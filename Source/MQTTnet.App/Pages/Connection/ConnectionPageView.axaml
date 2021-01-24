@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:common="using:MQTTnet.App.Common"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MQTTnet.App.Pages.Connection.ConnectionPageView">
+  <StackPanel Grid.IsSharedSizeScope="True">
+    
+    <ContentControl Content="{Binding ProtocolOptions}" />
+
+    <Separator />
+
+    <ContentControl Content="{Binding ServerOptions}" />
+
+    <Separator />
+
+    <ContentControl Content="{Binding SessionOptions}" />
+
+    <Separator />
+
+    <ContentControl Content="{Binding MqttNetOptions}" />
+
+    <Separator />
+
+    <StackPanel Orientation="Horizontal">
+      <Button HorizontalAlignment="Right" IsEnabled="{Binding IsConnecting, Converter={x:Static common:DefaultConverters.BooleanInverter}}" Command="{Binding Connect}">Connect</Button>
+      <Button HorizontalAlignment="Right">Disconnect</Button>
+    </StackPanel>
+
+    <TextBlock Foreground="{StaticResource SystemControlErrorTextForegroundBrush}" Text="{Binding ErrorMessage}"/>
+
+  </StackPanel>
+</UserControl>

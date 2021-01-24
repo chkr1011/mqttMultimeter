@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MQTTnet.App.Pages.Connection.SessionOptionsView">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" SharedSizeGroup="Column0" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"></RowDefinition>
+      <RowDefinition Height="Auto"></RowDefinition>
+      <RowDefinition Height="Auto"></RowDefinition>
+      <RowDefinition Height="Auto"></RowDefinition>
+    </Grid.RowDefinitions>
+
+    <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="0" Content="Client ID" />
+    <TextBox Classes="OptionValue" Grid.Column="1" Grid.Row="0" Text="{Binding ClientId}"/>
+
+    <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="1" Content="User" />
+    <TextBox Classes="OptionValue" Grid.Column="1" Grid.Row="1" Text="{Binding User}"/>
+
+    <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="2" Content="Password" />
+    <TextBox Classes="OptionValue" Grid.Column="1" Grid.Row="2" Text="{Binding Password}"/>
+
+    <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="3" Content="Clean session" />
+    <CheckBox Classes="OptionValue" Grid.Column="1" Grid.Row="3" IsChecked="{Binding CleanSession}" />
+  </Grid>
+</UserControl>

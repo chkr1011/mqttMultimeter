@@ -2,16 +2,13 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnet.App.Views
+namespace MQTTnet.App.Pages.Subscriptions
 {
-    public class MainWindow : Window
+    public class SubscriptionsPageView : UserControl
     {
-        public MainWindow()
+        public SubscriptionsPageView()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
         }
 
         private void InitializeComponent()

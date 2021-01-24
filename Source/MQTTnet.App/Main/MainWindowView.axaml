@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MQTTnet.App.Main"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MQTTnet.App.Main.MainWindowView"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="MQTTnet.App">
+  <Design.DataContext>
+    <vm:MainWindowViewModel />
+  </Design.DataContext>
+
+  <TabControl x:Name="TabControl" Grid.Row="1" TabStripPlacement="Left" Items="{Binding Pages}">
+    <TabControl.ItemTemplate>
+      <DataTemplate>
+        <ContentControl Content="{Binding Header}" />
+      </DataTemplate>
+    </TabControl.ItemTemplate>
+    <TabControl.ContentTemplate>
+      <DataTemplate>
+        <Border Background="{StaticResource SystemControlPageBackgroundChromeLowBrush}">
+          <ContentPresenter Margin="10" Content="{Binding #TabControl.SelectedContent}" />
+        </Border>
+      </DataTemplate>
+    </TabControl.ContentTemplate>
+  </TabControl>
+
+</Window>

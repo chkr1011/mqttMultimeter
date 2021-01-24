@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:subscriptions="using:MQTTnet.App.Pages.Subscriptions"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MQTTnet.App.Pages.Subscriptions.SubscriptionsPageView">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="5" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <ListBox Grid.Column="0" Items="{Binding ReceivedApplicationMessages}" SelectedItem="{Binding ReceivedApplicationMessages.SelectedItem}" />
+    <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" />
+    <subscriptions:ReceivedApplicationMessageDetailsView Grid.Column="2" DataContext="{Binding ReceivedApplicationMessages.SelectedItem.Details}" />
+  </Grid>
+</UserControl>
