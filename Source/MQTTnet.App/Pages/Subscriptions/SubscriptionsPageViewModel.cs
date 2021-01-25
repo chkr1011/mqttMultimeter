@@ -11,6 +11,9 @@ namespace MQTTnet.App.Pages.Subscriptions
     {
         readonly MqttClientService _mqttClientService;
 
+        int _messageId;
+
+
         public SubscriptionsPageViewModel(MqttClientService mqttClientService)
         {
             _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
@@ -26,8 +29,13 @@ namespace MQTTnet.App.Pages.Subscriptions
         {
             return Dispatcher.UIThread.InvokeAsync(() =>
             {
-                ReceivedApplicationMessages.Add(new ReceivedApplicationMessageViewModel(eventArgs.ApplicationMessage));
+                ReceivedApplicationMessages.Add(new ReceivedApplicationMessageViewModel(_messageId++, eventArgs.ApplicationMessage));
             });
+        }
+
+        public void Clear()
+        {
+            ReceivedApplicationMessages.Clear();
         }
     }
 }

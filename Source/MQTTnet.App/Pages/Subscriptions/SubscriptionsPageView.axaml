@@ -5,15 +5,27 @@
              xmlns:subscriptions="using:MQTTnet.App.Pages.Subscriptions"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Subscriptions.SubscriptionsPageView">
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="5" />
-      <ColumnDefinition Width="*" />
-    </Grid.ColumnDefinitions>
 
-    <ListBox Grid.Column="0" Items="{Binding ReceivedApplicationMessages}" SelectedItem="{Binding ReceivedApplicationMessages.SelectedItem}" />
-    <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" />
-    <subscriptions:ReceivedApplicationMessageDetailsView Grid.Column="2" DataContext="{Binding ReceivedApplicationMessages.SelectedItem.Details}" />
+  <Grid RowDefinitions="Auto,*">
+    <Border>
+      <Button Command="{Binding Clear}">Clear</Button>
+    </Border>
+
+    <Grid Grid.Row="1" ColumnDefinitions="*,5,*">
+      <ListBox Grid.Column="0" Items="{Binding ReceivedApplicationMessages}" SelectedItem="{Binding ReceivedApplicationMessages.SelectedItem}">
+        <ListBox.Styles>
+          <Style Selector="ListBoxItem">
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+          </Style>
+        </ListBox.Styles>
+      </ListBox>
+
+      <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" />
+      <subscriptions:ReceivedApplicationMessageDetailsView Grid.Column="2" DataContext="{Binding ReceivedApplicationMessages.SelectedItem.Details}" />
+    </Grid>
+
   </Grid>
+
+
 </UserControl>
