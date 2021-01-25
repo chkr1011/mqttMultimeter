@@ -11,19 +11,29 @@
     <vm:MainWindowViewModel />
   </Design.DataContext>
 
-  <TabControl x:Name="TabControl" Grid.Row="1" TabStripPlacement="Left" Items="{Binding Pages}">
-    <TabControl.ItemTemplate>
-      <DataTemplate>
-        <ContentControl Content="{Binding Header}" />
-      </DataTemplate>
-    </TabControl.ItemTemplate>
-    <TabControl.ContentTemplate>
-      <DataTemplate>
-        <Border Background="{StaticResource SystemControlPageBackgroundChromeLowBrush}">
-          <ContentPresenter Margin="10" Content="{Binding #TabControl.SelectedContent}" />
-        </Border>
-      </DataTemplate>
-    </TabControl.ContentTemplate>
-  </TabControl>
+  <Grid RowDefinitions="*,Auto">
+
+    <TabControl x:Name="TabControl" Grid.Row="0" TabStripPlacement="Left" Items="{Binding Pages}">
+      <TabControl.ItemTemplate>
+        <DataTemplate>
+          <ContentControl Content="{Binding Header}" />
+        </DataTemplate>
+      </TabControl.ItemTemplate>
+      <TabControl.ContentTemplate>
+        <DataTemplate>
+          <Border Background="{StaticResource SystemControlPageBackgroundChromeLowBrush}">
+            <ContentPresenter Margin="10" Content="{Binding #TabControl.SelectedContent}" />
+          </Border>
+        </DataTemplate>
+      </TabControl.ContentTemplate>
+    </TabControl>
+
+    <!-- The status bar. -->
+    <Border Grid.Row="1" Background="Red">
+      <DockPanel HorizontalAlignment="Stretch" LastChildFill="False" Margin="10,2">
+        <TextBlock Text="Version 1.0.0" DockPanel.Dock="Right" />
+      </DockPanel>
+    </Border>
+  </Grid>
 
 </Window>

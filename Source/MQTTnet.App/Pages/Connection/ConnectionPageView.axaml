@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.ConnectionPageView">
   <StackPanel Grid.IsSharedSizeScope="True">
-    
+
     <ContentControl Content="{Binding ProtocolOptions}" />
 
     <Separator />

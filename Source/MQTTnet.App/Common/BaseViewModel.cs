@@ -27,7 +27,7 @@ namespace MQTTnet.App.Common
 
             return _propertyStore.GetValue<TValue>(propertyName);
         }
-        
+
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

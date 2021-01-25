@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
@@ -53,6 +54,9 @@ namespace MQTTnet.App.Common
 
         int _hexCaretIndex;
 
+        public ObservableCollection<BufferValueViewModel> Values { get; } = new ObservableCollection<BufferValueViewModel>();
+
+
         public int HexCaretIndex
         {
             get => _hexCaretIndex;
@@ -86,19 +90,61 @@ namespace MQTTnet.App.Common
 
             var buffer = StringToByteArray(source);
 
-            var parsedHexValuesBuilder = new StringBuilder();
-            parsedHexValuesBuilder.AppendLine("byte\t: " + buffer[0]);
-            parsedHexValuesBuilder.AppendLine("boolean:\t" + BitConverter.ToBoolean(buffer));
-            parsedHexValuesBuilder.AppendLine("int16:\t" + BitConverter.ToInt16(buffer));
-            parsedHexValuesBuilder.AppendLine("uint16:\t" + BitConverter.ToUInt16(buffer));
-            parsedHexValuesBuilder.AppendLine("int32:\t" + BitConverter.ToInt32(buffer));
-            parsedHexValuesBuilder.AppendLine("uint32:\t" + BitConverter.ToUInt32(buffer));
-            parsedHexValuesBuilder.AppendLine("float:\t" + BitConverter.ToSingle(buffer));
-            parsedHexValuesBuilder.AppendLine("double:\t" + BitConverter.ToDouble(buffer));
+            Values.Clear();
 
+            Values.Add(new BufferValueViewModel("Offset", (_buffer.Length - buffer.Length).ToString()));
+            Values.Add(new BufferValueViewModel("Bytes left", buffer.Length.ToString()));
 
+            Values.Add(new BufferValueViewModel("Decimal", buffer[0].ToString()));
+            Values.Add(new BufferValueViewModel("Boolean", (buffer[0] > 0).ToString()));
+            Values.Add(new BufferValueViewModel("Bits", GetBits(buffer[0])));
+            Values.Add(new BufferValueViewModel("ASCII char", ((char)buffer[0]).ToString()));
 
-            ParsedHexValues = parsedHexValuesBuilder.ToString();
+            if (buffer.Length < 2)
+            {
+                return;
+            }
+
+            Values.Add(new BufferValueViewModel("Int 16", BitConverter.ToInt16(buffer).ToString()));
+            Values.Add(new BufferValueViewModel("UInt 16", BitConverter.ToUInt16(buffer).ToString()));
+            Values.Add(new BufferValueViewModel("UTF8 char", Encoding.UTF8.GetString(buffer, 0, 2)));
+
+            if (buffer.Length < 4)
+            {
+                return;
+            }
+
+            Values.Add(new BufferValueViewModel("Int 32", BitConverter.ToInt32(buffer).ToString()));
+            Values.Add(new BufferValueViewModel("UInt 32", BitConverter.ToUInt32(buffer).ToString()));
+            Values.Add(new BufferValueViewModel("Float", BitConverter.ToSingle(buffer).ToString()));
+
+            if (buffer.Length < 8)
+            {
+                return;
+            }
+
+            Values.Add(new BufferValueViewModel("int64", BitConverter.ToInt32(buffer).ToString()));
+            Values.Add(new BufferValueViewModel("uint64", BitConverter.ToUInt32(buffer).ToString()));
+            Values.Add(new BufferValueViewModel("Double", BitConverter.ToDouble(buffer).ToString()));
+        }
+
+        string GetBits(byte @byte)
+        {
+            var stringBuilder = new StringBuilder();
+            var counter = 0;
+            for (var i = 7; i >= 0; i--)
+            {
+                stringBuilder.Append((@byte & 1 << i) > 0 ? "1" : "0");
+
+                counter++;
+                if (counter == 4 && i != 0)
+                {
+                    stringBuilder.Append(".");
+                    counter = 0;
+                }
+            }
+
+            return stringBuilder.ToString();
         }
 
         public static byte[] StringToByteArray(string hex)
@@ -112,12 +158,6 @@ namespace MQTTnet.App.Common
         public string HexContent
         {
             get;
-        }
-
-        public string ParsedHexValues
-        {
-            get => GetValue<string>();
-            private set => SetValue(value);
         }
 
         public string Utf8Content

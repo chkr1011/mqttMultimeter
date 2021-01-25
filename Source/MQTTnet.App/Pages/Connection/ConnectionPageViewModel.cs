@@ -13,7 +13,7 @@ namespace MQTTnet.App.Pages.Connection
         public ConnectionPageViewModel(MqttClientService mqttClientService)
         {
             _mqttClientService = mqttClientService;
-            
+
             Header = "Connection";
 
             var timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, TimerCallback);
@@ -33,8 +33,8 @@ namespace MQTTnet.App.Pages.Connection
 
         public MqttNetOptionsViewModel MqttNetOptions { get; } = new MqttNetOptionsViewModel();
 
-        public string ErrorMessage 
-        { 
+        public string ErrorMessage
+        {
             get => GetValue<string>();
             private set => SetValue(value);
         }

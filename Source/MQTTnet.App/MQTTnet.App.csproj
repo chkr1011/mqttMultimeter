@@ -9,7 +9,6 @@
     <AvaloniaResource Include="Assets\**" />
     <Folder Include="Pages\Monitor\" />
     <Folder Include="Pages\Info\" />
-    <Folder Include="Pages\Inspector\" />
     <Folder Include="Pages\Analasys\" />
     <Folder Include="Pages\Status\" />
   </ItemGroup>
@@ -19,7 +18,7 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.10.0" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.0" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.0" />
-    <PackageReference Include="MQTTnet" Version="3.0.13" />
+    <PackageReference Include="MQTTnet" Version="3.0.14-rc7" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="SimpleInjector" Version="5.2.1" />
   </ItemGroup>
@@ -35,6 +34,9 @@
     </Compile>
     <Compile Update="Pages\Connection\SessionOptionsView.axaml.cs">
       <DependentUpon>SessionOptionsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\PacketInspector\PacketInspectorPageView.axaml.cs">
+      <DependentUpon>PacketInspectorPageView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
