@@ -1,4 +1,4 @@
-﻿namespace MQTTnet.App.Common
+﻿namespace MQTTnet.App.Common.BufferInspector
 {
     public sealed class BufferValueViewModel : BaseViewModel
     {

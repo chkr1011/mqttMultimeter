@@ -58,17 +58,25 @@ namespace MQTTnet.App.Services.Client
 
             await _mqttClient.ConnectAsync(clientOptionsBuilder.Build());
 
-            await _mqttClient.SubscribeAsync("#");
-
             IsConnected = true;
         }
 
-        public async Task Subscribe()
+        public async Task Subscribe(SubscriptionEditorViewModel options)
         {
-            var subscribeOptionsBuilder = new MqttClientSubscribeOptionsBuilder()
-                .WithTopicFilter(new MqttTopicFilterBuilder().WithTopic(""));
+            var topicFilter = new MqttTopicFilterBuilder()
+                .WithTopic(options.Topic)
+                .WithQualityOfServiceLevel(options.QualityOfServiceLevels.SelectedItem.Value)
+                .WithNoLocal(options.NoLocal)
+                .WithRetainAsPublished(options.RetainAsPublished)
+                .Build();
 
-            //_mqttClient.SubscribeAsync(new MqttClientSubscribeOptionsBuilder())
+            var subscribeOptions = new MqttClientSubscribeOptionsBuilder()
+                .WithTopicFilter(topicFilter)
+                .Build();
+
+            var subscribeResult = await _mqttClient.SubscribeAsync(subscribeOptions).ConfigureAwait(false);
+
+
         }
 
         public void RegisterApplicationMessageReceivedHandler(IMqttApplicationMessageReceivedHandler handler)

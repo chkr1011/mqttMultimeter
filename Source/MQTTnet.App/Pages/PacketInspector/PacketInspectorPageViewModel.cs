@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Avalonia.Threading;
+﻿using Avalonia.Threading;
 using MQTTnet.App.Common;
 using MQTTnet.App.Services.Client;
 using MQTTnet.Diagnostics.PacketInspection;

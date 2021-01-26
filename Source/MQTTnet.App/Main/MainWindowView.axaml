@@ -13,7 +13,7 @@
 
   <Grid RowDefinitions="*,Auto">
 
-    <TabControl x:Name="TabControl" Grid.Row="0" TabStripPlacement="Left" Items="{Binding Pages}">
+    <TabControl Padding="0" x:Name="TabControl" Grid.Row="0" TabStripPlacement="Left" Items="{Binding Pages}">
       <TabControl.ItemTemplate>
         <DataTemplate>
           <ContentControl Content="{Binding Header}" />

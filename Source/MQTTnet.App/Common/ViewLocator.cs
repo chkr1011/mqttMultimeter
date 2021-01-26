@@ -26,8 +26,6 @@ namespace MQTTnet.App.Common
                 var control = (Control)Activator.CreateInstance(type)!;
                 control.DataContext = data;
                 return control;
-
-                //return (Control)_container.GetInstance(type)!;
             }
             else
             {

@@ -19,15 +19,12 @@ namespace MQTTnet.App
             _container.RegisterSingleton<MqttClientService>();
 
             var viewLocator = new ViewLocator(_container);
-
             DataTemplates.Add(viewLocator);
         }
 
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
-
-
         }
 
         public override void OnFrameworkInitializationCompleted()

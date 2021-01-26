@@ -3,8 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="MQTTnet.App.Pages.PacketInspector.PacketView">
-  <DockPanel>
-    <TextBlock Text="{Binding Name}" FontFamily="Consolas" />
-  </DockPanel>
+             x:Class="MQTTnet.App.Pages.Subscriptions.SubscriptionView">
+  <StackPanel>
+    <Label>Topic</Label>
+    <TextBlock Text="{Binding Topic}" FontFamily="Consolas" />
+  </StackPanel>
 </UserControl>

@@ -3,7 +3,30 @@
              xmlns:local="using:MQTTnet.App"
              x:Class="MQTTnet.App.App">
   <Application.Styles>
-    <FluentTheme Mode="Dark" />
+    <FluentTheme Mode="Light" />
+
+    <Style Selector="Button">
+      <Setter Property="MinWidth" Value="80" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="MinHeight" Value="26" />
+    </Style>
+
+    <Style Selector="Button.LeftButton">
+    </Style>
+
+    <Style Selector="Button.RightButton">
+      <Setter Property="Margin" Value="10,0,0,0" />
+    </Style>
+
+    <Style Selector="Label.ValueHeader">
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="FontSize" Value="14" />
+      <Setter Property="Margin" Value="0,10,0,0" />
+    </Style>
+
+    <Style Selector="Label.FirstValueHeader">
+      <Setter Property="Margin" Value="0,0,0,0" />
+    </Style>
 
     <Style Selector="Separator">
       <Setter Property="HorizontalAlignment" Value="Stretch" />

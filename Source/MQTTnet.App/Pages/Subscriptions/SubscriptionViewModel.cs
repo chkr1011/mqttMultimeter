@@ -9,5 +9,10 @@ namespace MQTTnet.App.Pages.Subscriptions
             get;
             set;
         }
+
+        public void Unsubscribe()
+        {
+
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace MQTTnet.App.Common
 {
     public sealed class ViewModelCollection<TItem> : ObservableCollection<TItem>
     {
-        TItem _selectedItem;
+        TItem _selectedItem = default!;
 
         public TItem SelectedItem
         {

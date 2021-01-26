@@ -8,13 +8,15 @@ namespace MQTTnet.App.Pages.Connection
 {
     public sealed class ConnectionPageViewModel : BasePageViewModel
     {
+        readonly ConnectionPageHeaderViewModel _header = new ConnectionPageHeaderViewModel();
+
         readonly MqttClientService _mqttClientService;
 
         public ConnectionPageViewModel(MqttClientService mqttClientService)
         {
             _mqttClientService = mqttClientService;
 
-            Header = "Connection";
+            Header = _header;
 
             var timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, TimerCallback);
             timer.Start();
@@ -22,7 +24,7 @@ namespace MQTTnet.App.Pages.Connection
 
         void TimerCallback(object? sender, EventArgs e)
         {
-
+            _header.IsConnected = _mqttClientService.IsConnected;
         }
 
         public ProtocolOptionsViewModel ProtocolOptions { get; } = new ProtocolOptionsViewModel();

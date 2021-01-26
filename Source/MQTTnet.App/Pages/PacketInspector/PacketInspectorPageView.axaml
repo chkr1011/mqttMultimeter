@@ -5,12 +5,13 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.PacketInspector.PacketInspectorPageView">
 
-  <Grid ColumnDefinitions="2*,Auto">
+  <Grid ColumnDefinitions="*,5,*">
     <ListBox Grid.Column="0" Items="{Binding Packets}" SelectedItem="{Binding Packets.SelectedItem}">
-
     </ListBox>
 
-    <ContentControl Grid.Column="1" Content="{Binding Packets.SelectedItem.ContentInspector}" />
+    <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" />
+
+    <ContentControl Grid.Column="2" Content="{Binding Packets.SelectedItem.ContentInspector}" />
   </Grid>
 
 </UserControl>

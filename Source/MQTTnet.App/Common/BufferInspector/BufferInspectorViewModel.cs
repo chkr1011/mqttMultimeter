@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using ReactiveUI;
 
-namespace MQTTnet.App.Common
+namespace MQTTnet.App.Common.BufferInspector
 {
     public sealed class BufferInspectorViewModel : BaseViewModel
     {

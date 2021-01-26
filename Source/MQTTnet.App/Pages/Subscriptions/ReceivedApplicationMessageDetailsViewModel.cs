@@ -1,5 +1,6 @@
 ﻿using System;
 using MQTTnet.App.Common;
+using MQTTnet.App.Common.BufferInspector;
 
 namespace MQTTnet.App.Pages.Subscriptions
 {

@@ -1,8 +1,7 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnet.App.Common
+namespace MQTTnet.App.Common.BufferInspector
 {
     public class BufferValueView : UserControl
     {

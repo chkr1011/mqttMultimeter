@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using MQTTnet.App.Common;
 using MQTTnet.Protocol;
 
@@ -14,12 +15,45 @@ namespace MQTTnet.App.Pages.Subscriptions
             QualityOfServiceLevels.SelectedItem = QualityOfServiceLevels.FirstOrDefault()!;
         }
 
+        public event EventHandler Completed;
+
         public string Topic
         {
-            get => GetValue<string>();
-            set => SetValue(value);
+            get;
+            set;
+        }
+
+        public bool NoLocal
+        {
+            get;
+            set;
+        }
+
+        public bool RetainAsPublished
+        {
+            get;
+            set;
         }
 
         public ViewModelCollection<QualityOfServiceLevelViewModel> QualityOfServiceLevels { get; } = new ViewModelCollection<QualityOfServiceLevelViewModel>();
+
+        public bool Accepted { get; private set; }
+
+        public void Accept()
+        {
+            if (string.IsNullOrEmpty(Topic))
+            {
+                SetErrors(nameof(Topic), "Value must not be empty.");
+                return;
+            }
+
+            Accepted = true;
+            Completed.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Cancel()
+        {
+            Completed.Invoke(this, EventArgs.Empty);
+        }
     }
 }

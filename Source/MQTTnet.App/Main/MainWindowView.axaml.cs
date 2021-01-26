@@ -6,8 +6,12 @@ namespace MQTTnet.App.Main
 {
     public class MainWindowView : Window
     {
+        public static MainWindowView Instance { get; private set; } = default!;
+
         public MainWindowView()
         {
+            Instance = this;
+
             InitializeComponent();
 #if DEBUG
             this.AttachDevTools();
