@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -23,6 +24,11 @@ namespace MQTTnet.App
 
             var viewLocator = new ViewLocator(_container);
             DataTemplates.Add(viewLocator);
+        }
+
+        public static void ShowException(Exception exception)
+        {
+            ShowDialog(new TextViewModel(exception.ToString()));
         }
 
         public static void ShowDialog(BaseViewModel content)

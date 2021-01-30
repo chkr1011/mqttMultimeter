@@ -3,8 +3,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:common="using:MQTTnet.App.Common"
              x:Class="MQTTnet.App.Pages.PacketInspector.PacketView">
-  <DockPanel>
-    <TextBlock Text="{Binding Name}" FontFamily="Consolas" />
+
+  <DockPanel LastChildFill="True" HorizontalAlignment="Stretch">
+    <Border DockPanel.Dock="Left" Classes="Badge BadgeInbound" IsVisible="{Binding IsInbound}">
+      <TextBlock Margin="5" Text="Inbound"></TextBlock>
+    </Border>
+
+    <Border DockPanel.Dock="Left" Classes="Badge BadgeOutbound" IsVisible="{Binding IsInbound, Converter={x:Static  common:DefaultConverters.BooleanInverter}}">
+      <TextBlock Margin="5" Text="Outbound"></TextBlock>
+    </Border>
+
+    <Border DockPanel.Dock="Right" Classes="Badge BadgeLength">
+      <TextBlock Margin="5" Text="5 bytes"></TextBlock>
+    </Border>
+
+    <TextBlock Classes="CodeText" Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding Name}" />
   </DockPanel>
 </UserControl>

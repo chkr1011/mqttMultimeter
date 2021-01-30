@@ -5,14 +5,17 @@
              xmlns:common="using:MQTTnet.App.Common"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.ConnectionPageHeaderView">
-  <StackPanel Orientation="Horizontal">
-    <TextBlock Text="{Binding Title}" />
-    <Border CornerRadius="5" Background="Green" Margin="10,0,0,0" IsVisible="{Binding IsConnected}">
+  <DockPanel LastChildFill="True">
+
+    <Border DockPanel.Dock="Right" CornerRadius="5" Background="Green" Margin="10,0,0,0" IsVisible="{Binding IsConnected}">
       <TextBlock Text="Connected" FontSize="12" Margin="5" VerticalAlignment="Center" Foreground="White" />
     </Border>
 
-    <Border CornerRadius="5" Background="Red" Margin="10,0,0,0" IsVisible="{Binding IsConnected, Converter={x:Static common:DefaultConverters.BooleanInverter}}">
+    <Border DockPanel.Dock="Right" CornerRadius="5" Background="Red" Margin="10,0,0,0" IsVisible="{Binding IsConnected, Converter={x:Static common:DefaultConverters.BooleanInverter}}">
       <TextBlock Text="Not connected" FontSize="12" Margin="5" VerticalAlignment="Center" Foreground="White" />
     </Border>
-  </StackPanel>
+
+    <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+
+  </DockPanel>
 </UserControl>

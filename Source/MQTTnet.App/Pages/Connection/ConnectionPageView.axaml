@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:common="using:MQTTnet.App.Common"
+             xmlns:objectDump="using:MQTTnet.App.Common.ObjectDump"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.ConnectionPageView">
   <StackPanel Grid.IsSharedSizeScope="True">
@@ -25,11 +26,13 @@
     </StackPanel>
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-      <Button IsDefault="True" Margin="0,0,10,0" IsEnabled="{Binding IsConnecting, Converter={x:Static common:DefaultConverters.BooleanInverter}}" Command="{Binding Connect}">Connect</Button>
+      <Button Content="Connect" IsDefault="True" Margin="0,0,10,0" IsEnabled="{Binding IsConnecting, Converter={x:Static common:DefaultConverters.BooleanInverter}}" Command="{Binding Connect}" />
       <Button>Disconnect</Button>
     </StackPanel>
 
-    <TextBlock Foreground="{StaticResource SystemControlErrorTextForegroundBrush}" Text="{Binding ErrorMessage}"/>
+    <TextBlock Text="{Binding ErrorMessage}"/>
+
+    <objectDump:ObjectDumpView DataContext="{Binding Result}" />
 
   </StackPanel>
 </UserControl>

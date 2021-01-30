@@ -1,4 +1,6 @@
-﻿using MQTTnet.App.Common;
+﻿using System;
+using JetBrains.Annotations;
+using MQTTnet.App.Common;
 using MQTTnet.App.Common.BufferInspector;
 using MQTTnet.Diagnostics.PacketInspection;
 
@@ -6,31 +8,30 @@ namespace MQTTnet.App.Pages.PacketInspector
 {
     public sealed class PacketViewModel : BaseViewModel
     {
-        public PacketViewModel(ProcessMqttPacketContext context)
+        public PacketViewModel([NotNull] ProcessMqttPacketContext context)
         {
+            if (context == null) throw new ArgumentNullException(nameof(context));
+
             Direction = context.Direction;
 
-            if (context.Direction == MqttPacketFlowDirection.Inbound)
-            {
-                Name = ">>> ";
-            }
-            else
-            {
-                Name = "<<< ";
-            }
-
             Name += GetControlPacketType(context.Buffer[0]);
+            IsInbound = context.Direction == MqttPacketFlowDirection.Inbound;
+            Length = context.Buffer.Length;
 
             ContentInspector = new BufferInspectorViewModel(context.Buffer);
         }
 
-        public string Name { get; set; }
+        public int Length { get; }
+
+        public string Name { get; }
+
+        public bool IsInbound { get; }
 
         public MqttPacketFlowDirection Direction { get; set; }
 
         public BufferInspectorViewModel ContentInspector { get; }
 
-        string GetControlPacketType(byte data)
+        static string GetControlPacketType(byte data)
         {
             var controlType = data >> 4;
 

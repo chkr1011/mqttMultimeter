@@ -7,6 +7,7 @@ using MQTTnet.App.Pages.Connection;
 using MQTTnet.App.Pages.Publish;
 using MQTTnet.App.Pages.Subscriptions;
 using MQTTnet.Client;
+using MQTTnet.Client.Connecting;
 using MQTTnet.Client.Options;
 using MQTTnet.Client.Publishing;
 using MQTTnet.Client.Receiving;
@@ -26,7 +27,7 @@ namespace MQTTnet.App.Services.Client
 
         public bool IsConnected { get; private set; }
 
-        public async Task Connect([NotNull] ConnectionPageViewModel options)
+        public async Task<MqttClientAuthenticateResult> Connect([NotNull] ConnectionPageViewModel options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 
@@ -62,21 +63,25 @@ namespace MQTTnet.App.Services.Client
                 clientOptionsBuilder.WithPacketInspector(this);
             }
 
-            await _mqttClient.ConnectAsync(clientOptionsBuilder.Build());
+            var result = await _mqttClient.ConnectAsync(clientOptionsBuilder.Build());
 
             IsConnected = true;
+
+            return result;
         }
 
         public async Task Subscribe([NotNull] SubscriptionEditorViewModel options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 
+            ThrowIfNotConnected();
+
             var topicFilter = new MqttTopicFilterBuilder()
                 .WithTopic(options.Topic)
                 .WithQualityOfServiceLevel(options.QualityOfServiceLevel.Value)
-                //.WithNoLocal(options.NoLocal)
-                //.WithRetainHandling(MqttRetainHandling.DoNotSendOnSubscribe)
-                //.WithRetainAsPublished(options.RetainAsPublished)
+                .WithNoLocal(options.NoLocal)
+                .WithRetainHandling(MqttRetainHandling.DoNotSendOnSubscribe)
+                .WithRetainAsPublished(options.RetainAsPublished)
                 .Build();
 
             var subscribeOptions = new MqttClientSubscribeOptionsBuilder()
@@ -92,6 +97,8 @@ namespace MQTTnet.App.Services.Client
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 
+            ThrowIfNotConnected();
+
             var applicationMessage = new MqttApplicationMessageBuilder()
                 .WithTopic(options.Topic)
                 .WithQualityOfServiceLevel(options.QualityOfServiceLevel.Value)
@@ -102,15 +109,19 @@ namespace MQTTnet.App.Services.Client
             return await _mqttClient.PublishAsync(applicationMessage).ConfigureAwait(false);
         }
 
-        public async Task Unsubscribe(string topic)
+        public async Task Unsubscribe([NotNull] string topic)
         {
+            if (topic == null) throw new ArgumentNullException(nameof(topic));
+
+            ThrowIfNotConnected();
+
             var unsubscribeResult = await _mqttClient.UnsubscribeAsync(topic);
-
-
         }
 
-        public void RegisterApplicationMessageReceivedHandler(IMqttApplicationMessageReceivedHandler handler)
+        public void RegisterApplicationMessageReceivedHandler([NotNull] IMqttApplicationMessageReceivedHandler handler)
         {
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
+
             _applicationMessageReceivedHandlers.Add(handler);
         }
 
@@ -139,7 +150,13 @@ namespace MQTTnet.App.Services.Client
             }
         }
 
-
+        void ThrowIfNotConnected()
+        {
+            if (_mqttClient == null || !_mqttClient.IsConnected)
+            {
+                throw new InvalidOperationException("The MQTT client is not connected.");
+            }
+        }
 
     }
 }

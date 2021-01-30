@@ -77,7 +77,7 @@ namespace MQTTnet.App.Pages.Subscriptions
             }
             catch (Exception exception)
             {
-
+                App.ShowException(exception);
             }
         }
 

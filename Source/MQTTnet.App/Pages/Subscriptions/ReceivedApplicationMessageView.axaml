@@ -10,7 +10,7 @@
       <TextBlock MinWidth="50" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,5,0" DockPanel.Dock="Left" Text="{Binding Id}" FontFamily="Consolas" />
     </Border>
 
-    <Border DockPanel.Dock="Right" CornerRadius="5" Background="Gold" Margin="3">
+    <Border Classes="Badge BadgeLength" DockPanel.Dock="Right">
       <TextBlock Text="{Binding PayloadSize, StringFormat={}{0} bytes}" FontSize="10" Foreground="Black" Margin="5,2" />
     </Border>
 

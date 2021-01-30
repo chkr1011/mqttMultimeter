@@ -6,31 +6,21 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="MQTTnet.App.Main.MainWindowView"
         Icon="/Assets/avalonia-logo.ico"
-        Title="MQTTnet.App">
+        Title="MQTTnet App">
 
-  <Grid RowDefinitions="*,Auto">
-
-    <TabControl Padding="0" x:Name="TabControl" Grid.Row="0" TabStripPlacement="Left" Items="{Binding Pages}">
-      <TabControl.ItemTemplate>
-        <DataTemplate>
-          <ContentControl Content="{Binding Header}" />
-        </DataTemplate>
-      </TabControl.ItemTemplate>
-      <TabControl.ContentTemplate>
-        <DataTemplate>
-          <Border Background="WhiteSmoke">
-            <ContentPresenter Margin="10" Content="{Binding #TabControl.SelectedContent}" />
-          </Border>
-        </DataTemplate>
-      </TabControl.ContentTemplate>
-    </TabControl>
-
-    <!-- The status bar. -->
-    <Border Grid.Row="1" Background="Red">
-      <DockPanel HorizontalAlignment="Stretch" LastChildFill="False" Margin="10,2">
-        <TextBlock Text="Version 1.0.0" DockPanel.Dock="Right" />
-      </DockPanel>
-    </Border>
-  </Grid>
+  <TabControl Classes="sidebar" x:Name="TabControl" TabStripPlacement="Left" Items="{Binding Pages}">
+    <TabControl.ItemTemplate>
+      <DataTemplate>
+        <ContentControl Content="{Binding Header}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" />
+      </DataTemplate>
+    </TabControl.ItemTemplate>
+    <TabControl.ContentTemplate>
+      <DataTemplate>
+        <Border Background="WhiteSmoke">
+          <ContentPresenter Margin="10" Content="{Binding #TabControl.SelectedContent}" />
+        </Border>
+      </DataTemplate>
+    </TabControl.ContentTemplate>
+  </TabControl>
 
 </Window>

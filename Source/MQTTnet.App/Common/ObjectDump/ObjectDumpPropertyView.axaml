@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MQTTnet.App.Common.ObjectDump.ObjectDumpPropertyView">
+
+
+
+  <Grid Margin="0,0,0,10">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" SharedSizeGroup="Column0">
+      </ColumnDefinition>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+
+    <TextBlock Margin="0,0,10,0" Grid.Column="0" Text="{Binding Name}"></TextBlock>
+    <TextBlock Classes="CodeText" Grid.Column="1" Text="{Binding Value}"></TextBlock>
+  </Grid>
+</UserControl>

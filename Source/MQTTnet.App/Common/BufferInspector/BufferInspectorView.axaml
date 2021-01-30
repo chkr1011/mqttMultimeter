@@ -6,13 +6,20 @@
              x:Class="MQTTnet.App.Common.BufferInspector.BufferInspectorView">
   <TabControl TabStripPlacement="Right" Padding="0">
     <TabItem Header="HEX">
-      <StackPanel>
-        <TextBlock Text="00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F" Foreground="DimGray" FontFamily="Consolas" />
-        <TextBox Background="Transparent" Padding="0" BorderThickness="0" CaretIndex="{Binding HexCaretIndex, Mode=OneWayToSource}" IsReadOnly="True" FontFamily="Consolas" Text="{Binding HexContent}" AcceptsReturn="True" />
+
+      <StackPanel HorizontalAlignment="Center">
+
+        <Border BorderBrush="Black" BorderThickness="1" Background="White">
+          <StackPanel Margin="10">
+            <TextBlock Margin="0,0,0,5" Text="00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F" Foreground="DimGray" FontFamily="Consolas" />
+            <TextBox Background="Transparent" Padding="0" BorderThickness="0" CaretIndex="{Binding HexCaretIndex, Mode=OneWayToSource}" IsReadOnly="True" FontFamily="Consolas" Text="{Binding HexContent}" AcceptsReturn="True" />
+          </StackPanel>
+        </Border>
 
         <ItemsControl Margin="0,5,0,0" Items="{Binding Values}" Grid.IsSharedSizeScope="True" />
         <TextBlock FontFamily="Consolas" Text="{Binding ParsedHexValues}" />
       </StackPanel>
+
     </TabItem>
     <TabItem Header="UTF8">
       <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding Utf8Content}" AcceptsReturn="True" />

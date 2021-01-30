@@ -37,10 +37,7 @@
 
       <ListBox Grid.Row="1" Items="{Binding ReceivedApplicationMessages}" SelectedItem="{Binding ReceivedApplicationMessages.SelectedItem}">
         <ListBox.Styles>
-          <Style Selector="ListBoxItem">
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-          </Style>
+
         </ListBox.Styles>
       </ListBox>
     </Grid>

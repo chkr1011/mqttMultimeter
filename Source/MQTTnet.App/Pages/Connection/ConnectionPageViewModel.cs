@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Avalonia.Threading;
+using MQTTnet.Adapter;
 using MQTTnet.App.Common;
+using MQTTnet.App.Common.ObjectDump;
 using MQTTnet.App.Services.Client;
 
 namespace MQTTnet.App.Pages.Connection
@@ -35,6 +37,8 @@ namespace MQTTnet.App.Pages.Connection
 
         public MqttNetOptionsViewModel MqttNetOptions { get; } = new MqttNetOptionsViewModel();
 
+        public ObjectDumpViewModel Result { get; } = new ObjectDumpViewModel();
+
         public string ErrorMessage
         {
             get => GetValue<string>();
@@ -54,11 +58,17 @@ namespace MQTTnet.App.Pages.Connection
                 ErrorMessage = string.Empty;
                 IsConnecting = true;
 
-                await _mqttClientService.Connect(this);
+                var result = await _mqttClientService.Connect(this);
+
+                Result.Dump(result);
+            }
+            catch (MqttConnectingFailedException exception)
+            {
+                Result.Dump(exception.Result);
             }
             catch (Exception exception)
             {
-                ErrorMessage = exception.Message;
+                App.ShowException(exception);
             }
             finally
             {
