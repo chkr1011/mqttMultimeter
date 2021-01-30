@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Subscriptions.SubscriptionsPageView">
 
-  <Grid ColumnDefinitions="*,5,2*,5,*">
+  <Grid ColumnDefinitions="*,Auto,2*,Auto,*">
     <!-- The subscriptions -->
     <Grid Grid.Column="0" RowDefinitions="Auto,*">
 
@@ -15,12 +15,17 @@
       </StackPanel>
 
       <ListBox Grid.Row="1" Items="{Binding Subscriptions}">
-
+        <ListBox.Styles>
+          <Style Selector="ListBoxItem">
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+          </Style>
+        </ListBox.Styles>
       </ListBox>
 
     </Grid>
 
-    <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" />
+    <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" />
 
     <!-- The application messages -->
     <Grid Grid.Column="2" RowDefinitions="Auto,*">
@@ -40,7 +45,7 @@
       </ListBox>
     </Grid>
 
-    <GridSplitter Grid.Column="3" ResizeBehavior="PreviousAndNext" />
+    <GridSplitter Grid.Column="3" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" />
 
     <!-- The details view -->
     <subscriptions:ReceivedApplicationMessageDetailsView Grid.Column="4" DataContext="{Binding ReceivedApplicationMessages.SelectedItem.Details}" />

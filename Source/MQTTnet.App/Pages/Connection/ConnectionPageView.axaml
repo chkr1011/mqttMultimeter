@@ -6,26 +6,27 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.ConnectionPageView">
   <StackPanel Grid.IsSharedSizeScope="True">
+    <StackPanel>
+      <ContentControl Content="{Binding ProtocolOptions}" />
 
-    <ContentControl Content="{Binding ProtocolOptions}" />
+      <Separator />
 
-    <Separator />
+      <ContentControl Content="{Binding ServerOptions}" />
 
-    <ContentControl Content="{Binding ServerOptions}" />
+      <Separator />
 
-    <Separator />
+      <ContentControl Content="{Binding SessionOptions}" />
 
-    <ContentControl Content="{Binding SessionOptions}" />
+      <Separator />
 
-    <Separator />
+      <ContentControl Content="{Binding MqttNetOptions}" />
 
-    <ContentControl Content="{Binding MqttNetOptions}" />
+      <Separator />
+    </StackPanel>
 
-    <Separator />
-
-    <StackPanel Orientation="Horizontal">
-      <Button HorizontalAlignment="Right" IsEnabled="{Binding IsConnecting, Converter={x:Static common:DefaultConverters.BooleanInverter}}" Command="{Binding Connect}">Connect</Button>
-      <Button HorizontalAlignment="Right">Disconnect</Button>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button IsDefault="True" Margin="0,0,10,0" IsEnabled="{Binding IsConnecting, Converter={x:Static common:DefaultConverters.BooleanInverter}}" Command="{Binding Connect}">Connect</Button>
+      <Button>Disconnect</Button>
     </StackPanel>
 
     <TextBlock Foreground="{StaticResource SystemControlErrorTextForegroundBrush}" Text="{Binding ErrorMessage}"/>

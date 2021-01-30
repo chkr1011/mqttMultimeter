@@ -35,6 +35,12 @@
       <Setter Property="Margin" Value="0,10" />
     </Style>
 
+    <Style Selector="GridSplitter">
+      <Setter Property="Width" Value="1" />
+      <Setter Property="Margin" Value="2,0" />
+      <Setter Property="Background" Value="Gray" />
+    </Style>
+
     <Style Selector="Label.OptionLabel">
       <Setter Property="VerticalAlignment" Value="Center" />
       <Setter Property="Margin" Value="0,0,10,10" />
@@ -43,5 +49,14 @@
     <Style Selector=":is(Control).OptionValue">
       <Setter Property="Margin" Value="0,0,0,10" />
     </Style>
+
+    <Style Selector="TextBox.CodeText">
+      <Setter Property="FontFamily" Value="Consolas" />
+    </Style>
+
+    <Style Selector="TextBlock.CodeText">
+      <Setter Property="FontFamily" Value="Consolas" />
+    </Style>
+
   </Application.Styles>
 </Application>

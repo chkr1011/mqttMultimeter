@@ -25,6 +25,8 @@ namespace MQTTnet.App.Pages.Subscriptions
             Header = "Subscriptions";
         }
 
+        public ViewModelCollection<SubscriptionViewModel> Subscriptions { get; } = new ViewModelCollection<SubscriptionViewModel>();
+
         public ViewModelCollection<ReceivedApplicationMessageViewModel> ReceivedApplicationMessages { get; } = new ViewModelCollection<ReceivedApplicationMessageViewModel>();
 
         public Task HandleApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs eventArgs)
@@ -39,30 +41,44 @@ namespace MQTTnet.App.Pages.Subscriptions
         {
             try
             {
-                var viewModel = new SubscriptionEditorViewModel();
+                var editor = new SubscriptionEditorViewModel();
 
                 var window = new SubscriptionEditorView
                 {
                     Title = "Create subscription",
                     WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    ShowActivated = true,
                     SizeToContent = SizeToContent.WidthAndHeight,
                     ShowInTaskbar = false,
                     CanResize = false,
-                    DataContext = viewModel
+                    DataContext = editor
                 };
 
                 await window.ShowDialog(MainWindowView.Instance);
 
-                if (viewModel.Accepted)
+                if (!editor.Accepted)
                 {
-                    await _mqttClientService.Subscribe(viewModel).ConfigureAwait(false);
+                    return;
                 }
+
+                await _mqttClientService.Subscribe(editor).ConfigureAwait(false);
+
+                var subscription = new SubscriptionViewModel(editor)
+                {
+                };
+
+                subscription.UnsubscribedHandler = async () =>
+                {
+                    await _mqttClientService.Unsubscribe(editor.Topic);
+                    Subscriptions.Remove(subscription);
+                };
+
+                Subscriptions.Add(subscription);
             }
             catch (Exception exception)
             {
 
             }
-
         }
 
         public void Clear()

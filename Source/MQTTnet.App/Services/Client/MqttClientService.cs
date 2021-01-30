@@ -4,12 +4,16 @@ using System.Security.Authentication;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using MQTTnet.App.Pages.Connection;
+using MQTTnet.App.Pages.Publish;
 using MQTTnet.App.Pages.Subscriptions;
 using MQTTnet.Client;
 using MQTTnet.Client.Options;
+using MQTTnet.Client.Publishing;
 using MQTTnet.Client.Receiving;
 using MQTTnet.Client.Subscribing;
+using MQTTnet.Client.Unsubscribing;
 using MQTTnet.Diagnostics.PacketInspection;
+using MQTTnet.Protocol;
 
 namespace MQTTnet.App.Services.Client
 {
@@ -22,8 +26,10 @@ namespace MQTTnet.App.Services.Client
 
         public bool IsConnected { get; private set; }
 
-        public async Task Connect(ConnectionPageViewModel options)
+        public async Task Connect([NotNull] ConnectionPageViewModel options)
         {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
             IsConnected = false;
 
             if (_mqttClient != null)
@@ -61,13 +67,16 @@ namespace MQTTnet.App.Services.Client
             IsConnected = true;
         }
 
-        public async Task Subscribe(SubscriptionEditorViewModel options)
+        public async Task Subscribe([NotNull] SubscriptionEditorViewModel options)
         {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
             var topicFilter = new MqttTopicFilterBuilder()
                 .WithTopic(options.Topic)
-                .WithQualityOfServiceLevel(options.QualityOfServiceLevels.SelectedItem.Value)
-                .WithNoLocal(options.NoLocal)
-                .WithRetainAsPublished(options.RetainAsPublished)
+                .WithQualityOfServiceLevel(options.QualityOfServiceLevel.Value)
+                //.WithNoLocal(options.NoLocal)
+                //.WithRetainHandling(MqttRetainHandling.DoNotSendOnSubscribe)
+                //.WithRetainAsPublished(options.RetainAsPublished)
                 .Build();
 
             var subscribeOptions = new MqttClientSubscribeOptionsBuilder()
@@ -75,6 +84,27 @@ namespace MQTTnet.App.Services.Client
                 .Build();
 
             var subscribeResult = await _mqttClient.SubscribeAsync(subscribeOptions).ConfigureAwait(false);
+
+
+        }
+
+        public async Task<MqttClientPublishResult> Publish(PublishViewModel options)
+        {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
+            var applicationMessage = new MqttApplicationMessageBuilder()
+                .WithTopic(options.Topic)
+                .WithQualityOfServiceLevel(options.QualityOfServiceLevel.Value)
+                .WithRetainFlag(options.Retain)
+                .WithPayload(options.GeneratePayload())
+                .Build();
+
+            return await _mqttClient.PublishAsync(applicationMessage).ConfigureAwait(false);
+        }
+
+        public async Task Unsubscribe(string topic)
+        {
+            var unsubscribeResult = await _mqttClient.UnsubscribeAsync(topic);
 
 
         }
@@ -108,5 +138,8 @@ namespace MQTTnet.App.Services.Client
                 messageInspector.Invoke(context);
             }
         }
+
+
+
     }
 }

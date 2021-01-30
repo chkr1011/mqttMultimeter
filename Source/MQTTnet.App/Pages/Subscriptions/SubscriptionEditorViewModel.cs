@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Linq;
 using MQTTnet.App.Common;
-using MQTTnet.Protocol;
+using MQTTnet.App.Common.QualityOfServiceLevel;
 
 namespace MQTTnet.App.Pages.Subscriptions
 {
     public sealed class SubscriptionEditorViewModel : BaseViewModel
     {
-        public SubscriptionEditorViewModel()
-        {
-            QualityOfServiceLevels.Add(new QualityOfServiceLevelViewModel("0 - At most once", MqttQualityOfServiceLevel.AtMostOnce));
-            QualityOfServiceLevels.Add(new QualityOfServiceLevelViewModel("1 - At least once", MqttQualityOfServiceLevel.AtLeastOnce));
-            QualityOfServiceLevels.Add(new QualityOfServiceLevelViewModel("2 - Exactly once", MqttQualityOfServiceLevel.ExactlyOnce));
-            QualityOfServiceLevels.SelectedItem = QualityOfServiceLevels.FirstOrDefault()!;
-        }
-
         public event EventHandler Completed;
 
         public string Topic
@@ -22,6 +13,8 @@ namespace MQTTnet.App.Pages.Subscriptions
             get;
             set;
         }
+
+        public QualityOfServiceLevelSelectorViewModel QualityOfServiceLevel { get; } = new QualityOfServiceLevelSelectorViewModel();
 
         public bool NoLocal
         {
@@ -34,8 +27,6 @@ namespace MQTTnet.App.Pages.Subscriptions
             get;
             set;
         }
-
-        public ViewModelCollection<QualityOfServiceLevelViewModel> QualityOfServiceLevels { get; } = new ViewModelCollection<QualityOfServiceLevelViewModel>();
 
         public bool Accepted { get; private set; }
 

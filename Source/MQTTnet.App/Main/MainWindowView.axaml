@@ -7,9 +7,6 @@
         x:Class="MQTTnet.App.Main.MainWindowView"
         Icon="/Assets/avalonia-logo.ico"
         Title="MQTTnet.App">
-  <Design.DataContext>
-    <vm:MainWindowViewModel />
-  </Design.DataContext>
 
   <Grid RowDefinitions="*,Auto">
 
@@ -21,7 +18,7 @@
       </TabControl.ItemTemplate>
       <TabControl.ContentTemplate>
         <DataTemplate>
-          <Border Background="{StaticResource SystemControlPageBackgroundChromeLowBrush}">
+          <Border Background="WhiteSmoke">
             <ContentPresenter Margin="10" Content="{Binding #TabControl.SelectedContent}" />
           </Border>
         </DataTemplate>

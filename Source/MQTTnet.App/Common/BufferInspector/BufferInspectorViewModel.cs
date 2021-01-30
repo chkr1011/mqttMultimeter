@@ -11,14 +11,14 @@ namespace MQTTnet.App.Common.BufferInspector
     {
         readonly byte[] _buffer;
 
-        public BufferInspectorViewModel(byte[] buffer)
+        public BufferInspectorViewModel(byte[]? buffer)
         {
-            _buffer = buffer;
+            _buffer = buffer ?? new byte[0];
 
             var column = 0;
             var contentBuilder = new StringBuilder();
 
-            foreach (var @byte in buffer)
+            foreach (var @byte in _buffer)
             {
                 var byteHex = BitConverter.ToString(new[] { @byte });
 
@@ -36,13 +36,13 @@ namespace MQTTnet.App.Common.BufferInspector
 
             HexContent = contentBuilder.ToString();
 
-            Utf8Content = Encoding.UTF8.GetString(buffer);
+            Utf8Content = Encoding.UTF8.GetString(_buffer);
 
-            Base64Content = Convert.ToBase64String(buffer);
+            Base64Content = Convert.ToBase64String(_buffer);
 
             try
             {
-                var json = JObject.Parse(Encoding.UTF8.GetString(buffer));
+                var json = JObject.Parse(Encoding.UTF8.GetString(_buffer));
                 JsonContent = json.ToString(Formatting.Indented);
             }
             catch (Exception exception)

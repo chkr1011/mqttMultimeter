@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using MQTTnet.App.Common;
@@ -12,6 +13,8 @@ namespace MQTTnet.App
     {
         readonly Container _container;
 
+        static Window _mainWindow;
+
         public App()
         {
             _container = new Container();
@@ -20,6 +23,22 @@ namespace MQTTnet.App
 
             var viewLocator = new ViewLocator(_container);
             DataTemplates.Add(viewLocator);
+        }
+
+        public static void ShowDialog(BaseViewModel content)
+        {
+            var host = new Window
+            {
+                Title = "Message",
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                CanResize = false,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                ShowInTaskbar = false,
+                ShowActivated = true,
+                Content = content
+            };
+
+            host.ShowDialog(_mainWindow);
         }
 
         public override void Initialize()
@@ -31,10 +50,12 @@ namespace MQTTnet.App
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindowView
+                _mainWindow = new MainWindowView
                 {
                     DataContext = _container.GetInstance<MainWindowViewModel>()
                 };
+
+                desktop.MainWindow = _mainWindow;
             }
 
             base.OnFrameworkInitializationCompleted();

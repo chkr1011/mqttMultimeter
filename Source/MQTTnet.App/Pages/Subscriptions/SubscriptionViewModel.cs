@@ -1,18 +1,23 @@
-﻿using MQTTnet.App.Common;
+﻿using System;
+using System.Threading.Tasks;
+using MQTTnet.App.Common;
 
 namespace MQTTnet.App.Pages.Subscriptions
 {
     public sealed class SubscriptionViewModel : BaseViewModel
     {
-        public string Topic
+        public SubscriptionViewModel(SubscriptionEditorViewModel options)
         {
-            get;
-            set;
+            Options = options;
         }
 
-        public void Unsubscribe()
-        {
+        public Func<Task> UnsubscribedHandler { get; set; }
 
+        public SubscriptionEditorViewModel Options { get; }
+
+        public Task Unsubscribe()
+        {
+            return UnsubscribedHandler.Invoke();
         }
     }
 }

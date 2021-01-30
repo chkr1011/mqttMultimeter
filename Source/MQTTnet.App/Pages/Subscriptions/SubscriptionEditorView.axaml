@@ -1,28 +1,42 @@
 <Window xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             Background="WhiteSmoke"
-             x:Class="MQTTnet.App.Pages.Subscriptions.SubscriptionEditorView">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:common="using:MQTTnet.App.Common"
+        xmlns:qualityOfService="using:MQTTnet.App.Common.QualityOfServiceLevel"
+        xmlns:mqtt="using:MQTTnet.Protocol"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        Background="WhiteSmoke"
+        MinWidth="800"
+        x:Class="MQTTnet.App.Pages.Subscriptions.SubscriptionEditorView">
 
   <StackPanel Margin="10">
     <Label Classes="ValueHeader FirstValueHeader">Topic</Label>
-    <TextBox x:Name="TextBoxTopic" Text="{Binding Topic}" FontFamily="Consolas" />
+    <TextBox Classes="CodeText" x:Name="TextBoxTopic" Text="{Binding Topic}" />
 
-    <Label Classes="ValueHeader">Quality of Service level</Label>
-    <ComboBox Items="{Binding QualityOfServiceLevels}" SelectedItem="{Binding QualityOfServiceLevels.SelectedItem}"></ComboBox>
+    <Label Classes="ValueHeader" Content="Quality of Service level" />
+    <qualityOfService:QualityOfServiceLevelSelectorView DataContext="{Binding QualityOfServiceLevel}" />
 
-    <Separator></Separator>
+    <Separator />
 
-    <Label Classes="ValueHeader FirstValueHeader">MQTT 5.0 features</Label>
+    <Label Classes="ValueHeader FirstValueHeader" Content="MQTT 5.0 features"></Label>
     <CheckBox>No local</CheckBox>
     <CheckBox>Retain as published</CheckBox>
 
-    <Label Classes="ValueHeader FirstValueHeader">Retain handling</Label>
-    <ComboBox></ComboBox>
+    <Label Classes="ValueHeader">Retain handling</Label>
+    <RadioButton IsChecked="{Binding Path=QualityOfServiceLevel, Converter={x:Static common:DefaultConverters.RadioButtonValueConverter}, ConverterParameter={x:Static mqtt:MqttQualityOfServiceLevel.AtMostOnce}}"
+                 GroupName="RetainHandling"
+                 Content="Send at subscribe (0)"  />
 
-    <Separator></Separator>
+    <RadioButton IsChecked="{Binding Path=QualityOfServiceLevel, Converter={x:Static common:DefaultConverters.RadioButtonValueConverter}, ConverterParameter={x:Static mqtt:MqttQualityOfServiceLevel.AtLeastOnce}}"
+                 GroupName="RetainHandling"
+                 Content="Send at subscribe if new subscription only (1)"  />
+
+    <RadioButton IsChecked="{Binding Path=QualityOfServiceLevel, Converter={x:Static common:DefaultConverters.RadioButtonValueConverter}, ConverterParameter={x:Static mqtt:MqttQualityOfServiceLevel.ExactlyOnce}}"
+                 GroupName="RetainHandling"
+                 Content="Do not send on subscribe (2)"  />
+
+    <Separator />
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
       <Button IsDefault="True" Command="{Binding Accept}">OK</Button>
