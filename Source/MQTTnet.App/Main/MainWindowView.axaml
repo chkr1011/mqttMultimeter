@@ -1,26 +1,36 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:MQTTnet.App.Main"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="MQTTnet.App.Main.MainWindowView"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="MQTTnet App">
+<Window
+    x:Class="MQTTnet.App.Main.MainWindowView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:MQTTnet.App.Main"
+    Title="MQTTnet App"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Icon="/Assets/avalonia-logo.ico"
+    mc:Ignorable="d">
 
-  <TabControl Classes="sidebar" x:Name="TabControl" TabStripPlacement="Left" Items="{Binding Pages}">
-    <TabControl.ItemTemplate>
-      <DataTemplate>
-        <ContentControl Content="{Binding Header}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" />
-      </DataTemplate>
-    </TabControl.ItemTemplate>
-    <TabControl.ContentTemplate>
-      <DataTemplate>
-        <Border Background="WhiteSmoke">
-          <ContentPresenter Margin="10" Content="{Binding #TabControl.SelectedContent}" />
-        </Border>
-      </DataTemplate>
-    </TabControl.ContentTemplate>
-  </TabControl>
+    <TabControl
+        x:Name="TabControl"
+        Classes="sidebar"
+        Items="{Binding Pages}"
+        TabStripPlacement="Left">
+        <TabControl.ItemTemplate>
+            <DataTemplate>
+                <ContentControl
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    Content="{Binding Header}" />
+            </DataTemplate>
+        </TabControl.ItemTemplate>
+        <TabControl.ContentTemplate>
+            <DataTemplate>
+                <Border Background="WhiteSmoke">
+                    <ContentPresenter Margin="10" Content="{Binding #TabControl.SelectedContent}" />
+                </Border>
+            </DataTemplate>
+        </TabControl.ContentTemplate>
+    </TabControl>
 
 </Window>
