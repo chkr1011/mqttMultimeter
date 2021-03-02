@@ -47,8 +47,16 @@ namespace MQTTnet.App.Services.Client
                 .WithProtocolVersion(options.ProtocolOptions.ProtocolVersions.SelectedItem.Value)
                 .WithClientId(options.SessionOptions.ClientId)
                 .WithCredentials(options.SessionOptions.User, options.SessionOptions.Password)
-                .WithTcpServer(options.ServerOptions.Host, options.ServerOptions.Port)
                 .WithKeepAlivePeriod(TimeSpan.FromSeconds(options.ServerOptions.KeepAliveInterval));
+
+            if (options.ServerOptions.Transports.SelectedItem.Transport == Transport.TCP)
+            {
+                clientOptionsBuilder.WithTcpServer(options.ServerOptions.Host, options.ServerOptions.Port);
+            }
+            else
+            {
+                clientOptionsBuilder.WithWebSocketServer(options.ServerOptions.Host);
+            }
 
             if (options.ServerOptions.TlsVersions.SelectedItem.Value != SslProtocols.None)
             {

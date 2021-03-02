@@ -18,7 +18,13 @@
     </Grid.RowDefinitions>
 
     <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="0" Content="Transport protocol" />
-    <ComboBox Classes="OptionValue" Grid.Column="1" Grid.Row="0" Items="{Binding Transports}" SelectedItem="{Binding Transports.SelectedItem}" />
+    <ComboBox Classes="OptionValue" Grid.Column="1" Grid.Row="0" Items="{Binding Transports}" SelectedItem="{Binding Transports.SelectedItem}">
+      <ComboBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding DisplayName}" />
+        </DataTemplate>
+      </ComboBox.ItemTemplate>
+    </ComboBox>
 
     <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="1" Content="TLS version" />
     <ComboBox Classes="OptionValue" Grid.Column="1" Grid.Row="1" Items="{Binding TlsVersions}" SelectedItem="{Binding TlsVersions.SelectedItem}">

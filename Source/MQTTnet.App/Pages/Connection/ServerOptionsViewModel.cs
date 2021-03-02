@@ -6,27 +6,14 @@ namespace MQTTnet.App.Pages.Connection
 {
     public sealed class ServerOptionsViewModel : BaseViewModel
     {
-        public sealed class TlsVersionViewModel
-        {
-            public TlsVersionViewModel(string displayName, SslProtocols value)
-            {
-                DisplayName = displayName;
-                Value = value;
-            }
-
-            public string DisplayName { get; }
-
-            public SslProtocols Value { get; }
-        }
-
         public ServerOptionsViewModel()
         {
             Host = "localhost";
             Port = 1883;
             KeepAliveInterval = 0;
 
-            Transports.Add("TCP");
-            Transports.Add("WebSocket");
+            Transports.Add(new TransportViewModel("TCP", Transport.TCP));
+            Transports.Add(new TransportViewModel("WebSocket", Transport.WebSocket));
             Transports.SelectedItem = Transports.FirstOrDefault()!;
 
             TlsVersions.Add(new TlsVersionViewModel("no TLS", SslProtocols.None));
@@ -56,7 +43,7 @@ namespace MQTTnet.App.Pages.Connection
             set => SetValue(value);
         }
 
-        public ViewModelCollection<string> Transports { get; } = new ViewModelCollection<string>();
+        public ViewModelCollection<TransportViewModel> Transports { get; } = new ViewModelCollection<TransportViewModel>();
 
         public ViewModelCollection<TlsVersionViewModel> TlsVersions { get; } = new ViewModelCollection<TlsVersionViewModel>();
     }

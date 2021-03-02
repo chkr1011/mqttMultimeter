@@ -24,11 +24,6 @@ namespace MQTTnet.App.Pages.Connection
             timer.Start();
         }
 
-        void TimerCallback(object? sender, EventArgs e)
-        {
-            _header.IsConnected = _mqttClientService.IsConnected;
-        }
-
         public ProtocolOptionsViewModel ProtocolOptions { get; } = new ProtocolOptionsViewModel();
 
         public ServerOptionsViewModel ServerOptions { get; } = new ServerOptionsViewModel();
@@ -74,6 +69,11 @@ namespace MQTTnet.App.Pages.Connection
             {
                 IsConnecting = false;
             }
+        }
+
+        void TimerCallback(object? sender, EventArgs e)
+        {
+            _header.IsConnected = _mqttClientService.IsConnected;
         }
     }
 }
