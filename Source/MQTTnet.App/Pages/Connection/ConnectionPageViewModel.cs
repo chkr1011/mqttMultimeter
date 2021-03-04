@@ -34,12 +34,6 @@ namespace MQTTnet.App.Pages.Connection
 
         public ObjectDumpViewModel Result { get; } = new ObjectDumpViewModel();
 
-        public string ErrorMessage
-        {
-            get => GetValue<string>();
-            private set => SetValue(value);
-        }
-
         public bool IsConnecting
         {
             get => GetValue<bool>();
@@ -50,7 +44,6 @@ namespace MQTTnet.App.Pages.Connection
         {
             try
             {
-                ErrorMessage = string.Empty;
                 IsConnecting = true;
 
                 var result = await _mqttClientService.Connect(this);
@@ -68,6 +61,18 @@ namespace MQTTnet.App.Pages.Connection
             finally
             {
                 IsConnecting = false;
+            }
+        }
+
+        public async Task Disconnect()
+        {
+            try
+            {
+                await _mqttClientService.Disconnect();
+            }
+            catch (Exception exception)
+            {
+                App.ShowException(exception);
             }
         }
 

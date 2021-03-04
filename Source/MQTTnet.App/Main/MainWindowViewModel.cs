@@ -21,6 +21,6 @@ namespace MQTTnet.App.Main
             Pages.Add(packetInspectorPageViewModel);
         }
 
-        public ObservableCollection<BaseViewModel> Pages { get; } = new ObservableCollection<BaseViewModel>();
+        public ObservableCollection<BaseViewModel> Pages { get; } = new();
     }
 }

@@ -8,7 +8,9 @@ namespace MQTTnet.App.Pages.Connection
         public SessionOptionsViewModel()
         {
             ClientId = "MQTTnet.App-" + Guid.NewGuid();
+            KeepAliveInterval = 10;
             CleanSession = true;
+            RequestProblemInformation = false;
         }
 
         public string ClientId
@@ -29,7 +31,25 @@ namespace MQTTnet.App.Pages.Connection
             set => SetValue(value);
         }
 
+        public int KeepAliveInterval
+        {
+            get => GetValue<int>();
+            set => SetValue(value);
+        }
+
         public bool CleanSession
+        {
+            get => GetValue<bool>();
+            set => SetValue(value);
+        }
+
+        public bool RequestProblemInformation
+        {
+            get => GetValue<bool>();
+            set => SetValue(value);
+        }
+
+        public bool RequestResponseInformation
         {
             get => GetValue<bool>();
             set => SetValue(value);

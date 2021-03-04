@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using MQTTnet.App.Common;
-using MQTTnet.App.Main;
 using MQTTnet.App.Services.Client;
 using MQTTnet.Client.Receiving;
 
@@ -41,7 +40,7 @@ namespace MQTTnet.App.Pages.Subscriptions
         {
             try
             {
-                var editor = new SubscriptionEditorViewModel();
+                var editor = new SubscriptionEditorViewModel(_mqttClientService);
 
                 var window = new SubscriptionEditorView
                 {
@@ -54,22 +53,20 @@ namespace MQTTnet.App.Pages.Subscriptions
                     DataContext = editor
                 };
 
-                await window.ShowDialog(MainWindowView.Instance);
+                await App.ShowDialog(window);
 
-                if (!editor.Accepted)
+                if (!editor.Subscribed)
                 {
                     return;
                 }
 
-                await _mqttClientService.Subscribe(editor).ConfigureAwait(false);
-
-                var subscription = new SubscriptionViewModel(editor)
+                var subscription = new SubscriptionViewModel(editor.ConfigurationPage)
                 {
                 };
 
                 subscription.UnsubscribedHandler = async () =>
                 {
-                    await _mqttClientService.Unsubscribe(editor.Topic);
+                    //await _mqttClientService.Unsubscribe(editor.Topic);
                     Subscriptions.Remove(subscription);
                 };
 

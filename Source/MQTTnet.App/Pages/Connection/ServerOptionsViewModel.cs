@@ -10,7 +10,7 @@ namespace MQTTnet.App.Pages.Connection
         {
             Host = "localhost";
             Port = 1883;
-            KeepAliveInterval = 0;
+            CommunicationTimeout = 10;
 
             Transports.Add(new TransportViewModel("TCP", Transport.TCP));
             Transports.Add(new TransportViewModel("WebSocket", Transport.WebSocket));
@@ -37,14 +37,16 @@ namespace MQTTnet.App.Pages.Connection
             set => SetValue(value);
         }
 
-        public int KeepAliveInterval
+        public int CommunicationTimeout
         {
-            get => GetValue<int>();
-            set => SetValue(value);
+            get;
+            set;
         }
 
         public ViewModelCollection<TransportViewModel> Transports { get; } = new ViewModelCollection<TransportViewModel>();
 
         public ViewModelCollection<TlsVersionViewModel> TlsVersions { get; } = new ViewModelCollection<TlsVersionViewModel>();
+
+
     }
 }

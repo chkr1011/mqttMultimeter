@@ -5,6 +5,11 @@
     <Nullable>enable</Nullable>
     <ApplicationIcon>App.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
@@ -19,7 +24,7 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.10.0" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.0" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.0" />
-    <PackageReference Include="MQTTnet" Version="3.0.15-rc2" />
+    <PackageReference Include="MQTTnet" Version="3.0.15" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="SimpleInjector" Version="5.2.1" />
   </ItemGroup>
@@ -38,6 +43,12 @@
     </Compile>
     <Compile Update="Pages\PacketInspector\PacketInspectorPageView.axaml.cs">
       <DependentUpon>PacketInspectorPageView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Publish\PublishOptionsView.axaml.cs">
+      <DependentUpon>PublishOptionsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Subscriptions\SubscriptionOptionsPageView.axaml.cs">
+      <DependentUpon>SubscriptionOptionsPageView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

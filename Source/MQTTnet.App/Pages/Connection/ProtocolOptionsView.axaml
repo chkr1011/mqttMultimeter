@@ -4,23 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.ProtocolOptionsView">
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" SharedSizeGroup="Column0" />
-      <ColumnDefinition Width="*" />
-    </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"></RowDefinition>
-    </Grid.RowDefinitions>
+  <StackPanel>
+    <Label Classes="OptionGroupLabel" Grid.Row="0" Grid.ColumnSpan="2" Content="Protocol options" />
 
-    <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="0" Content="Protocol version" />
-    <ComboBox Classes="OptionValue" Grid.Column="1" Grid.Row="0" Items="{Binding ProtocolVersions}" SelectedItem="{Binding ProtocolVersions.SelectedItem}">
-      <ComboBox.ItemTemplate>
-        <DataTemplate>
-          <TextBlock Text="{Binding DisplayName}" />
-        </DataTemplate>
-      </ComboBox.ItemTemplate>
-    </ComboBox>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Column0" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
 
-  </Grid>
+      <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="0" Content="Version" />
+      <ComboBox Classes="OptionValue" Grid.Column="1" Grid.Row="0" Items="{Binding ProtocolVersions}" SelectedItem="{Binding ProtocolVersions.SelectedItem}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding DisplayName}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+
+    </Grid>
+  </StackPanel>
 </UserControl>

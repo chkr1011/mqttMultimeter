@@ -6,14 +6,14 @@ namespace MQTTnet.App.Pages.Subscriptions
 {
     public sealed class SubscriptionViewModel : BaseViewModel
     {
-        public SubscriptionViewModel(SubscriptionEditorViewModel options)
+        public SubscriptionViewModel(SubscriptionOptionsPageViewModel configuration)
         {
-            Options = options;
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public Func<Task> UnsubscribedHandler { get; set; }
 
-        public SubscriptionEditorViewModel Options { get; }
+        public SubscriptionOptionsPageViewModel Configuration { get; }
 
         public Task Unsubscribe()
         {

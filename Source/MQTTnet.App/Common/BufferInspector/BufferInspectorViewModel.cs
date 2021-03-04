@@ -36,6 +36,8 @@ namespace MQTTnet.App.Common.BufferInspector
 
             HexContent = contentBuilder.ToString();
 
+            HexCaretIndex = 0;
+
             Utf8Content = Encoding.UTF8.GetString(_buffer);
 
             Base64Content = Convert.ToBase64String(_buffer);
@@ -54,7 +56,6 @@ namespace MQTTnet.App.Common.BufferInspector
         int _hexCaretIndex;
 
         public ObservableCollection<BufferValueViewModel> Values { get; } = new ObservableCollection<BufferValueViewModel>();
-
 
         public int HexCaretIndex
         {

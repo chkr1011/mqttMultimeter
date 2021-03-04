@@ -7,11 +7,11 @@ namespace MQTTnet.App.Pages.Subscriptions
     {
         public SubscriptionEditorView()
         {
-            InitializeComponent();
+            AvaloniaXamlLoader.Load(this);
 
             GotFocus += (s, e) =>
             {
-                this.FindControl<TextBox>("TextBoxTopic").Focus();
+                //this.FindControl<TextBox>("TextBoxTopic").Focus();
             };
 
             DataContextChanged += (_, __) =>
@@ -22,12 +22,9 @@ namespace MQTTnet.App.Pages.Subscriptions
                 {
                     Close();
                 };
-            };
-        }
 
-        void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
+                //this.FindControl<TextBox>("TextBoxTopic").Focus();
+            };
         }
     }
 }

@@ -7,5 +7,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <ItemsPresenter Grid.IsSharedSizeScope="True" Items="{Binding Properties}" />
+    <ScrollViewer>
+        <ItemsPresenter Grid.IsSharedSizeScope="True" Items="{Binding Properties}" />
+    </ScrollViewer>
 </UserControl>

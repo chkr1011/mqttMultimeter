@@ -7,7 +7,7 @@ namespace MQTTnet.App.Common.ObjectDump
 {
     public sealed class ObjectDumpViewModel : BaseViewModel
     {
-        public ObservableCollection<ObjectDumpPropertyViewModel> Properties { get; } = new ObservableCollection<ObjectDumpPropertyViewModel>();
+        public ObservableCollection<ObjectDumpPropertyViewModel> Properties { get; } = new();
 
         public void Dump(object? graph)
         {
@@ -26,7 +26,7 @@ namespace MQTTnet.App.Common.ObjectDump
                 Properties.Add(new ObjectDumpPropertyViewModel
                 {
                     Name = property.Name,
-                    Value = Convert.ToString(property.GetValue(graph))
+                    Value = Convert.ToString(property.GetValue(graph)) ?? string.Empty
                 });
             }
         }

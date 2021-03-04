@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using JetBrains.Annotations;
 using MQTTnet.App.Common;
 using MQTTnet.App.Services.Client;
 
@@ -10,18 +9,18 @@ namespace MQTTnet.App.Pages.Publish
     {
         readonly MqttClientService _mqttClientService;
 
-        public PublishPageViewModel([NotNull] MqttClientService mqttClientService)
+        public PublishPageViewModel(MqttClientService mqttClientService)
         {
             _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
             Header = new TextViewModel("Publish");
 
-            Publishes.Add(new PublishViewModel(_mqttClientService)
+            Publishes.Add(new PublishOptionsViewModel(_mqttClientService)
             {
                 Topic = "Test"
             });
         }
 
-        public ObservableCollection<PublishViewModel> Publishes { get; } = new ObservableCollection<PublishViewModel>();
+        public ObservableCollection<PublishOptionsViewModel> Publishes { get; } = new ObservableCollection<PublishOptionsViewModel>();
     }
 }

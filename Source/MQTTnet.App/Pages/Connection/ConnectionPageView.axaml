@@ -6,33 +6,35 @@
              xmlns:objectDump="using:MQTTnet.App.Common.ObjectDump"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.ConnectionPageView">
-  <StackPanel Grid.IsSharedSizeScope="True">
-    <StackPanel>
-      <ContentControl Content="{Binding ProtocolOptions}" />
 
-      <Separator />
+  <Grid ColumnDefinitions="*, Auto" RowDefinitions="*,Auto">
 
-      <ContentControl Content="{Binding ServerOptions}" />
+    <!-- The area with all options. -->
+    <ScrollViewer Grid.Row="0">
 
-      <Separator />
+      <StackPanel Grid.Column="0" Grid.IsSharedSizeScope="True">
+        <ContentControl Content="{Binding ProtocolOptions}" />
+        <Separator />
+        <ContentControl Content="{Binding ServerOptions}" />
+        <Separator />
+        <ContentControl Content="{Binding SessionOptions}" />
+        <Separator />
+        <ContentControl Content="{Binding MqttNetOptions}" />
+        <Separator />
+      </StackPanel>
 
-      <ContentControl Content="{Binding SessionOptions}" />
+    </ScrollViewer>
 
-      <Separator />
-
-      <ContentControl Content="{Binding MqttNetOptions}" />
-
-      <Separator />
-    </StackPanel>
-
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+    <!-- The buttons area.-->
+    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
       <Button Content="Connect" IsDefault="True" Margin="0,0,10,0" IsEnabled="{Binding IsConnecting, Converter={x:Static common:DefaultConverters.BooleanInverter}}" Command="{Binding Connect}" />
-      <Button>Disconnect</Button>
+      <Button Content="Disconnect" Command="{Binding Disconnect}" />
     </StackPanel>
 
-    <TextBlock Text="{Binding ErrorMessage}"/>
+    <StackPanel Grid.Column="1" Orientation="Horizontal">
+      <Separator VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="1"></Separator>
+      <objectDump:ObjectDumpView Margin="10,0,0,0" DataContext="{Binding Result}" />
+    </StackPanel>
 
-    <objectDump:ObjectDumpView DataContext="{Binding Result}" />
-
-  </StackPanel>
+  </Grid>
 </UserControl>

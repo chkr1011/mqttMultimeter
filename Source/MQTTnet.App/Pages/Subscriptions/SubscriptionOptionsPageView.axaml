@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:common="using:MQTTnet.App.Common"
+             xmlns:qualityOfService="using:MQTTnet.App.Common.QualityOfServiceLevel"
+             xmlns:mqtt="using:MQTTnet.Protocol"
+             x:Class="MQTTnet.App.Pages.Subscriptions.SubscriptionOptionsPageView">
+
+  <StackPanel>
+    <Label Classes="ValueHeader FirstValueHeader">Topic</Label>
+    <TextBox Classes="CodeText" x:Name="TextBoxTopic" Text="{Binding Topic}" />
+
+    <Label Classes="ValueHeader" Content="Quality of Service level" />
+    <qualityOfService:QualityOfServiceLevelSelectorView DataContext="{Binding QualityOfServiceLevel}" />
+
+    <Separator />
+
+    <Label Classes="ValueHeader FirstValueHeader" Content="MQTT 5.0 features"></Label>
+    <CheckBox>No local</CheckBox>
+    <CheckBox>Retain as published</CheckBox>
+
+    <Label Classes="ValueHeader">Retain handling</Label>
+    <RadioButton IsChecked="{Binding IsRetainHandling0}"
+                 GroupName="RetainHandling"
+                 Content="Send at subscribe (0)"  />
+
+    <RadioButton IsChecked="{Binding IsRetainHandling1}"
+                 GroupName="RetainHandling"
+                 Content="Send at subscribe if new subscription only (1)"  />
+
+    <RadioButton GroupName="RetainHandling"
+                 Content="Do not send on subscribe (2)"  />
+
+  </StackPanel>
+
+</UserControl>

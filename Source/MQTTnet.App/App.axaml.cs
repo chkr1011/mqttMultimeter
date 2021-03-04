@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -14,7 +15,7 @@ namespace MQTTnet.App
     {
         readonly Container _container;
 
-        static Window _mainWindow;
+        static Window? _mainWindow;
 
         public App()
         {
@@ -26,25 +27,55 @@ namespace MQTTnet.App
             DataTemplates.Add(viewLocator);
         }
 
-        public static void ShowException(Exception exception)
+        public static Task ShowMessage(string message)
         {
-            ShowDialog(new TextViewModel(exception.ToString()));
-        }
+            if (message == null) throw new ArgumentNullException(nameof(message));
 
-        public static void ShowDialog(BaseViewModel content)
-        {
             var host = new Window
             {
-                Title = "Message",
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 CanResize = false,
                 SizeToContent = SizeToContent.WidthAndHeight,
                 ShowInTaskbar = false,
                 ShowActivated = true,
-                Content = content
+                Content = message,
+                DataContext = message
             };
 
-            host.ShowDialog(_mainWindow);
+            return host.ShowDialog(MainWindowView.Instance);
+        }
+        
+        public static void ShowException(Exception exception)
+        {
+            ShowMessage(exception.ToString());
+
+            //ShowDialog(new TextViewModel(exception.ToString()));
+        }
+
+        public static Task ShowDialog(Window window)
+        {
+            if (window == null) throw new ArgumentNullException(nameof(window));
+
+            return window.ShowDialog(MainWindowView.Instance);
+        }
+        
+        public static Task ShowDialog(IDialogViewModel content)
+        {
+            if (content == null) throw new ArgumentNullException(nameof(content));
+            
+            var host = new Window
+            {
+                Title = content.Title,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                CanResize = false,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                ShowInTaskbar = false,
+                ShowActivated = true,
+                Content = content,
+                DataContext = content
+            };
+
+            return host.ShowDialog(_mainWindow);
         }
 
         public override void Initialize()

@@ -7,11 +7,11 @@ using MQTTnet.App.Services.Client;
 
 namespace MQTTnet.App.Pages.Publish
 {
-    public sealed class PublishViewModel : BaseViewModel
+    public sealed class PublishOptionsViewModel : BaseViewModel
     {
         readonly MqttClientService _mqttClientService;
 
-        public PublishViewModel(MqttClientService mqttClientService)
+        public PublishOptionsViewModel(MqttClientService mqttClientService)
         {
             _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
@@ -52,7 +52,7 @@ namespace MQTTnet.App.Pages.Publish
             }
             catch (Exception exception)
             {
-                App.ShowDialog(new TextViewModel(exception.ToString()));
+                App.ShowException(exception);
             }
         }
 

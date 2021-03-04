@@ -15,6 +15,6 @@ namespace MQTTnet.App.Pages.Connection
             ProtocolVersions.SelectedItem = ProtocolVersions[1];
         }
 
-        public ViewModelCollection<ProtocolVersionViewModel> ProtocolVersions { get; } = new ViewModelCollection<ProtocolVersionViewModel>();
+        public ViewModelCollection<ProtocolVersionViewModel> ProtocolVersions { get; } = new();
     }
 }

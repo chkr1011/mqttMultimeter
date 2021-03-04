@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:common="using:MQTTnet.App.Common.BufferInspector"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             Background="WhiteSmoke"
              x:Class="MQTTnet.App.Pages.Subscriptions.ReceivedApplicationMessageDetailsView">
 
   <StackPanel Margin="10">

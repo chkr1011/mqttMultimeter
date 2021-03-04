@@ -22,6 +22,6 @@ namespace MQTTnet.App.Pages.PacketInspector
             });
         }
 
-        public ViewModelCollection<PacketViewModel> Packets { get; } = new ViewModelCollection<PacketViewModel>();
+        public ViewModelCollection<PacketViewModel> Packets { get; } = new();
     }
 }

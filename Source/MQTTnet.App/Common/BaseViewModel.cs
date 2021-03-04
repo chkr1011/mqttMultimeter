@@ -31,9 +31,18 @@ namespace MQTTnet.App.Common
             return _propertyStore.GetValue<TValue>(propertyName);
         }
 
-        protected void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected void ClearErrors()
+        {
+            _errors.Clear();
+
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(string.Empty));
+
+            OnPropertyChanged(nameof(HasErrors));
         }
 
         protected void SetErrors(string propertyName, params string[] errors)

@@ -4,45 +4,50 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.ServerOptionsView">
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" SharedSizeGroup="Column0" />
-      <ColumnDefinition Width="*" />
-    </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"></RowDefinition>
-      <RowDefinition Height="Auto"></RowDefinition>
-      <RowDefinition Height="Auto"></RowDefinition>
-      <RowDefinition Height="Auto"></RowDefinition>
-      <RowDefinition Height="Auto"></RowDefinition>
-    </Grid.RowDefinitions>
 
-    <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="0" Content="Transport protocol" />
-    <ComboBox Classes="OptionValue" Grid.Column="1" Grid.Row="0" Items="{Binding Transports}" SelectedItem="{Binding Transports.SelectedItem}">
-      <ComboBox.ItemTemplate>
-        <DataTemplate>
-          <TextBlock Text="{Binding DisplayName}" />
-        </DataTemplate>
-      </ComboBox.ItemTemplate>
-    </ComboBox>
+  <StackPanel>
+    <Label Classes="OptionGroupLabel" Grid.Row="0" Grid.ColumnSpan="2" Content="Server options" />
 
-    <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="1" Content="TLS version" />
-    <ComboBox Classes="OptionValue" Grid.Column="1" Grid.Row="1" Items="{Binding TlsVersions}" SelectedItem="{Binding TlsVersions.SelectedItem}">
-      <ComboBox.ItemTemplate>
-        <DataTemplate>
-          <TextBlock Text="{Binding DisplayName}" />
-        </DataTemplate>
-      </ComboBox.ItemTemplate>
-    </ComboBox>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" SharedSizeGroup="Column0" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
 
-    <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="2" Content="Host" />
-    <TextBox Classes="OptionValue" Grid.Column="1" Grid.Row="2" Text="{Binding Host}"/>
+      <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="0" Content="Transport protocol" />
+      <ComboBox Classes="OptionValue" Grid.Column="1" Grid.Row="0" Items="{Binding Transports}" SelectedItem="{Binding Transports.SelectedItem}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding DisplayName}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
 
-    <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="3" Content="Port" />
-    <NumericUpDown Classes="OptionValue" Grid.Column="1" Grid.Row="3" Value="{Binding Port}" />
+      <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="1" Content="TLS version" />
+      <ComboBox Classes="OptionValue" Grid.Column="1" Grid.Row="1" Items="{Binding TlsVersions}" SelectedItem="{Binding TlsVersions.SelectedItem}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding DisplayName}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
 
-    <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="4" Content="Keep alive interval" />
-    <NumericUpDown Classes="OptionValue" Grid.Column="1" Grid.Row="4" Value="{Binding KeepAliveInterval}" />
-  </Grid>
+      <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="2" Content="Host" />
+      <TextBox Classes="OptionValue" Grid.Column="1" Grid.Row="2" Text="{Binding Host}"/>
+
+      <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="3" Content="Port" />
+      <NumericUpDown Classes="OptionValue" Grid.Column="1" Grid.Row="3" Value="{Binding Port}" />
+
+      <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="4" Content="Communication timeout" />
+      <NumericUpDown Classes="OptionValue" Grid.Column="1" Grid.Row="4" Value="{Binding CommunicationTimeout}" />
+    </Grid>
+  </StackPanel>
 
 </UserControl>

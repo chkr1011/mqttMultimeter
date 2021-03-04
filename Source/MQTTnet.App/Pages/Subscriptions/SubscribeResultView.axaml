@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:common="using:MQTTnet.App.Common"
+             x:Class="MQTTnet.App.Pages.Subscriptions.SubscribeResultView">
+
+  <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Label FontSize="16" Grid.Row="0" Grid.Column="0" FontWeight="Bold">Topic</Label>
+    <TextBlock FontSize="14" Classes="CodeText" Grid.Row="0" Grid.Column="1" Text="{Binding Topic, FallbackValue=TOPIC}"></TextBlock>
+
+    <Label FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="0" >Response</Label>
+    <TextBlock FontSize="14" Classes="CodeText" Grid.Row="1" Grid.Column="1" Text="{Binding Response, FallbackValue=RESPONSE}"></TextBlock>
+
+    <Label FontSize="16" Grid.Row="2" Grid.Column="0" FontWeight="Bold" Margin="0,0,10,0">Response code</Label>
+    <TextBlock FontSize="14" Classes="CodeText" Grid.Row="2" Grid.Column="1" Text="{Binding ResponseCode, FallbackValue=1234}"></TextBlock>
+
+    <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,20,0,0">
+      <TextBlock IsVisible="{Binding Succeeded}" FontSize="16" Text="Success" Foreground="Green"  HorizontalAlignment="Center"></TextBlock>
+      <TextBlock IsVisible="{Binding Succeeded, Converter={x:Static common:DefaultConverters.BooleanInverter}}" FontSize="16" Text="Error" Foreground="Red"  HorizontalAlignment="Center"></TextBlock>
+    </StackPanel>
+  </Grid>
+</UserControl>
