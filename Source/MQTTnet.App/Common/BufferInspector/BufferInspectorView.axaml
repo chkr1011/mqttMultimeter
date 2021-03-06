@@ -2,55 +2,98 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:bufferInspector="using:MQTTnet.App.Common.BufferInspector"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              x:Class="MQTTnet.App.Common.BufferInspector.BufferInspectorView">
-  <TabControl TabStripPlacement="Top" Padding="0">
-    <TabItem Header="HEX">
+  <Border Background="#2B2B2B">
+    <TabControl TabStripPlacement="Top" Padding="0" Background="#2B2B2B" Margin="3">
+      <TabControl.Styles>
+        <Style Selector="TabItem">
+          <Setter Property="Padding" Value="0,0,10,0" />
+          <Setter Property="Margin" Value="0" />
+          <Setter Property="FontSize" Value="16" />
+        </Style>
 
-      <StackPanel HorizontalAlignment="Stretch">
+        <Style Selector="TabItem > TextBlock">
+          <Setter Property="FontFamily" Value="Consolas" />
+        </Style>
+      </TabControl.Styles>
 
-        <TextBox CaretIndex="{Binding HexCaretIndex, Mode=OneWayToSource}" IsReadOnly="True" FontFamily="Consolas" Text="{Binding HexContent}" AcceptsReturn="True">
-          <TextBox.Template>
-            <ControlTemplate>
+      <TabItem Header="HEX">
+        <ScrollViewer>
+          <Grid RowDefinitions="*,Auto">
 
-              <Border CornerRadius="3"
-                      Background="{TemplateBinding Background}"
-                      BorderBrush="{TemplateBinding BorderBrush}"
-                      BorderThickness="{TemplateBinding BorderThickness}">
-                <StackPanel Margin="{TemplateBinding Padding}">
-                  <TextBlock Margin="0,0,0,10" Text="00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F" Foreground="Gray" FontFamily="{TemplateBinding FontFamily}" />
-                  <TextPresenter Name="PART_TextPresenter"
-                             Text="{TemplateBinding Text, Mode=TwoWay}"
-                             CaretIndex="{TemplateBinding CaretIndex}"
-                             SelectionStart="{TemplateBinding SelectionStart}"
-                             SelectionEnd="{TemplateBinding SelectionEnd}"
-                             TextAlignment="{TemplateBinding TextAlignment}"
-                             TextWrapping="{TemplateBinding TextWrapping}"
-                             PasswordChar="{TemplateBinding PasswordChar}"
-                             RevealPassword="{TemplateBinding RevealPassword}"
-                             SelectionBrush="{TemplateBinding SelectionBrush}"
-                             SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
-                             CaretBrush="{TemplateBinding CaretBrush}" />
-                </StackPanel>
-              </Border>
-            </ControlTemplate>
-          </TextBox.Template>
-        </TextBox>
+            <TextBox Grid.Row="0" CaretIndex="{Binding HexCaretIndex, Mode=OneWayToSource}" IsReadOnly="True" FontFamily="Consolas" Text="{Binding HexContent}" AcceptsReturn="True">
+              <TextBox.Template>
+                <ControlTemplate>
+                  <Border CornerRadius="3" Background="#1A1A1A" BorderBrush="#A7A7A7" BorderThickness="1">
+                    <Grid Margin="10" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,Auto,Auto">
 
-        <ItemsControl Margin="0,5,0,0" Items="{Binding Values}" Grid.IsSharedSizeScope="True" />
-        <TextBlock FontFamily="Consolas" Text="{Binding ParsedHexValues}" />
-      </StackPanel>
+                      <!-- Horizontal ruler -->
+                      <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,0,0,10"
+                        Text="00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F "
+                        Foreground="Gray"
+                        FontFamily="Consolas" />
 
-    </TabItem>
-    <TabItem Header="UTF8">
-      <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding Utf8Content}" AcceptsReturn="True" />
-    </TabItem>
-    <TabItem Header="JSON">
-      <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding JsonContent}" AcceptsReturn="True" />
-    </TabItem>
-    <TabItem Header="Base64">
-      <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding Base64Content}" AcceptsReturn="True" />
-    </TabItem>
-  </TabControl>
+                      <!-- The hex content -->
+                      <TextPresenter
+                        x:Name="PART_TextPresenter"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        CaretIndex="{TemplateBinding CaretIndex}"
+                        SelectionStart="{TemplateBinding SelectionStart}"
+                        SelectionEnd="{TemplateBinding SelectionEnd}"
+                        TextAlignment="{TemplateBinding TextAlignment}"
+                        TextWrapping="{TemplateBinding TextWrapping}"
+                        PasswordChar="{TemplateBinding PasswordChar}"
+                        RevealPassword="{TemplateBinding RevealPassword}"
+                        SelectionBrush="{TemplateBinding SelectionBrush}"
+                        SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
+                        CaretBrush="{TemplateBinding CaretBrush}"
+                        FontFamily="Consolas"
+                        Text="{Binding HexContent}">
+
+                      </TextPresenter>
+
+                      <!-- String preview -->
+                      <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        VerticalAlignment="Top"
+                        Text="{Binding HexPreview}"
+                        FontFamily="Consolas"
+                        Foreground="Gray">
+                      </TextBlock>
+                    </Grid>
+                  </Border>
+                </ControlTemplate>
+              </TextBox.Template>
+            </TextBox>
+
+            <!-- The parsed values -->
+            <ItemsControl Grid.Row="1"  Margin="0,5,0,0" Items="{Binding Values}" Grid.IsSharedSizeScope="True" />
+          </Grid>
+        </ScrollViewer>
+      </TabItem>
+
+      <TabItem Header="UTF8">
+        <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding Utf8Content}" TextWrapping="Wrap" AcceptsReturn="True" />
+      </TabItem>
+
+      <TabItem Header="JSON">
+        <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding JsonContent}" AcceptsReturn="True" />
+      </TabItem>
+
+      <TabItem Header="Base64">
+        <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding Base64Content}" TextWrapping="Wrap" AcceptsReturn="True" />
+      </TabItem>
+
+    </TabControl>
+  </Border>
 
 </UserControl>

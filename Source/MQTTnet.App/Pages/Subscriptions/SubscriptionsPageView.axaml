@@ -27,7 +27,7 @@
 
     <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" />
 
-    <!-- The application messages -->
+    <!-- The received application messages -->
     <Grid Grid.Column="2" RowDefinitions="Auto,*">
       <StackPanel Grid.Row="0">
         <Border>
@@ -35,11 +35,7 @@
         </Border>
       </StackPanel>
 
-      <ListBox Grid.Row="1" Items="{Binding ReceivedApplicationMessages}" SelectedItem="{Binding ReceivedApplicationMessages.SelectedItem}">
-        <ListBox.Styles>
-
-        </ListBox.Styles>
-      </ListBox>
+      <ListBox Grid.Row="1" Items="{Binding ReceivedApplicationMessages}" SelectedItem="{Binding ReceivedApplicationMessages.SelectedItem}" />
     </Grid>
 
     <GridSplitter Grid.Column="3" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" />

@@ -13,7 +13,8 @@ namespace MQTTnet.App.Pages.Subscriptions
             PayloadLength = message.Payload?.Length ?? 0;
             QualityOfServiceLevel = $"{(int)message.QualityOfServiceLevel} ({message.QualityOfServiceLevel})";
 
-            PayloadInspector = new BufferInspectorViewModel(message.Payload);
+            PayloadInspector = new BufferInspectorViewModel();
+            PayloadInspector.Dump(message.Payload ?? Array.Empty<byte>());
         }
 
         public DateTime Timestamp { get; }

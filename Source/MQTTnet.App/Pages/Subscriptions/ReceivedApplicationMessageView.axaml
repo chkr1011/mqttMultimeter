@@ -5,21 +5,21 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Subscriptions.ReceivedApplicationMessageView">
 
-  <DockPanel LastChildFill="True">
-    <Border Background="Gray" Margin="0,0,10,0" >
-      <TextBlock MinWidth="50" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,5,0" DockPanel.Dock="Left" Text="{Binding Id}" FontFamily="Consolas" />
+  <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+    <Border Background="Gray" Grid.Column="0" Margin="0,0,10,0" >
+      <TextBlock Classes="CodeText" MinWidth="50" TextAlignment="Right" Margin="0,0,5,0" Text="{Binding Id, FallbackValue=9999}" />
     </Border>
 
-    <Border Classes="Badge BadgeLength" DockPanel.Dock="Right">
-      <TextBlock Text="{Binding PayloadSize, StringFormat={}{0} bytes}" FontSize="10" Foreground="Black" Margin="5,2" />
-    </Border>
+    <TextBlock Classes="CodeText" Grid.Column="1" Text="{Binding Topic, FallbackValue=TOPIC}" />
 
-    <Border DockPanel.Dock="Right" CornerRadius="5" Background="HotPink" Margin="3" IsVisible="{Binding IsRetained}">
+    <Border Grid.Column="2" CornerRadius="5" Background="HotPink" Margin="3" IsVisible="{Binding IsRetained}">
       <TextBlock Text="Retained" FontSize="10" Foreground="Black" Margin="5,2" />
     </Border>
 
-    <TextBlock Text="{Binding Topic}" VerticalAlignment="Center" FontFamily="Consolas" />
+    <Border Classes="Badge BadgeLength" Grid.Column="3">
+      <TextBlock Text="{Binding PayloadSize, StringFormat={}{0} bytes, FallbackValue=9999}" />
+    </Border>
 
-  </DockPanel>
+  </Grid>
 
 </UserControl>

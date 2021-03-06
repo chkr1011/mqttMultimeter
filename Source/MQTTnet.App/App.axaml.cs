@@ -44,7 +44,7 @@ namespace MQTTnet.App
 
             return host.ShowDialog(MainWindowView.Instance);
         }
-        
+
         public static void ShowException(Exception exception)
         {
             ShowMessage(exception.ToString());
@@ -58,11 +58,11 @@ namespace MQTTnet.App
 
             return window.ShowDialog(MainWindowView.Instance);
         }
-        
+
         public static Task ShowDialog(IDialogViewModel content)
         {
             if (content == null) throw new ArgumentNullException(nameof(content));
-            
+
             var host = new Window
             {
                 Title = content.Title,

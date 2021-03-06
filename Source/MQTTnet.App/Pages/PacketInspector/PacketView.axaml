@@ -6,19 +6,22 @@
              xmlns:common="using:MQTTnet.App.Common"
              x:Class="MQTTnet.App.Pages.PacketInspector.PacketView">
 
-  <DockPanel LastChildFill="True" HorizontalAlignment="Stretch">
-    <Border DockPanel.Dock="Left" Classes="Badge BadgeInbound" IsVisible="{Binding IsInbound}">
-      <TextBlock Margin="5" Text="Inbound"></TextBlock>
+  <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+
+    <Border Background="Gray" Grid.Column="0" Margin="0,0,10,0" >
+      <TextBlock MinWidth="50" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,5,0" DockPanel.Dock="Left" Text="{Binding Number, FallbackValue=99999}" Classes="CodeText" />
     </Border>
 
-    <Border DockPanel.Dock="Left" Classes="Badge BadgeOutbound" IsVisible="{Binding IsInbound, Converter={x:Static  common:DefaultConverters.BooleanInverter}}">
-      <TextBlock Margin="5" Text="Outbound"></TextBlock>
+    <Image Width="16" Source="/Assets/Icons/arrow_down.png" Grid.Column="1"  IsVisible="{Binding IsInbound}" />
+
+    <Image Width="16" Source="/Assets/Icons/arrow_up.png" Grid.Column="1"  IsVisible="{Binding IsInbound, Converter={x:Static  common:DefaultConverters.BooleanInverter}}" />
+
+    <TextBlock Classes="CodeText" Grid.Column="2" Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding Name}" />
+
+    <Border Grid.Column="3" Classes="Badge BadgeLength">
+      <TextBlock Margin="5,2" Text="5 bytes"></TextBlock>
     </Border>
 
-    <Border DockPanel.Dock="Right" Classes="Badge BadgeLength">
-      <TextBlock Margin="5" Text="5 bytes"></TextBlock>
-    </Border>
 
-    <TextBlock Classes="CodeText" Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding Name}" />
-  </DockPanel>
+  </Grid>
 </UserControl>

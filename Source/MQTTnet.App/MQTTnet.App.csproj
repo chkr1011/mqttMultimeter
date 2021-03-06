@@ -13,6 +13,8 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
+    <None Remove="Assets\Icons\arrow_down.png" />
+    <None Remove="Assets\Icons\arrow_up.png" />
     <Folder Include="Pages\Monitor\" />
     <Folder Include="Pages\Info\" />
     <Folder Include="Pages\Analasys\" />

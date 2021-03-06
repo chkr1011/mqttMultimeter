@@ -7,7 +7,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.ConnectionPageView">
 
-  <Grid ColumnDefinitions="*, Auto" RowDefinitions="*,Auto">
+  <Grid ColumnDefinitions="*, Auto" RowDefinitions="*,Auto" Margin="0,10,0,10">
 
     <!-- The area with all options. -->
     <ScrollViewer Grid.Row="0">

@@ -2,13 +2,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              xmlns:bufferInspector="using:MQTTnet.App.Common.BufferInspector"
              x:Class="MQTTnet.App.Pages.PacketInspector.PacketInspectorPageView">
 
-  <Grid ColumnDefinitions="*,5,*">
-    <ListBox Grid.Column="0" Items="{Binding Packets}" SelectedItem="{Binding Packets.SelectedItem}">
-    </ListBox>
+  <Grid ColumnDefinitions="2*,Auto,*">
+
+    <Grid Grid.Column="0" RowDefinitions="Auto,*">
+      <Border Grid.Row="0" Background="#ff0078d7">
+        <StackPanel Margin="2">
+          <Button Content="Clear" Command="{Binding Clear}" />
+        </StackPanel>
+      </Border>
+
+      <ListBox Grid.Row="1"  Items="{Binding Packets}" SelectedItem="{Binding Packets.SelectedItem}" />
+    </Grid>
 
     <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" />
 

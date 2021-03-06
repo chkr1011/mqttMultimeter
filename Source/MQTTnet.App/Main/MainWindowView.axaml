@@ -27,7 +27,7 @@
         <TabControl.ContentTemplate>
             <DataTemplate>
                 <Border>
-                    <ContentPresenter Margin="10" Content="{Binding #TabControl.SelectedContent}" />
+                    <ContentPresenter Margin="10,0,0,0" Content="{Binding #TabControl.SelectedContent}" />
                 </Border>
             </DataTemplate>
         </TabControl.ContentTemplate>

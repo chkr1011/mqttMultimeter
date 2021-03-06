@@ -7,6 +7,8 @@ namespace MQTTnet.App.Pages.PacketInspector
 {
     public sealed class PacketInspectorPageViewModel : BasePageViewModel
     {
+        int _number;
+
         public PacketInspectorPageViewModel(MqttClientService mqttClientService)
         {
             Header = "Packet Inspector";
@@ -16,12 +18,21 @@ namespace MQTTnet.App.Pages.PacketInspector
 
         void ProcessPacket(ProcessMqttPacketContext context)
         {
+            var number = _number++;
+            var viewModel = new PacketViewModel(number, context);
+
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                Packets.Add(new PacketViewModel(context));
+                Packets.Add(viewModel);
             });
         }
 
-        public ViewModelCollection<PacketViewModel> Packets { get; } = new();
+        public ViewModelCollection<PacketViewModel> Packets { get; } = new ViewModelCollection<PacketViewModel>();
+
+        public void Clear()
+        {
+            _number = 0;
+            Packets.Clear();
+        }
     }
 }
