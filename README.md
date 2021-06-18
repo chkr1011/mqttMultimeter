@@ -9,7 +9,9 @@
 
 # MQTTnet App
 
-MQTTnet App is a high performance .NET application for MQTT based communication testing. The protocol implementation is based on the _MQTTnet_ project.
+MQTTnet App is a high performance .NET application for MQTT communication testing and analysing. The protocol implementation is based on the _MQTTnet_ project.
+
+The application is based on Avalonia for UI rendering.
 
 ## Features
 
