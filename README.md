@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/chkr1011/MQTTnet.App/blob/master/Images/icon_det_256.png?raw=true" width="196">
+<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/icon_det_256.png?raw=true" width="196">
 <br/>
 <br/>
 </p>
@@ -23,7 +23,7 @@ MQTTnet App is a high performance .NET application for MQTT based communication 
 ## Screenshots
 
 <p align="center">
-<img src="https://github.com/chkr1011/MQTTnet.App/blob/master/Images/Screenshots/AppScreen1.png?raw=true" width="196">
+<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/AppScreen1.png?raw=true" width="196">
 <br/>
 <br/>
 </p>
