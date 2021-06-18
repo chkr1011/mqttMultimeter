@@ -23,7 +23,7 @@ MQTTnet App is a high performance .NET application for MQTT based communication 
 ## Screenshots
 
 <p align="center">
-<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/AppScreen1.png?raw=true" width="196">
+<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/AppScreen1.png?raw=true">
 <br/>
 <br/>
 </p>
