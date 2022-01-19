@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
 
-    runs-on: windows-2022
+    runs-on: ubuntu-latest
 
     steps:
       - name: Setup .NET SDK
@@ -20,7 +20,7 @@ jobs:
         run: dotnet restore
 
       - name: Build win-x86
-        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish .\Source\MQTTnet.App\MQTTnet.App.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Build win-x64
         run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
