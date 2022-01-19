@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
 
     steps:
       - name: Setup .NET SDK
@@ -15,6 +15,9 @@ jobs:
 
       - name: Checkout Code
         uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: dotnet restore
 
       - name: Build win-x86
         run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
@@ -41,7 +44,7 @@ jobs:
         run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Build linux-arm64
-        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r linux-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Collect win-x86 artifacts
         uses: actions/upload-artifact@v2
