@@ -18,14 +18,14 @@ namespace MQTTnet.App.Services.Client
 {
     public sealed class MqttClientService : IMqttApplicationMessageReceivedHandler, IMqttPacketInspector
     {
-        readonly List<IMqttApplicationMessageReceivedHandler> _applicationMessageReceivedHandlers = new List<IMqttApplicationMessageReceivedHandler>();
-        readonly List<Action<ProcessMqttPacketContext>> _messageInspectors = new List<Action<ProcessMqttPacketContext>>();
+        readonly List<IMqttApplicationMessageReceivedHandler> _applicationMessageReceivedHandlers = new();
+        readonly List<Action<ProcessMqttPacketContext>> _messageInspectors = new();
 
         IMqttClient? _mqttClient;
 
         public bool IsConnected => _mqttClient?.IsConnected == true;
 
-        public async Task<MqttClientAuthenticateResult> Connect(ConnectionPageViewModel options)
+        public async Task<MqttClientConnectResult> Connect(ConnectionPageViewModel options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 

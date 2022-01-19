@@ -1,0 +1,72 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v1.9.0
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Build win-x86
+        run: dotnet publish -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+
+      - name: Build win-x64
+        run: dotnet publish -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+
+      - name: Build win-arm
+        run: dotnet publish -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+
+      - name: Build win-arm64
+        run: dotnet publish -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+
+      - name: Build osx-x64
+        run: dotnet publish -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+
+      - name: Build osx-x64
+        run: dotnet publish -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+
+      - name: Build linux-x64
+        run: dotnet publish -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+
+      - name: Build linux-arm
+        run: dotnet publish -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+
+      - name: Build linux-arm64
+        run: dotnet publish -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+
+      - name: Collect win-x86 artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: MQTTnet.App-win-x86
+          path: |
+            Source\MQTTnet.App\bin\Release\net6.0\win-x86\publish\*.*
+        
+      - name: Collect win-x64 artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: MQTTnet.App-win-x64
+          path: |
+            Source\MQTTnet.App\bin\Release\net6.0\win-x64\publish\*.*
+            
+      - name: Collect win-arm artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: MQTTnet.App-win-arm
+          path: |
+            Source\MQTTnet.App\bin\Release\net6.0\win-arm\publish\*.*
+            
+      - name: Collect win-arm artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: MQTTnet.App-win-arm64
+          path: |
+            Source\MQTTnet.App\bin\Release\net6.0\win-arm64\publish\*.*

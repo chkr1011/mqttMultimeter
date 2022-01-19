@@ -74,8 +74,6 @@ namespace MQTTnet.App.Common.BufferInspector
         {
             Buffer = buffer;
 
-
-
             DumpAsHex(buffer);
 
             HexCaretIndex = 0;
