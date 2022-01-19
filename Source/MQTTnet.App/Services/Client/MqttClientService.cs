@@ -43,6 +43,7 @@ namespace MQTTnet.App.Services.Client
                 .WithCommunicationTimeout(TimeSpan.FromSeconds(options.ServerOptions.CommunicationTimeout))
                 .WithProtocolVersion(options.ProtocolOptions.ProtocolVersions.SelectedItem.Value)
                 .WithClientId(options.SessionOptions.ClientId)
+                .WithCleanSession(options.SessionOptions.CleanSession)
                 .WithCredentials(options.SessionOptions.User, options.SessionOptions.Password)
                 .WithRequestProblemInformation(options.SessionOptions.RequestProblemInformation)
                 .WithRequestResponseInformation(options.SessionOptions.RequestResponseInformation)
