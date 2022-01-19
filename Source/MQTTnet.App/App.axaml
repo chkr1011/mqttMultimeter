@@ -8,7 +8,12 @@
     <FluentTheme Mode="Dark" />
 
     <Style Selector="TextBlock">
-      <Setter Property="FontFamily" Value="Roboto" />
+      <Setter Property="FontFamily" Value="Segoe UI" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    
+    <Style Selector="Label">
+      <Setter Property="FontFamily" Value="Segoe UI" />
       <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
@@ -55,8 +60,8 @@
 
     <Style Selector="Label.OptionGroupLabel">
       <Setter Property="VerticalAlignment" Value="Center" />
-      <Setter Property="FontWeight" Value="Bold" />
-      <Setter Property="FontSize" Value="14" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="FontSize" Value="16" />
     </Style>
 
     <Style Selector=":is(Control).OptionValue">
