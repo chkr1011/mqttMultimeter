@@ -3,6 +3,14 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <Product>MQTTnet</Product>
+    <AssemblyVersion>0.0.1</AssemblyVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <IsPackable>false</IsPackable>
+    <PackageId />
+    <PackageVersion />
+    <Authors />
+    <Company>Christian Kratky</Company>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>embedded</DebugType>
@@ -15,7 +23,6 @@
     <None Remove="Assets\Icons\arrow_down.png" />
     <None Remove="Assets\Icons\arrow_up.png" />
     <Folder Include="Pages\Monitor\" />
-    <Folder Include="Pages\Info\" />
     <Folder Include="Pages\Analasys\" />
     <Folder Include="Pages\Status\" />
   </ItemGroup>

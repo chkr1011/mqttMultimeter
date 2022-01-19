@@ -20,7 +20,7 @@ jobs:
         run: dotnet restore Source\\MQTTnet.App.sln
 
       - name: Build win-x86
-        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false --self-contained true
 
       - name: Collect win-x86 artifacts
         uses: actions/upload-artifact@v2
@@ -29,7 +29,7 @@ jobs:
           path: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/win-x86/publish/
 
       - name: Build win-x64
-        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false --self-contained true
 
       - name: Collect win-x64 artifacts
         uses: actions/upload-artifact@v2
@@ -38,7 +38,7 @@ jobs:
           path: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/win-x64/publish/
 
       - name: Build win-arm
-        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false --self-contained true
 
       - name: Collect win-arm artifacts
         uses: actions/upload-artifact@v2
@@ -47,7 +47,7 @@ jobs:
           path: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/win-arm/publish/
 
       - name: Build win-arm64
-        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false --self-contained true
 
       - name: Collect win-arm64 artifacts
         uses: actions/upload-artifact@v2
@@ -56,7 +56,7 @@ jobs:
           path: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/win-arm64/publish/
 
       - name: Build osx-x64
-        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false --self-contained true
 
       - name: Collect osx-x64 artifacts
         uses: actions/upload-artifact@v2
@@ -65,7 +65,7 @@ jobs:
           path: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/osx-x64/publish/
 
       - name: Build linux-x64
-        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false --self-contained true
 
       - name: Collect linux-x64 artifacts
         uses: actions/upload-artifact@v2
@@ -74,7 +74,7 @@ jobs:
           path: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/linux-x64/publish/
 
       - name: Build linux-arm
-        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false --self-contained true
 
       - name: Collect linux-arm artifacts
         uses: actions/upload-artifact@v2
@@ -83,7 +83,7 @@ jobs:
           path: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/linux-arm/publish/
 
       - name: Build linux-arm64
-        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r linux-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r linux-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false --self-contained true
 
       - name: Collect linux-arm artifacts
         uses: actions/upload-artifact@v2

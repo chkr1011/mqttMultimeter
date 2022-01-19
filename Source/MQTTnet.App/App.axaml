@@ -118,26 +118,7 @@
             <Grid ColumnDefinitions="Auto,*" RowDefinitions="*">
 
               <DockPanel Grid.Row="0" Grid.Column="0">
-
-                <Border
-                    Cursor="Hand"
-                    Background="#2E2D2C"
-                    DockPanel.Dock="Bottom">
-                  <StackPanel>
-                    <Image Height="128" Source="avares://MQTTnet.App/Assets/icon_det_512.png" />
-                    <TextBlock
-                        Margin="10,5,10,5"
-                        HorizontalAlignment="Center"
-                        FontSize="20"
-                        Text="MQTTnet App" />
-                    <TextBlock
-                        Margin="0,0,0,10"
-                        HorizontalAlignment="Center"
-                        FontSize="12"
-                        Text="Version 0.0.1" />
-                  </StackPanel>
-                </Border>
-
+                
                 <ScrollViewer
                     Name="PART_ScrollViewer"
                     Background="{TemplateBinding Background}"

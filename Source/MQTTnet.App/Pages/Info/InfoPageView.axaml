@@ -1,0 +1,29 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MQTTnet.App.Pages.Info.InfoPageView">
+    
+    <UserControl.Styles>
+        <Style Selector="Label.VersionString">
+            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="Margin" Value="0,0,0,10" />
+        </Style>
+        
+        <Style Selector="Label.VersionName">
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </UserControl.Styles>
+
+    <StackPanel Margin="10">
+        <Label Classes="VersionName" Content="MQTTnet.App version:"></Label>
+        <Label Classes="VersionString" Content="{Binding MqttNetAppVersion}"></Label>
+
+        <Label Classes="VersionName" Content=".NET version:"></Label>
+        <Label Classes="VersionString" Content="{Binding DotNetVersion}"></Label>
+
+        <Label Classes="VersionName" Content="MQTTnet version:"></Label>
+        <Label Classes="VersionString" Content="{Binding MqttNetVersion}"></Label>
+    </StackPanel>
+</UserControl>
