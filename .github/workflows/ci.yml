@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore .\Source\MQTTnet.App.sln
 
       - name: Build win-x86
         run: dotnet publish .\Source\MQTTnet.App\MQTTnet.App.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
