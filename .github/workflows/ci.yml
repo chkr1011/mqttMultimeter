@@ -22,6 +22,12 @@ jobs:
       - name: Build win-x86
         run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
+      - name: Collect win-x86 artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: MQTTnet.App-win-x86
+          path: Source\\MQTTnet.App\\bin\\Release\\net6.0\\win-x86\\publish\\*
+
       - name: Build win-x64
         run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
@@ -43,11 +49,7 @@ jobs:
       - name: Build linux-arm64
         run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r linux-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
-      - name: Collect win-x86 artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: MQTTnet.App-win-x86
-          path: Source\\MQTTnet.App\\bin\\Release\\net6.0\\win-x86\\publish\\*.*
+
         
       - name: Collect win-x64 artifacts
         uses: actions/upload-artifact@v2
