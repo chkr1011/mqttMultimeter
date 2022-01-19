@@ -17,31 +17,31 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build win-x86
-        run: dotnet publish -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Build win-x64
-        run: dotnet publish -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Build win-arm
-        run: dotnet publish -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Build win-arm64
-        run: dotnet publish -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Build osx-x64
-        run: dotnet publish -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Build osx-x64
-        run: dotnet publish -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Build linux-x64
-        run: dotnet publish -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Build linux-arm
-        run: dotnet publish -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Build linux-arm64
-        run: dotnet publish -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
+        run: dotnet publish Source\MQTTnet.App\MQTTnet.App.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true --self-contained true
 
       - name: Collect win-x86 artifacts
         uses: actions/upload-artifact@v2
