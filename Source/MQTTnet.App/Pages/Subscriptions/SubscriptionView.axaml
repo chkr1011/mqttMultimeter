@@ -2,7 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:subscriptions="clr-namespace:MQTTnet.App.Pages.Subscriptions"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance subscriptions:SubscriptionViewModel}"
              x:Class="MQTTnet.App.Pages.Subscriptions.SubscriptionView">
     <StackPanel Margin="10">
         <Label Content="Topic" Classes="ValueHeader FirstValueHeader" />

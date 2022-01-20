@@ -58,7 +58,7 @@ public sealed class SubscriptionsPageViewModel : BasePageViewModel, IMqttApplica
 
             subscription.UnsubscribedHandler = async () =>
             {
-                //await _mqttClientService.Unsubscribe(editor.Topic);
+                await _mqttClientService.Unsubscribe(editor.ConfigurationPage.Topic);
                 Subscriptions.Remove(subscription);
             };
 
