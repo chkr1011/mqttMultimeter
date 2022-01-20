@@ -1,11 +1,10 @@
-namespace MQTTnet.App.Common
+namespace MQTTnet.App.Common;
+
+public abstract class BasePageViewModel : BaseViewModel
 {
-    public abstract class BasePageViewModel : BaseViewModel
+    public object Header
     {
-        public object Header
-        {
-            get => GetValue<object>();
-            set => SetValue(value);
-        }
+        get => GetValue<object>();
+        set => SetValue(value);
     }
 }

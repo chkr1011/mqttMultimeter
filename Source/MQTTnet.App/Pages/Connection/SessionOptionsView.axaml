@@ -4,48 +4,48 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.SessionOptionsView">
-  <StackPanel>
-    <Label Classes="OptionGroupLabel" Grid.Row="0" Grid.ColumnSpan="2" Content="Session options" />
+    <StackPanel>
+        <Label Classes="OptionGroupLabel" Content="Session options" />
 
-    <Grid>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Column0" />
-        <ColumnDefinition Width="*" />
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Column0" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-      <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="0" Content="Client ID" />
-      <TextBox Classes="OptionValue" Grid.Column="1" Grid.Row="0" Text="{Binding ClientId}"/>
+            <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="0" Content="Client ID" />
+            <TextBox Classes="OptionValue" Grid.Column="1" Grid.Row="0" Text="{Binding ClientId}" />
 
-      <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="1" Content="User" />
-      <TextBox Classes="OptionValue" Grid.Column="1" Grid.Row="1" Text="{Binding User}"/>
+            <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="1" Content="User" />
+            <TextBox Classes="OptionValue" Grid.Column="1" Grid.Row="1" Text="{Binding User}" />
 
-      <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="2" Content="Password" />
-      <TextBox Classes="OptionValue" Grid.Column="1" Grid.Row="2" Text="{Binding Password}"/>
+            <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="2" Content="Password" />
+            <TextBox Classes="OptionValue" Grid.Column="1" Grid.Row="2" Text="{Binding Password}" />
 
-      <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="3" Content="Keep alive interval" />
-      <NumericUpDown Classes="OptionValue" Grid.Column="1" Grid.Row="3" Value="{Binding KeepAliveInterval}" />
+            <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="3" Content="Keep alive interval" />
+            <NumericUpDown Classes="OptionValue" Grid.Column="1" Grid.Row="3" Value="{Binding KeepAliveInterval}" />
 
-      <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="4" Content="Clean session" />
-      <CheckBox Classes="OptionValue" Grid.Column="1" Grid.Row="4" IsChecked="{Binding CleanSession}" />
+            <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="4" Content="Clean session" />
+            <CheckBox Classes="OptionValue" Grid.Column="1" Grid.Row="4" IsChecked="{Binding CleanSession}" />
 
-      <Label Classes="OptionGroupLabel" Grid.Row="5" Grid.ColumnSpan="2" Content="MQTT 5.0.0+ only" />
+            <Label Classes="OptionGroupLabel" Grid.Row="5" Grid.ColumnSpan="2" Content="MQTT 5.0.0+ only" />
 
-      <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="6" Content="Request Problem Information" />
-      <CheckBox Classes="OptionValue" Grid.Column="1" Grid.Row="6" IsChecked="{Binding RequestProblemInformation}" />
+            <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="6" Content="Request Problem Information" />
+            <CheckBox Classes="OptionValue" Grid.Column="1" Grid.Row="6" IsChecked="{Binding RequestProblemInformation}" />
 
-      <Label Classes="OptionLabel"  Grid.Column="0" Grid.Row="7" Content="Request Response Information" />
-      <CheckBox Classes="OptionValue" Grid.Column="1" Grid.Row="7" IsChecked="{Binding RequestResponseInformation}" />
+            <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="7" Content="Request Response Information" />
+            <CheckBox Classes="OptionValue" Grid.Column="1" Grid.Row="7" IsChecked="{Binding RequestResponseInformation}" />
 
-    </Grid>
-  </StackPanel>
+        </Grid>
+    </StackPanel>
 </UserControl>

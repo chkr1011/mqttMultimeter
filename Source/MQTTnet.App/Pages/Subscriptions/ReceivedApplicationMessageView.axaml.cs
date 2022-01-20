@@ -1,19 +1,17 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnet.App.Pages.Subscriptions
-{
-    public class ReceivedApplicationMessageView : UserControl
-    {
-        public ReceivedApplicationMessageView()
-        {
-            InitializeComponent();
-        }
+namespace MQTTnet.App.Pages.Subscriptions;
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+public class ReceivedApplicationMessageView : UserControl
+{
+    public ReceivedApplicationMessageView()
+    {
+        InitializeComponent();
+    }
+
+    void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }

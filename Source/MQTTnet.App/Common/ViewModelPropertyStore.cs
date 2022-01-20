@@ -1,43 +1,35 @@
 using System.Collections.Generic;
 
-namespace MQTTnet.App.Common
+namespace MQTTnet.App.Common;
+
+internal sealed class ViewModelPropertyStore
 {
-    internal sealed class ViewModelPropertyStore
+    readonly Dictionary<string, object> _values = new();
+
+    public TValue GetValue<TValue>(string propertyName)
     {
-        readonly Dictionary<string, object> _values = new Dictionary<string, object>();
+        if (_values.TryGetValue(propertyName, out var value)) return (TValue) value;
 
-        public bool SetValue<TValue>(string propertyName, TValue value)
+        return default!;
+    }
+
+    public bool SetValue<TValue>(string propertyName, TValue value)
+    {
+        var equalityComparer = EqualityComparer<TValue>.Default;
+
+        if (_values.TryGetValue(propertyName, out var existingValue))
+            if (equalityComparer.Equals(value, (TValue) existingValue))
+                // The value already exists and has the same value.
+                return false;
+
+        if (equalityComparer.Equals(value, default))
         {
-            var equalityComparer = EqualityComparer<TValue>.Default;
-
-            if (_values.TryGetValue(propertyName, out var existingValue))
-            {
-                if (equalityComparer.Equals(value, (TValue)existingValue))
-                {
-                    // The value already exists and has the same value.
-                    return false;
-                }
-            }
-
-            if (equalityComparer.Equals(value, default))
-            {
-                // We do not store default values in the dictionary.
-                _values.Remove(propertyName);
-                return true;
-            }
-
-            _values[propertyName] = value!;
+            // We do not store default values in the dictionary.
+            _values.Remove(propertyName);
             return true;
         }
 
-        public TValue GetValue<TValue>(string propertyName)
-        {
-            if (_values.TryGetValue(propertyName, out var value))
-            {
-                return (TValue)value;
-            }
-
-            return default!;
-        }
+        _values[propertyName] = value!;
+        return true;
     }
 }

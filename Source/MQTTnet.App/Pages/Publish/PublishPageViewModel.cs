@@ -1,26 +1,49 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using MQTTnet.App.Common;
 using MQTTnet.App.Services.Client;
 
-namespace MQTTnet.App.Pages.Publish
+namespace MQTTnet.App.Pages.Publish;
+
+public sealed class PublishPageViewModel : BasePageViewModel
 {
-    public sealed class PublishPageViewModel : BasePageViewModel
+    readonly MqttClientService _mqttClientService;
+
+    public PublishPageViewModel(MqttClientService mqttClientService)
     {
-        readonly MqttClientService _mqttClientService;
+        _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
-        public PublishPageViewModel(MqttClientService mqttClientService)
+        Header = new TextViewModel("Publish");
+
+        // Make sure that we start with at least one item.
+        AddItem();
+    }
+
+    public ObservableCollection<PublishItemViewModel> Items { get; } = new();
+
+    public void AddItem()
+    {
+        var newItem = new PublishItemViewModel
         {
-            _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
+            Name = "Untitled"
+        };
 
-            Header = new TextViewModel("Publish");
+        newItem.PublishRequested += OnItemPublishRequested;
+        
+        Items.Add(newItem);
+    }
 
-            Publishes.Add(new PublishOptionsViewModel(_mqttClientService)
-            {
-                Topic = "Test"
-            });
+    async Task OnItemPublishRequested(PublishItemViewModel arg)
+    {
+        try
+        {
+            var response = await _mqttClientService.Publish(arg);
+            arg.Response.ApplyResponse(response);
         }
-
-        public ObservableCollection<PublishOptionsViewModel> Publishes { get; } = new ObservableCollection<PublishOptionsViewModel>();
+        catch (Exception exception)
+        {
+            App.ShowException(exception);
+        }
     }
 }

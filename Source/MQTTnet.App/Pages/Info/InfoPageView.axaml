@@ -26,10 +26,10 @@
         <Label Classes="VersionString" Content="{Binding AvaloniaVersion}" />
 
         <Label Content="Used libraries" Classes="OptionGroupLabel" />
-        <Label Content="- Avalonia"></Label>
-        <Label Content="- MQTTnet"></Label>
-        <Label Content="- Newtonsoft.Json"></Label>
-        <Label Content="- SimpleInjector"></Label>
+        <Label Content="- Avalonia" />
+        <Label Content="- MQTTnet" />
+        <Label Content="- Newtonsoft.Json" />
+        <Label Content="- SimpleInjector" />
 
         <Label Content="Icons" Margin="0,10,0,0" Classes="OptionGroupLabel" />
         <Label Content="famfamfam Silk (http://www.famfamfam.com/)" />

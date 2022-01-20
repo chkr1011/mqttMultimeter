@@ -2,25 +2,24 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnet.App.Main
+namespace MQTTnet.App.Main;
+
+public class MainWindowView : Window
 {
-    public class MainWindowView : Window
+    public MainWindowView()
     {
-        public static MainWindowView Instance { get; private set; } = default!;
+        Instance = this;
 
-        public MainWindowView()
-        {
-            Instance = this;
-
-            InitializeComponent();
+        InitializeComponent();
 #if DEBUG
-            this.AttachDevTools();
+        this.AttachDevTools();
 #endif
-        }
+    }
 
-        void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+    public static MainWindowView Instance { get; private set; } = default!;
+
+    void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }

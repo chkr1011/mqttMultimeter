@@ -4,85 +4,72 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MQTTnet.App.Common
+namespace MQTTnet.App.Common;
+
+public abstract class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
+    readonly Dictionary<string, IEnumerable> _errors = new();
+    readonly ViewModelPropertyStore _propertyStore = new();
+
+    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public bool HasErrors => _errors.Count > 0;
+
+    public IEnumerable GetErrors(string? propertyName)
     {
-        readonly Dictionary<string, IEnumerable> _errors = new Dictionary<string, IEnumerable>();
-        readonly ViewModelPropertyStore _propertyStore = new ViewModelPropertyStore();
+        if (string.IsNullOrEmpty(propertyName)) return default!;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        if (_errors.TryGetValue(propertyName, out var errors)) return errors;
 
-        protected void SetValue<TValue>(TValue value, [CallerMemberName] string? propertyName = null)
-        {
-            if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
+        return default!;
+    }
 
-            if (_propertyStore.SetValue(propertyName, value))
-            {
-                //this.RaisePropertyChanged(propertyName);
-                OnPropertyChanged(propertyName);
-            }
-        }
+    protected void ClearErrors()
+    {
+        _errors.Clear();
 
-        protected TValue GetValue<TValue>([CallerMemberName] string? propertyName = null)
-        {
-            if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
+        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(string.Empty));
 
-            return _propertyStore.GetValue<TValue>(propertyName);
-        }
+        OnPropertyChanged(nameof(HasErrors));
+    }
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+    protected TValue GetValue<TValue>([CallerMemberName] string? propertyName = null)
+    {
+        if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
 
-        protected void ClearErrors()
-        {
-            _errors.Clear();
+        return _propertyStore.GetValue<TValue>(propertyName);
+    }
 
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(string.Empty));
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 
-            OnPropertyChanged(nameof(HasErrors));
-        }
+    protected void SetErrors(string propertyName, params string[] errors)
+    {
+        SetErrors(propertyName, (ICollection) errors);
+    }
 
-        protected void SetErrors(string propertyName, params string[] errors)
-        {
-            SetErrors(propertyName, (ICollection)errors);
-        }
+    protected void SetErrors(string propertyName, ICollection? errors)
+    {
+        if (errors == null || errors.Count == 0)
+            _errors.Remove(propertyName);
+        else
+            _errors[propertyName] = errors;
 
-        protected void SetErrors(string propertyName, ICollection? errors)
-        {
-            if (errors == null || errors.Count == 0)
-            {
-                _errors.Remove(propertyName);
-            }
-            else
-            {
-                _errors[propertyName] = errors;
-            }
+        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
 
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        OnPropertyChanged(nameof(HasErrors));
+    }
 
-            OnPropertyChanged(nameof(HasErrors));
-        }
+    protected void SetValue<TValue>(TValue value, [CallerMemberName] string? propertyName = null)
+    {
+        if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
 
-        public IEnumerable GetErrors(string? propertyName)
-        {
-            if (string.IsNullOrEmpty(propertyName))
-            {
-                return default!;
-            }
-
-            if (_errors.TryGetValue(propertyName, out var errors))
-            {
-                return errors;
-            }
-
-            return default!;
-        }
-
-        public bool HasErrors => _errors.Count > 0;
-
-        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+        if (_propertyStore.SetValue(propertyName, value))
+            //this.RaisePropertyChanged(propertyName);
+            OnPropertyChanged(propertyName);
     }
 }

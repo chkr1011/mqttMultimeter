@@ -2,7 +2,6 @@
 using Avalonia.Controls;
 using MQTTnet.App.Common;
 using MQTTnet.Client;
-using ReactiveUI;
 
 namespace MQTTnet.App.Pages.Info;
 
@@ -17,12 +16,12 @@ public sealed class InfoPageViewModel : BasePageViewModel
         DotNetVersion = Environment.Version.ToString();
         AvaloniaVersion = typeof(Label).Assembly.GetName().Version?.ToString() ?? "<unknown>";
     }
-    
-    public string MqttNetAppVersion { get; }
-    
-    public string MqttNetVersion { get; }
-    
-    public string DotNetVersion { get; }
-    
+
     public string AvaloniaVersion { get; }
+
+    public string DotNetVersion { get; }
+
+    public string MqttNetAppVersion { get; }
+
+    public string MqttNetVersion { get; }
 }

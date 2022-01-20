@@ -5,17 +5,18 @@
              xmlns:common="using:MQTTnet.App.Common"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.ConnectionPageHeaderView">
-  <DockPanel LastChildFill="True">
+    <DockPanel LastChildFill="True">
 
-    <Border DockPanel.Dock="Right" CornerRadius="5" Background="Green" Margin="10,0,0,0" IsVisible="{Binding IsConnected}">
-      <TextBlock Text="Connected" FontSize="12" Margin="5" VerticalAlignment="Center" Foreground="White" />
-    </Border>
+        <Border DockPanel.Dock="Right" CornerRadius="5" Background="Green" Margin="10,0,0,0" IsVisible="{Binding IsConnected}">
+            <TextBlock Text="Connected" FontSize="12" Margin="5" VerticalAlignment="Center" Foreground="White" />
+        </Border>
 
-    <Border DockPanel.Dock="Right" CornerRadius="5" Background="Red" Margin="10,0,0,0" IsVisible="{Binding IsConnected, Converter={x:Static common:DefaultConverters.BooleanInverter}}">
-      <TextBlock Text="Not connected" FontSize="12" Margin="5" VerticalAlignment="Center" Foreground="White" />
-    </Border>
+        <Border DockPanel.Dock="Right" CornerRadius="5" Background="Red" Margin="10,0,0,0"
+                IsVisible="{Binding IsConnected, Converter={x:Static common:DefaultConverters.BooleanInverter}}">
+            <TextBlock Text="Not connected" FontSize="12" Margin="5" VerticalAlignment="Center" Foreground="White" />
+        </Border>
 
-    <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+        <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
 
-  </DockPanel>
+    </DockPanel>
 </UserControl>

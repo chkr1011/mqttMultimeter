@@ -1,21 +1,20 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace MQTTnet.App.Common
+namespace MQTTnet.App.Common;
+
+public sealed class ViewModelCollection<TItem> : ObservableCollection<TItem>
 {
-    public sealed class ViewModelCollection<TItem> : ObservableCollection<TItem>
+    TItem _selectedItem = default!;
+
+    public TItem SelectedItem
     {
-        TItem _selectedItem = default!;
+        get => _selectedItem;
 
-        public TItem SelectedItem
+        set
         {
-            get => _selectedItem;
-
-            set
-            {
-                _selectedItem = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedItem)));
-            }
+            _selectedItem = value;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedItem)));
         }
     }
 }

@@ -5,5 +5,5 @@
              xmlns:common="using:MQTTnet.App.Common.BufferInspector"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.PacketInspector.PacketDetailsView">
-  <common:BufferInspectorView DataContext="{Binding SelectedPacket.Content}"></common:BufferInspectorView>
+    <common:BufferInspectorView DataContext="{Binding SelectedPacket.Content}" />
 </UserControl>

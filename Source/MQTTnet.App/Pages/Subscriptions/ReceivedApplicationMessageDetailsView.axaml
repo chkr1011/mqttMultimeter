@@ -6,17 +6,17 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Subscriptions.ReceivedApplicationMessageDetailsView">
 
-  <StackPanel Margin="10">
-    <Label Content="Timestamp" FontWeight="Bold" />
-    <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding Timestamp}" />
+    <StackPanel Margin="10">
+        <Label Content="Timestamp" FontWeight="Bold" />
+        <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding Timestamp}" />
 
-    <Label Content="Topic" FontWeight="Bold" />
-    <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding Topic}" />
+        <Label Content="Topic" FontWeight="Bold" />
+        <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding Topic}" />
 
-    <Label Content="Quality of Serice level" FontWeight="Bold" />
-    <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding QualityOfServiceLevel}" />
+        <Label Content="Quality of Serice level" FontWeight="Bold" />
+        <TextBox IsReadOnly="True" FontFamily="Consolas" Text="{Binding QualityOfServiceLevel}" />
 
-    <Label Content="Payload" FontWeight="Bold"></Label>
-    <common:BufferInspectorView DataContext="{Binding PayloadInspector}" />
-  </StackPanel>
+        <Label Content="Payload" FontWeight="Bold" />
+        <common:BufferInspectorView DataContext="{Binding PayloadInspector}" />
+    </StackPanel>
 </UserControl>

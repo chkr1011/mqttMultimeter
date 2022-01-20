@@ -1,9 +1,8 @@
-﻿namespace MQTTnet.App.Common
-{
-    public static class DefaultConverters
-    {
-        public static BooleanInverter BooleanInverter { get; } = new BooleanInverter();
+﻿namespace MQTTnet.App.Common;
 
-        public static RadioButtonValueConverter RadioButtonValueConverter { get; } = new RadioButtonValueConverter();
-    }
+public static class DefaultConverters
+{
+    public static BooleanInverter BooleanInverter { get; } = new();
+
+    public static RadioButtonValueConverter RadioButtonValueConverter { get; } = new();
 }

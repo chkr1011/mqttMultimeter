@@ -6,24 +6,23 @@ using MQTTnet.App.Pages.PacketInspector;
 using MQTTnet.App.Pages.Publish;
 using MQTTnet.App.Pages.Subscriptions;
 
-namespace MQTTnet.App.Main
-{
-    public sealed class MainWindowViewModel : BaseViewModel
-    {
-        public MainWindowViewModel(
-            ConnectionPageViewModel connectionPageViewModel,
-            SubscriptionsPageViewModel subscriptionsPageViewModel,
-            PublishPageViewModel publishPageViewModel,
-            PacketInspectorPageViewModel packetInspectorPageViewModel,
-            InfoPageViewModel infoPageViewModel)
-        {
-            Pages.Add(connectionPageViewModel);
-            Pages.Add(subscriptionsPageViewModel);
-            Pages.Add(publishPageViewModel);
-            Pages.Add(packetInspectorPageViewModel);
-            Pages.Add(infoPageViewModel);
-        }
+namespace MQTTnet.App.Main;
 
-        public ObservableCollection<BaseViewModel> Pages { get; } = new();
+public sealed class MainWindowViewModel : BaseViewModel
+{
+    public MainWindowViewModel(
+        ConnectionPageViewModel connectionPageViewModel,
+        SubscriptionsPageViewModel subscriptionsPageViewModel,
+        PublishPageViewModel publishPageViewModel,
+        PacketInspectorPageViewModel packetInspectorPageViewModel,
+        InfoPageViewModel infoPageViewModel)
+    {
+        Pages.Add(connectionPageViewModel);
+        Pages.Add(subscriptionsPageViewModel);
+        Pages.Add(publishPageViewModel);
+        Pages.Add(packetInspectorPageViewModel);
+        Pages.Add(infoPageViewModel);
     }
+
+    public ObservableCollection<BaseViewModel> Pages { get; } = new();
 }

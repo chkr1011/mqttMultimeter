@@ -1,18 +1,22 @@
 using Avalonia;
 
-namespace MQTTnet.App
-{
-    static class Program
-    {
-        public static void Main(string[] args) => BuildAvaloniaApp()
-            .StartWithClassicDesktopLifetime(args);
+namespace MQTTnet.App;
 
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
-                .UsePlatformDetect()
-                .With(new Win32PlatformOptions
-                {
-                    AllowEglInitialization = true
-                });
+internal static class Program
+{
+    public static AppBuilder BuildAvaloniaApp()
+    {
+        return AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .With(new Win32PlatformOptions
+            {
+                AllowEglInitialization = true
+            });
+    }
+
+    public static void Main(string[] args)
+    {
+        BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
     }
 }

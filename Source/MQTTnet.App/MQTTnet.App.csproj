@@ -1,62 +1,62 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <Product>MQTTnet</Product>
-    <AssemblyVersion>0.0.1</AssemblyVersion>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <IsPackable>false</IsPackable>
-    <PackageId />
-    <PackageVersion />
-    <Authors />
-    <Company>Christian Kratky</Company>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>embedded</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <AvaloniaResource Include="Assets\**" />
-    <None Remove="Assets\Icons\arrow_down.png" />
-    <None Remove="Assets\Icons\arrow_up.png" />
-    <Folder Include="Pages\Monitor\" />
-    <Folder Include="Pages\Analasys\" />
-    <Folder Include="Pages\Status\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.11" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.11" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.11" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
-    <PackageReference Include="MQTTnet" Version="3.1.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="SimpleInjector" Version="5.3.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Main\MainWindowView.axaml.cs">
-      <DependentUpon>MainWindowView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Pages\Connection\ConnectionPageView.axaml.cs">
-      <DependentUpon>ConnectionPageView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Pages\Connection\MqttNetOptionsView.axaml.cs">
-      <DependentUpon>MqttNetOptionsView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Pages\Connection\SessionOptionsView.axaml.cs">
-      <DependentUpon>SessionOptionsView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Pages\PacketInspector\PacketInspectorPageView.axaml.cs">
-      <DependentUpon>PacketInspectorPageView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Pages\Publish\PublishOptionsView.axaml.cs">
-      <DependentUpon>PublishOptionsView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Pages\Subscriptions\SubscriptionOptionsPageView.axaml.cs">
-      <DependentUpon>SubscriptionOptionsPageView.axaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <Product>MQTTnet</Product>
+        <AssemblyVersion>0.0.1</AssemblyVersion>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <IsPackable>false</IsPackable>
+        <PackageId />
+        <PackageVersion />
+        <Authors />
+        <Company>Christian Kratky</Company>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>embedded</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <Prefer32Bit>false</Prefer32Bit>
+    </PropertyGroup>
+    <ItemGroup>
+        <Folder Include="Models\" />
+        <AvaloniaResource Include="Assets\**" />
+        <None Remove="Assets\Icons\arrow_down.png" />
+        <None Remove="Assets\Icons\arrow_up.png" />
+        <Folder Include="Pages\Monitor\" />
+        <Folder Include="Pages\Analasys\" />
+        <Folder Include="Pages\Status\" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="0.10.11" />
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.11" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.11" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
+        <PackageReference Include="MQTTnet" Version="3.1.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="SimpleInjector" Version="5.3.2" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Main\MainWindowView.axaml.cs">
+            <DependentUpon>MainWindowView.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\Connection\ConnectionPageView.axaml.cs">
+            <DependentUpon>ConnectionPageView.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\Connection\MqttNetOptionsView.axaml.cs">
+            <DependentUpon>MqttNetOptionsView.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\Connection\SessionOptionsView.axaml.cs">
+            <DependentUpon>SessionOptionsView.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\PacketInspector\PacketInspectorPageView.axaml.cs">
+            <DependentUpon>PacketInspectorPageView.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\Publish\PublishItemView.axaml.cs">
+            <DependentUpon>PublishOptionsView.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\Subscriptions\SubscriptionOptionsPageView.axaml.cs">
+            <DependentUpon>SubscriptionOptionsPageView.axaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
 </Project>

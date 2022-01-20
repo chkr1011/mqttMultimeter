@@ -1,30 +1,26 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnet.App.Pages.Subscriptions
+namespace MQTTnet.App.Pages.Subscriptions;
+
+public class SubscriptionEditorView : Window
 {
-    public class SubscriptionEditorView : Window
+    public SubscriptionEditorView()
     {
-        public SubscriptionEditorView()
+        AvaloniaXamlLoader.Load(this);
+
+        GotFocus += (s, e) =>
         {
-            AvaloniaXamlLoader.Load(this);
+            //this.FindControl<TextBox>("TextBoxTopic").Focus();
+        };
 
-            GotFocus += (s, e) =>
-            {
-                //this.FindControl<TextBox>("TextBoxTopic").Focus();
-            };
+        DataContextChanged += (_, __) =>
+        {
+            var viewModel = (SubscriptionEditorViewModel) DataContext!;
 
-            DataContextChanged += (_, __) =>
-            {
-                var viewModel = (SubscriptionEditorViewModel)DataContext!;
+            viewModel.Completed += (___, ____) => { Close(); };
 
-                viewModel.Completed += (___, ____) =>
-                {
-                    Close();
-                };
-
-                //this.FindControl<TextBox>("TextBoxTopic").Focus();
-            };
-        }
+            //this.FindControl<TextBox>("TextBoxTopic").Focus();
+        };
     }
 }
