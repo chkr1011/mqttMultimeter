@@ -64,6 +64,15 @@ jobs:
           name: MQTTnet.App-osx-x64
           path: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/osx-x64/publish/
 
+      - name: Build linux-x86
+        run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r linux-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false --self-contained true
+
+      - name: Collect linux-x86 artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: MQTTnet.App-linux-x86
+          path: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/linux-x86/publish/
+
       - name: Build linux-x64
         run: dotnet publish Source\\MQTTnet.App\\MQTTnet.App.csproj -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false --self-contained true
 
