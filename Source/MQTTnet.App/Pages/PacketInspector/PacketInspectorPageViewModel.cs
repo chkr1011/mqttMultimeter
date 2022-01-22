@@ -1,18 +1,16 @@
 ﻿using Avalonia.Threading;
+using MQTTnet.App.Client.Service;
 using MQTTnet.App.Common;
-using MQTTnet.App.Services.Client;
-using MQTTnet.Diagnostics.PacketInspection;
+using MQTTnet.Diagnostics;
 
 namespace MQTTnet.App.Pages.PacketInspector;
 
-public sealed class PacketInspectorPageViewModel : BasePageViewModel
+public sealed class PacketInspectorPageViewModel : BaseViewModel
 {
     int _number;
 
     public PacketInspectorPageViewModel(MqttClientService mqttClientService)
     {
-        Header = "Packet Inspector";
-
         mqttClientService.RegisterMessageInspectorHandler(ProcessPacket);
     }
 
@@ -29,6 +27,9 @@ public sealed class PacketInspectorPageViewModel : BasePageViewModel
         var number = _number++;
         var viewModel = new PacketViewModel(number, context);
 
-        Dispatcher.UIThread.InvokeAsync(() => { Packets.Add(viewModel); });
+        Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            Packets.Add(viewModel);
+        });
     }
 }

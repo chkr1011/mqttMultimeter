@@ -1,5 +1,5 @@
 ﻿using MQTTnet.App.Common;
-using MQTTnet.Client.Publishing;
+using MQTTnet.Client;
 
 namespace MQTTnet.App.Pages.Publish;
 
@@ -10,7 +10,7 @@ public sealed class PublishResponseViewModel : BaseViewModel
         get => GetValue<string>();
         set => SetValue(value);
     }
-    
+
     public string ReasonString
     {
         get => GetValue<string>();

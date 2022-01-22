@@ -7,7 +7,7 @@
     <StackPanel Orientation="Horizontal">
         <StackPanel.Styles>
             <Style Selector="RadioButton">
-                <Setter Property="Margin" Value="0,0,10,0"></Setter>
+                <Setter Property="Margin" Value="0,0,10,0" />
             </Style>
         </StackPanel.Styles>
         <RadioButton GroupName="QoS" Content="At most once (0)" IsChecked="{Binding Path=IsLevel0, Mode=TwoWay}" />

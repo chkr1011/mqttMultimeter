@@ -2,88 +2,53 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:MQTTnet.App.Controls"
              xmlns:publish="clr-namespace:MQTTnet.App.Pages.Publish"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance publish:PublishPageViewModel}"
              x:Class="MQTTnet.App.Pages.Publish.PublishPageView">
-    <UserControl.Styles>
-        
-        <Style Selector="TabItem">
-            <Setter Property="Template">
-                <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Border>
-                        <Grid RowDefinitions="Auto,*">
-                            <Rectangle Name="PART_SelectionIndicator" Height="2" HorizontalAlignment="Stretch" />
-                            <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <ContentPresenter 
-                                              Margin="10"
-                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                              Content="{TemplateBinding Header}" />
-                            <Button Background="Transparent" Click="OnCloseItemClicked" MinWidth="32">x</Button>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                </ControlTemplate>
-            </Setter>
-        </Style>
 
-        <Style Selector="TabItem:selected /template/ Rectangle#PART_SelectionIndicator">
-            <Setter Property="Fill" Value="{DynamicResource SystemAccentColor}" />
-        </Style>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Pages/Publish/PublishItemListItem.axaml"></ResourceInclude>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
-        <Style Selector="controls|AppTabControl">
-            <Setter Property="Template">
-                <ControlTemplate TargetType="{x:Type controls:AppTabControl}">
-                    <Border>
-                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,*">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
 
-                            <ScrollViewer
-                                Name="PART_ScrollViewer"
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Background="{TemplateBinding Background}"
-                                HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
-                                VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+        <!-- The list of publish items. -->
+        <Grid Background="#262626">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                                <ItemsPresenter
-                                    Name="PART_ItemsPresenter"
-                                    ItemTemplate="{TemplateBinding ItemTemplate}"
-                                    Items="{TemplateBinding Items}"
-                                    ItemsPanel="{TemplateBinding ItemsPanel}" />
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0">
+                <Button ToolTip.Tip="Add publish item" Classes="ToolBarButton" Command="{Binding AddItem}">
+                    <Image Source="/Assets/Icons/add.png" />
+                </Button>
+                <Button ToolTip.Tip="Remove all publish items" Classes="ToolBarButton" Command="{Binding ClearItems}">
+                    <Image Source="/Assets/Icons/bin.png" />
+                </Button>
+            </StackPanel>
 
-                            </ScrollViewer>
+            <ListBox Background="Transparent" ItemTemplate="{StaticResource PublishItemViewModelListItem}" Grid.Row="1" SelectedItem="{Binding SelectedItem}" Items="{Binding Items}" Grid.Column="0"
+                     x:Name="PART_PublishItems" />
+        </Grid>
 
-                            <ContentPresenter Grid.Column="1" Grid.Row="0"
-                                              Content="{TemplateBinding CustomHeaderContent}" />
+        <!-- The splitter -->
+        <GridSplitter Grid.Column="1" Width="1" />
 
-                            <ContentPresenter
-                                Name="PART_SelectedContentHost"
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2"
-                                HorizontalContentAlignment="Stretch"
-                                VerticalContentAlignment="Stretch"
-                                Content="{TemplateBinding SelectedContent}"
-                                ContentTemplate="{TemplateBinding SelectedContentTemplate}" />
-                        </Grid>
-                    </Border>
-                </ControlTemplate>
-            </Setter>
-        </Style>
-    </UserControl.Styles>
-
-    <controls:AppTabControl Items="{Binding Items}">
-        <controls:AppTabControl.CustomHeaderContent>
-            <Button Command="{Binding AddItem}">+</Button>
-        </controls:AppTabControl.CustomHeaderContent>
-        <TabControl.ItemTemplate>
-            <DataTemplate>
-                <TextBlock Classes="CodeText" Text="{Binding Name}" />
-            </DataTemplate>
-        </TabControl.ItemTemplate>
-    </controls:AppTabControl>
+        <!-- The selected publish. -->
+        <ContentPresenter Margin="10" Grid.Column="2" Content="{Binding ElementName=PART_PublishItems, Path=SelectedItem}" />
+    </Grid>
 
 </UserControl>

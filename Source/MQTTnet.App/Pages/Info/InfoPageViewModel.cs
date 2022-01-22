@@ -5,12 +5,10 @@ using MQTTnet.Client;
 
 namespace MQTTnet.App.Pages.Info;
 
-public sealed class InfoPageViewModel : BasePageViewModel
+public sealed class InfoPageViewModel : BaseViewModel
 {
     public InfoPageViewModel()
     {
-        Header = "Info";
-
         MqttNetAppVersion = typeof(App).Assembly.GetName().Version?.ToString() ?? "<unknown>";
         MqttNetVersion = typeof(MqttClient).Assembly.GetName().Version?.ToString() ?? "<unknown>";
         DotNetVersion = Environment.Version.ToString();

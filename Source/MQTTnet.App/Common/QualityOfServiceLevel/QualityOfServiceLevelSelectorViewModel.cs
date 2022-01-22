@@ -32,11 +32,20 @@ public sealed class QualityOfServiceLevelSelectorViewModel : BaseViewModel
     {
         get
         {
-            if (IsLevel0) return MqttQualityOfServiceLevel.AtMostOnce;
+            if (IsLevel0)
+            {
+                return MqttQualityOfServiceLevel.AtMostOnce;
+            }
 
-            if (IsLevel1) return MqttQualityOfServiceLevel.AtLeastOnce;
+            if (IsLevel1)
+            {
+                return MqttQualityOfServiceLevel.AtLeastOnce;
+            }
 
-            if (IsLevel2) return MqttQualityOfServiceLevel.ExactlyOnce;
+            if (IsLevel2)
+            {
+                return MqttQualityOfServiceLevel.ExactlyOnce;
+            }
 
             throw new NotSupportedException();
         }
@@ -47,11 +56,20 @@ public sealed class QualityOfServiceLevelSelectorViewModel : BaseViewModel
             IsLevel1 = false;
             IsLevel2 = false;
 
-            if (value == MqttQualityOfServiceLevel.AtMostOnce) IsLevel0 = true;
+            if (value == MqttQualityOfServiceLevel.AtMostOnce)
+            {
+                IsLevel0 = true;
+            }
 
-            if (value == MqttQualityOfServiceLevel.AtLeastOnce) IsLevel1 = true;
+            if (value == MqttQualityOfServiceLevel.AtLeastOnce)
+            {
+                IsLevel1 = true;
+            }
 
-            if (value == MqttQualityOfServiceLevel.ExactlyOnce) IsLevel2 = true;
+            if (value == MqttQualityOfServiceLevel.ExactlyOnce)
+            {
+                IsLevel2 = true;
+            }
         }
     }
 }

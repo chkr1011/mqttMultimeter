@@ -13,16 +13,19 @@ public sealed class ObjectDumpViewModel : BaseViewModel
     {
         Properties.Clear();
 
-        if (graph == null) return;
+        if (graph == null)
+        {
+            return;
+        }
 
-        var properties = graph.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            .OrderBy(p => p.Name).ToList();
+        var properties = graph.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => p.Name).ToList();
 
         foreach (var property in properties)
+        {
             Properties.Add(new ObjectDumpPropertyViewModel
             {
-                Name = property.Name,
-                Value = Convert.ToString(property.GetValue(graph)) ?? string.Empty
+                Name = property.Name, Value = Convert.ToString(property.GetValue(graph)) ?? string.Empty
             });
+        }
     }
 }

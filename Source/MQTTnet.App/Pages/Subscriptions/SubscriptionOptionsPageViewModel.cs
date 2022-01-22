@@ -21,9 +21,15 @@ public sealed class SubscriptionOptionsPageViewModel : BaseViewModel
         // TODO: This should be refactored as soon as Avalonia supports Binding.DoNothing!
         get
         {
-            if (IsRetainHandling0) return MqttRetainHandling.SendAtSubscribe;
+            if (IsRetainHandling0)
+            {
+                return MqttRetainHandling.SendAtSubscribe;
+            }
 
-            if (IsRetainHandling1) return MqttRetainHandling.SendAtSubscribeIfNewSubscriptionOnly;
+            if (IsRetainHandling1)
+            {
+                return MqttRetainHandling.SendAtSubscribeIfNewSubscriptionOnly;
+            }
 
             return MqttRetainHandling.SendAtSubscribe;
         }
@@ -35,7 +41,10 @@ public sealed class SubscriptionOptionsPageViewModel : BaseViewModel
     {
         ClearErrors();
 
-        if (string.IsNullOrEmpty(Topic)) SetErrors(nameof(Topic), "Value must not be empty.");
+        if (string.IsNullOrEmpty(Topic))
+        {
+            SetErrors(nameof(Topic), "Value must not be empty.");
+        }
 
         return !HasErrors;
     }

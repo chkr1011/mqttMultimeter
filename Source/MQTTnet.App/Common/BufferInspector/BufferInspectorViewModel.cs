@@ -160,10 +160,7 @@ public sealed class BufferInspectorViewModel : BaseViewModel
 
     public static byte[] StringToByteArray(string hex)
     {
-        return Enumerable.Range(0, hex.Length)
-            .Where(x => x % 2 == 0)
-            .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
-            .ToArray();
+        return Enumerable.Range(0, hex.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(hex.Substring(x, 2), 16)).ToArray();
     }
 
     void DumpAsHex(byte[] buffer)
@@ -174,15 +171,22 @@ public sealed class BufferInspectorViewModel : BaseViewModel
 
         foreach (var @byte in buffer)
         {
-            var byteHex = BitConverter.ToString(new[] {@byte});
+            var byteHex = BitConverter.ToString(new[]
+            {
+                @byte
+            });
 
             contentBuilder.Append(byteHex);
             contentBuilder.Append(' ');
 
             if (@byte > 0x0020 && @byte < 0x007F)
+            {
                 previewBuilder.Append((char) @byte);
+            }
             else
+            {
                 previewBuilder.Append('.');
+            }
 
             column++;
 
@@ -223,9 +227,15 @@ public sealed class BufferInspectorViewModel : BaseViewModel
         var hexContent = HexContent;
 
         var i = _hexCaretIndex;
-        if (i + 1 > hexContent.Length - 1) return;
+        if (i + 1 > hexContent.Length - 1)
+        {
+            return;
+        }
 
-        if (hexContent[i + 1] == ' ') i--;
+        if (hexContent[i + 1] == ' ')
+        {
+            i--;
+        }
 
         var source = hexContent.Substring(i);
         source = source.Replace(Environment.NewLine, " ");
@@ -234,7 +244,10 @@ public sealed class BufferInspectorViewModel : BaseViewModel
 
         var buffer = StringToByteArray(source);
 
-        foreach (var value in Values) value.SetValue(string.Empty);
+        foreach (var value in Values)
+        {
+            value.SetValue(string.Empty);
+        }
 
         _offsetValue.SetValue(_buffer.Length - buffer.Length);
         _bytesLeftValue.SetValue(buffer.Length);
@@ -244,19 +257,28 @@ public sealed class BufferInspectorViewModel : BaseViewModel
         _bitsValue.SetValue(GetBits(buffer[0]));
         _asciiCharValue.SetValue((char) buffer[0]);
 
-        if (buffer.Length < 2) return;
+        if (buffer.Length < 2)
+        {
+            return;
+        }
 
         _int16Value.SetValue(BitConverter.ToInt16(buffer));
         _uint16Value.SetValue(BitConverter.ToUInt16(buffer));
         _utf8Char.SetValue(Encoding.UTF8.GetString(buffer, 0, 2));
 
-        if (buffer.Length < 4) return;
+        if (buffer.Length < 4)
+        {
+            return;
+        }
 
         _int32Value.SetValue(BitConverter.ToInt32(buffer));
         _uint32Value.SetValue(BitConverter.ToUInt32(buffer));
         _floatValue.SetValue(BitConverter.ToSingle(buffer));
 
-        if (buffer.Length < 8) return;
+        if (buffer.Length < 8)
+        {
+            return;
+        }
 
         _int64Value.SetValue(BitConverter.ToInt64(buffer));
         _uint64Value.SetValue(BitConverter.ToUInt64(buffer));

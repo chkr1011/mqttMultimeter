@@ -1,7 +1,7 @@
 ﻿using System;
 using MQTTnet.App.Common;
 using MQTTnet.App.Common.BufferInspector;
-using MQTTnet.Diagnostics.PacketInspection;
+using MQTTnet.Diagnostics;
 
 namespace MQTTnet.App.Pages.PacketInspector;
 
@@ -9,7 +9,10 @@ public sealed class PacketViewModel : BaseViewModel
 {
     public PacketViewModel(int number, ProcessMqttPacketContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
 
         Number = number;
         Name += GetControlPacketType(context.Buffer[0]);
@@ -40,22 +43,38 @@ public sealed class PacketViewModel : BaseViewModel
 
         switch (controlType)
         {
-            case 1: return "CONNECT";
-            case 2: return "CONNACK";
-            case 3: return "PUBLISH";
-            case 4: return "PUBACK";
-            case 5: return "PUBREC";
-            case 6: return "PUBREL";
-            case 7: return "PUBCOMP";
-            case 8: return "SUBSCRIBE";
-            case 9: return "SUBACK";
-            case 10: return "UNSUBSCRIBE";
-            case 11: return "UNSUBACK";
-            case 12: return "PINGREQ";
-            case 13: return "PINGRESP";
-            case 14: return "DISCONNECT";
-            case 15: return "AUTH";
-            default: return "UNKNOWN";
+            case 1:
+                return "CONNECT";
+            case 2:
+                return "CONNACK";
+            case 3:
+                return "PUBLISH";
+            case 4:
+                return "PUBACK";
+            case 5:
+                return "PUBREC";
+            case 6:
+                return "PUBREL";
+            case 7:
+                return "PUBCOMP";
+            case 8:
+                return "SUBSCRIBE";
+            case 9:
+                return "SUBACK";
+            case 10:
+                return "UNSUBSCRIBE";
+            case 11:
+                return "UNSUBACK";
+            case 12:
+                return "PINGREQ";
+            case 13:
+                return "PINGRESP";
+            case 14:
+                return "DISCONNECT";
+            case 15:
+                return "AUTH";
+            default:
+                return "UNKNOWN";
         }
     }
 }

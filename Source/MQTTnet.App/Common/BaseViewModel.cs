@@ -19,9 +19,15 @@ public abstract class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorIn
 
     public IEnumerable GetErrors(string? propertyName)
     {
-        if (string.IsNullOrEmpty(propertyName)) return default!;
+        if (string.IsNullOrEmpty(propertyName))
+        {
+            return default!;
+        }
 
-        if (_errors.TryGetValue(propertyName, out var errors)) return errors;
+        if (_errors.TryGetValue(propertyName, out var errors))
+        {
+            return errors;
+        }
 
         return default!;
     }
@@ -37,7 +43,10 @@ public abstract class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorIn
 
     protected TValue GetValue<TValue>([CallerMemberName] string? propertyName = null)
     {
-        if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
+        if (propertyName == null)
+        {
+            throw new ArgumentNullException(nameof(propertyName));
+        }
 
         return _propertyStore.GetValue<TValue>(propertyName);
     }
@@ -55,9 +64,13 @@ public abstract class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorIn
     protected void SetErrors(string propertyName, ICollection? errors)
     {
         if (errors == null || errors.Count == 0)
+        {
             _errors.Remove(propertyName);
+        }
         else
+        {
             _errors[propertyName] = errors;
+        }
 
         ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
 
@@ -66,10 +79,15 @@ public abstract class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorIn
 
     protected void SetValue<TValue>(TValue value, [CallerMemberName] string? propertyName = null)
     {
-        if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
+        if (propertyName == null)
+        {
+            throw new ArgumentNullException(nameof(propertyName));
+        }
 
         if (_propertyStore.SetValue(propertyName, value))
             //this.RaisePropertyChanged(propertyName);
+        {
             OnPropertyChanged(propertyName);
+        }
     }
 }

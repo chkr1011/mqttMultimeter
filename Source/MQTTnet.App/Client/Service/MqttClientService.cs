@@ -6,29 +6,32 @@ using MQTTnet.App.Pages.Connection;
 using MQTTnet.App.Pages.Publish;
 using MQTTnet.App.Pages.Subscriptions;
 using MQTTnet.Client;
-using MQTTnet.Client.Connecting;
-using MQTTnet.Client.Options;
-using MQTTnet.Client.Publishing;
-using MQTTnet.Client.Receiving;
-using MQTTnet.Client.Subscribing;
-using MQTTnet.Client.Unsubscribing;
-using MQTTnet.Diagnostics.PacketInspection;
-using MQTTnet.Protocol;
+using MQTTnet.Diagnostics;
+using MQTTnet.Internal;
 
-namespace MQTTnet.App.Services.Client;
+namespace MQTTnet.App.Client.Service;
 
-public sealed class MqttClientService : IMqttApplicationMessageReceivedHandler, IMqttPacketInspector
+public sealed class MqttClientService : IMqttPacketInspector
 {
-    readonly List<IMqttApplicationMessageReceivedHandler> _applicationMessageReceivedHandlers = new();
+    readonly AsyncEvent<MqttApplicationMessageReceivedEventArgs> _applicationMessageReceivedEvent = new();
     readonly List<Action<ProcessMqttPacketContext>> _messageInspectors = new();
 
     IMqttClient? _mqttClient;
+
+    public event Func<MqttApplicationMessageReceivedEventArgs, Task> ApplicationMessageReceived
+    {
+        add => _applicationMessageReceivedEvent.AddHandler(value);
+        remove => _applicationMessageReceivedEvent.RemoveHandler(value);
+    }
 
     public bool IsConnected => _mqttClient?.IsConnected == true;
 
     public async Task<MqttClientConnectResult> Connect(ConnectionPageViewModel options)
     {
-        if (options == null) throw new ArgumentNullException(nameof(options));
+        if (options == null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
 
         if (_mqttClient != null)
         {
@@ -38,10 +41,7 @@ public sealed class MqttClientService : IMqttApplicationMessageReceivedHandler, 
 
         _mqttClient = new MqttFactory().CreateMqttClient();
 
-        _mqttClient.UseApplicationMessageReceivedHandler(this);
-
-        var clientOptionsBuilder = new MqttClientOptionsBuilder()
-            .WithCommunicationTimeout(TimeSpan.FromSeconds(options.ServerOptions.CommunicationTimeout))
+        var clientOptionsBuilder = new MqttClientOptionsBuilder().WithCommunicationTimeout(TimeSpan.FromSeconds(options.ServerOptions.CommunicationTimeout))
             .WithProtocolVersion(options.ProtocolOptions.ProtocolVersions.SelectedItem.Value)
             .WithClientId(options.SessionOptions.ClientId)
             .WithCleanSession(options.SessionOptions.CleanSession)
@@ -51,14 +51,29 @@ public sealed class MqttClientService : IMqttApplicationMessageReceivedHandler, 
             .WithKeepAlivePeriod(TimeSpan.FromSeconds(options.SessionOptions.KeepAliveInterval));
 
         if (options.ServerOptions.Transports.SelectedItem.Transport == Transport.TCP)
+        {
             clientOptionsBuilder.WithTcpServer(options.ServerOptions.Host, options.ServerOptions.Port);
+        }
         else
+        {
             clientOptionsBuilder.WithWebSocketServer(options.ServerOptions.Host);
+        }
 
         if (options.ServerOptions.TlsVersions.SelectedItem.Value != SslProtocols.None)
-            clientOptionsBuilder.WithTls(o => { o.SslProtocol = options.ServerOptions.TlsVersions.SelectedItem.Value; });
+        {
+            clientOptionsBuilder.WithTls(o =>
+            {
+                o.SslProtocol = options.ServerOptions.TlsVersions.SelectedItem.Value;
+            });
+        }
 
-        if (options.MqttNetOptions.EnablePacketInspection) clientOptionsBuilder.WithPacketInspector(this);
+        // TODO: To event.
+        if (options.MqttNetOptions.EnablePacketInspection)
+        {
+            clientOptionsBuilder.WithPacketInspector(this);
+        }
+
+        _mqttClient.ApplicationMessageReceivedAsync += OnApplicationMessageReceived;
 
         var result = await _mqttClient.ConnectAsync(clientOptionsBuilder.Build());
 
@@ -72,68 +87,64 @@ public sealed class MqttClientService : IMqttApplicationMessageReceivedHandler, 
         return _mqttClient.DisconnectAsync();
     }
 
-    public async Task HandleApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs eventArgs)
-    {
-        if (eventArgs == null) throw new ArgumentNullException(nameof(eventArgs));
-
-        foreach (var handler in _applicationMessageReceivedHandlers) await handler.HandleApplicationMessageReceivedAsync(eventArgs);
-    }
-
     public void ProcessMqttPacket(ProcessMqttPacketContext context)
     {
-        foreach (var messageInspector in _messageInspectors) messageInspector.Invoke(context);
+        foreach (var messageInspector in _messageInspectors)
+        {
+            messageInspector.Invoke(context);
+        }
     }
 
     public Task<MqttClientPublishResult> Publish(PublishItemViewModel item)
     {
-        if (item == null) throw new ArgumentNullException(nameof(item));
+        if (item == null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
 
         ThrowIfNotConnected();
 
-        var applicationMessage = new MqttApplicationMessageBuilder()
-            .WithTopic(item.Topic)
+        var applicationMessage = new MqttApplicationMessageBuilder().WithTopic(item.Topic)
             .WithQualityOfServiceLevel(item.QualityOfServiceLevel.Value)
             .WithRetainFlag(item.Retain)
             .WithMessageExpiryInterval(item.MessageExpiryInterval)
             .WithContentType(item.ContentType)
             .WithPayloadFormatIndicator(item.PayloadFormatIndicator.ToPayloadFormatIndicator())
             .WithPayload(item.PayloadFormatIndicator.ToPayload(item.Payload))
+            .WithSubscriptionIdentifier(item.SubscriptionIdentifier)
+            .WithTopicAlias(item.TopicAlias)
             .Build();
-        
+
         return _mqttClient.PublishAsync(applicationMessage);
-    }
-
-    public void RegisterApplicationMessageReceivedHandler(IMqttApplicationMessageReceivedHandler handler)
-    {
-        if (handler == null) throw new ArgumentNullException(nameof(handler));
-
-        _applicationMessageReceivedHandlers.Add(handler);
     }
 
     public void RegisterMessageInspectorHandler(Action<ProcessMqttPacketContext> handler)
     {
-        if (handler == null) throw new ArgumentNullException(nameof(handler));
+        if (handler == null)
+        {
+            throw new ArgumentNullException(nameof(handler));
+        }
 
         _messageInspectors.Add(handler);
     }
 
     public async Task<MqttClientSubscribeResult> Subscribe(SubscriptionOptionsPageViewModel configuration)
     {
-        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+        if (configuration == null)
+        {
+            throw new ArgumentNullException(nameof(configuration));
+        }
 
         ThrowIfNotConnected();
 
-        var topicFilter = new MqttTopicFilterBuilder()
-            .WithTopic(configuration.Topic)
+        var topicFilter = new MqttTopicFilterBuilder().WithTopic(configuration.Topic)
             .WithQualityOfServiceLevel(configuration.QualityOfServiceLevel.Value)
             .WithNoLocal(configuration.NoLocal)
             .WithRetainHandling(configuration.RetainHandling)
             .WithRetainAsPublished(configuration.RetainAsPublished)
             .Build();
 
-        var subscribeOptions = new MqttClientSubscribeOptionsBuilder()
-            .WithTopicFilter(topicFilter)
-            .Build();
+        var subscribeOptions = new MqttClientSubscribeOptionsBuilder().WithTopicFilter(topicFilter).Build();
 
         var subscribeResult = await _mqttClient.SubscribeAsync(subscribeOptions).ConfigureAwait(false);
 
@@ -142,7 +153,10 @@ public sealed class MqttClientService : IMqttApplicationMessageReceivedHandler, 
 
     public async Task<MqttClientUnsubscribeResult> Unsubscribe(string topic)
     {
-        if (topic == null) throw new ArgumentNullException(nameof(topic));
+        if (topic == null)
+        {
+            throw new ArgumentNullException(nameof(topic));
+        }
 
         ThrowIfNotConnected();
 
@@ -151,8 +165,16 @@ public sealed class MqttClientService : IMqttApplicationMessageReceivedHandler, 
         return unsubscribeResult;
     }
 
+    Task OnApplicationMessageReceived(MqttApplicationMessageReceivedEventArgs eventArgs)
+    {
+        return _applicationMessageReceivedEvent.InvokeAsync(eventArgs);
+    }
+
     void ThrowIfNotConnected()
     {
-        if (_mqttClient == null || !_mqttClient.IsConnected) throw new InvalidOperationException("The MQTT client is not connected.");
+        if (_mqttClient == null || !_mqttClient.IsConnected)
+        {
+            throw new InvalidOperationException("The MQTT client is not connected.");
+        }
     }
 }

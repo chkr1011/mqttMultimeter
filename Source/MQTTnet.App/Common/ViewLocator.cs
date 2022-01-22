@@ -28,7 +28,10 @@ internal sealed class ViewLocator : IDataTemplate
             return control;
         }
 
-        return new TextBlock {Text = "Not Found: " + name};
+        return new TextBlock
+        {
+            Text = "Not Found: " + name
+        };
     }
 
     public bool Match(object data)

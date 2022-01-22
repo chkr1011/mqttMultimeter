@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using MQTTnet.App.Client.Service;
 using MQTTnet.App.Common;
-using MQTTnet.App.Services.Client;
-using MQTTnet.Client.Subscribing;
+using MQTTnet.Client;
 
 namespace MQTTnet.App.Pages.Subscriptions;
 
@@ -30,7 +30,10 @@ public sealed class SubscriptionEditorViewModel : BaseWizardViewModel
         {
             if (ActivePage == ConfigurationPage)
             {
-                if (!ConfigurationPage.Validate()) return;
+                if (!ConfigurationPage.Validate())
+                {
+                    return;
+                }
 
                 // TODO: Show some animation.
 

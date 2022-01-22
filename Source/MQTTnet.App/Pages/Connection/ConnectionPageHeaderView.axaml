@@ -15,8 +15,6 @@
                 IsVisible="{Binding IsConnected, Converter={x:Static common:DefaultConverters.BooleanInverter}}">
             <TextBlock Text="Not connected" FontSize="12" Margin="5" VerticalAlignment="Center" Foreground="White" />
         </Border>
-
-        <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
-
+        
     </DockPanel>
 </UserControl>

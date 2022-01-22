@@ -8,7 +8,10 @@ internal sealed class ViewModelPropertyStore
 
     public TValue GetValue<TValue>(string propertyName)
     {
-        if (_values.TryGetValue(propertyName, out var value)) return (TValue) value;
+        if (_values.TryGetValue(propertyName, out var value))
+        {
+            return (TValue) value;
+        }
 
         return default!;
     }
@@ -18,9 +21,13 @@ internal sealed class ViewModelPropertyStore
         var equalityComparer = EqualityComparer<TValue>.Default;
 
         if (_values.TryGetValue(propertyName, out var existingValue))
+        {
             if (equalityComparer.Equals(value, (TValue) existingValue))
                 // The value already exists and has the same value.
+            {
                 return false;
+            }
+        }
 
         if (equalityComparer.Equals(value, default))
         {

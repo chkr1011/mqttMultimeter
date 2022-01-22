@@ -9,6 +9,4 @@ public sealed class ConnectionPageHeaderViewModel : BaseViewModel
         get => GetValue<bool>();
         set => SetValue(value);
     }
-
-    public string Title { get; } = "Connection";
 }

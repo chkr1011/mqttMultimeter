@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Threading;
+using MQTTnet.App.Client.Service;
 using MQTTnet.App.Common;
-using MQTTnet.App.Services.Client;
-using MQTTnet.Client.Receiving;
+using MQTTnet.Client;
 
 namespace MQTTnet.App.Pages.Subscriptions;
 
-public sealed class SubscriptionsPageViewModel : BasePageViewModel, IMqttApplicationMessageReceivedHandler
+public sealed class SubscriptionsPageViewModel : BaseViewModel
 {
     readonly MqttClientService _mqttClientService;
 
@@ -19,9 +19,7 @@ public sealed class SubscriptionsPageViewModel : BasePageViewModel, IMqttApplica
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
-        mqttClientService.RegisterApplicationMessageReceivedHandler(this);
-
-        Header = "Subscriptions";
+        mqttClientService.ApplicationMessageReceived += HandleApplicationMessageReceivedAsync;
     }
 
     public ViewModelCollection<ReceivedApplicationMessageViewModel> ReceivedApplicationMessages { get; } = new();
@@ -52,7 +50,10 @@ public sealed class SubscriptionsPageViewModel : BasePageViewModel, IMqttApplica
 
             await App.ShowDialog(window);
 
-            if (!editor.Subscribed) return;
+            if (!editor.Subscribed)
+            {
+                return;
+            }
 
             var subscription = new SubscriptionViewModel(editor.ConfigurationPage);
 
@@ -70,8 +71,11 @@ public sealed class SubscriptionsPageViewModel : BasePageViewModel, IMqttApplica
         }
     }
 
-    public Task HandleApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs eventArgs)
+    Task HandleApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs eventArgs)
     {
-        return Dispatcher.UIThread.InvokeAsync(() => { ReceivedApplicationMessages.Add(new ReceivedApplicationMessageViewModel(_messageId++, eventArgs.ApplicationMessage)); });
+        return Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            ReceivedApplicationMessages.Add(new ReceivedApplicationMessageViewModel(_messageId++, eventArgs.ApplicationMessage));
+        });
     }
 }

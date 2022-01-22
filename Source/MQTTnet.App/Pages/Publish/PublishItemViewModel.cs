@@ -13,6 +13,8 @@ public sealed class PublishItemViewModel : BaseViewModel
         PayloadFormatIndicator.IsUnspecified = true;
     }
 
+    public event EventHandler? DeleteRequested;
+
     public event Func<PublishItemViewModel, Task>? PublishRequested;
 
     public string ContentType
@@ -39,15 +41,21 @@ public sealed class PublishItemViewModel : BaseViewModel
         set => SetValue(value);
     }
 
-    public PublishResponseViewModel Response { get; } = new();
-    
     public PayloadFormatIndicatorViewModel PayloadFormatIndicator { get; } = new();
 
     public QualityOfServiceLevelSelectorViewModel QualityOfServiceLevel { get; } = new();
 
+    public PublishResponseViewModel Response { get; } = new();
+
     public bool Retain
     {
         get => GetValue<bool>();
+        set => SetValue(value);
+    }
+
+    public uint SubscriptionIdentifier
+    {
+        get => GetValue<uint>();
         set => SetValue(value);
     }
 
@@ -57,14 +65,19 @@ public sealed class PublishItemViewModel : BaseViewModel
         set => SetValue(value);
     }
 
-    public uint TopicAlias
+    public ushort TopicAlias
     {
-        get => GetValue<uint>();
+        get => GetValue<ushort>();
         set => SetValue(value);
+    }
+
+    public void Delete()
+    {
+        DeleteRequested?.Invoke(this, EventArgs.Empty);
     }
 
     public Task Publish()
     {
-        return PublishRequested.Invoke(this);
+        return PublishRequested?.Invoke(this) ?? Task.CompletedTask;
     }
 }

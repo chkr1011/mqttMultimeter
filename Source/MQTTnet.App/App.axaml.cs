@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Remote;
 using Avalonia.Markup.Xaml;
+using MQTTnet.App.Client.Service;
 using MQTTnet.App.Common;
+using MQTTnet.App.Controls.ErrorBox;
 using MQTTnet.App.Main;
-using MQTTnet.App.Services.Client;
 using SimpleInjector;
 
 namespace MQTTnet.App;
@@ -37,7 +39,7 @@ public sealed class App : Application
         {
             _mainWindow = new MainWindowView
             {
-                DataContext = _container.GetInstance<MainWindowViewModel>()
+                DataContext = _container.GetInstance<MainViewModel>()
             };
 
             desktop.MainWindow = _mainWindow;
@@ -48,14 +50,20 @@ public sealed class App : Application
 
     public static Task ShowDialog(Window window)
     {
-        if (window == null) throw new ArgumentNullException(nameof(window));
+        if (window == null)
+        {
+            throw new ArgumentNullException(nameof(window));
+        }
 
         return window.ShowDialog(MainWindowView.Instance);
     }
 
     public static Task ShowDialog(IDialogViewModel content)
     {
-        if (content == null) throw new ArgumentNullException(nameof(content));
+        if (content == null)
+        {
+            throw new ArgumentNullException(nameof(content));
+        }
 
         var host = new Window
         {
@@ -74,14 +82,30 @@ public sealed class App : Application
 
     public static void ShowException(Exception exception)
     {
-        ShowMessage(exception.ToString());
+        var viewModel = new ErrorBoxViewModel
+        {
+            Message = exception.Message, Exception = exception.ToString()
+        };
+
+        var window = new ErrorBox
+        {
+            DataContext = viewModel,
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+        };
+
+        window.ShowDialog(MainWindowView.Instance);
+
+        //ShowMessage(exception.ToString());
 
         //ShowDialog(new TextViewModel(exception.ToString()));
     }
 
     public static Task ShowMessage(string message)
     {
-        if (message == null) throw new ArgumentNullException(nameof(message));
+        if (message == null)
+        {
+            throw new ArgumentNullException(nameof(message));
+        }
 
         var host = new Window
         {

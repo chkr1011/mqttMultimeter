@@ -8,6 +8,12 @@ namespace MQTTnet.App.Pages.Publish;
 
 public sealed class PayloadFormatIndicatorViewModel : BaseViewModel
 {
+    public bool IsCharacterData
+    {
+        get => GetValue<bool>();
+        set => SetValue(value);
+    }
+
     public bool IsUnspecified
     {
         get => GetValue<bool>();
@@ -25,13 +31,7 @@ public sealed class PayloadFormatIndicatorViewModel : BaseViewModel
         get => GetValue<bool>();
         set => SetValue(value);
     }
-        
-    public bool IsCharacterData
-    {
-        get => GetValue<bool>();
-        set => SetValue(value);
-    }
-        
+
     public byte[] ToPayload(string payloadInput)
     {
         if (string.IsNullOrEmpty(payloadInput))
@@ -45,7 +45,7 @@ public sealed class PayloadFormatIndicatorViewModel : BaseViewModel
             // ways like HEX editors etc.
             return Encoding.UTF8.GetBytes(payloadInput);
         }
-            
+
         if (IsCharacterData)
         {
             return Encoding.UTF8.GetBytes(payloadInput);
@@ -63,7 +63,7 @@ public sealed class PayloadFormatIndicatorViewModel : BaseViewModel
 
         throw new NotSupportedException();
     }
-        
+
     public MqttPayloadFormatIndicator ToPayloadFormatIndicator()
     {
         if (IsCharacterData)

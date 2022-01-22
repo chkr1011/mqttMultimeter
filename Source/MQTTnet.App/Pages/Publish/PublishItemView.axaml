@@ -1,90 +1,195 @@
-<UserControl
-    x:Class="MQTTnet.App.Pages.Publish.PublishItemView"
-    xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
-    d:DataContext="{d:DesignInstance publish:PublishItemViewModel}"
-    xmlns:qualityOfServiceLevel="using:MQTTnet.App.Common.QualityOfServiceLevel"
-    xmlns:publish="clr-namespace:MQTTnet.App.Pages.Publish"
-    mc:Ignorable="d">
+<UserControl x:Class="MQTTnet.App.Pages.Publish.PublishItemView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance publish:PublishItemViewModel}"
+             xmlns:qualityOfServiceLevel="using:MQTTnet.App.Common.QualityOfServiceLevel"
+             xmlns:publish="clr-namespace:MQTTnet.App.Pages.Publish"
+             mc:Ignorable="d">
+    <UserControl.Styles>
+        <Style Selector="Label.caption">
+            <Setter Property="FontWeight"
+                    Value="SemiBold" />
+            <Setter Property="Margin"
+                    Value="0,0,10,0" />
+        </Style>
+        <Style Selector="TextBlock.note">
+            <Setter Property="FontWeight"
+                    Value="SemiLight" />
+            <Setter Property="Margin"
+                    Value="10,0,0,0" />
+        </Style>
+    </UserControl.Styles>
     <Grid RowDefinitions="Auto,2*,Auto,*">
 
         <StackPanel Grid.Row="0">
-            <Label Content="{Binding Name}" />
+            <TextBox Text="{Binding Name}"
+                     BorderThickness="0"
+                     Background="Transparent" />
 
             <Separator />
 
-            <Grid ColumnDefinitions="*,Auto" Margin="0,10,0,0">
-                <TextBox Grid.Column="0" Watermark="Topic" Classes="CodeText" Text="{Binding Topic}" />
-                <Button Background="Green" Grid.Column="1" Content="Publish" Margin="10,0,0,0" Command="{Binding Publish}" IsDefault="True" />
+            <Grid ColumnDefinitions="*,Auto"
+                  Margin="0,10,0,0">
+                <TextBox Grid.Column="0"
+                         Watermark="Topic"
+                         Classes="CodeText"
+                         Text="{Binding Topic}" />
+                <Button Background="Green"
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        Command="{Binding Publish}"
+                        IsDefault="True">
+                    <StackPanel>
+                        <Image Source="/Assets/Icons/email_go.png" />
+                        <TextBlock Text="Publish" />
+                    </StackPanel>
+                </Button>
             </Grid>
         </StackPanel>
 
         <TabControl Grid.Row="1">
+
+            <!-- The payload tab -->
             <TabItem Header="Payload">
-                <Grid RowDefinitions="Auto,*">
+                <Grid RowDefinitions="Auto,*"
+                      Margin="0,10,0,0">
                     <StackPanel>
-                        <StackPanel Orientation="Horizontal">
+                        <!-- The content type -->
+                        <TextBox Watermark="Content type"
+                                 Margin="0,10,0,0"
+                                 Text="{Binding ContentType, Mode=TwoWay}" />
+
+                        <!-- The payload format indicator -->
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,10,0,0">
                             <StackPanel.Styles>
                                 <Style Selector="RadioButton">
-                                    <Setter Property="Margin" Value="0,0,10,0" />
+                                    <Setter Property="Margin"
+                                            Value="0,0,10,0" />
                                 </Style>
                             </StackPanel.Styles>
-                            <RadioButton Content="Unspecified" IsChecked="{Binding PayloadFormatIndicator.IsUnspecified}" />
-                            <RadioButton Content="Unspecified (Base64 string)" IsChecked="{Binding PayloadFormatIndicator.IsUnspecifiedBase64String}" />
-                            <RadioButton Content="Unspecified (File path)" IsChecked="{Binding PayloadFormatIndicator.IsUnspecifiedFilePath}" />
-                            <RadioButton Content="Character data" IsChecked="{Binding PayloadFormatIndicator.IsCharacterData}" />
+                            <Label Margin="0,0,10,0"
+                                   VerticalAlignment="Center"
+                                   FontWeight="SemiBold">
+                                Payload format indicator:
+                            </Label>
+                            <RadioButton Content="Unspecified"
+                                         IsChecked="{Binding PayloadFormatIndicator.IsUnspecified}" />
+                            <RadioButton Content="Unspecified (Base64 string)"
+                                         IsChecked="{Binding PayloadFormatIndicator.IsUnspecifiedBase64String}" />
+                            <RadioButton Content="Unspecified (File path)"
+                                         IsChecked="{Binding PayloadFormatIndicator.IsUnspecifiedFilePath}" />
+                            <RadioButton Content="Character data"
+                                         IsChecked="{Binding PayloadFormatIndicator.IsCharacterData}" />
                         </StackPanel>
-
-                        <!-- The content type -->
-                        <TextBox Watermark="Content type" Margin="0,10,0,0" Text="{Binding ContentType, Mode=TwoWay}" />
-
-                        <Separator />
                     </StackPanel>
 
 
                     <!-- The payload -->
-                    <TextBox Watermark="Payload" Grid.Row="1" Classes="CodeText" AcceptsReturn="True"
-                             Text="{Binding Path=Payload, Mode=TwoWay}" VerticalAlignment="Stretch" />
+                    <TextBox Watermark="Payload"
+                             Grid.Row="1"
+                             Margin="0,10,0,0"
+                             Classes="CodeText"
+                             AcceptsReturn="True"
+                             Text="{Binding Path=Payload, Mode=TwoWay}"
+                             VerticalAlignment="Stretch" />
 
                 </Grid>
             </TabItem>
 
+            <!-- The settings tab -->
             <TabItem Header="Settings">
                 <StackPanel>
-                    <Label Classes="ValueHeader" Content="Quality of Service level" />
-                    <qualityOfServiceLevel:QualityOfServiceLevelSelectorView
-                        DataContext="{Binding QualityOfServiceLevel}" />
 
-                    <Label Classes="ValueHeader" Content="Retain" />
-                    <CheckBox IsChecked="{Binding Retain}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto"
+                          Margin="0,10,0,0"
+                          RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
 
-                    <Label Classes="ValueHeader" Content="Message expiry interval" />
-                    <TextBlock>A value of 0 means no expiration.</TextBlock>
-                    <NumericUpDown Value="{Binding MessageExpiryInterval}" Minimum="0" Maximum="4294967295" />
-                    
-                    <Label Classes="ValueHeader" Content="Topic alias" />
-                    <TextBlock>A value of 0 means no topic alias.</TextBlock>
-                    <NumericUpDown Value="{Binding TopicAlias}" Minimum="0" Maximum="4294967295" />
+                        <!-- QoS -->
+                        <Label Classes="caption"
+                               Grid.Column="0"
+                               Grid.Row="0"
+                               Content="Quality of service (QoS) level" />
+                        <qualityOfServiceLevel:QualityOfServiceLevelSelectorView Grid.Column="1"
+                                                                                 Grid.Row="0"
+                                                                                 DataContext="{Binding QualityOfServiceLevel}" />
+                        <!-- Retain -->
+                        <Label Classes="caption"
+                               Grid.Column="0"
+                               Grid.Row="1"
+                               Content="Retain" />
+                        <CheckBox Grid.Column="1"
+                                  Grid.Row="1"
+                                  IsChecked="{Binding Retain}" />
+
+                        <!-- Message Expiry Interval -->
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Classes="caption"
+                               Content="Message expiry interval" />
+                        <NumericUpDown Value="{Binding MessageExpiryInterval}"
+                                       Minimum="0"
+                                       Grid.Row="2"
+                                       Grid.Column="1"
+                                       Maximum="4294967295" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="2"
+                                   Classes="note">
+                            A value of 0 means no expiration.
+                        </TextBlock>
+
+                        <!-- Topic Alias -->
+                        <Label Classes="caption"
+                               Grid.Column="0"
+                               Grid.Row="3"
+                               Content="Topic alias" />
+                        <NumericUpDown Grid.Column="1"
+                                       Grid.Row="3"
+                                       Value="{Binding TopicAlias}"
+                                       Minimum="0"
+                                       Maximum="65535" />
+                        <TextBlock Grid.Column="2"
+                                   Grid.Row="3"
+                                   Classes="note">
+                            A value of 0 means no topic alias.
+                        </TextBlock>
+
+                        <!-- Subscription identifier -->
+                        <Label Classes="caption"
+                               Grid.Column="0"
+                               Grid.Row="4"
+                               Content="Subscription identifier" />
+                        <NumericUpDown Grid.Column="1"
+                                       Grid.Row="4"
+                                       Value="{Binding SubscriptionIdentifier}"
+                                       Minimum="0"
+                                       Maximum="4294967295" />
+                        <TextBlock Grid.Column="2"
+                                   Grid.Row="4"
+                                   Classes="note">
+                            A value of 0 means no subscription identifier.
+                        </TextBlock>
+                    </Grid>
+
                 </StackPanel>
             </TabItem>
 
             <TabItem Header="User Properties" />
 
         </TabControl>
-        
+
         <Separator Grid.Row="2" />
 
-        
         <StackPanel Grid.Row="3">
             <Label>Response</Label>
-            <TextBlock Text="{Binding Response.ReasonCode}"></TextBlock>
-            
+            <TextBlock Text="{Binding Response.ReasonCode}" />
+
             <Label>Reason string</Label>
-            <TextBlock Text="{Binding Response.ReasonString}"></TextBlock>
+            <TextBlock Text="{Binding Response.ReasonString}" />
         </StackPanel>
     </Grid>
 </UserControl>

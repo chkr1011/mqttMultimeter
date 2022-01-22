@@ -1,0 +1,52 @@
+<Window x:Class="MQTTnet.App.Main.MainWindowView"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:main="clr-namespace:MQTTnet.App.Main"
+        Title="MQTTnet App"
+        d:DataContext="{d:DesignInstance main:MainViewModel}"
+        d:DesignHeight="450"
+        d:DesignWidth="800"
+        mc:Ignorable="d">
+
+    <TabControl x:Name="TabControl"
+                Classes="sidebar">
+        <TabControl.Items>
+            <TabItem Content="{Binding ConnectionPage}">
+                <TabItem.Header>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Grid.Column="0"
+                                   Text="CONNECTION" />
+                        <ContentPresenter Content="{Binding ConnectionPage.Header}" Grid.Column="1" />
+                    </Grid>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem Header="SUBSCRIPTIONS"
+                     Content="{Binding SubscriptionsPage}" />
+            <TabItem Header="PUBLISH"
+                     Content="{Binding PublishPage}" />
+            <TabItem Header="PACKET INSPECTOR"
+                     Content="{Binding PacketInspectorPage}" />
+            <TabItem Header="INFO"
+                     Content="{Binding InfoPage}" />
+        </TabControl.Items>
+
+        <!-- <TabControl.ItemTemplate> -->
+        <!--     <DataTemplate> -->
+        <!--         <ContentControl HorizontalAlignment="Stretch" -->
+        <!--                         HorizontalContentAlignment="Stretch" -->
+        <!--                         Content="{Binding Header}" /> -->
+        <!--     </DataTemplate> -->
+        <!-- </TabControl.ItemTemplate> -->
+
+        <TabControl.ContentTemplate>
+            <DataTemplate>
+                <Border>
+                    <ContentPresenter Content="{Binding #TabControl.SelectedContent}" />
+                </Border>
+            </DataTemplate>
+        </TabControl.ContentTemplate>
+    </TabControl>
+
+</Window>

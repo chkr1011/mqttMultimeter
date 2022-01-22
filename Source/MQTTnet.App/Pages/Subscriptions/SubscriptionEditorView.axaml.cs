@@ -18,7 +18,10 @@ public class SubscriptionEditorView : Window
         {
             var viewModel = (SubscriptionEditorViewModel) DataContext!;
 
-            viewModel.Completed += (___, ____) => { Close(); };
+            viewModel.Completed += (___, ____) =>
+            {
+                Close();
+            };
 
             //this.FindControl<TextBox>("TextBoxTopic").Focus();
         };

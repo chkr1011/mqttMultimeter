@@ -5,8 +5,7 @@ namespace MQTTnet.App.Controls;
 
 public sealed class AppTabControl : TabControl
 {
-    public static readonly StyledProperty<object?> CustomHeaderContentProperty =
-        AvaloniaProperty.Register<TabControl, object?>(nameof(TabStripPlacement));
+    public static readonly StyledProperty<object?> CustomHeaderContentProperty = AvaloniaProperty.Register<TabControl, object?>(nameof(TabStripPlacement));
 
     public object? CustomHeaderContent
     {
