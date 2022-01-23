@@ -2,7 +2,7 @@ using Avalonia;
 
 namespace MQTTnet.App;
 
-internal static class Program
+static class Program
 {
     public static AppBuilder BuildAvaloniaApp()
     {

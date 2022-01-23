@@ -2,19 +2,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:common="using:MQTTnet.App.Common"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.ConnectionPageHeaderView">
     <DockPanel LastChildFill="True">
 
-        <Border DockPanel.Dock="Right" CornerRadius="5" Background="Green" Margin="10,0,0,0" IsVisible="{Binding IsConnected}">
-            <TextBlock Text="Connected" FontSize="12" Margin="5" VerticalAlignment="Center" Foreground="White" />
+        <Border DockPanel.Dock="Right"
+                CornerRadius="5"
+                Background="Green"
+                Margin="10,0,0,0"
+                IsVisible="{Binding IsConnected}">
+            <TextBlock Text="Connected"
+                       FontSize="12"
+                       Margin="5"
+                       VerticalAlignment="Center"
+                       Foreground="White" />
         </Border>
 
-        <Border DockPanel.Dock="Right" CornerRadius="5" Background="Red" Margin="10,0,0,0"
-                IsVisible="{Binding IsConnected, Converter={x:Static common:DefaultConverters.BooleanInverter}}">
-            <TextBlock Text="Not connected" FontSize="12" Margin="5" VerticalAlignment="Center" Foreground="White" />
+        <Border DockPanel.Dock="Right"
+                CornerRadius="5"
+                Background="Red"
+                Margin="10,0,0,0"
+                IsVisible="{Binding !IsConnected}">
+            <TextBlock Text="Not connected"
+                       FontSize="12"
+                       Margin="5"
+                       VerticalAlignment="Center"
+                       Foreground="White" />
         </Border>
-        
+
     </DockPanel>
 </UserControl>

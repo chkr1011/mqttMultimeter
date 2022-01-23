@@ -18,7 +18,8 @@
                     <Grid ColumnDefinitions="*,Auto">
                         <TextBlock Grid.Column="0"
                                    Text="CONNECTION" />
-                        <ContentPresenter Content="{Binding ConnectionPage.Header}" Grid.Column="1" />
+                        <ContentPresenter Content="{Binding ConnectionPage.Header}"
+                                          Grid.Column="1" />
                     </Grid>
                 </TabItem.Header>
             </TabItem>

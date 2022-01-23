@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using MQTTnet.Adapter;
-using MQTTnet.App.Client.Service;
 using MQTTnet.App.Common;
 using MQTTnet.App.Common.ObjectDump;
+using MQTTnet.App.Services.Mqtt;
 
 namespace MQTTnet.App.Pages.Connection;
 
@@ -15,12 +15,12 @@ public sealed class ConnectionPageViewModel : BaseViewModel
     public ConnectionPageViewModel(MqttClientService mqttClientService)
     {
         _mqttClientService = mqttClientService;
-        
+
         var timer = new DispatcherTimer(TimeSpan.FromSeconds(0.5), DispatcherPriority.Normal, TimerCallback);
         timer.Start();
     }
 
-    public ConnectionPageHeaderViewModel Header { get; } = new(); 
+    public ConnectionPageHeaderViewModel Header { get; } = new();
 
     public bool IsConnecting
     {

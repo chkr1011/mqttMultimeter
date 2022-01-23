@@ -16,7 +16,7 @@ public class SubscriptionEditorView : Window
 
         DataContextChanged += (_, __) =>
         {
-            var viewModel = (SubscriptionEditorViewModel) DataContext!;
+            var viewModel = (SubscriptionEditorViewModel)DataContext!;
 
             viewModel.Completed += (___, ____) =>
             {

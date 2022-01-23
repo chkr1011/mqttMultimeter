@@ -11,7 +11,7 @@ public sealed class ReceivedApplicationMessageDetailsViewModel : BaseViewModel
         Timestamp = DateTime.Now;
         Topic = message.Topic;
         PayloadLength = message.Payload?.Length ?? 0;
-        QualityOfServiceLevel = $"{(int) message.QualityOfServiceLevel} ({message.QualityOfServiceLevel})";
+        QualityOfServiceLevel = $"{(int)message.QualityOfServiceLevel} ({message.QualityOfServiceLevel})";
 
         PayloadInspector = new BufferInspectorViewModel();
         PayloadInspector.Dump(message.Payload ?? Array.Empty<byte>());

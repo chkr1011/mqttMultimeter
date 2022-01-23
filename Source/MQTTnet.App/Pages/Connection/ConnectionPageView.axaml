@@ -36,7 +36,7 @@
             <Button Content="Connect"
                     IsDefault="True"
                     Margin="0,0,10,0"
-                    IsEnabled="{Binding IsConnecting, Converter={x:Static common:DefaultConverters.BooleanInverter}}"
+                    IsEnabled="{Binding !IsConnecting}"
                     Command="{Binding Connect}" />
             <Button Content="Disconnect"
                     Command="{Binding Disconnect}" />

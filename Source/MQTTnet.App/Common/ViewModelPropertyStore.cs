@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace MQTTnet.App.Common;
 
-internal sealed class ViewModelPropertyStore
+sealed class ViewModelPropertyStore
 {
     readonly Dictionary<string, object> _values = new();
 
@@ -10,7 +10,7 @@ internal sealed class ViewModelPropertyStore
     {
         if (_values.TryGetValue(propertyName, out var value))
         {
-            return (TValue) value;
+            return (TValue)value;
         }
 
         return default!;
@@ -18,15 +18,19 @@ internal sealed class ViewModelPropertyStore
 
     public bool SetValue<TValue>(string propertyName, TValue value)
     {
+        if (!_values.TryGetValue(propertyName, out var existingValue))
+        {
+            // The value is new. No further checks are required.
+            _values[propertyName] = value!;
+            return true;
+        }
+
         var equalityComparer = EqualityComparer<TValue>.Default;
 
-        if (_values.TryGetValue(propertyName, out var existingValue))
+        if (equalityComparer.Equals(value, (TValue)existingValue))
         {
-            if (equalityComparer.Equals(value, (TValue) existingValue))
-                // The value already exists and has the same value.
-            {
-                return false;
-            }
+            // The value already exists and has the same value.
+            return false;
         }
 
         if (equalityComparer.Equals(value, default))

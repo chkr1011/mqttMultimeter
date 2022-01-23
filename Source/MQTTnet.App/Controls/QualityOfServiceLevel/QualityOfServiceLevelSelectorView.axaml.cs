@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnet.App.Common.QualityOfServiceLevel;
+namespace MQTTnet.App.Controls.QualityOfServiceLevel;
 
 public class QualityOfServiceLevelSelectorView : UserControl
 {

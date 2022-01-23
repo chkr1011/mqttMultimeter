@@ -1,7 +1,8 @@
 ﻿using System;
+using MQTTnet.App.Common;
 using MQTTnet.Protocol;
 
-namespace MQTTnet.App.Common.QualityOfServiceLevel;
+namespace MQTTnet.App.Controls.QualityOfServiceLevel;
 
 public sealed class QualityOfServiceLevelSelectorViewModel : BaseViewModel
 {
@@ -52,24 +53,9 @@ public sealed class QualityOfServiceLevelSelectorViewModel : BaseViewModel
 
         set
         {
-            IsLevel0 = false;
-            IsLevel1 = false;
-            IsLevel2 = false;
-
-            if (value == MqttQualityOfServiceLevel.AtMostOnce)
-            {
-                IsLevel0 = true;
-            }
-
-            if (value == MqttQualityOfServiceLevel.AtLeastOnce)
-            {
-                IsLevel1 = true;
-            }
-
-            if (value == MqttQualityOfServiceLevel.ExactlyOnce)
-            {
-                IsLevel2 = true;
-            }
+            IsLevel0 = value == MqttQualityOfServiceLevel.AtMostOnce;
+            IsLevel1 = value == MqttQualityOfServiceLevel.AtLeastOnce;
+            IsLevel2 = value == MqttQualityOfServiceLevel.ExactlyOnce;
         }
     }
 }

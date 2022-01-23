@@ -181,7 +181,7 @@ public sealed class BufferInspectorViewModel : BaseViewModel
 
             if (@byte > 0x0020 && @byte < 0x007F)
             {
-                previewBuilder.Append((char) @byte);
+                previewBuilder.Append((char)@byte);
             }
             else
             {
@@ -255,7 +255,7 @@ public sealed class BufferInspectorViewModel : BaseViewModel
         _byteValue.SetValue(buffer[0]);
         _booleanValue.SetValue(buffer[0] > 0);
         _bitsValue.SetValue(GetBits(buffer[0]));
-        _asciiCharValue.SetValue((char) buffer[0]);
+        _asciiCharValue.SetValue((char)buffer[0]);
 
         if (buffer.Length < 2)
         {

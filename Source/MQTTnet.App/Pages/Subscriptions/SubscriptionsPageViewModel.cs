@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Threading;
-using MQTTnet.App.Client.Service;
 using MQTTnet.App.Common;
+using MQTTnet.App.Services.Mqtt;
 using MQTTnet.Client;
 
 namespace MQTTnet.App.Pages.Subscriptions;

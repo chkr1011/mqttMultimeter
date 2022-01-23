@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="/Pages/Publish/PublishItemListItem.axaml"></ResourceInclude>
+                <ResourceInclude Source="/Pages/Publish/PublishItemListItem.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -31,24 +31,38 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0">
-                <Button ToolTip.Tip="Add publish item" Classes="ToolBarButton" Command="{Binding AddItem}">
-                    <Image Source="/Assets/Icons/add.png" />
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="0"
+                        Margin="0">
+                <Button ToolTip.Tip="Add publish item"
+                        Classes="tool_bar_button"
+                        Command="{Binding AddItem}">
+                    <Image Source="/Assets/Icons/Add_16x.png" />
                 </Button>
-                <Button ToolTip.Tip="Remove all publish items" Classes="ToolBarButton" Command="{Binding ClearItems}">
-                    <Image Source="/Assets/Icons/bin.png" />
+                <Button ToolTip.Tip="Remove all publish items"
+                        Classes="tool_bar_button"
+                        Command="{Binding ClearItems}">
+                    <Image Source="/Assets/Icons/ClearCollection_16x.png" />
                 </Button>
             </StackPanel>
 
-            <ListBox Background="Transparent" ItemTemplate="{StaticResource PublishItemViewModelListItem}" Grid.Row="1" SelectedItem="{Binding SelectedItem}" Items="{Binding Items}" Grid.Column="0"
+            <ListBox Background="Transparent"
+                     ItemTemplate="{StaticResource PublishItemViewModelListItem}"
+                     Grid.Row="1"
+                     SelectedItem="{Binding SelectedItem}"
+                     Items="{Binding Items}"
+                     Grid.Column="0"
                      x:Name="PART_PublishItems" />
         </Grid>
 
         <!-- The splitter -->
-        <GridSplitter Grid.Column="1" Width="1" />
+        <GridSplitter Grid.Column="1"
+                      Width="1" />
 
         <!-- The selected publish. -->
-        <ContentPresenter Margin="10" Grid.Column="2" Content="{Binding ElementName=PART_PublishItems, Path=SelectedItem}" />
+        <ContentPresenter Margin="10"
+                          Grid.Column="2"
+                          Content="{Binding ElementName=PART_PublishItems, Path=SelectedItem}" />
     </Grid>
 
 </UserControl>

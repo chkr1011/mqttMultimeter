@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MQTTnet.App.Common;
-using MQTTnet.App.Common.QualityOfServiceLevel;
+using MQTTnet.App.Controls.QualityOfServiceLevel;
+using MQTTnet.App.Controls.UserProperties;
 
 namespace MQTTnet.App.Pages.Publish;
 
 public sealed class PublishItemViewModel : BaseViewModel
 {
-    public PublishItemViewModel()
+    public PublishItemViewModel(PublishPageViewModel owner)
     {
+        Owner = owner ?? throw new ArgumentNullException(nameof(owner));
+
         Payload = string.Empty;
         PayloadFormatIndicator.IsUnspecified = true;
-    }
 
-    public event EventHandler? DeleteRequested;
+        Response.UserProperties.IsReadOnly = true;
+    }
 
     public event Func<PublishItemViewModel, Task>? PublishRequested;
 
@@ -35,6 +38,8 @@ public sealed class PublishItemViewModel : BaseViewModel
         set => SetValue(value);
     }
 
+    public PublishPageViewModel Owner { get; }
+
     public string Payload
     {
         get => GetValue<string>();
@@ -46,6 +51,12 @@ public sealed class PublishItemViewModel : BaseViewModel
     public QualityOfServiceLevelSelectorViewModel QualityOfServiceLevel { get; } = new();
 
     public PublishResponseViewModel Response { get; } = new();
+
+    public string ResponseTopic
+    {
+        get => GetValue<string>();
+        set => SetValue(value);
+    }
 
     public bool Retain
     {
@@ -71,10 +82,7 @@ public sealed class PublishItemViewModel : BaseViewModel
         set => SetValue(value);
     }
 
-    public void Delete()
-    {
-        DeleteRequested?.Invoke(this, EventArgs.Empty);
-    }
+    public UserPropertiesViewModel UserProperties { get; } = new();
 
     public Task Publish()
     {

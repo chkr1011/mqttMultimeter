@@ -1,0 +1,84 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:userProperties="clr-namespace:MQTTnet.App.Controls.UserProperties"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance userProperties:UserPropertiesViewModel}"
+             x:Class="MQTTnet.App.Controls.UserProperties.UserPropertiesView">
+    <Grid RowDefinitions="Auto,Auto,*"
+          Grid.IsSharedSizeScope="True">
+
+        <!-- The buttons -->
+        <StackPanel Grid.Row="0" IsVisible="{Binding !IsReadOnly}"
+                    Orientation="Horizontal">
+            <Button Classes="tool_bar_button"
+                    ToolTip.Tip="Add user property"
+                    Command="{Binding AddItem}">
+                <Image Source="/Assets/Icons/Add_16x.png" />
+            </Button>
+            <Button Classes="tool_bar_button"
+                    ToolTip.Tip="Remove all user properties"
+                    Command="{Binding ClearItems}">
+                <Image Source="/Assets/Icons/ClearCollection_16x.png" />
+            </Button>
+        </StackPanel>
+
+        <!-- The column headers -->
+        <Grid Grid.Row="1"
+              ColumnDefinitions="*,30,2*">
+            <Grid.Styles>
+                <Style Selector="Label">
+                    <Setter Property="FontWeight"
+                            Value="Bold" />
+                </Style>
+            </Grid.Styles>
+            <Label Grid.Column="0"
+                   Content="Name" />
+            <Label Grid.Column="2"
+                   Content="Value" />
+        </Grid>
+
+        <!-- The rows -->
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl Items="{Binding Items}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type userProperties:UserPropertyViewModel}">
+                        <Grid Margin="0,5"
+                              ColumnDefinitions="*,30,2*,Auto">
+
+                            <!-- The name. -->
+                            <TextBox Grid.Column="0"
+                                     IsReadOnly="{Binding Owner.IsReadOnly}"
+                                     Text="{Binding Name, Mode=TwoWay}" />
+
+                            <TextBlock Grid.Column="1"
+                                       Margin="10,0"
+                                       FontWeight="Bold"
+                                       FontSize="18">=</TextBlock>
+
+                            <!-- The value. -->
+                            <TextBox Grid.Column="2"
+                                     IsReadOnly="{Binding Owner.IsReadOnly}"
+                                     Text="{Binding Value, Mode=TwoWay}" />
+
+                            <!-- The context actions -->
+                            <StackPanel Grid.Column="3"
+                                        Margin="10,0,0,0">
+                                <Button Classes="tool_bar_button"
+                                        Command="{Binding Owner.RemoveItem}"
+                                        CommandParameter="{Binding .}">
+                                    <Image Source="/Assets/Icons/Remove_16x.png"
+                                           ToolTip.Tip="Remove user property" />
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

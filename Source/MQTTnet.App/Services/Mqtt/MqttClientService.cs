@@ -9,7 +9,7 @@ using MQTTnet.Client;
 using MQTTnet.Diagnostics;
 using MQTTnet.Internal;
 
-namespace MQTTnet.App.Client.Service;
+namespace MQTTnet.App.Services.Mqtt;
 
 public sealed class MqttClientService : IMqttPacketInspector
 {
@@ -104,7 +104,7 @@ public sealed class MqttClientService : IMqttPacketInspector
 
         ThrowIfNotConnected();
 
-        var applicationMessage = new MqttApplicationMessageBuilder().WithTopic(item.Topic)
+        var applicationMessageBuilder = new MqttApplicationMessageBuilder().WithTopic(item.Topic)
             .WithQualityOfServiceLevel(item.QualityOfServiceLevel.Value)
             .WithRetainFlag(item.Retain)
             .WithMessageExpiryInterval(item.MessageExpiryInterval)
@@ -112,10 +112,22 @@ public sealed class MqttClientService : IMqttPacketInspector
             .WithPayloadFormatIndicator(item.PayloadFormatIndicator.ToPayloadFormatIndicator())
             .WithPayload(item.PayloadFormatIndicator.ToPayload(item.Payload))
             .WithSubscriptionIdentifier(item.SubscriptionIdentifier)
-            .WithTopicAlias(item.TopicAlias)
-            .Build();
+            .WithResponseTopic(item.ResponseTopic);
 
-        return _mqttClient.PublishAsync(applicationMessage);
+        if (item.TopicAlias > 0)
+        {
+            applicationMessageBuilder.WithTopicAlias(item.TopicAlias);
+        }
+
+        foreach (var userProperty in item.UserProperties.Items)
+        {
+            if (!string.IsNullOrEmpty(userProperty.Name))
+            {
+                applicationMessageBuilder.WithUserProperty(userProperty.Name, userProperty.Value);
+            }
+        }
+
+        return _mqttClient.PublishAsync(applicationMessageBuilder.Build());
     }
 
     public void RegisterMessageInspectorHandler(Action<ProcessMqttPacketContext> handler)

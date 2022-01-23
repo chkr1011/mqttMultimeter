@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using MQTTnet.App.Client.Service;
 using MQTTnet.App.Common;
+using MQTTnet.App.Services.Mqtt;
 using MQTTnet.Client;
 
 namespace MQTTnet.App.Pages.Subscriptions;
@@ -47,7 +47,7 @@ public sealed class SubscriptionEditorViewModel : BaseWizardViewModel
                 {
                     Topic = resultItem.TopicFilter.Topic,
                     Response = resultItem.ResultCode.ToString(),
-                    ResponseCode = ((int) resultItem.ResultCode).ToString(),
+                    ResponseCode = ((int)resultItem.ResultCode).ToString(),
                     Succeeded = resultItem.ResultCode <= MqttClientSubscribeResultCode.GrantedQoS2
                 };
 

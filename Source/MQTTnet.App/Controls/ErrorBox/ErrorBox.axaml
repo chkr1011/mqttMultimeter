@@ -16,6 +16,7 @@
     <Grid RowDefinitions="*,Auto,Auto">
         <TextBlock FontSize="18"
                    FontWeight="Light"
+                   TextWrapping="Wrap"
                    HorizontalAlignment="Center"
                    Grid.Row="0"
                    Text="{Binding Message}" />
@@ -34,9 +35,7 @@
                         Orientation="Horizontal">
                 <Button Click="OnButtonCloseClicked">Copy to clipboard</Button>
                 <Button Margin="10,0,0,0"
-                        Click="OnButtonCloseClicked">
-                    OK
-                </Button>
+                        Click="OnButtonCloseClicked">OK</Button>
             </StackPanel>
         </Border>
     </Grid>

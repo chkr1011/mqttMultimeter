@@ -58,7 +58,7 @@ public abstract class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorIn
 
     protected void SetErrors(string propertyName, params string[] errors)
     {
-        SetErrors(propertyName, (ICollection) errors);
+        SetErrors(propertyName, (ICollection)errors);
     }
 
     protected void SetErrors(string propertyName, ICollection? errors)

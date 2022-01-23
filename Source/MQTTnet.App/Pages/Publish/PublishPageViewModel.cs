@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using MQTTnet.App.Client.Service;
 using MQTTnet.App.Common;
+using MQTTnet.App.Services.Mqtt;
 
 namespace MQTTnet.App.Pages.Publish;
 
@@ -30,13 +30,16 @@ public sealed class PublishPageViewModel : BaseViewModel
 
     public void AddItem()
     {
-        var newItem = new PublishItemViewModel
+        var newItem = new PublishItemViewModel(this)
         {
             Name = "Untitled"
         };
 
+        // Prepare the UI with at lest one user property.
+        // It will not be send when the name is empty.
+        newItem.UserProperties.AddItem();
+
         newItem.PublishRequested += OnItemPublishRequested;
-        newItem.DeleteRequested += OnItemDeleteRequested;
 
         Items.Add(newItem);
         SelectedItem = newItem;
@@ -48,9 +51,14 @@ public sealed class PublishPageViewModel : BaseViewModel
         SelectedItem = null;
     }
 
-    void OnItemDeleteRequested(object? sender, EventArgs e)
+    public void RemoveItem(PublishItemViewModel item)
     {
-        Items.Remove((PublishItemViewModel) sender);
+        if (item == null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+
+        Items.Remove(item);
     }
 
     async Task OnItemPublishRequested(PublishItemViewModel arg)

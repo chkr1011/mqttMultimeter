@@ -23,12 +23,12 @@ public sealed class MainViewModel : BaseViewModel
     }
 
     public ConnectionPageViewModel ConnectionPage { get; }
-    
-    public SubscriptionsPageViewModel SubscriptionsPage { get; }
-    
-    public PublishPageViewModel PublishPage { get; }
-    
-    public PacketInspectorPageViewModel PacketInspectorPage { get; }
-    
+
     public InfoPageViewModel InfoPage { get; }
+
+    public PacketInspectorPageViewModel PacketInspectorPage { get; }
+
+    public PublishPageViewModel PublishPage { get; }
+
+    public SubscriptionsPageViewModel SubscriptionsPage { get; }
 }

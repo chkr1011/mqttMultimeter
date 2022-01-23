@@ -3,12 +3,11 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Controls.Remote;
 using Avalonia.Markup.Xaml;
-using MQTTnet.App.Client.Service;
 using MQTTnet.App.Common;
 using MQTTnet.App.Controls.ErrorBox;
 using MQTTnet.App.Main;
+using MQTTnet.App.Services.Mqtt;
 using SimpleInjector;
 
 namespace MQTTnet.App;
@@ -89,8 +88,7 @@ public sealed class App : Application
 
         var window = new ErrorBox
         {
-            DataContext = viewModel,
-            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+            DataContext = viewModel, WindowStartupLocation = WindowStartupLocation.CenterOwner
         };
 
         window.ShowDialog(MainWindowView.Instance);

@@ -1,5 +1,5 @@
 ﻿using MQTTnet.App.Common;
-using MQTTnet.App.Common.QualityOfServiceLevel;
+using MQTTnet.App.Controls.QualityOfServiceLevel;
 using MQTTnet.Protocol;
 
 namespace MQTTnet.App.Pages.Subscriptions;

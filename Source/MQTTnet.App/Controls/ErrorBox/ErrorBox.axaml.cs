@@ -9,15 +9,15 @@ public sealed class ErrorBox : Window
 {
     public static readonly StyledProperty<string> MessageProperty = AvaloniaProperty.Register<ErrorBox, string>(nameof(Message));
 
+    public ErrorBox()
+    {
+        InitializeComponent();
+    }
+
     public string Message
     {
         get => GetValue(MessageProperty);
         set => SetValue(MessageProperty, value);
-    }
-    
-    public ErrorBox()
-    {
-        InitializeComponent();
     }
 
     void InitializeComponent()

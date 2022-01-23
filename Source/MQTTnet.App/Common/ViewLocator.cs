@@ -5,7 +5,7 @@ using SimpleInjector;
 
 namespace MQTTnet.App.Common;
 
-internal sealed class ViewLocator : IDataTemplate
+sealed class ViewLocator : IDataTemplate
 {
     readonly Container _container;
 
@@ -23,7 +23,7 @@ internal sealed class ViewLocator : IDataTemplate
 
         if (type != null)
         {
-            var control = (Control) Activator.CreateInstance(type)!;
+            var control = (Control)Activator.CreateInstance(type)!;
             control.DataContext = data;
             return control;
         }

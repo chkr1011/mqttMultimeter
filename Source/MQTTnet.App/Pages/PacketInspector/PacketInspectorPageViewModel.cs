@@ -1,6 +1,6 @@
 ﻿using Avalonia.Threading;
-using MQTTnet.App.Client.Service;
 using MQTTnet.App.Common;
+using MQTTnet.App.Services.Mqtt;
 using MQTTnet.Diagnostics;
 
 namespace MQTTnet.App.Pages.PacketInspector;
