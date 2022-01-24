@@ -9,9 +9,9 @@
 
 # MQTTnet App
 
-MQTTnet App is a high performance .NET application for MQTT communication testing and analysing. The protocol implementation is based on the _MQTTnet_ project.
+MQTTnet App is a high performance .NET application for MQTT communication testing and analysing. 
 
-The application is based on Avalonia for UI rendering.
+The protocol implementation is based on the _MQTTnet_ project. The application uses Avalonia for UI rendering.
 
 ## Features
 
@@ -21,6 +21,7 @@ The application is based on Avalonia for UI rendering.
 * Inspection of raw MQTT messages.
 * Publishing of messages.
 * Subscribing of messages.
+* MQTTv5 features like user properties etc.
 
 ## Screenshots
 
@@ -30,9 +31,15 @@ The application is based on Avalonia for UI rendering.
 <br/>
 </p>
 
-## Supported oerating systems
+## Supported operating systems
 
-* Windows x86/x64
+| OS | x86 | x64 | ARM | ARM64
+|-|-|-|-|-|
+| Windows | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Linux | | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| macOS |  | :heavy_check_mark: |  |  |
+
+* Windows x86, x64, ARM, ARM64
 * Linux x86/x64/ARM
 * macOS x86/x64
 
@@ -51,7 +58,7 @@ Also additions and updates in the Wiki are welcome.
 
 MIT License
 
-MQTTnet.App Copyright (c) 2020-2021 Christian Kratky
+MQTTnet.App Copyright (c) 2020-2022 Christian Kratky
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
