@@ -34,28 +34,6 @@
         <GridSplitter Grid.Column="1"
                       ResizeBehavior="PreviousAndNext"
                       ResizeDirection="Columns" />
-
-        <!-- The received application messages -->
-        <Grid Grid.Column="2"
-              RowDefinitions="Auto,*">
-            <StackPanel Grid.Row="0">
-                <Border>
-                    <Button Command="{Binding Clear}">Clear</Button>
-                </Border>
-            </StackPanel>
-
-            <ListBox Grid.Row="1"
-                     Items="{Binding ReceivedApplicationMessages}"
-                     SelectedItem="{Binding ReceivedApplicationMessages.SelectedItem}" />
-        </Grid>
-
-        <GridSplitter Grid.Column="3"
-                      ResizeBehavior="PreviousAndNext"
-                      ResizeDirection="Columns" />
-
-        <!-- The details view -->
-        <subscriptions:ReceivedApplicationMessageDetailsView Grid.Column="4"
-                                                             DataContext="{Binding ReceivedApplicationMessages.SelectedItem.Details}" />
     </Grid>
 
 

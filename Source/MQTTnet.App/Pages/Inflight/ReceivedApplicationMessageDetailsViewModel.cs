@@ -2,7 +2,7 @@
 using MQTTnet.App.Common;
 using MQTTnet.App.Common.BufferInspector;
 
-namespace MQTTnet.App.Pages.Subscriptions;
+namespace MQTTnet.App.Pages.Inflight;
 
 public sealed class ReceivedApplicationMessageDetailsViewModel : BaseViewModel
 {

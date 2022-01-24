@@ -22,9 +22,6 @@
         <AvaloniaResource Include="Assets\**" />
         <None Remove="Assets\Icons\arrow_down.png" />
         <None Remove="Assets\Icons\arrow_up.png" />
-        <Folder Include="Pages\Monitor\" />
-        <Folder Include="Pages\Analasys\" />
-        <Folder Include="Pages\Status\" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.11" />
@@ -32,6 +29,7 @@
         <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
         <PackageReference Include="Avalonia.Diagnostics" Version="0.10.11" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
+        <PackageReference Include="MessagePack" Version="2.3.85" />
         <PackageReference Include="MQTTnet" Version="4.0.0-preview1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="SimpleInjector" Version="5.3.2" />
@@ -57,6 +55,10 @@
         </Compile>
         <Compile Update="Pages\Subscriptions\SubscriptionOptionsPageView.axaml.cs">
             <DependentUpon>SubscriptionOptionsPageView.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Pages\Inflight\ReceivedApplicationMessageDetailsView.axaml.cs">
+          <DependentUpon>ReceivedApplicationMessageDetailsView.axaml</DependentUpon>
+          <SubType>Code</SubType>
         </Compile>
     </ItemGroup>
     <ItemGroup>

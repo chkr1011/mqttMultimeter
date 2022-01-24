@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:common="using:MQTTnet.App.Common.BufferInspector"
+             xmlns:inflight="clr-namespace:MQTTnet.App.Pages.Inflight"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance inflight:ReceivedApplicationMessageViewModel}"
+             x:Class="MQTTnet.App.Pages.Inflight.ReceivedApplicationMessageDetailsView">
+
+    <Grid RowDefinitions="Auto,*"
+          Margin="10,5,10,10">
+
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*"
+              RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+
+            <!-- The topic -->
+            <Label Content="Topic"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Classes="caption" />
+            <TextBox IsReadOnly="True"
+                     Grid.Row="1"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     Classes="value code_text"
+                     Text="{Binding Topic}" />
+
+            <!-- The timestamp -->
+            <Label Content="Timestamp"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   Classes="caption" />
+            <TextBox IsReadOnly="True"
+                     Grid.Column="1"
+                     Grid.Row="2"
+                     Classes="value code_text"
+                     Text="{Binding Timestamp}" />
+
+            <!-- The Quality of Service level -->
+            <Label Grid.Row="3"
+                   Grid.Column="0"
+                   Content="Quality of Service level (QoS)"
+                   Classes="caption" />
+            <TextBox IsReadOnly="True"
+                     Grid.Row="3"
+                     Classes="code_text"
+                     Grid.Column="1"
+                     Text="{Binding Source.QualityOfServiceLevel}" />
+
+            <!-- The payload -->
+            <Label Grid.Row="4"
+                   Grid.Column="0"
+                   Content="Payload"
+                   Classes="caption" />
+
+        </Grid>
+
+        <common:BufferInspectorView Grid.Row="1"
+                                    Buffer="{Binding Source.Payload}" />
+    </Grid>
+
+</UserControl>

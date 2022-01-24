@@ -23,10 +23,26 @@
                     </Grid>
                 </TabItem.Header>
             </TabItem>
+            <TabItem Content="{Binding PublishPage}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Assets/Icons/Send_16x.png" />
+                        <Label Margin="10,0,0,0"
+                               Content="Publish" />
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
             <TabItem Header="Subscribe"
                      Content="{Binding SubscriptionsPage}" />
-            <TabItem Header="Publish"
-                     Content="{Binding PublishPage}" />
+            <TabItem Content="{Binding InflightPage}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Assets/Icons/MessageQueue_16x.png" />
+                        <Label Margin="10,0,0,0"
+                               Content="Inflight" />
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
             <TabItem Header="Packet Inspection"
                      Content="{Binding PacketInspectorPage}" />
             <TabItem Header="Info"

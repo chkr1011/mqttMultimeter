@@ -11,24 +11,6 @@
              xmlns:qualityOfServiceLevel="clr-namespace:MQTTnet.App.Controls.QualityOfServiceLevel"
              xmlns:groupBox="clr-namespace:MQTTnet.App.Controls.GroupBox"
              mc:Ignorable="d">
-    <UserControl.Styles>
-        <Style Selector="Label.caption">
-            <Setter Property="FontWeight"
-                    Value="SemiBold" />
-            <Setter Property="Margin"
-                    Value="0,5,20,5" />
-        </Style>
-        <Style Selector=":is(Control).value">
-            <Setter Property="Margin"
-                    Value="0,5,0,5" />
-        </Style>
-        <Style Selector="TextBlock.note">
-            <Setter Property="FontWeight"
-                    Value="SemiLight" />
-            <Setter Property="Margin"
-                    Value="10,5,0,5" />
-        </Style>
-    </UserControl.Styles>
     <Grid RowDefinitions="Auto,2*,*">
 
         <StackPanel Grid.Row="0">

@@ -3,13 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Styles>
         <FluentTheme Mode="Dark" />
-        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml" />
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
 
         <StyleInclude Source="/Styles/GridSplitter.axaml" />
         <StyleInclude Source="/Styles/Button.axaml" />
         <StyleInclude Source="/Styles/Sidebar.axaml" />
         <StyleInclude Source="/Controls/GroupBox/GroupBox.axaml" />
+        <StyleInclude Source="/Common/BufferInspector/BufferInspectorView.axaml" />
 
+        <Style Selector="Label.caption">
+                <Setter Property="FontWeight"
+                        Value="SemiBold" />
+                <Setter Property="Margin"
+                        Value="0,5,20,5" />
+        </Style>
+        <Style Selector=":is(Control).value">
+                <Setter Property="Margin"
+                        Value="0,5,0,5" />
+        </Style>
+        <Style Selector="TextBlock.note">
+                <Setter Property="FontWeight"
+                        Value="SemiLight" />
+                <Setter Property="Margin"
+                        Value="10,5,0,5" />
+        </Style>
+        
         <Style Selector="ItemsPresenter">
             <Setter Property="(KeyboardNavigation.TabNavigation)"
                     Value="Continue" />
@@ -136,8 +154,8 @@
             <Setter Property="FontFamily"
                     Value="Consolas" />
         </Style>
-
-        <Style Selector="TextBlock.CodeText">
+        
+        <Style Selector="TextBlock.code_text">
             <Setter Property="FontFamily"
                     Value="Consolas" />
         </Style>
