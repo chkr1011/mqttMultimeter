@@ -1,0 +1,22 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <GridSplitter />
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="GridSplitter">
+        <Setter Property="Width"
+                Value="1" />
+        <Setter Property="MinWidth"
+                Value="1" />
+        <Setter Property="MaxWidth"
+                Value="1" />
+    </Style>
+
+    <Style Selector="GridSplitter:pointerover">
+        <Setter Property="Background"
+                Value="Red" />
+    </Style>
+</Styles>

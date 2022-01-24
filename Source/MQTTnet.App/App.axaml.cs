@@ -5,97 +5,117 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using MQTTnet.App.Common;
+using MQTTnet.App.Controls.ErrorBox;
 using MQTTnet.App.Main;
-using MQTTnet.App.Services.Client;
+using MQTTnet.App.Services.Mqtt;
 using SimpleInjector;
 
-namespace MQTTnet.App
+namespace MQTTnet.App;
+
+public sealed class App : Application
 {
-    public sealed class App : Application
+    static Window? _mainWindow;
+    readonly Container _container;
+
+    public App()
     {
-        readonly Container _container;
+        _container = new Container();
+        _container.Options.ResolveUnregisteredConcreteTypes = true;
+        _container.RegisterSingleton<MqttClientService>();
 
-        static Window? _mainWindow;
+        var viewLocator = new ViewLocator(_container);
+        DataTemplates.Add(viewLocator);
+    }
 
-        public App()
+    public override void Initialize()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
+
+    public override void OnFrameworkInitializationCompleted()
+    {
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            _container = new Container();
-            _container.Options.ResolveUnregisteredConcreteTypes = true;
-            _container.RegisterSingleton<MqttClientService>();
-
-            var viewLocator = new ViewLocator(_container);
-            DataTemplates.Add(viewLocator);
-        }
-
-        public static Task ShowMessage(string message)
-        {
-            if (message == null) throw new ArgumentNullException(nameof(message));
-
-            var host = new Window
+            _mainWindow = new MainWindowView
             {
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                CanResize = false,
-                SizeToContent = SizeToContent.WidthAndHeight,
-                ShowInTaskbar = false,
-                ShowActivated = true,
-                Content = message,
-                DataContext = message
+                DataContext = _container.GetInstance<MainViewModel>()
             };
 
-            return host.ShowDialog(MainWindowView.Instance);
+            desktop.MainWindow = _mainWindow;
         }
 
-        public static void ShowException(Exception exception)
+        base.OnFrameworkInitializationCompleted();
+    }
+
+    public static Task ShowDialog(Window window)
+    {
+        if (window == null)
         {
-            ShowMessage(exception.ToString());
-
-            //ShowDialog(new TextViewModel(exception.ToString()));
+            throw new ArgumentNullException(nameof(window));
         }
 
-        public static Task ShowDialog(Window window)
+        return window.ShowDialog(MainWindowView.Instance);
+    }
+
+    public static Task ShowDialog(IDialogViewModel content)
+    {
+        if (content == null)
         {
-            if (window == null) throw new ArgumentNullException(nameof(window));
-
-            return window.ShowDialog(MainWindowView.Instance);
+            throw new ArgumentNullException(nameof(content));
         }
 
-        public static Task ShowDialog(IDialogViewModel content)
+        var host = new Window
         {
-            if (content == null) throw new ArgumentNullException(nameof(content));
+            Title = content.Title,
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+            CanResize = false,
+            SizeToContent = SizeToContent.WidthAndHeight,
+            ShowInTaskbar = false,
+            ShowActivated = true,
+            Content = content,
+            DataContext = content
+        };
 
-            var host = new Window
-            {
-                Title = content.Title,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                CanResize = false,
-                SizeToContent = SizeToContent.WidthAndHeight,
-                ShowInTaskbar = false,
-                ShowActivated = true,
-                Content = content,
-                DataContext = content
-            };
+        return host.ShowDialog(_mainWindow);
+    }
 
-            return host.ShowDialog(_mainWindow);
-        }
-
-        public override void Initialize()
+    public static void ShowException(Exception exception)
+    {
+        var viewModel = new ErrorBoxViewModel
         {
-            AvaloniaXamlLoader.Load(this);
-        }
+            Message = exception.Message, Exception = exception.ToString()
+        };
 
-        public override void OnFrameworkInitializationCompleted()
+        var window = new ErrorBox
         {
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                _mainWindow = new MainWindowView
-                {
-                    DataContext = _container.GetInstance<MainWindowViewModel>()
-                };
+            DataContext = viewModel, WindowStartupLocation = WindowStartupLocation.CenterOwner
+        };
 
-                desktop.MainWindow = _mainWindow;
-            }
+        window.ShowDialog(MainWindowView.Instance);
 
-            base.OnFrameworkInitializationCompleted();
+        //ShowMessage(exception.ToString());
+
+        //ShowDialog(new TextViewModel(exception.ToString()));
+    }
+
+    public static Task ShowMessage(string message)
+    {
+        if (message == null)
+        {
+            throw new ArgumentNullException(nameof(message));
         }
+
+        var host = new Window
+        {
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+            CanResize = false,
+            SizeToContent = SizeToContent.WidthAndHeight,
+            ShowInTaskbar = false,
+            ShowActivated = true,
+            Content = message,
+            DataContext = message
+        };
+
+        return host.ShowDialog(MainWindowView.Instance);
     }
 }

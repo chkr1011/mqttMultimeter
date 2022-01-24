@@ -1,17 +1,16 @@
-﻿namespace MQTTnet.App.Common
-{
-    public abstract class BaseWizardViewModel : BaseViewModel
-    {
-        BaseViewModel? _activePage;
+﻿namespace MQTTnet.App.Common;
 
-        public BaseViewModel? ActivePage
+public abstract class BaseWizardViewModel : BaseViewModel
+{
+    BaseViewModel? _activePage;
+
+    public BaseViewModel? ActivePage
+    {
+        get => _activePage;
+        protected set
         {
-            get => _activePage;
-            protected set
-            {
-                _activePage = value;
-                OnPropertyChanged();
-            }
+            _activePage = value;
+            OnPropertyChanged();
         }
     }
 }

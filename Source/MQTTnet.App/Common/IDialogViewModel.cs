@@ -1,7 +1,6 @@
-namespace MQTTnet.App.Common
+namespace MQTTnet.App.Common;
+
+public interface IDialogViewModel
 {
-    public interface IDialogViewModel
-    {
-        public string Title { get; set; }
-    }
+    public string Title { get; set; }
 }

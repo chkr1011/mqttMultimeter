@@ -4,81 +4,78 @@ using Avalonia.Threading;
 using MQTTnet.Adapter;
 using MQTTnet.App.Common;
 using MQTTnet.App.Common.ObjectDump;
-using MQTTnet.App.Services.Client;
+using MQTTnet.App.Services.Mqtt;
 
-namespace MQTTnet.App.Pages.Connection
+namespace MQTTnet.App.Pages.Connection;
+
+public sealed class ConnectionPageViewModel : BaseViewModel
 {
-    public sealed class ConnectionPageViewModel : BasePageViewModel
+    readonly MqttClientService _mqttClientService;
+
+    public ConnectionPageViewModel(MqttClientService mqttClientService)
     {
-        readonly ConnectionPageHeaderViewModel _header = new ConnectionPageHeaderViewModel();
+        _mqttClientService = mqttClientService;
 
-        readonly MqttClientService _mqttClientService;
+        var timer = new DispatcherTimer(TimeSpan.FromSeconds(0.5), DispatcherPriority.Normal, TimerCallback);
+        timer.Start();
+    }
 
-        public ConnectionPageViewModel(MqttClientService mqttClientService)
+    public ConnectionPageHeaderViewModel Header { get; } = new();
+
+    public bool IsConnecting
+    {
+        get => GetValue<bool>();
+        private set => SetValue(value);
+    }
+
+    public MqttNetOptionsViewModel MqttNetOptions { get; } = new();
+
+    public ProtocolOptionsViewModel ProtocolOptions { get; } = new();
+
+    public ObjectDumpViewModel Result { get; } = new();
+
+    public ServerOptionsViewModel ServerOptions { get; } = new();
+
+    public SessionOptionsViewModel SessionOptions { get; } = new();
+
+    public async Task Connect()
+    {
+        try
         {
-            _mqttClientService = mqttClientService;
+            IsConnecting = true;
 
-            Header = _header;
+            var result = await _mqttClientService.Connect(this);
 
-            var timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, TimerCallback);
-            timer.Start();
+            Result.Dump(result);
         }
-
-        public ProtocolOptionsViewModel ProtocolOptions { get; } = new ProtocolOptionsViewModel();
-
-        public ServerOptionsViewModel ServerOptions { get; } = new ServerOptionsViewModel();
-
-        public SessionOptionsViewModel SessionOptions { get; } = new SessionOptionsViewModel();
-
-        public MqttNetOptionsViewModel MqttNetOptions { get; } = new MqttNetOptionsViewModel();
-
-        public ObjectDumpViewModel Result { get; } = new ObjectDumpViewModel();
-
-        public bool IsConnecting
+        catch (MqttConnectingFailedException exception)
         {
-            get => GetValue<bool>();
-            private set => SetValue(value);
+            Result.Dump(exception.Result);
         }
-
-        public async Task Connect()
+        catch (Exception exception)
         {
-            try
-            {
-                IsConnecting = true;
-
-                var result = await _mqttClientService.Connect(this);
-
-                Result.Dump(result);
-            }
-            catch (MqttConnectingFailedException exception)
-            {
-                Result.Dump(exception.Result);
-            }
-            catch (Exception exception)
-            {
-                App.ShowException(exception);
-            }
-            finally
-            {
-                IsConnecting = false;
-            }
+            App.ShowException(exception);
         }
-
-        public async Task Disconnect()
+        finally
         {
-            try
-            {
-                await _mqttClientService.Disconnect();
-            }
-            catch (Exception exception)
-            {
-                App.ShowException(exception);
-            }
+            IsConnecting = false;
         }
+    }
 
-        void TimerCallback(object? sender, EventArgs e)
+    public async Task Disconnect()
+    {
+        try
         {
-            _header.IsConnected = _mqttClientService.IsConnected;
+            await _mqttClientService.Disconnect();
         }
+        catch (Exception exception)
+        {
+            App.ShowException(exception);
+        }
+    }
+
+    void TimerCallback(object? sender, EventArgs e)
+    {
+        Header.IsConnected = _mqttClientService.IsConnected;
     }
 }

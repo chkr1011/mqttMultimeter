@@ -1,190 +1,195 @@
-<Application
-    x:Class="MQTTnet.App.App"
-    xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MQTTnet.App"
-    xmlns:bufferInspector="using:MQTTnet.App.Common.BufferInspector">
-  <Application.Styles>
-    <FluentTheme Mode="Dark" />
+<Application x:Class="MQTTnet.App.App"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Styles>
+        <FluentTheme Mode="Dark" />
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml" />
 
-    <Style Selector="TextBlock">
-      <Setter Property="FontFamily" Value="Segoe UI" />
-      <Setter Property="VerticalAlignment" Value="Center" />
-    </Style>
-    
-    <Style Selector="Label">
-      <Setter Property="FontFamily" Value="Segoe UI" />
-      <Setter Property="VerticalAlignment" Value="Center" />
-    </Style>
+        <StyleInclude Source="/Styles/GridSplitter.axaml" />
+        <StyleInclude Source="/Styles/Button.axaml" />
+        <StyleInclude Source="/Styles/Sidebar.axaml" />
+        <StyleInclude Source="/Controls/GroupBox/GroupBox.axaml" />
 
-    <Style Selector="Button">
-      <Setter Property="MinWidth" Value="80" />
-      <Setter Property="HorizontalContentAlignment" Value="Center" />
-      <Setter Property="MinHeight" Value="26" />
-      <Setter Property="VerticalContentAlignment" Value="Center" />
-    </Style>
+        <Style Selector="ItemsPresenter">
+            <Setter Property="(KeyboardNavigation.TabNavigation)"
+                    Value="Continue" />
+        </Style>
 
-    <Style Selector="Button.LeftButton" />
+        <Style Selector="TabControl">
+            <Setter Property="Margin"
+                    Value="0" />
+            <Setter Property="Padding"
+                    Value="0" />
+        </Style>
 
-    <Style Selector="Button.RightButton">
-      <Setter Property="Margin" Value="10,0,0,0" />
-    </Style>
+        <Style Selector="TabItem">
+            <Setter Property="Margin"
+                    Value="0,0,10,0" />
+            <Setter Property="Padding"
+                    Value="0" />
+        </Style>
 
-    <Style Selector="Label.ValueHeader">
-      <Setter Property="FontWeight" Value="Bold" />
-      <Setter Property="FontSize" Value="14" />
-      <Setter Property="Margin" Value="0,10,0,0" />
-    </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily"
+                    Value="Segoe UI" />
+            <Setter Property="FontSize"
+                    Value="12" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+        </Style>
 
-    <Style Selector="Label.FirstValueHeader">
-      <Setter Property="Margin" Value="0,0,0,0" />
-    </Style>
+        <Style Selector="TextBox">
+            <Setter Property="FontFamily"
+                    Value="Segoe UI" />
+            <Setter Property="FontSize"
+                    Value="12" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+        </Style>
 
-    <Style Selector="Separator">
-      <Setter Property="HorizontalAlignment" Value="Stretch" />
-      <Setter Property="Height" Value="1" />
-      <Setter Property="Background" Value="Gray" />
-      <Setter Property="Margin" Value="0,10" />
-    </Style>
+        <Style Selector="TextBox[AcceptsReturn=True]">
+            <Setter Property="VerticalContentAlignment"
+                    Value="Top" />
+        </Style>
 
-    <Style Selector="GridSplitter">
-      <Setter Property="Width" Value="1" />
-      <Setter Property="Margin" Value="2,0" />
-      <Setter Property="Background" Value="Transparent" />
-    </Style>
+        <Style Selector="Label">
+            <Setter Property="FontFamily"
+                    Value="Segoe UI" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+        </Style>
 
-    <Style Selector="Label.OptionLabel">
-      <Setter Property="VerticalAlignment" Value="Center" />
-      <Setter Property="Margin" Value="0,0,10,10" />
-    </Style>
+        <Style Selector="RadioButton">
+            <Setter Property="FontFamily"
+                    Value="Segoe UI" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="FontSize"
+                    Value="12" />
+        </Style>
 
-    <Style Selector="Label.OptionGroupLabel">
-      <Setter Property="VerticalAlignment" Value="Center" />
-      <Setter Property="FontWeight" Value="SemiBold" />
-      <Setter Property="FontSize" Value="16" />
-    </Style>
+        <Style Selector="Button">
+            <Setter Property="MinWidth"
+                    Value="80" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Center" />
+            <Setter Property="MinHeight"
+                    Value="26" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+        </Style>
 
-    <Style Selector=":is(Control).OptionValue">
-      <Setter Property="Margin" Value="0,0,0,10" />
-    </Style>
+        <Style Selector="Button.LeftButton" />
 
-    <Style Selector="TextBox.CodeText">
-      <Setter Property="FontFamily" Value="Consolas" />
-    </Style>
+        <Style Selector="Button.RightButton">
+            <Setter Property="Margin"
+                    Value="10,0,0,0" />
+        </Style>
 
-    <Style Selector="TextBlock.CodeText">
-      <Setter Property="FontFamily" Value="Consolas" />
-    </Style>
+        <Style Selector="Label.ValueHeader">
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Margin"
+                    Value="0,10,0,0" />
+        </Style>
 
-    <Style Selector="ListBoxItem">
-      <Setter Property="Padding" Value="0" />
-      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-    </Style>
+        <Style Selector="Label.FirstValueHeader">
+            <Setter Property="Margin"
+                    Value="0,0,0,0" />
+        </Style>
 
-    <Style Selector="Border.Badge">
-      <Setter Property="CornerRadius" Value="5" />
-      <Setter Property="Margin" Value="3" />
-    </Style>
+        <Style Selector="Separator">
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch" />
+            <Setter Property="Height"
+                    Value="1" />
+            <Setter Property="Background"
+                    Value="WhiteSmoke" />
+            <Setter Property="Margin"
+                    Value="0,10" />
+        </Style>
 
-    <Style Selector="Border.Badge > TextBlock">
-      <Setter Property="FontSize" Value="10" />
-      <Setter Property="Margin" Value="5,2" />
-      <Setter Property="Foreground" Value="Black" />
-    </Style>
+        <Style Selector="Label.OptionLabel">
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="Margin"
+                    Value="0,0,10,10" />
+        </Style>
 
-    <Style Selector="Border.BadgeLength">
-      <Setter Property="Background" Value="Gold" />
-    </Style>
+        <Style Selector="Label.OptionGroupLabel">
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="FontWeight"
+                    Value="SemiBold" />
+            <Setter Property="FontSize"
+                    Value="16" />
+        </Style>
 
-    <Style Selector="Border.BadgeRetained">
-      <Setter Property="Background" Value="HotPink" />
-    </Style>
+        <Style Selector=":is(Control).OptionValue">
+            <Setter Property="Margin"
+                    Value="0,0,0,10" />
+        </Style>
 
-    <Style Selector="Border.BadgeInbound">
-      <Setter Property="Background" Value="Green" />
-    </Style>
+        <Style Selector="TextBox.code_text">
+            <Setter Property="FontFamily"
+                    Value="Consolas" />
+        </Style>
 
-    <Style Selector="Border.BadgeOutbound">
-      <Setter Property="Background" Value="Blue" />
-    </Style>
+        <Style Selector="TextBlock.CodeText">
+            <Setter Property="FontFamily"
+                    Value="Consolas" />
+        </Style>
 
+        <Style Selector="ListBoxItem">
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Stretch" />
+        </Style>
 
-    <Style Selector="Window">
-      <Setter Property="Background" Value="#4A4647" />
-    </Style>
+        <Style Selector="Border.Badge">
+            <Setter Property="CornerRadius"
+                    Value="5" />
+            <Setter Property="Margin"
+                    Value="3" />
+        </Style>
 
-    <Style Selector="TabControl.sidebar">
-      <Setter Property="TabStripPlacement" Value="Left" />
-      <Setter Property="Padding" Value="8 0 0 0" />
-      <Setter Property="Background" Value="#2E2D2C" />
-      <Setter Property="Template">
-        <ControlTemplate>
-          <Border>
-            <Grid ColumnDefinitions="Auto,*" RowDefinitions="*">
+        <Style Selector="Border.Badge > TextBlock">
+            <Setter Property="FontSize"
+                    Value="10" />
+            <Setter Property="Margin"
+                    Value="5,2" />
+            <Setter Property="Foreground"
+                    Value="Black" />
+        </Style>
 
-              <DockPanel Grid.Row="0" Grid.Column="0">
-                
-                <ScrollViewer
-                    Name="PART_ScrollViewer"
-                    Background="{TemplateBinding Background}"
-                    HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
-                    VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+        <Style Selector="Border.BadgeLength">
+            <Setter Property="Background"
+                    Value="Gold" />
+        </Style>
 
-                  <ItemsPresenter
-                      Name="PART_ItemsPresenter"
-                      ItemTemplate="{TemplateBinding ItemTemplate}"
-                      Items="{TemplateBinding Items}"
-                      ItemsPanel="{TemplateBinding ItemsPanel}" />
-                </ScrollViewer>
+        <Style Selector="Border.BadgeRetained">
+            <Setter Property="Background"
+                    Value="HotPink" />
+        </Style>
 
-              </DockPanel>
+        <Style Selector="Border.BadgeInbound">
+            <Setter Property="Background"
+                    Value="Green" />
+        </Style>
 
+        <Style Selector="Border.BadgeOutbound">
+            <Setter Property="Background"
+                    Value="Blue" />
+        </Style>
 
-              <ContentPresenter
-                  Name="PART_SelectedContentHost"
-                  Grid.Row="0"
-                  Grid.Column="1"
-                  HorizontalContentAlignment="Stretch"
-                  VerticalContentAlignment="Stretch"
+        <Style Selector="Window">
+            <!-- <Setter Property="Background" Value="#4A4647" /> -->
+            <Setter Property="Background"
+                    Value="#212121" />
+        </Style>
 
-                  Content="{TemplateBinding SelectedContent}"
-                  ContentTemplate="{TemplateBinding SelectedContentTemplate}" />
-
-
-
-            </Grid>
-          </Border>
-        </ControlTemplate>
-      </Setter>
-    </Style>
-
-    <Style Selector="TabControl.sidebar &gt; TabItem">
-      <Setter Property="BorderThickness" Value="10,0,0,0" />
-      <Setter Property="FontSize" Value="14" />
-      <Setter Property="Width" Value="225" />
-      <Setter Property="Margin" Value="0" />
-      <Setter Property="HorizontalAlignment" Value="Stretch" />
-      <Setter Property="Padding" Value="16" />
-      <Setter Property="VerticalContentAlignment" Value="Center" />
-    </Style>
-    <Style Selector="TabControl.sidebar &gt; TabItem:selected /template/ Border#PART_SelectedPipe">
-      <Setter Property="IsVisible" Value="False" />
-
-    </Style>
-    <Style Selector="TabControl.sidebar &gt; TabItem:pointerover">
-      <Setter Property="Opacity" Value="1" />
-    </Style>
-    <Style Selector="TabControl.sidebar &gt; TabItem:pointerover /template/ Border#PART_LayoutRoot">
-      <Setter Property="Background" Value="{DynamicResource SystemAccentColorLight1}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColorLight1}" />
-    </Style>
-    <Style Selector="TabControl.sidebar &gt; TabItem:selected">
-      <Setter Property="Opacity" Value="1" />
-      <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
-    </Style>
-    <Style Selector="TabControl.sidebar &gt; TabItem:selected /template/ Border#PART_LayoutRoot">
-      <Setter Property="Background" Value="#4A4647" />
-    </Style>
-
-  </Application.Styles>
+    </Application.Styles>
 </Application>

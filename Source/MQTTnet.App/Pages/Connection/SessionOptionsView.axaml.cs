@@ -1,19 +1,17 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnet.App.Pages.Connection
-{
-    public class SessionOptionsView : UserControl
-    {
-        public SessionOptionsView()
-        {
-            InitializeComponent();
-        }
+namespace MQTTnet.App.Pages.Connection;
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+public class SessionOptionsView : UserControl
+{
+    public SessionOptionsView()
+    {
+        InitializeComponent();
+    }
+
+    void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }

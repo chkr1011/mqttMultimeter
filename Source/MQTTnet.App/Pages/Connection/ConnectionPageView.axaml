@@ -4,37 +4,52 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:common="using:MQTTnet.App.Common"
              xmlns:objectDump="using:MQTTnet.App.Common.ObjectDump"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.ConnectionPageView">
 
-  <Grid ColumnDefinitions="*, Auto" RowDefinitions="*,Auto" Margin="0,10,0,10">
+    <Grid ColumnDefinitions="*, Auto"
+          RowDefinitions="*,Auto"
+          Margin="0,10,0,10">
 
-    <!-- The area with all options. -->
-    <ScrollViewer Grid.Row="0">
+        <!-- The area with all options. -->
+        <ScrollViewer Grid.Row="0">
 
-      <StackPanel Grid.Column="0" Grid.IsSharedSizeScope="True">
-        <ContentControl Content="{Binding ProtocolOptions}" />
-        <Separator />
-        <ContentControl Content="{Binding ServerOptions}" />
-        <Separator />
-        <ContentControl Content="{Binding SessionOptions}" />
-        <Separator />
-        <ContentControl Content="{Binding MqttNetOptions}" />
-        <Separator />
-      </StackPanel>
+            <StackPanel Grid.IsSharedSizeScope="True">
+                <ContentControl Content="{Binding ProtocolOptions}" />
+                <Separator />
+                <ContentControl Content="{Binding ServerOptions}" />
+                <Separator />
+                <ContentControl Content="{Binding SessionOptions}" />
+                <Separator />
+                <ContentControl Content="{Binding MqttNetOptions}" />
+                <Separator />
+            </StackPanel>
 
-    </ScrollViewer>
+        </ScrollViewer>
 
-    <!-- The buttons area.-->
-    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-      <Button Content="Connect" IsDefault="True" Margin="0,0,10,0" IsEnabled="{Binding IsConnecting, Converter={x:Static common:DefaultConverters.BooleanInverter}}" Command="{Binding Connect}" />
-      <Button Content="Disconnect" Command="{Binding Disconnect}" />
-    </StackPanel>
+        <!-- The buttons area.-->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="Connect"
+                    IsDefault="True"
+                    Margin="0,0,10,0"
+                    IsEnabled="{Binding !IsConnecting}"
+                    Command="{Binding Connect}" />
+            <Button Content="Disconnect"
+                    Command="{Binding Disconnect}" />
+        </StackPanel>
 
-    <StackPanel Grid.Column="1" Orientation="Horizontal">
-      <Separator VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="1"></Separator>
-      <objectDump:ObjectDumpView Margin="10,0,0,0" DataContext="{Binding Result}" />
-    </StackPanel>
+        <StackPanel Grid.Column="1"
+                    Orientation="Horizontal">
+            <Separator VerticalAlignment="Stretch"
+                       HorizontalAlignment="Left"
+                       Width="1" />
+            <objectDump:ObjectDumpView Margin="10,0,0,0"
+                                       DataContext="{Binding Result}" />
+        </StackPanel>
 
-  </Grid>
+    </Grid>
 </UserControl>

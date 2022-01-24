@@ -8,21 +8,28 @@
              xmlns:bufferInspector="using:MQTTnet.App.Common.BufferInspector"
              x:Class="MQTTnet.App.Pages.PacketInspector.PacketInspectorPageView">
 
-  <Grid ColumnDefinitions="2*,Auto,*">
+    <Grid ColumnDefinitions="2*,Auto,*">
 
-    <Grid Grid.Column="0" RowDefinitions="Auto,*">
-      <Border Grid.Row="0" Background="#ff0078d7">
-        <StackPanel Margin="2">
-          <Button Content="Clear" Command="{Binding Clear}" />
-        </StackPanel>
-      </Border>
+        <Grid Grid.Column="0"
+              RowDefinitions="Auto,*">
+            <Border Grid.Row="0"
+                    Background="#ff0078d7">
+                <StackPanel Margin="2">
+                    <Button Content="Clear"
+                            Command="{Binding Clear}" />
+                </StackPanel>
+            </Border>
 
-      <ListBox Grid.Row="1"  Items="{Binding Packets}" SelectedItem="{Binding Packets.SelectedItem}" />
+            <ListBox Grid.Row="1"
+                     Items="{Binding Packets}"
+                     SelectedItem="{Binding Packets.SelectedItem}" />
+        </Grid>
+
+        <GridSplitter Grid.Column="1"
+                      ResizeBehavior="PreviousAndNext" />
+
+        <bufferInspector:BufferInspectorView Grid.Column="2"
+                                             DataContext="{Binding Packets.SelectedItem.ContentInspector}" />
     </Grid>
-
-    <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" />
-
-    <bufferInspector:BufferInspectorView Grid.Column="2" DataContext="{Binding Packets.SelectedItem.ContentInspector}" />
-  </Grid>
 
 </UserControl>

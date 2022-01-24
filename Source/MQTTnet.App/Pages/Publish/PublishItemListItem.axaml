@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:publish="clr-namespace:MQTTnet.App.Pages.Publish">
+
+    <DataTemplate x:Key="PublishItemViewModelListItem"
+                  DataType="{x:Type publish:PublishItemViewModel}">
+
+        <Grid ColumnDefinitions="*,Auto"
+              Margin="10">
+
+            <StackPanel>
+                <TextBlock Text="{Binding Name}"
+                           FontSize="12" />
+
+                <TextBlock Margin="0,5,0,0"
+                           TextTrimming="CharacterEllipsis"
+                           ToolTip.Tip="{Binding Topic}"
+                           FontSize="10"
+                           Foreground="LightGray"
+                           Classes="CodeText"
+                           Text="{Binding Topic}" />
+            </StackPanel>
+
+            <Button Grid.Column="1"
+                    Margin="10,0,0,0"
+                    Classes="tool_bar_button"
+                    ToolTip.Tip="Delete publish item"
+                    Command="{Binding Owner.RemoveItem}"
+                    CommandParameter="{Binding .}">
+                <Image Source="/Assets/Icons/Remove_16x.png" />
+            </Button>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

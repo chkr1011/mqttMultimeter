@@ -1,21 +1,20 @@
-﻿namespace MQTTnet.App.Common
+﻿namespace MQTTnet.App.Common;
+
+public sealed class TextViewModel : BaseViewModel
 {
-    public sealed class TextViewModel : BaseViewModel
+    public TextViewModel()
     {
-        public TextViewModel()
-        {
-            Text = string.Empty;
-        }
+        Text = string.Empty;
+    }
 
-        public TextViewModel(string text)
-        {
-            Text = text;
-        }
+    public TextViewModel(string text)
+    {
+        Text = text;
+    }
 
-        public string Text
-        {
-            get => GetValue<string>();
-            set => SetValue(value);
-        }
+    public string Text
+    {
+        get => GetValue<string>();
+        set => SetValue(value);
     }
 }

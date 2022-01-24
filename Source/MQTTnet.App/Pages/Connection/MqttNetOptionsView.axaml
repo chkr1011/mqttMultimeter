@@ -2,27 +2,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Connection.MqttNetOptionsView">
-  <StackPanel>
-    <Label Classes="OptionGroupLabel" Grid.Row="0" Grid.ColumnSpan="2" Content="MQTTnet library options" />
+    <StackPanel>
+        <Label Classes="OptionGroupLabel"
+               Content="MQTTnet library options" />
 
-    <Grid>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" SharedSizeGroup="Column0" />
-        <ColumnDefinition Width="*" />
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"
+                                  SharedSizeGroup="Column0" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-      <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="0" Content="Enable logging" />
-      <CheckBox Classes="OptionValue" Grid.Column="1" Grid.Row="0" IsChecked="{Binding EnableLogging}" />
+            <Label Classes="OptionLabel"
+                   Grid.Column="0"
+                   Grid.Row="0"
+                   Content="Enable logging" />
+            <CheckBox Classes="OptionValue"
+                      Grid.Column="1"
+                      Grid.Row="0"
+                      IsChecked="{Binding EnableLogging}" />
 
-      <Label Classes="OptionLabel" Grid.Column="0" Grid.Row="1" Content="Enable packet inspection" />
-      <CheckBox Classes="OptionValue" Grid.Column="1" Grid.Row="1" IsChecked="{Binding EnablePacketInspection}" />
-    </Grid>
+            <Label Classes="OptionLabel"
+                   Grid.Column="0"
+                   Grid.Row="1"
+                   Content="Enable packet inspection" />
+            <CheckBox Classes="OptionValue"
+                      Grid.Column="1"
+                      Grid.Row="1"
+                      IsChecked="{Binding EnablePacketInspection}" />
+        </Grid>
 
-  </StackPanel>
+    </StackPanel>
 </UserControl>

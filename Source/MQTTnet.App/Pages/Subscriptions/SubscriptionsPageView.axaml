@@ -3,46 +3,60 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:subscriptions="using:MQTTnet.App.Pages.Subscriptions"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Subscriptions.SubscriptionsPageView">
 
-  <Grid ColumnDefinitions="*,Auto,2*,Auto,*">
-    <!-- The subscriptions -->
-    <Grid Grid.Column="0" RowDefinitions="Auto,*">
+    <Grid ColumnDefinitions="*,Auto,2*,Auto,*">
+        <!-- The subscriptions -->
+        <Grid Grid.Column="0"
+              RowDefinitions="Auto,*">
 
-      <StackPanel Grid.Row="0">
-        <Button Command="{Binding CreateSubscription}">Subscribe</Button>
-      </StackPanel>
+            <StackPanel Grid.Row="0">
+                <Button Command="{Binding CreateSubscription}">Subscribe</Button>
+            </StackPanel>
 
-      <ListBox Grid.Row="1" Items="{Binding Subscriptions}">
-        <ListBox.Styles>
-          <Style Selector="ListBoxItem">
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-          </Style>
-        </ListBox.Styles>
-      </ListBox>
+            <ListBox Grid.Row="1"
+                     Items="{Binding Subscriptions}">
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem">
+                        <Setter Property="Padding"
+                                Value="0" />
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch" />
+                    </Style>
+                </ListBox.Styles>
+            </ListBox>
 
+        </Grid>
+
+        <GridSplitter Grid.Column="1"
+                      ResizeBehavior="PreviousAndNext"
+                      ResizeDirection="Columns" />
+
+        <!-- The received application messages -->
+        <Grid Grid.Column="2"
+              RowDefinitions="Auto,*">
+            <StackPanel Grid.Row="0">
+                <Border>
+                    <Button Command="{Binding Clear}">Clear</Button>
+                </Border>
+            </StackPanel>
+
+            <ListBox Grid.Row="1"
+                     Items="{Binding ReceivedApplicationMessages}"
+                     SelectedItem="{Binding ReceivedApplicationMessages.SelectedItem}" />
+        </Grid>
+
+        <GridSplitter Grid.Column="3"
+                      ResizeBehavior="PreviousAndNext"
+                      ResizeDirection="Columns" />
+
+        <!-- The details view -->
+        <subscriptions:ReceivedApplicationMessageDetailsView Grid.Column="4"
+                                                             DataContext="{Binding ReceivedApplicationMessages.SelectedItem.Details}" />
     </Grid>
-
-    <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" />
-
-    <!-- The received application messages -->
-    <Grid Grid.Column="2" RowDefinitions="Auto,*">
-      <StackPanel Grid.Row="0">
-        <Border>
-          <Button Command="{Binding Clear}">Clear</Button>
-        </Border>
-      </StackPanel>
-
-      <ListBox Grid.Row="1" Items="{Binding ReceivedApplicationMessages}" SelectedItem="{Binding ReceivedApplicationMessages.SelectedItem}" />
-    </Grid>
-
-    <GridSplitter Grid.Column="3" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" />
-
-    <!-- The details view -->
-    <subscriptions:ReceivedApplicationMessageDetailsView Grid.Column="4" DataContext="{Binding ReceivedApplicationMessages.SelectedItem.Details}" />
-  </Grid>
 
 
 </UserControl>

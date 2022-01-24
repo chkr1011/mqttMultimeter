@@ -1,19 +1,18 @@
 ﻿using MQTTnet.App.Common;
 
-namespace MQTTnet.App.Pages.Connection
-{
-    public sealed class MqttNetOptionsViewModel : BaseViewModel
-    {
-        public bool EnablePacketInspection
-        {
-            get => GetValue<bool>();
-            set => SetValue(value);
-        }
+namespace MQTTnet.App.Pages.Connection;
 
-        public bool EnableLogging
-        {
-            get => GetValue<bool>();
-            set => SetValue(value);
-        }
+public sealed class MqttNetOptionsViewModel : BaseViewModel
+{
+    public bool EnableLogging
+    {
+        get => GetValue<bool>();
+        set => SetValue(value);
+    }
+
+    public bool EnablePacketInspection
+    {
+        get => GetValue<bool>();
+        set => SetValue(value);
     }
 }

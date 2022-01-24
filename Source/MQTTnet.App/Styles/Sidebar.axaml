@@ -1,0 +1,97 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="TabControl.sidebar">
+        <Setter Property="TabStripPlacement"
+                Value="Left" />
+        <Setter Property="Padding"
+                Value="8 0 0 0" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="#262626">
+                    <Grid ColumnDefinitions="Auto,Auto,*"
+                          RowDefinitions="*">
+
+                        <ScrollViewer Grid.Row="0"
+                                      Grid.Column="0"
+                                      Name="PART_ScrollViewer"
+                                      Background="{TemplateBinding Background}"
+                                      HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                                      VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+
+                            <ItemsPresenter Name="PART_ItemsPresenter"
+                                            ItemTemplate="{TemplateBinding ItemTemplate}"
+                                            Items="{TemplateBinding Items}"
+                                            ItemsPanel="{TemplateBinding ItemsPanel}" />
+                        </ScrollViewer>
+
+                        <Rectangle Grid.Column="1"
+                                   Width="1"
+                                   VerticalAlignment="Stretch"
+                                   Fill="Black" />
+
+                        <ContentPresenter Name="PART_SelectedContentHost"
+                                          Grid.Row="0"
+                                          Background="#212121"
+                                          Grid.Column="2"
+                                          HorizontalContentAlignment="Stretch"
+                                          VerticalContentAlignment="Stretch"
+                                          Content="{TemplateBinding SelectedContent}"
+                                          ContentTemplate="{TemplateBinding SelectedContentTemplate}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="TabControl.sidebar > TabItem">
+        <Setter Property="BorderThickness"
+                Value="10,0,0,0" />
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="Width"
+                Value="225" />
+        <Setter Property="Margin"
+                Value="0" />
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch" />
+        <Setter Property="Padding"
+                Value="16" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+    </Style>
+
+    <Style Selector="TabControl.sidebar > TabItem:selected /template/ Border#PART_SelectedPipe">
+        <Setter Property="IsVisible"
+                Value="False" />
+    </Style>
+
+    <Style Selector="TabControl.sidebar > TabItem:pointerover">
+        <Setter Property="Opacity"
+                Value="1" />
+    </Style>
+
+    <Style Selector="TabControl.sidebar > TabItem:pointerover /template/ Border#PART_LayoutRoot">
+        <Setter Property="Background"
+                Value="{DynamicResource SystemAccentColorLight1}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource SystemAccentColorLight1}" />
+    </Style>
+
+    <Style Selector="TabControl.sidebar > TabItem:selected">
+        <Setter Property="Opacity"
+                Value="1" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource SystemAccentColor}" />
+    </Style>
+
+    <Style Selector="TabControl.sidebar > TabItem:selected /template/ Border#PART_LayoutRoot">
+        <Setter Property="Background"
+                Value="#4A4647" />
+    </Style>
+</Styles>

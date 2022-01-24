@@ -2,36 +2,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Info.InfoPageView">
 
     <UserControl.Styles>
         <Style Selector="Label.VersionString">
-            <Setter Property="FontFamily" Value="Consolas" />
-            <Setter Property="Margin" Value="0,0,0,10" />
+            <Setter Property="FontFamily"
+                    Value="Consolas" />
+            <Setter Property="Margin"
+                    Value="0,0,0,10" />
         </Style>
     </UserControl.Styles>
 
     <StackPanel Margin="10">
-        <Label Classes="OptionGroupLabel" Content="MQTTnet.App version:" />
-        <Label Classes="VersionString" Content="{Binding MqttNetAppVersion}" />
+        <Label Classes="OptionGroupLabel"
+               Content="MQTTnet.App version:" />
+        <Label Classes="VersionString"
+               Content="{Binding MqttNetAppVersion}" />
 
-        <Label Classes="OptionGroupLabel" Content=".NET version:" />
-        <Label Classes="VersionString" Content="{Binding DotNetVersion}" />
+        <Label Classes="OptionGroupLabel"
+               Content=".NET version:" />
+        <Label Classes="VersionString"
+               Content="{Binding DotNetVersion}" />
 
-        <Label Classes="OptionGroupLabel" Content="MQTTnet version:" />
-        <Label Classes="VersionString" Content="{Binding MqttNetVersion}" />
+        <Label Classes="OptionGroupLabel"
+               Content="MQTTnet version:" />
+        <Label Classes="VersionString"
+               Content="{Binding MqttNetVersion}" />
 
-        <Label Classes="OptionGroupLabel" Content="Avalonia version:" />
-        <Label Classes="VersionString" Content="{Binding AvaloniaVersion}" />
+        <Label Classes="OptionGroupLabel"
+               Content="Avalonia version:" />
+        <Label Classes="VersionString"
+               Content="{Binding AvaloniaVersion}" />
 
-        <Label Content="Used libraries" Classes="OptionGroupLabel" />
-        <Label Content="- Avalonia"></Label>
-        <Label Content="- MQTTnet"></Label>
-        <Label Content="- Newtonsoft.Json"></Label>
-        <Label Content="- SimpleInjector"></Label>
+        <Label Content="Used libraries"
+               Classes="OptionGroupLabel" />
+        <Label Content="- Avalonia" />
+        <Label Content="- MQTTnet" />
+        <Label Content="- Newtonsoft.Json" />
+        <Label Content="- SimpleInjector" />
 
-        <Label Content="Icons" Margin="0,10,0,0" Classes="OptionGroupLabel" />
+        <Label Content="Icons"
+               Margin="0,10,0,0"
+               Classes="OptionGroupLabel" />
         <Label Content="famfamfam Silk (http://www.famfamfam.com/)" />
     </StackPanel>
 </UserControl>

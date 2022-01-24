@@ -1,9 +1,8 @@
-﻿namespace MQTTnet.App.Pages.Connection
-{
-    public enum Transport
-    {
-        TCP,
+﻿namespace MQTTnet.App.Pages.Connection;
 
-        WebSocket
-    }
+public enum Transport
+{
+    TCP,
+
+    WebSocket
 }
