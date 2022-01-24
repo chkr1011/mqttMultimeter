@@ -17,37 +17,21 @@
                 <TabItem.Header>
                     <Grid ColumnDefinitions="*,Auto">
                         <TextBlock Grid.Column="0"
-                                   Text="CONNECTION" />
+                                   Text="Connect" />
                         <ContentPresenter Content="{Binding ConnectionPage.Header}"
                                           Grid.Column="1" />
                     </Grid>
                 </TabItem.Header>
             </TabItem>
-            <TabItem Header="SUBSCRIPTIONS"
+            <TabItem Header="Subscribe"
                      Content="{Binding SubscriptionsPage}" />
-            <TabItem Header="PUBLISH"
+            <TabItem Header="Publish"
                      Content="{Binding PublishPage}" />
-            <TabItem Header="PACKET INSPECTOR"
+            <TabItem Header="Packet Inspection"
                      Content="{Binding PacketInspectorPage}" />
-            <TabItem Header="INFO"
+            <TabItem Header="Info"
                      Content="{Binding InfoPage}" />
         </TabControl.Items>
-
-        <!-- <TabControl.ItemTemplate> -->
-        <!--     <DataTemplate> -->
-        <!--         <ContentControl HorizontalAlignment="Stretch" -->
-        <!--                         HorizontalContentAlignment="Stretch" -->
-        <!--                         Content="{Binding Header}" /> -->
-        <!--     </DataTemplate> -->
-        <!-- </TabControl.ItemTemplate> -->
-
-        <TabControl.ContentTemplate>
-            <DataTemplate>
-                <Border>
-                    <ContentPresenter Content="{Binding #TabControl.SelectedContent}" />
-                </Border>
-            </DataTemplate>
-        </TabControl.ContentTemplate>
     </TabControl>
 
 </Window>

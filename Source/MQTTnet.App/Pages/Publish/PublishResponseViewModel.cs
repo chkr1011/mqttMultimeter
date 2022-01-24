@@ -14,7 +14,7 @@ public sealed class PublishResponseViewModel : BaseViewModel
 
     public int? ReasonCode
     {
-        get => GetValue<int>();
+        get => GetValue<int?>();
         set => SetValue(value);
     }
 
