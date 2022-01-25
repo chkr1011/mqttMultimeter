@@ -27,13 +27,13 @@ public sealed class MainViewModel : BaseViewModel
 
     public ConnectionPageViewModel ConnectionPage { get; }
 
+    public InflightPageViewModel InflightPage { get; }
+
+    public InfoPageViewModel InfoPage { get; }
+
+    public PacketInspectorPageViewModel PacketInspectorPage { get; }
+
     public PublishPageViewModel PublishPage { get; }
 
     public SubscriptionsPageViewModel SubscriptionsPage { get; }
-    
-    public InflightPageViewModel InflightPage { get; }
-    
-    public PacketInspectorPageViewModel PacketInspectorPage { get; }
-    
-    public InfoPageViewModel InfoPage { get; }
 }

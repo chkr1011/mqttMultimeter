@@ -1,5 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
 namespace MQTTnet.App.Pages.Inflight;
@@ -11,7 +10,7 @@ public class InflightPageView : UserControl
         InitializeComponent();
     }
 
-    private void InitializeComponent()
+    void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
     }

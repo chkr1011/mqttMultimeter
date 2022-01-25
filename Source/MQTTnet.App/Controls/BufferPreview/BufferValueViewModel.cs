@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using MQTTnet.App.Common;
 
-namespace MQTTnet.App.Common.BufferInspector;
+namespace MQTTnet.App.Controls;
 
 public sealed class BufferValueViewModel : BaseViewModel
 {
     string _value;
+
 
     public BufferValueViewModel(string name, string value = "")
     {

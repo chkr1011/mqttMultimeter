@@ -3,33 +3,39 @@ using System.IO;
 using System.Text;
 using MQTTnet.App.Common;
 using MQTTnet.Protocol;
+using ReactiveUI;
 
 namespace MQTTnet.App.Pages.Publish;
 
 public sealed class PayloadFormatIndicatorViewModel : BaseViewModel
 {
+    bool _isCharacterData;
+    bool _isUnspecified = true;
+    bool _isUnspecifiedBase64String;
+    bool _isUnspecifiedFilePath;
+
     public bool IsCharacterData
     {
-        get => GetValue<bool>();
-        set => SetValue(value);
+        get => _isCharacterData;
+        set => this.RaiseAndSetIfChanged(ref _isCharacterData, value);
     }
 
     public bool IsUnspecified
     {
-        get => GetValue<bool>();
-        set => SetValue(value);
+        get => _isUnspecified;
+        set => this.RaiseAndSetIfChanged(ref _isUnspecified, value);
     }
 
     public bool IsUnspecifiedBase64String
     {
-        get => GetValue<bool>();
-        set => SetValue(value);
+        get => _isUnspecifiedBase64String;
+        set => this.RaiseAndSetIfChanged(ref _isUnspecifiedBase64String, value);
     }
 
     public bool IsUnspecifiedFilePath
     {
-        get => GetValue<bool>();
-        set => SetValue(value);
+        get => _isUnspecifiedFilePath;
+        set => this.RaiseAndSetIfChanged(ref _isUnspecifiedFilePath, value);
     }
 
     public byte[] ToPayload(string payloadInput)

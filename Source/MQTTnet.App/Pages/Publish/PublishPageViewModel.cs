@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MQTTnet.App.Common;
 using MQTTnet.App.Services.Mqtt;
+using ReactiveUI;
 
 namespace MQTTnet.App.Pages.Publish;
 
@@ -11,10 +12,12 @@ public sealed class PublishPageViewModel : BaseViewModel
 {
     readonly MqttClientService _mqttClientService;
 
+    PublishItemViewModel? _selectedItem;
+
     public PublishPageViewModel(MqttClientService mqttClientService)
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
-        
+
         // Make sure that we start with at least one item.
         AddItem();
         SelectedItem = Items.FirstOrDefault();
@@ -24,8 +27,8 @@ public sealed class PublishPageViewModel : BaseViewModel
 
     public PublishItemViewModel? SelectedItem
     {
-        get => GetValue<PublishItemViewModel>();
-        set => SetValue(value);
+        get => _selectedItem;
+        set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
     }
 
     public void AddItem()

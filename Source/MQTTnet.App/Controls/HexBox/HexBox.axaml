@@ -1,0 +1,76 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:MQTTnet.App.Controls">
+    <Design.PreviewWith>
+        <controls:HexBox Width="300"
+                         Height="300" />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|HexBox">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="{x:Type controls:HexBox}">
+                <TextBox IsReadOnly="True"
+                         Name="PART_ContentTextBox"
+                         AcceptsReturn="True">
+                    <TextBox.Template>
+                        <ControlTemplate>
+                            <Border CornerRadius="{TemplateBinding CornerRadius}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ScrollViewer>
+                                    <Grid Margin="10"
+                                          RowDefinitions="Auto,Auto"
+                                          ColumnDefinitions="Auto,Auto,Auto">
+
+                                        <!-- Horizontal ruler -->
+                                        <TextBlock Grid.Row="0"
+                                                   Grid.Column="1"
+                                                   FontFamily="Consolas"
+                                                   Margin="0,0,0,10"
+                                                   Text="00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F"
+                                                   Foreground="Gray" />
+
+                                        <TextBlock Grid.Row="0"
+                                                   Grid.Column="2"
+                                                   Margin="10,0,0,10"
+                                                   FontFamily="Consolas"
+                                                   Text="Decoded Text"
+                                                   Foreground="Gray" />
+
+                                        <!-- The hex content -->
+                                        <TextPresenter x:Name="PART_TextPresenter"
+                                                       Grid.Row="1"
+                                                       Grid.Column="1"
+                                                       FontFamily="Consolas"
+                                                       SelectionStart="{TemplateBinding SelectionStart}"
+                                                       SelectionEnd="{TemplateBinding SelectionEnd}"
+                                                       TextAlignment="{TemplateBinding TextAlignment}"
+                                                       TextWrapping="{TemplateBinding TextWrapping}"
+                                                       PasswordChar="{TemplateBinding PasswordChar}"
+                                                       RevealPassword="{TemplateBinding RevealPassword}"
+                                                       SelectionBrush="{TemplateBinding SelectionBrush}"
+                                                       SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
+                                                       CaretBrush="{TemplateBinding CaretBrush}"
+                                                       CaretIndex="{TemplateBinding CaretIndex}"
+                                                       Text="{TemplateBinding Text}" />
+
+                                        <!-- String preview -->
+                                        <TextBlock Grid.Row="1"
+                                                   Grid.Column="2"
+                                                   FontFamily="Consolas"
+                                                   Margin="10,0,0,0"
+                                                   VerticalAlignment="Top"
+                                                   Text="{Binding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:HexBox}}}"
+                                                   x:Name="PART_PreviewTextBlock"
+                                                   Foreground="Gray" />
+                                    </Grid>
+                                </ScrollViewer>
+                            </Border>
+                        </ControlTemplate>
+                    </TextBox.Template>
+                </TextBox>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

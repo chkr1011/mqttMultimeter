@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using Avalonia.Threading;
 using MQTTnet.App.Common;
 using MQTTnet.App.Services.Mqtt;
-using MQTTnet.Client;
 
 namespace MQTTnet.App.Pages.Subscriptions;
 
@@ -12,24 +10,12 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
 {
     readonly MqttClientService _mqttClientService;
 
-    int _messageId;
-
-
     public SubscriptionsPageViewModel(MqttClientService mqttClientService)
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
-
-        mqttClientService.ApplicationMessageReceived += HandleApplicationMessageReceivedAsync;
     }
-
-    public ViewModelCollection<ReceivedApplicationMessageViewModel> ReceivedApplicationMessages { get; } = new();
 
     public ViewModelCollection<SubscriptionViewModel> Subscriptions { get; } = new();
-
-    public void Clear()
-    {
-        ReceivedApplicationMessages.Clear();
-    }
 
     public async Task CreateSubscription()
     {
@@ -69,13 +55,5 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
         {
             App.ShowException(exception);
         }
-    }
-
-    Task HandleApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs eventArgs)
-    {
-        return Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            ReceivedApplicationMessages.Add(new ReceivedApplicationMessageViewModel(_messageId++, eventArgs.ApplicationMessage));
-        });
     }
 }

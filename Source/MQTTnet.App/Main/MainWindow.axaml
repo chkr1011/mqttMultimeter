@@ -12,6 +12,8 @@
 
     <TabControl x:Name="TabControl"
                 Classes="sidebar">
+
+        <!-- Connect -->
         <TabControl.Items>
             <TabItem Content="{Binding ConnectionPage}">
                 <TabItem.Header>
@@ -23,6 +25,8 @@
                     </Grid>
                 </TabItem.Header>
             </TabItem>
+
+            <!-- Publish -->
             <TabItem Content="{Binding PublishPage}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -32,8 +36,12 @@
                     </StackPanel>
                 </TabItem.Header>
             </TabItem>
+
+            <!-- Subscribe -->
             <TabItem Header="Subscribe"
                      Content="{Binding SubscriptionsPage}" />
+
+            <!-- Inflight -->
             <TabItem Content="{Binding InflightPage}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -43,8 +51,12 @@
                     </StackPanel>
                 </TabItem.Header>
             </TabItem>
+
+            <!-- Packet Inspection -->
             <TabItem Header="Packet Inspection"
                      Content="{Binding PacketInspectorPage}" />
+
+            <!-- Info -->
             <TabItem Header="Info"
                      Content="{Binding InfoPage}" />
         </TabControl.Items>

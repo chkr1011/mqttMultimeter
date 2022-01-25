@@ -7,9 +7,7 @@
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance publish:PublishItemViewModel}"
              xmlns:publish="clr-namespace:MQTTnet.App.Pages.Publish"
-             xmlns:userProperties="clr-namespace:MQTTnet.App.Controls.UserProperties"
-             xmlns:qualityOfServiceLevel="clr-namespace:MQTTnet.App.Controls.QualityOfServiceLevel"
-             xmlns:groupBox="clr-namespace:MQTTnet.App.Controls.GroupBox"
+             xmlns:controls="clr-namespace:MQTTnet.App.Controls"
              mc:Ignorable="d">
     <Grid RowDefinitions="Auto,2*,*">
 
@@ -23,7 +21,7 @@
         </StackPanel>
 
         <!-- The request -->
-        <groupBox:GroupBox Grid.Row="1"
+        <controls:GroupBox Grid.Row="1"
                            Header="Request">
 
             <Grid RowDefinitions="Auto,*">
@@ -120,9 +118,9 @@
                                        Grid.Column="0"
                                        Grid.Row="0"
                                        Content="Quality of service (QoS) level" />
-                                <qualityOfServiceLevel:QualityOfServiceLevelSelectorView Grid.Column="1"
-                                                                                         Grid.Row="0"
-                                                                                         DataContext="{Binding QualityOfServiceLevel}" />
+                                <controls:QualityOfServiceLevelSelectorView Grid.Column="1"
+                                                                            Grid.Row="0"
+                                                                            DataContext="{Binding QualityOfServiceLevel}" />
                                 <!-- Retain -->
                                 <Label Classes="caption"
                                        Grid.Column="0"
@@ -193,16 +191,16 @@
                     </TabItem>
 
                     <TabItem Header="User Properties">
-                        <userProperties:UserPropertiesView DataContext="{Binding UserProperties}" />
+                        <controls:UserPropertiesView DataContext="{Binding UserProperties}" />
                     </TabItem>
 
                 </TabControl>
             </Grid>
 
-        </groupBox:GroupBox>
+        </controls:GroupBox>
 
         <!-- The response -->
-        <groupBox:GroupBox Grid.Row="2"
+        <controls:GroupBox Grid.Row="2"
                            Header="Response">
             <TabControl>
                 <TabItem Header="General">
@@ -239,9 +237,9 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="User properties">
-                    <userProperties:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
+                    <controls:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
                 </TabItem>
             </TabControl>
-        </groupBox:GroupBox>
+        </controls:GroupBox>
     </Grid>
 </UserControl>

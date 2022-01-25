@@ -1,11 +1,11 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnet.App.Pages.Inflight;
+namespace MQTTnet.App.Controls;
 
-public class ReceivedApplicationMessageDetailsView : UserControl
+public class BufferValueView : UserControl
 {
-    public ReceivedApplicationMessageDetailsView()
+    public BufferValueView()
     {
         InitializeComponent();
     }

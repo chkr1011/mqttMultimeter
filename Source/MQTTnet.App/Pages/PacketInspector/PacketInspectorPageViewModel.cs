@@ -22,25 +22,6 @@ public sealed class PacketInspectorPageViewModel : BaseViewModel
         Packets.Clear();
     }
 
-    void ProcessPacket(ProcessMqttPacketContext context)
-    {
-        var number = _number++;
-        var viewModel = new PacketViewModel
-        {
-            Number = number,
-            Name = GetControlPacketType(context.Buffer[0]),
-            Length = context.Buffer.Length,
-            IsInbound = context.Direction == MqttPacketFlowDirection.Inbound
-        };
-        
-        viewModel.ContentInspector.Dump(context.Buffer);
-
-        Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            Packets.Add(viewModel);
-        });
-    }
-    
     static string GetControlPacketType(byte data)
     {
         var controlType = data >> 4;
@@ -80,5 +61,24 @@ public sealed class PacketInspectorPageViewModel : BaseViewModel
             default:
                 return "UNKNOWN";
         }
+    }
+
+    void ProcessPacket(ProcessMqttPacketContext context)
+    {
+        var number = _number++;
+        var viewModel = new PacketViewModel
+        {
+            Number = number,
+            Name = GetControlPacketType(context.Buffer[0]),
+            Length = context.Buffer.Length,
+            IsInbound = context.Direction == MqttPacketFlowDirection.Inbound
+        };
+
+        viewModel.ContentInspector.Dump(context.Buffer);
+
+        Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            Packets.Add(viewModel);
+        });
     }
 }

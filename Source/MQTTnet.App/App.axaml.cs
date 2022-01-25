@@ -5,7 +5,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using MQTTnet.App.Common;
-using MQTTnet.App.Controls.ErrorBox;
+using MQTTnet.App.Controls;
 using MQTTnet.App.Main;
 using MQTTnet.App.Services.Mqtt;
 using SimpleInjector;
@@ -23,7 +23,7 @@ public sealed class App : Application
         _container.Options.ResolveUnregisteredConcreteTypes = true;
         _container.RegisterSingleton<MqttClientService>();
 
-        var viewLocator = new ViewLocator(_container);
+        var viewLocator = new ViewLocator();
         DataTemplates.Add(viewLocator);
     }
 
@@ -83,12 +83,14 @@ public sealed class App : Application
     {
         var viewModel = new ErrorBoxViewModel
         {
-            Message = exception.Message, Exception = exception.ToString()
+            Message = exception.Message,
+            Exception = exception.ToString()
         };
 
         var window = new ErrorBox
         {
-            DataContext = viewModel, WindowStartupLocation = WindowStartupLocation.CenterOwner
+            DataContext = viewModel,
+            WindowStartupLocation = WindowStartupLocation.CenterOwner
         };
 
         window.ShowDialog(MainWindowView.Instance);

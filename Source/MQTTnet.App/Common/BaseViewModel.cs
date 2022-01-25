@@ -3,17 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using ReactiveUI;
 
 namespace MQTTnet.App.Common;
 
-public abstract class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
+public abstract class BaseViewModel : ReactiveObject, INotifyDataErrorInfo
 {
     readonly Dictionary<string, IEnumerable> _errors = new();
     readonly ViewModelPropertyStore _propertyStore = new();
 
     public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
-
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     public bool HasErrors => _errors.Count > 0;
 
@@ -53,7 +52,7 @@ public abstract class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorIn
 
     protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        this.RaisePropertyChanged(propertyName);
     }
 
     protected void SetErrors(string propertyName, params string[] errors)

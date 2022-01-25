@@ -1,13 +1,31 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MQTTnet.App.Common;
-using MQTTnet.App.Controls.QualityOfServiceLevel;
-using MQTTnet.App.Controls.UserProperties;
+using MQTTnet.App.Controls;
+using ReactiveUI;
 
 namespace MQTTnet.App.Pages.Publish;
 
 public sealed class PublishItemViewModel : BaseViewModel
 {
+    string _contentType = string.Empty;
+
+    uint _messageExpiryInterval;
+
+    string _name = string.Empty;
+
+    string _payload = string.Empty;
+
+    string _responseTopic = string.Empty;
+
+    bool _retain;
+
+    uint _subscriptionIdentifier;
+
+    string _topic = string.Empty;
+
+    ushort _topicAlias;
+
     public PublishItemViewModel(PublishPageViewModel owner)
     {
         Owner = owner ?? throw new ArgumentNullException(nameof(owner));
@@ -22,28 +40,28 @@ public sealed class PublishItemViewModel : BaseViewModel
 
     public string ContentType
     {
-        get => GetValue<string>();
-        set => SetValue(value);
+        get => _contentType;
+        set => this.RaiseAndSetIfChanged(ref _contentType, value);
     }
 
     public uint MessageExpiryInterval
     {
-        get => GetValue<uint>();
-        set => SetValue(value);
+        get => _messageExpiryInterval;
+        set => this.RaiseAndSetIfChanged(ref _messageExpiryInterval, value);
     }
 
     public string Name
     {
-        get => GetValue<string>();
-        set => SetValue(value);
+        get => _name;
+        set => this.RaiseAndSetIfChanged(ref _name, value);
     }
 
     public PublishPageViewModel Owner { get; }
 
     public string Payload
     {
-        get => GetValue<string>();
-        set => SetValue(value);
+        get => _payload;
+        set => this.RaiseAndSetIfChanged(ref _payload, value);
     }
 
     public PayloadFormatIndicatorViewModel PayloadFormatIndicator { get; } = new();
@@ -54,32 +72,32 @@ public sealed class PublishItemViewModel : BaseViewModel
 
     public string ResponseTopic
     {
-        get => GetValue<string>();
-        set => SetValue(value);
+        get => _responseTopic;
+        set => this.RaiseAndSetIfChanged(ref _responseTopic, value);
     }
 
     public bool Retain
     {
-        get => GetValue<bool>();
-        set => SetValue(value);
+        get => _retain;
+        set => this.RaiseAndSetIfChanged(ref _retain, value);
     }
 
     public uint SubscriptionIdentifier
     {
-        get => GetValue<uint>();
-        set => SetValue(value);
+        get => _subscriptionIdentifier;
+        set => this.RaiseAndSetIfChanged(ref _subscriptionIdentifier, value);
     }
 
     public string Topic
     {
-        get => GetValue<string>();
-        set => SetValue(value);
+        get => _topic;
+        set => this.RaiseAndSetIfChanged(ref _topic, value);
     }
 
     public ushort TopicAlias
     {
-        get => GetValue<ushort>();
-        set => SetValue(value);
+        get => _topicAlias;
+        set => this.RaiseAndSetIfChanged(ref _topicAlias, value);
     }
 
     public UserPropertiesViewModel UserProperties { get; } = new();

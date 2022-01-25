@@ -1,21 +1,12 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using SimpleInjector;
+using MQTTnet.App.Common;
 
-namespace MQTTnet.App.Common;
+namespace MQTTnet.App;
 
 sealed class ViewLocator : IDataTemplate
 {
-    readonly Container _container;
-
-    public ViewLocator(Container container)
-    {
-        _container = container ?? throw new ArgumentNullException(nameof(container));
-    }
-
-    public bool SupportsRecycling => false;
-
     public IControl Build(object data)
     {
         var name = data.GetType().FullName!.Replace("ViewModel", "View");

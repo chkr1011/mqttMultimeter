@@ -7,33 +7,24 @@ using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using MQTTnet.App.Common.Extensions;
+using MQTTnet.App.Extensions;
+using MQTTnet.App.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace MQTTnet.App.Common.BufferInspector;
-
-public sealed class BufferConverter
-{
-    public string Caption { get; set; }
-
-    public Func<byte[], string> Convert { get; set; }
-}
+namespace MQTTnet.App.Controls;
 
 public sealed class BufferInspectorView : TemplatedControl
 {
     public static readonly StyledProperty<byte[]?> BufferProperty = AvaloniaProperty.Register<BufferInspectorView, byte[]?>(nameof(Buffer));
 
-    public static readonly StyledProperty<BufferConverter> SelectedFormatProperty =
-        AvaloniaProperty.Register<BufferInspectorView, BufferConverter>(nameof(SelectedFormat));
+    public static readonly StyledProperty<BufferConverter> SelectedFormatProperty = AvaloniaProperty.Register<BufferInspectorView, BufferConverter>(nameof(SelectedFormat));
 
-    public static readonly StyledProperty<IList<BufferConverter>> FormatsProperty =
-        AvaloniaProperty.Register<BufferInspectorView, IList<BufferConverter>>(nameof(Formats));
+    public static readonly StyledProperty<IList<BufferConverter>> FormatsProperty = AvaloniaProperty.Register<BufferInspectorView, IList<BufferConverter>>(nameof(Formats));
+
+    public static readonly StyledProperty<bool> ShowRawProperty = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(ShowRaw));
 
     TextBox? _stringContent;
-
-    // public static readonly StyledProperty<int> CaretIndexProperty = AvaloniaProperty.Register<BufferInspectorView, int>(nameof(Buffer));
-    //
 
     public BufferInspectorView()
     {
@@ -41,8 +32,8 @@ public sealed class BufferInspectorView : TemplatedControl
 
         Formats.Add(new BufferConverter
         {
-            Caption = "UTF8",
-            Convert = b => Encoding.UTF8.GetString(b)
+            Caption = "ASCII",
+            Convert = b => Encoding.ASCII.GetString(b)
         });
 
         Formats.Add(new BufferConverter
@@ -53,12 +44,30 @@ public sealed class BufferInspectorView : TemplatedControl
 
         Formats.Add(new BufferConverter
         {
+            Caption = "Binary",
+            Convert = BinaryEncoder.GetString
+        });
+
+        Formats.Add(new BufferConverter
+        {
+            Caption = "HEX",
+            Convert = HexEncoder.GetString
+        });
+
+        Formats.Add(new BufferConverter
+        {
             Caption = "JSON",
             Convert = b =>
             {
                 var json = Encoding.UTF8.GetString(b);
                 return JToken.Parse(json).ToString(Formatting.Indented);
             }
+        });
+
+        Formats.Add(new BufferConverter
+        {
+            Caption = "RAW",
+            Convert = null // Special case!
         });
 
         // Formats.Add(new BufferConverterViewModel
@@ -74,6 +83,24 @@ public sealed class BufferInspectorView : TemplatedControl
 
         Formats.Add(new BufferConverter
         {
+            Caption = "Unicode",
+            Convert = b => Encoding.Unicode.GetString(b)
+        });
+
+        Formats.Add(new BufferConverter
+        {
+            Caption = "UTF-8",
+            Convert = b => Encoding.UTF8.GetString(b)
+        });
+
+        Formats.Add(new BufferConverter
+        {
+            Caption = "UTF-32",
+            Convert = b => Encoding.UTF32.GetString(b)
+        });
+
+        Formats.Add(new BufferConverter
+        {
             Caption = "XML",
             Convert = b =>
             {
@@ -82,7 +109,7 @@ public sealed class BufferInspectorView : TemplatedControl
             }
         });
 
-        SelectedFormat = Formats.FirstOrDefault()!;
+        SelectedFormat = Formats.First(s => s.Caption == "UTF-8");
     }
 
     public byte[]? Buffer
@@ -103,6 +130,13 @@ public sealed class BufferInspectorView : TemplatedControl
         set => SetValue(SelectedFormatProperty, value);
     }
 
+    public bool ShowRaw
+    {
+        get => GetValue(ShowRawProperty);
+        set => SetValue(ShowRawProperty, value);
+    }
+
+    // TODO: Fix
     public static byte[] TestData => Encoding.UTF8.GetBytes("Hallo");
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -122,6 +156,11 @@ public sealed class BufferInspectorView : TemplatedControl
         {
             ReadBuffer();
         }
+        
+        if (change.Property == SelectedFormatProperty)
+        {
+            ShowRaw = SelectedFormat.Caption == "RAW";
+        }
     }
 
     void ReadBuffer()
@@ -137,9 +176,21 @@ public sealed class BufferInspectorView : TemplatedControl
             buffer = Array.Empty<byte>();
         }
 
+        if (buffer.Length == 0)
+        {
+            _stringContent.Text = string.Empty;
+            return;
+        }
+
+        var format = SelectedFormat;
+        if (format == null)
+        {
+            throw new InvalidOperationException();
+        }
+
         try
         {
-            _stringContent.Text = SelectedFormat.Convert(buffer);
+            _stringContent.Text = format.Convert?.Invoke(buffer);
         }
         catch (Exception exception)
         {

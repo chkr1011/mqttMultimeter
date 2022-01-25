@@ -2,10 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using MQTTnet.App.Common;
 
-namespace MQTTnet.App.Common.BufferInspector;
+namespace MQTTnet.App.Controls;
 
 public sealed class BufferInspectorViewModel : BaseViewModel
 {
@@ -62,16 +61,6 @@ public sealed class BufferInspectorViewModel : BaseViewModel
         Values.Add(_unicodeCharValue);
     }
 
-    public string Base64Content
-    {
-        get => _base64Content;
-        set
-        {
-            _base64Content = value;
-            OnPropertyChanged();
-        }
-    }
-
     public byte[] Buffer
     {
         get => _buffer;
@@ -113,26 +102,6 @@ public sealed class BufferInspectorViewModel : BaseViewModel
         }
     }
 
-    public string JsonContent
-    {
-        get => _jsonContent;
-        set
-        {
-            _jsonContent = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string Utf8Content
-    {
-        get => _utf8Content;
-        set
-        {
-            _utf8Content = value;
-            OnPropertyChanged();
-        }
-    }
-
     public ObservableCollection<BufferValueViewModel> Values { get; } = new();
 
     public void Dump(byte[] buffer)
@@ -142,20 +111,6 @@ public sealed class BufferInspectorViewModel : BaseViewModel
         DumpAsHex(buffer);
 
         HexCaretIndex = 0;
-
-        Utf8Content = Encoding.UTF8.GetString(_buffer);
-
-        Base64Content = Convert.ToBase64String(_buffer);
-
-        try
-        {
-            var json = JObject.Parse(Encoding.UTF8.GetString(_buffer));
-            JsonContent = json.ToString(Formatting.Indented);
-        }
-        catch (Exception exception)
-        {
-            JsonContent = exception.Message;
-        }
     }
 
     public static byte[] StringToByteArray(string hex)

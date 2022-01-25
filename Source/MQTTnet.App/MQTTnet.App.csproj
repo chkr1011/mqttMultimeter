@@ -56,13 +56,19 @@
         <Compile Update="Pages\Subscriptions\SubscriptionOptionsPageView.axaml.cs">
             <DependentUpon>SubscriptionOptionsPageView.axaml</DependentUpon>
         </Compile>
-        <Compile Update="Pages\Inflight\ReceivedApplicationMessageDetailsView.axaml.cs">
-          <DependentUpon>ReceivedApplicationMessageDetailsView.axaml</DependentUpon>
-          <SubType>Code</SubType>
+        <Compile Update="Pages\Inflight\InflightPageItemView.axaml.cs">
+            <DependentUpon>ReceivedApplicationMessageDetailsView.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Controls\HexBox\HexBox.axaml.cs">
+            <DependentUpon>HexBox.axaml</DependentUpon>
+            <SubType>Code</SubType>
         </Compile>
     </ItemGroup>
     <ItemGroup>
         <UpToDateCheckInput Remove="Common\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml" />
         <UpToDateCheckInput Remove="Configuration\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml" />
+        <UpToDateCheckInput Remove="Common\BufferInspector\BufferInspectorView.axaml" />
+        <UpToDateCheckInput Remove="Common\BufferInspector\BufferValueView.axaml" />
     </ItemGroup>
 </Project>

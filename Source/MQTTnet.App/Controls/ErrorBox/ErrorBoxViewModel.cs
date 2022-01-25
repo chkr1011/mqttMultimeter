@@ -1,4 +1,4 @@
-﻿namespace MQTTnet.App.Controls.ErrorBox;
+﻿namespace MQTTnet.App.Controls;
 
 public sealed class ErrorBoxViewModel
 {
