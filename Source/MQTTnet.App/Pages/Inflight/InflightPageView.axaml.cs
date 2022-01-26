@@ -1,11 +1,11 @@
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnet.App.Common.BufferInspector;
+namespace MQTTnet.App.Pages.Inflight;
 
-public class BufferInspectorView : UserControl
+public class InflightPageView : UserControl
 {
-    public BufferInspectorView()
+    public InflightPageView()
     {
         InitializeComponent();
     }

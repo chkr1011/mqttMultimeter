@@ -1,17 +1,13 @@
-﻿using MQTTnet.App.Common;
-using MQTTnet.App.Common.BufferInspector;
+﻿namespace MQTTnet.App.Pages.PacketInspector;
 
-namespace MQTTnet.App.Pages.PacketInspector;
-
-public sealed class PacketViewModel : BaseViewModel
+public sealed class PacketViewModel
 {
-    public BufferInspectorViewModel ContentInspector { get; } = new();
-    
-    public bool IsInbound { get; set; }
+    public byte[]? Data { get; init; }
 
-    public int Length { get; set; }
+    public bool IsInbound { get; init; }
 
-    public string Name { get; set; }
+    public long Length { get; init; }
+    public int Number { get; init; }
 
-    public int Number { get; set; }
+    public string? Type { get; init; }
 }

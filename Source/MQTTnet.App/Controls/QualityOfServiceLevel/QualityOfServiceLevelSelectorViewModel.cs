@@ -1,11 +1,16 @@
 ﻿using System;
 using MQTTnet.App.Common;
 using MQTTnet.Protocol;
+using ReactiveUI;
 
-namespace MQTTnet.App.Controls.QualityOfServiceLevel;
+namespace MQTTnet.App.Controls;
 
 public sealed class QualityOfServiceLevelSelectorViewModel : BaseViewModel
 {
+    bool _isLevel0 = true;
+    bool _isLevel1;
+    bool _isLevel2;
+
     public QualityOfServiceLevelSelectorViewModel()
     {
         Value = MqttQualityOfServiceLevel.AtMostOnce;
@@ -13,20 +18,20 @@ public sealed class QualityOfServiceLevelSelectorViewModel : BaseViewModel
 
     public bool IsLevel0
     {
-        get => GetValue<bool>();
-        set => SetValue(value);
+        get => _isLevel0;
+        set => this.RaiseAndSetIfChanged(ref _isLevel0, value);
     }
 
     public bool IsLevel1
     {
-        get => GetValue<bool>();
-        set => SetValue(value);
+        get => _isLevel1;
+        set => this.RaiseAndSetIfChanged(ref _isLevel1, value);
     }
 
     public bool IsLevel2
     {
-        get => GetValue<bool>();
-        set => SetValue(value);
+        get => _isLevel2;
+        set => this.RaiseAndSetIfChanged(ref _isLevel2, value);
     }
 
     public MqttQualityOfServiceLevel Value

@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:errorBox="clr-namespace:MQTTnet.App.Controls.ErrorBox"
+        xmlns:controls="clr-namespace:MQTTnet.App.Controls"
         mc:Ignorable="d"
         d:DesignWidth="640"
         d:DesignHeight="340"
@@ -10,8 +10,8 @@
         ShowInTaskbar="False"
         CanResize="False"
         Height="320"
-        x:Class="MQTTnet.App.Controls.ErrorBox.ErrorBox"
-        d:DataContext="{d:DesignInstance errorBox:ErrorBoxViewModel}"
+        x:Class="MQTTnet.App.Controls.ErrorBox"
+        d:DataContext="{d:DesignInstance controls:ErrorBoxViewModel}"
         Title="Error">
     <Grid RowDefinitions="*,Auto,Auto">
         <TextBlock FontSize="18"

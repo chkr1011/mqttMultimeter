@@ -1,11 +1,11 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnet.App.Common;
+namespace MQTTnet.App.Pages.Inflight;
 
-public class TextView : UserControl
+public class InflightPageItemView : UserControl
 {
-    public TextView()
+    public InflightPageItemView()
     {
         InitializeComponent();
     }

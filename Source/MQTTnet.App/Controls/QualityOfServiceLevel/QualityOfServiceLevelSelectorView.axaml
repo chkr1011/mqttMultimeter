@@ -2,12 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:qualityOfServiceLevel="clr-namespace:MQTTnet.App.Controls.QualityOfServiceLevel"
+             xmlns:controls="clr-namespace:MQTTnet.App.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
-             d:DataContext="{d:DesignInstance qualityOfServiceLevel:QualityOfServiceLevelSelectorViewModel}"
-             x:Class="MQTTnet.App.Controls.QualityOfServiceLevel.QualityOfServiceLevelSelectorView">
+             d:DataContext="{d:DesignInstance controls:QualityOfServiceLevelSelectorViewModel}"
+             x:Class="MQTTnet.App.Controls.QualityOfServiceLevelSelectorView">
     <StackPanel Orientation="Horizontal">
         <StackPanel.Styles>
             <Style Selector="RadioButton">

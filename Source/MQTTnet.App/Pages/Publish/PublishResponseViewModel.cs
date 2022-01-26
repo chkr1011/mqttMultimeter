@@ -1,33 +1,39 @@
 ﻿using MQTTnet.App.Common;
-using MQTTnet.App.Controls.UserProperties;
+using MQTTnet.App.Controls;
 using MQTTnet.Client;
+using ReactiveUI;
 
 namespace MQTTnet.App.Pages.Publish;
 
 public sealed class PublishResponseViewModel : BaseViewModel
 {
+    ushort? _packetIdentifier;
+    int? _reasonCode;
+    string? _reasonCodeText;
+    string? _reasonString;
+
     public ushort? PacketIdentifier
     {
-        get => GetValue<ushort?>();
-        set => SetValue(value);
+        get => _packetIdentifier;
+        set => this.RaiseAndSetIfChanged(ref _packetIdentifier, value);
     }
 
     public int? ReasonCode
     {
-        get => GetValue<int?>();
-        set => SetValue(value);
+        get => _reasonCode;
+        set => this.RaiseAndSetIfChanged(ref _reasonCode, value);
     }
 
-    public string ReasonCodeText
+    public string? ReasonCodeText
     {
-        get => GetValue<string>();
-        set => SetValue(value);
+        get => _reasonCodeText;
+        set => this.RaiseAndSetIfChanged(ref _reasonCodeText, value);
     }
-    
-    public string ReasonString
+
+    public string? ReasonString
     {
-        get => GetValue<string>();
-        set => SetValue(value);
+        get => _reasonString;
+        set => this.RaiseAndSetIfChanged(ref _reasonString, value);
     }
 
     public UserPropertiesViewModel UserProperties { get; } = new();

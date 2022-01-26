@@ -1,0 +1,33 @@
+﻿using System;
+using MQTTnet.App.Controls;
+using MQTTnet.Protocol;
+
+namespace MQTTnet.App.Pages.Inflight;
+
+public sealed class InflightPageItemViewModel
+{
+    public long Length { get; init; }
+
+    public int Number { get; init; }
+
+    public InflightPageViewModel OwnerPage { get; init; }
+
+    public string PayloadPreview { get; set; } = string.Empty;
+
+    public MqttQualityOfServiceLevel QualityOfServiceLevel { get; init; }
+
+    public bool Retained { get; init; }
+
+    public MqttApplicationMessage Source { get; init; }
+
+    public DateTime Timestamp { get; init; }
+
+    public string? Topic { get; init; }
+
+    public UserPropertiesViewModel UserProperties { get; } = new();
+
+    public void Repeat()
+    {
+        OwnerPage.RepeatItem(this);
+    }
+}

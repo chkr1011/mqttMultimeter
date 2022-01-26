@@ -1,20 +1,36 @@
-﻿using Avalonia.Threading;
+﻿using System.Collections.ObjectModel;
+using Avalonia.Threading;
 using MQTTnet.App.Common;
 using MQTTnet.App.Services.Mqtt;
 using MQTTnet.Diagnostics;
+using ReactiveUI;
 
 namespace MQTTnet.App.Pages.PacketInspector;
 
 public sealed class PacketInspectorPageViewModel : BaseViewModel
 {
+    bool _isRecordingEnabled = true;
     int _number;
+    PacketViewModel? _selectedPacket;
 
     public PacketInspectorPageViewModel(MqttClientService mqttClientService)
     {
         mqttClientService.RegisterMessageInspectorHandler(ProcessPacket);
     }
 
-    public ViewModelCollection<PacketViewModel> Packets { get; } = new();
+    public bool IsRecordingEnabled
+    {
+        get => _isRecordingEnabled;
+        set => this.RaiseAndSetIfChanged(ref _isRecordingEnabled, value);
+    }
+
+    public ObservableCollection<PacketViewModel> Packets { get; } = new();
+
+    public PacketViewModel? SelectedPacket
+    {
+        get => _selectedPacket;
+        set => this.RaiseAndSetIfChanged(ref _selectedPacket, value);
+    }
 
     public void ClearItems()
     {
@@ -22,25 +38,6 @@ public sealed class PacketInspectorPageViewModel : BaseViewModel
         Packets.Clear();
     }
 
-    void ProcessPacket(ProcessMqttPacketContext context)
-    {
-        var number = _number++;
-        var viewModel = new PacketViewModel
-        {
-            Number = number,
-            Name = GetControlPacketType(context.Buffer[0]),
-            Length = context.Buffer.Length,
-            IsInbound = context.Direction == MqttPacketFlowDirection.Inbound
-        };
-        
-        viewModel.ContentInspector.Dump(context.Buffer);
-
-        Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            Packets.Add(viewModel);
-        });
-    }
-    
     static string GetControlPacketType(byte data)
     {
         var controlType = data >> 4;
@@ -48,37 +45,60 @@ public sealed class PacketInspectorPageViewModel : BaseViewModel
         switch (controlType)
         {
             case 1:
-                return "CONNECT";
+                return "CONNECT (01)";
             case 2:
-                return "CONNACK";
+                return "CONNACK (02)";
             case 3:
-                return "PUBLISH";
+                return "PUBLISH (03)";
             case 4:
-                return "PUBACK";
+                return "PUBACK (04)";
             case 5:
-                return "PUBREC";
+                return "PUBREC (05)";
             case 6:
-                return "PUBREL";
+                return "PUBREL (06)";
             case 7:
-                return "PUBCOMP";
+                return "PUBCOMP (07)";
             case 8:
-                return "SUBSCRIBE";
+                return "SUBSCRIBE (08)";
             case 9:
-                return "SUBACK";
+                return "SUBACK (09)";
             case 10:
-                return "UNSUBSCRIBE";
+                return "UNSUBSCRIBE (10)";
             case 11:
-                return "UNSUBACK";
+                return "UNSUBACK (11)";
             case 12:
-                return "PINGREQ";
+                return "PINGREQ (12)";
             case 13:
-                return "PINGRESP";
+                return "PINGRESP (13)";
             case 14:
-                return "DISCONNECT";
+                return "DISCONNECT (14)";
             case 15:
-                return "AUTH";
+                return "AUTH (15)";
             default:
                 return "UNKNOWN";
         }
+    }
+
+    void ProcessPacket(ProcessMqttPacketContext context)
+    {
+        if (!_isRecordingEnabled)
+        {
+            return;
+        }
+
+        var number = _number++;
+        var viewModel = new PacketViewModel
+        {
+            Number = number,
+            Type = GetControlPacketType(context.Buffer[0]),
+            Data = context.Buffer,
+            Length = context.Buffer.Length,
+            IsInbound = context.Direction == MqttPacketFlowDirection.Inbound
+        };
+
+        Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            Packets.Add(viewModel);
+        });
     }
 }

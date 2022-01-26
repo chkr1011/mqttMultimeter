@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MQTTnet.App.Common;
 using MQTTnet.Packets;
+using ReactiveUI;
 
-namespace MQTTnet.App.Controls.UserProperties;
+namespace MQTTnet.App.Controls;
 
 public sealed class UserPropertiesViewModel : BaseViewModel
 {
+    bool _isReadOnly;
+
     public bool IsReadOnly
     {
-        get => GetValue<bool>();
-        set => SetValue(value);
+        get => _isReadOnly;
+        set => this.RaiseAndSetIfChanged(ref _isReadOnly, value);
     }
 
     public ObservableCollection<UserPropertyViewModel> Items { get; } = new();
@@ -34,7 +37,8 @@ public sealed class UserPropertiesViewModel : BaseViewModel
         {
             Items.Add(new UserPropertyViewModel(this)
             {
-                Name = userProperty.Name, Value = userProperty.Value
+                Name = userProperty.Name,
+                Value = userProperty.Value
             });
         }
     }

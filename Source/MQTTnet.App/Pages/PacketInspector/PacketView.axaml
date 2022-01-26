@@ -14,7 +14,7 @@
         <Border Background="Gray"
                 Grid.Column="0"
                 Margin="0,0,10,0">
-            
+
             <TextBlock MinWidth="50"
                        VerticalAlignment="Center"
                        TextAlignment="Right"
@@ -45,6 +45,6 @@
             <TextBlock Margin="5,2"
                        Text="5 bytes" />
         </Border>
-        
+
     </Grid>
 </UserControl>

@@ -24,7 +24,8 @@ public sealed class ObjectDumpViewModel : BaseViewModel
         {
             Properties.Add(new ObjectDumpPropertyViewModel
             {
-                Name = property.Name, Value = Convert.ToString(property.GetValue(graph)) ?? string.Empty
+                Name = property.Name,
+                Value = Convert.ToString(property.GetValue(graph)) ?? string.Empty
             });
         }
     }

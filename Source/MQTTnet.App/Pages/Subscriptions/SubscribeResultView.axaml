@@ -5,7 +5,6 @@
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
-             xmlns:common="using:MQTTnet.App.Common"
              x:Class="MQTTnet.App.Pages.Subscriptions.SubscribeResultView">
 
     <Grid ColumnDefinitions="Auto,Auto"

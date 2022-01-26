@@ -1,0 +1,131 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:inflight="clr-namespace:MQTTnet.App.Pages.Inflight"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance inflight:InflightPageViewModel}"
+             d:DesignHeight="450"
+             x:Class="MQTTnet.App.Pages.Inflight.InflightPageView">
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- The Tool Bar. -->
+        <StackPanel Grid.Column="0"
+                    Classes="tool_bar">
+
+            <!-- The Enable/Disable button -->
+            <ToggleButton Classes="tool_bar_button"
+                          IsChecked="{Binding IsRecordingEnabled}"
+                          ToolTip.Tip="Enable/Disable recording">
+                <Grid>
+                    <Image Source="/Assets/Icons/BreakpointEnabled_16x.png"
+                           IsVisible="{Binding IsRecordingEnabled}" />
+                    <Image Source="/Assets/Icons/BreakpointDisabled_16x.png"
+                           IsVisible="{Binding !IsRecordingEnabled}" />
+                </Grid>
+            </ToggleButton>
+
+            <!-- The clear items button -->
+            <Button Classes="tool_bar_button"
+                    Command="{Binding ClearItems}"
+                    ToolTip.Tip="Clear all application messages.">
+                <Image Source="/Assets/Icons/ClearCollection_16x.png" />
+            </Button>
+
+            <!-- The topic filter text -->
+            <TextBox Width="200"
+                     Classes="tool_bar_text_box"
+                     Watermark="Topic filter"
+                     Text="{Binding Path=FilterText, Mode=TwoWay}" />
+        </StackPanel>
+
+        <Grid Grid.Row="1"
+              ColumnDefinitions="*,Auto,*">
+
+            <!-- The data grid with items -->
+            <DataGrid Grid.Column="0"
+                      Background="#262626"
+                      SelectedItem="{Binding SelectedItem}"
+                      Items="{Binding Items}">
+                <DataGrid.Columns>
+                    <!-- The number column -->
+                    <DataGridTemplateColumn Header="#"
+                                            Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="5,0"
+                                           HorizontalAlignment="Right"
+                                           Classes="code_text"
+                                           Text="{Binding Number}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- The topic column -->
+                    <DataGridTemplateColumn Header="Topic"
+                                            Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="5,0"
+                                           Classes="code_text"
+                                           Text="{Binding Topic}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- The flags column -->
+                    <DataGridTemplateColumn Header="Flags"
+                                            Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            Margin="5,0">
+                                    <Border IsVisible="{Binding Retained}"
+                                            Classes="BadgeRetained Badge"
+                                            ToolTip.Tip="Retained">
+                                        <TextBlock Text="R" />
+                                    </Border>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- The size column -->
+                    <DataGridTemplateColumn Header="Size"
+                                            Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="5,0,10,0"
+                                           HorizontalAlignment="Right"
+                                           Classes="code_text"
+                                           Text="{Binding Length, StringFormat={}{0} bytes}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- The splitter -->
+            <GridSplitter Grid.Column="1" />
+
+            <!-- The details of the selected item -->
+            <Grid Grid.Column="2"
+                  RowDefinitions="Auto,*">
+                <Border Grid.Row="0"
+                        Height="31"
+                        Background="Black">
+                    <Label Margin="5,0"
+                           Classes="tool_bar_label"
+                           Content="Selected application message" />
+                </Border>
+                
+                <inflight:InflightPageItemView Grid.Row="1"
+                                               DataContext="{Binding SelectedItem}" />
+
+            </Grid>
+        </Grid>
+    </Grid>
+
+</UserControl>

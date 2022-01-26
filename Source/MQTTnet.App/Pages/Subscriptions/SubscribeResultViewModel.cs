@@ -9,5 +9,6 @@ public sealed class SubscribeResultViewModel : BaseViewModel
     public string ResponseCode { get; set; } = string.Empty;
 
     public bool Succeeded { get; set; }
+
     public string Topic { get; set; } = string.Empty;
 }

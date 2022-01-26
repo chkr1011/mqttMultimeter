@@ -7,29 +7,9 @@
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance publish:PublishItemViewModel}"
              xmlns:publish="clr-namespace:MQTTnet.App.Pages.Publish"
-             xmlns:userProperties="clr-namespace:MQTTnet.App.Controls.UserProperties"
-             xmlns:qualityOfServiceLevel="clr-namespace:MQTTnet.App.Controls.QualityOfServiceLevel"
-             xmlns:groupBox="clr-namespace:MQTTnet.App.Controls.GroupBox"
+             xmlns:controls="clr-namespace:MQTTnet.App.Controls"
              mc:Ignorable="d">
-    <UserControl.Styles>
-        <Style Selector="Label.caption">
-            <Setter Property="FontWeight"
-                    Value="SemiBold" />
-            <Setter Property="Margin"
-                    Value="0,5,20,5" />
-        </Style>
-        <Style Selector=":is(Control).value">
-            <Setter Property="Margin"
-                    Value="0,5,0,5" />
-        </Style>
-        <Style Selector="TextBlock.note">
-            <Setter Property="FontWeight"
-                    Value="SemiLight" />
-            <Setter Property="Margin"
-                    Value="10,5,0,5" />
-        </Style>
-    </UserControl.Styles>
-    <Grid RowDefinitions="Auto,2*,*">
+    <Grid RowDefinitions="Auto,2*,Auto">
 
         <StackPanel Grid.Row="0">
             <TextBox Text="{Binding Name}"
@@ -41,7 +21,7 @@
         </StackPanel>
 
         <!-- The request -->
-        <groupBox:GroupBox Grid.Row="1"
+        <controls:GroupBox Grid.Row="1"
                            Header="Request">
 
             <Grid RowDefinitions="Auto,*">
@@ -117,7 +97,7 @@
                                    Classes="caption">Payload</Label>
                             <TextBox Grid.Row="2"
                                      Grid.Column="1"
-                                     Classes="CodeText value"
+                                     Classes="code_text value"
                                      AcceptsReturn="True"
                                      Text="{Binding Path=Payload, Mode=TwoWay}"
                                      VerticalAlignment="Stretch" />
@@ -138,9 +118,9 @@
                                        Grid.Column="0"
                                        Grid.Row="0"
                                        Content="Quality of service (QoS) level" />
-                                <qualityOfServiceLevel:QualityOfServiceLevelSelectorView Grid.Column="1"
-                                                                                         Grid.Row="0"
-                                                                                         DataContext="{Binding QualityOfServiceLevel}" />
+                                <controls:QualityOfServiceLevelSelectorView Grid.Column="1"
+                                                                            Grid.Row="0"
+                                                                            DataContext="{Binding QualityOfServiceLevel}" />
                                 <!-- Retain -->
                                 <Label Classes="caption"
                                        Grid.Column="0"
@@ -211,16 +191,16 @@
                     </TabItem>
 
                     <TabItem Header="User Properties">
-                        <userProperties:UserPropertiesView DataContext="{Binding UserProperties}" />
+                        <controls:UserPropertiesView DataContext="{Binding UserProperties}" />
                     </TabItem>
 
                 </TabControl>
             </Grid>
 
-        </groupBox:GroupBox>
+        </controls:GroupBox>
 
         <!-- The response -->
-        <groupBox:GroupBox Grid.Row="2"
+        <controls:GroupBox Grid.Row="2"
                            Header="Response">
             <TabControl>
                 <TabItem Header="General">
@@ -257,9 +237,9 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="User properties">
-                    <userProperties:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
+                    <controls:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
                 </TabItem>
             </TabControl>
-        </groupBox:GroupBox>
+        </controls:GroupBox>
     </Grid>
 </UserControl>

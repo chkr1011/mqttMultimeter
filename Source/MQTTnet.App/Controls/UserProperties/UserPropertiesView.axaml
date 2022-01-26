@@ -2,17 +2,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:userProperties="clr-namespace:MQTTnet.App.Controls.UserProperties"
+             xmlns:controls="clr-namespace:MQTTnet.App.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
-             d:DataContext="{d:DesignInstance userProperties:UserPropertiesViewModel}"
-             x:Class="MQTTnet.App.Controls.UserProperties.UserPropertiesView">
+             d:DataContext="{d:DesignInstance controls:UserPropertiesViewModel}"
+             x:Class="MQTTnet.App.Controls.UserPropertiesView">
     <Grid RowDefinitions="Auto,Auto,*"
           Grid.IsSharedSizeScope="True">
 
         <!-- The buttons -->
-        <StackPanel Grid.Row="0" IsVisible="{Binding !IsReadOnly}"
+        <StackPanel Grid.Row="0"
+                    IsVisible="{Binding !IsReadOnly, FallbackValue=False}"
                     Orientation="Horizontal">
             <Button Classes="tool_bar_button"
                     ToolTip.Tip="Add user property"
@@ -45,7 +46,7 @@
         <ScrollViewer Grid.Row="2">
             <ItemsControl Items="{Binding Items}">
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type userProperties:UserPropertyViewModel}">
+                    <DataTemplate DataType="{x:Type controls:UserPropertyViewModel}">
                         <Grid Margin="0,5"
                               ColumnDefinitions="*,30,2*,Auto">
 

@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:qualityOfServiceLevel="clr-namespace:MQTTnet.App.Controls.QualityOfServiceLevel"
+             xmlns:controls="clr-namespace:MQTTnet.App.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
@@ -16,7 +16,7 @@
 
         <Label Classes="ValueHeader"
                Content="Quality of Service level" />
-        <qualityOfServiceLevel:QualityOfServiceLevelSelectorView DataContext="{Binding QualityOfServiceLevel}" />
+        <controls:QualityOfServiceLevelSelectorView DataContext="{Binding QualityOfServiceLevel}" />
 
         <Separator />
 

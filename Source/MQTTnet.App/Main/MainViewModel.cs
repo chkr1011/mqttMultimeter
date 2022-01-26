@@ -1,5 +1,6 @@
 using MQTTnet.App.Common;
 using MQTTnet.App.Pages.Connection;
+using MQTTnet.App.Pages.Inflight;
 using MQTTnet.App.Pages.Info;
 using MQTTnet.App.Pages.PacketInspector;
 using MQTTnet.App.Pages.Publish;
@@ -10,19 +11,23 @@ namespace MQTTnet.App.Main;
 public sealed class MainViewModel : BaseViewModel
 {
     public MainViewModel(ConnectionPageViewModel connectionPage,
-        SubscriptionsPageViewModel subscriptionsPage,
         PublishPageViewModel publishPage,
+        SubscriptionsPageViewModel subscriptionsPage,
+        InflightPageViewModel inflightPage,
         PacketInspectorPageViewModel packetInspectorPage,
         InfoPageViewModel infoPage)
     {
         ConnectionPage = connectionPage;
-        SubscriptionsPage = subscriptionsPage;
         PublishPage = publishPage;
+        SubscriptionsPage = subscriptionsPage;
+        InflightPage = inflightPage;
         PacketInspectorPage = packetInspectorPage;
         InfoPage = infoPage;
     }
 
     public ConnectionPageViewModel ConnectionPage { get; }
+
+    public InflightPageViewModel InflightPage { get; }
 
     public InfoPageViewModel InfoPage { get; }
 
