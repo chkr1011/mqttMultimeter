@@ -9,7 +9,7 @@
              xmlns:publish="clr-namespace:MQTTnet.App.Pages.Publish"
              xmlns:controls="clr-namespace:MQTTnet.App.Controls"
              mc:Ignorable="d">
-    <Grid RowDefinitions="Auto,2*,*">
+    <Grid RowDefinitions="Auto,2*,Auto">
 
         <StackPanel Grid.Row="0">
             <TextBox Text="{Binding Name}"
@@ -97,7 +97,7 @@
                                    Classes="caption">Payload</Label>
                             <TextBox Grid.Row="2"
                                      Grid.Column="1"
-                                     Classes="CodeText value"
+                                     Classes="code_text value"
                                      AcceptsReturn="True"
                                      Text="{Binding Path=Payload, Mode=TwoWay}"
                                      VerticalAlignment="Stretch" />

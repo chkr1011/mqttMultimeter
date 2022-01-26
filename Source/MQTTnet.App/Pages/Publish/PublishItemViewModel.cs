@@ -8,27 +8,27 @@ namespace MQTTnet.App.Pages.Publish;
 
 public sealed class PublishItemViewModel : BaseViewModel
 {
-    string _contentType = string.Empty;
+    string? _contentType;
 
     uint _messageExpiryInterval;
 
     string _name = string.Empty;
 
-    string _payload = string.Empty;
+    string? _payload;
 
-    string _responseTopic = string.Empty;
+    string? _responseTopic;
 
     bool _retain;
 
     uint _subscriptionIdentifier;
 
-    string _topic = string.Empty;
+    string? _topic;
 
     ushort _topicAlias;
 
-    public PublishItemViewModel(PublishPageViewModel owner)
+    public PublishItemViewModel(PublishPageViewModel ownerPage)
     {
-        Owner = owner ?? throw new ArgumentNullException(nameof(owner));
+        OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
 
         Payload = string.Empty;
         PayloadFormatIndicator.IsUnspecified = true;
@@ -36,9 +36,7 @@ public sealed class PublishItemViewModel : BaseViewModel
         Response.UserProperties.IsReadOnly = true;
     }
 
-    public event Func<PublishItemViewModel, Task>? PublishRequested;
-
-    public string ContentType
+    public string? ContentType
     {
         get => _contentType;
         set => this.RaiseAndSetIfChanged(ref _contentType, value);
@@ -56,9 +54,9 @@ public sealed class PublishItemViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _name, value);
     }
 
-    public PublishPageViewModel Owner { get; }
+    public PublishPageViewModel OwnerPage { get; }
 
-    public string Payload
+    public string? Payload
     {
         get => _payload;
         set => this.RaiseAndSetIfChanged(ref _payload, value);
@@ -70,7 +68,7 @@ public sealed class PublishItemViewModel : BaseViewModel
 
     public PublishResponseViewModel Response { get; } = new();
 
-    public string ResponseTopic
+    public string? ResponseTopic
     {
         get => _responseTopic;
         set => this.RaiseAndSetIfChanged(ref _responseTopic, value);
@@ -88,7 +86,7 @@ public sealed class PublishItemViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _subscriptionIdentifier, value);
     }
 
-    public string Topic
+    public string? Topic
     {
         get => _topic;
         set => this.RaiseAndSetIfChanged(ref _topic, value);
@@ -104,6 +102,6 @@ public sealed class PublishItemViewModel : BaseViewModel
 
     public Task Publish()
     {
-        return PublishRequested?.Invoke(this) ?? Task.CompletedTask;
+        return OwnerPage.PublishItem(this);
     }
 }

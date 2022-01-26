@@ -6,8 +6,8 @@ namespace MQTTnet.App.Controls;
 
 public sealed class UserPropertyViewModel : BaseViewModel
 {
-    string _name;
-    string _value;
+    string _name = string.Empty;
+    string _value = string.Empty;
 
     public UserPropertyViewModel(UserPropertiesViewModel owner)
     {

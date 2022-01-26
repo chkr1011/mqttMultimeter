@@ -8,6 +8,8 @@
              x:Class="MQTTnet.App.Pages.Info.InfoPageView">
 
     <UserControl.Styles>
+        <StyleInclude Source="avares://AvaloniaEdit/AvaloniaEdit.xaml" />
+
         <Style Selector="Label.VersionString">
             <Setter Property="FontFamily"
                     Value="Consolas" />
@@ -47,6 +49,18 @@
         <Label Content="Icons"
                Margin="0,10,0,0"
                Classes="OptionGroupLabel" />
-        <Label Content="famfamfam Silk (http://www.famfamfam.com/)" />
+        <Label Content="VSImage Library 2019" />
+
+        <Label Content="MQTT 5.0.0 Specification"
+               Margin="0,10,0,0"
+               Classes="OptionGroupLabel" />
+        <Label Content="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html" />
+
+        <Label Content="MQTT 3.1.1 Specification"
+               Margin="0,10,0,0"
+               Classes="OptionGroupLabel" />
+        <Label Content="http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html" />
+
+
     </StackPanel>
 </UserControl>

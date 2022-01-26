@@ -4,13 +4,35 @@
     <Application.Styles>
         <FluentTheme Mode="Dark" />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+        <StyleInclude Source="avares://AvaloniaEdit/AvaloniaEdit.xaml" />
 
         <StyleInclude Source="/Styles/GridSplitter.axaml" />
         <StyleInclude Source="/Styles/Button.axaml" />
+        <StyleInclude Source="/Styles/ToolBar.axaml" />
         <StyleInclude Source="/Styles/Sidebar.axaml" />
         <StyleInclude Source="/Controls/GroupBox/GroupBox.axaml" />
         <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
         <StyleInclude Source="/Controls/HexBox/HexBox.axaml" />
+
+        <Style Selector="DataGrid">
+            <Setter Property="SelectionMode"
+                    Value="Single" />
+            <Setter Property="CanUserReorderColumns"
+                    Value="False" />
+            <Setter Property="CanUserSortColumns"
+                    Value="False" />
+            <Setter Property="CanUserResizeColumns"
+                    Value="True" />
+            <Setter Property="AutoGenerateColumns"
+                    Value="False" />
+            <Setter Property="IsReadOnly"
+                    Value="True" />
+        </Style>
+
+        <Style Selector="DataGridCell > Grid >> Rectangle">
+            <Setter Property="IsVisible"
+                    Value="False" />
+        </Style>
 
         <Style Selector="Label.tool_bar_label">
             <Setter Property="FontSize"
@@ -25,10 +47,12 @@
             <Setter Property="Margin"
                     Value="0,5,20,5" />
         </Style>
+
         <Style Selector=":is(Control).value">
             <Setter Property="Margin"
                     Value="0,5,0,5" />
         </Style>
+
         <Style Selector="TextBlock.note">
             <Setter Property="FontWeight"
                     Value="SemiLight" />
@@ -215,6 +239,11 @@
             <!-- <Setter Property="Background" Value="#4A4647" /> -->
             <Setter Property="Background"
                     Value="#212121" />
+        </Style>
+
+        <Style Selector="TabControl">
+            <Setter Property="Padding"
+                    Value="0,10,0,0" />
         </Style>
 
     </Application.Styles>

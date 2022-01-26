@@ -8,21 +8,34 @@
              d:DataContext="{d:DesignInstance inflight:InflightPageViewModel}"
              d:DesignHeight="450"
              x:Class="MQTTnet.App.Pages.Inflight.InflightPageView">
-
     <Grid RowDefinitions="Auto,*">
 
         <!-- The Tool Bar. -->
         <StackPanel Grid.Column="0"
-                    Orientation="Horizontal">
+                    Classes="tool_bar">
+
+            <!-- The Enable/Disable button -->
+            <ToggleButton Classes="tool_bar_button"
+                          IsChecked="{Binding IsRecordingEnabled}"
+                          ToolTip.Tip="Enable/Disable recording">
+                <Grid>
+                    <Image Source="/Assets/Icons/BreakpointEnabled_16x.png"
+                           IsVisible="{Binding IsRecordingEnabled}" />
+                    <Image Source="/Assets/Icons/BreakpointDisabled_16x.png"
+                           IsVisible="{Binding !IsRecordingEnabled}" />
+                </Grid>
+            </ToggleButton>
+
+            <!-- The clear items button -->
             <Button Classes="tool_bar_button"
                     Command="{Binding ClearItems}"
                     ToolTip.Tip="Clear all application messages.">
                 <Image Source="/Assets/Icons/ClearCollection_16x.png" />
             </Button>
 
-            <!-- The topic filter text. -->
+            <!-- The topic filter text -->
             <TextBox Width="200"
-                     BorderThickness="0"
+                     Classes="tool_bar_text_box"
                      Watermark="Topic filter"
                      Text="{Binding Path=FilterText, Mode=TwoWay}" />
         </StackPanel>
@@ -30,17 +43,11 @@
         <Grid Grid.Row="1"
               ColumnDefinitions="*,Auto,*">
 
-            <!-- The data grid with items. -->
+            <!-- The data grid with items -->
             <DataGrid Grid.Column="0"
                       Background="#262626"
-                      SelectionMode="Single"
-                      CanUserReorderColumns="False"
-                      CanUserSortColumns="False"
-                      CanUserResizeColumns="True"
-                      AutoGenerateColumns="False"
                       SelectedItem="{Binding SelectedItem}"
-                      Items="{Binding Items}"
-                      IsReadOnly="True">
+                      Items="{Binding Items}">
                 <DataGrid.Columns>
                     <!-- The number column -->
                     <DataGridTemplateColumn Header="#"
@@ -90,7 +97,7 @@
                                             Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="5,0"
+                                <TextBlock Margin="5,0,10,0"
                                            HorizontalAlignment="Right"
                                            Classes="code_text"
                                            Text="{Binding Length, StringFormat={}{0} bytes}" />
@@ -101,10 +108,9 @@
             </DataGrid>
 
             <!-- The splitter -->
-            <GridSplitter Grid.Column="1"
-                          Width="1" />
+            <GridSplitter Grid.Column="1" />
 
-            <!-- The details of the selected item. -->
+            <!-- The details of the selected item -->
             <Grid Grid.Column="2"
                   RowDefinitions="Auto,*">
                 <Border Grid.Row="0"
@@ -114,6 +120,7 @@
                            Classes="tool_bar_label"
                            Content="Selected application message" />
                 </Border>
+                
                 <inflight:InflightPageItemView Grid.Row="1"
                                                DataContext="{Binding SelectedItem}" />
 

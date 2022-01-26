@@ -42,8 +42,6 @@ public sealed class PublishPageViewModel : BaseViewModel
         // It will not be send when the name is empty.
         newItem.UserProperties.AddItem();
 
-        newItem.PublishRequested += OnItemPublishRequested;
-
         Items.Add(newItem);
         SelectedItem = newItem;
     }
@@ -54,6 +52,19 @@ public sealed class PublishPageViewModel : BaseViewModel
         SelectedItem = null;
     }
 
+    public async Task PublishItem(PublishItemViewModel item)
+    {
+        try
+        {
+            var response = await _mqttClientService.Publish(item);
+            item.Response.ApplyResponse(response);
+        }
+        catch (Exception exception)
+        {
+            App.ShowException(exception);
+        }
+    }
+
     public void RemoveItem(PublishItemViewModel item)
     {
         if (item == null)
@@ -62,18 +73,5 @@ public sealed class PublishPageViewModel : BaseViewModel
         }
 
         Items.Remove(item);
-    }
-
-    async Task OnItemPublishRequested(PublishItemViewModel arg)
-    {
-        try
-        {
-            var response = await _mqttClientService.Publish(arg);
-            arg.Response.ApplyResponse(response);
-        }
-        catch (Exception exception)
-        {
-            App.ShowException(exception);
-        }
     }
 }

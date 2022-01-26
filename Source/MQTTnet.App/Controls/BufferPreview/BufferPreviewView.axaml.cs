@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using MQTTnet.App.Extensions;
 using MQTTnet.App.Text;
 using Newtonsoft.Json;
@@ -18,13 +19,17 @@ public sealed class BufferInspectorView : TemplatedControl
 {
     public static readonly StyledProperty<byte[]?> BufferProperty = AvaloniaProperty.Register<BufferInspectorView, byte[]?>(nameof(Buffer));
 
-    public static readonly StyledProperty<BufferConverter> SelectedFormatProperty = AvaloniaProperty.Register<BufferInspectorView, BufferConverter>(nameof(SelectedFormat));
+    public static readonly StyledProperty<BufferConverter?> SelectedFormatProperty = AvaloniaProperty.Register<BufferInspectorView, BufferConverter?>(nameof(SelectedFormat));
 
     public static readonly StyledProperty<IList<BufferConverter>> FormatsProperty = AvaloniaProperty.Register<BufferInspectorView, IList<BufferConverter>>(nameof(Formats));
 
     public static readonly StyledProperty<bool> ShowRawProperty = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(ShowRaw));
 
-    TextBox? _stringContent;
+    public static readonly StyledProperty<string> PreviewContentProperty = AvaloniaProperty.Register<BufferInspectorView, string>(nameof(PreviewContent));
+
+    public static readonly StyledProperty<string?> SelectedFormatNameProperty = AvaloniaProperty.Register<BufferInspectorView, string?>(nameof(SelectedFormatName), "UTF-8");
+
+    Button? _copyToClipboardButton;
 
     public BufferInspectorView()
     {
@@ -32,31 +37,31 @@ public sealed class BufferInspectorView : TemplatedControl
 
         Formats.Add(new BufferConverter
         {
-            Caption = "ASCII",
+            Name = "ASCII",
             Convert = b => Encoding.ASCII.GetString(b)
         });
 
         Formats.Add(new BufferConverter
         {
-            Caption = "Base64",
+            Name = "Base64",
             Convert = Convert.ToBase64String
         });
 
         Formats.Add(new BufferConverter
         {
-            Caption = "Binary",
+            Name = "Binary",
             Convert = BinaryEncoder.GetString
         });
 
         Formats.Add(new BufferConverter
         {
-            Caption = "HEX",
+            Name = "HEX",
             Convert = HexEncoder.GetString
         });
 
         Formats.Add(new BufferConverter
         {
-            Caption = "JSON",
+            Name = "JSON",
             Convert = b =>
             {
                 var json = Encoding.UTF8.GetString(b);
@@ -66,7 +71,7 @@ public sealed class BufferInspectorView : TemplatedControl
 
         Formats.Add(new BufferConverter
         {
-            Caption = "RAW",
+            Name = "RAW",
             Convert = null // Special case!
         });
 
@@ -83,25 +88,25 @@ public sealed class BufferInspectorView : TemplatedControl
 
         Formats.Add(new BufferConverter
         {
-            Caption = "Unicode",
+            Name = "Unicode",
             Convert = b => Encoding.Unicode.GetString(b)
         });
 
         Formats.Add(new BufferConverter
         {
-            Caption = "UTF-8",
+            Name = "UTF-8",
             Convert = b => Encoding.UTF8.GetString(b)
         });
 
         Formats.Add(new BufferConverter
         {
-            Caption = "UTF-32",
+            Name = "UTF-32",
             Convert = b => Encoding.UTF32.GetString(b)
         });
 
         Formats.Add(new BufferConverter
         {
-            Caption = "XML",
+            Name = "XML",
             Convert = b =>
             {
                 var xml = Encoding.UTF8.GetString(b);
@@ -109,7 +114,22 @@ public sealed class BufferInspectorView : TemplatedControl
             }
         });
 
-        SelectedFormat = Formats.First(s => s.Caption == "UTF-8");
+        SelectFormat();
+    }
+
+    void SelectFormat()
+    {
+        if (string.IsNullOrEmpty(SelectedFormatName))
+        {
+            SelectedFormat = Formats.FirstOrDefault();
+        }
+
+        SelectedFormat = Formats.FirstOrDefault(f => f.Name.Equals(SelectedFormatName));
+
+        if (SelectedFormat == null)
+        {
+            SelectedFormat = Formats.FirstOrDefault();
+        }
     }
 
     public byte[]? Buffer
@@ -124,7 +144,19 @@ public sealed class BufferInspectorView : TemplatedControl
         set => SetValue(FormatsProperty, value);
     }
 
-    public BufferConverter SelectedFormat
+    public string? SelectedFormatName
+    {
+        get => GetValue(SelectedFormatNameProperty);
+        set => SetValue(SelectedFormatNameProperty, value);
+    }
+
+    public string PreviewContent
+    {
+        get => GetValue(PreviewContentProperty);
+        set => SetValue(PreviewContentProperty, value);
+    }
+
+    public BufferConverter? SelectedFormat
     {
         get => GetValue(SelectedFormatProperty);
         set => SetValue(SelectedFormatProperty, value);
@@ -143,7 +175,8 @@ public sealed class BufferInspectorView : TemplatedControl
     {
         base.OnApplyTemplate(e);
 
-        _stringContent = (TextBox)this.GetTemplateChild("PART_StringContent")!;
+        _copyToClipboardButton = (Button)this.GetTemplateChild("CopyToClipboardButton");
+        _copyToClipboardButton.Click += OnCopyToClipboard;
 
         ReadBuffer();
     }
@@ -156,20 +189,30 @@ public sealed class BufferInspectorView : TemplatedControl
         {
             ReadBuffer();
         }
-        
+
         if (change.Property == SelectedFormatProperty)
         {
-            ShowRaw = SelectedFormat.Caption == "RAW";
+            ShowRaw = SelectedFormat.Name == "RAW";
+        }
+
+        if (change.Property == SelectedFormatNameProperty)
+        {
+            SelectFormat();
+        }
+    }
+
+    void OnCopyToClipboard(object? sender, RoutedEventArgs e)
+    {
+        var clipboardContent = PreviewContent;
+
+        if (!string.IsNullOrEmpty(clipboardContent))
+        {
+            Application.Current?.Clipboard?.SetTextAsync(clipboardContent);
         }
     }
 
     void ReadBuffer()
     {
-        if (_stringContent == null)
-        {
-            return;
-        }
-
         var buffer = Buffer;
         if (buffer == null)
         {
@@ -178,7 +221,7 @@ public sealed class BufferInspectorView : TemplatedControl
 
         if (buffer.Length == 0)
         {
-            _stringContent.Text = string.Empty;
+            PreviewContent = string.Empty;
             return;
         }
 
@@ -190,11 +233,11 @@ public sealed class BufferInspectorView : TemplatedControl
 
         try
         {
-            _stringContent.Text = format.Convert?.Invoke(buffer);
+            PreviewContent = format.Convert?.Invoke(buffer) ?? string.Empty;
         }
         catch (Exception exception)
         {
-            _stringContent.Text = $"<{exception.Message}>";
+            PreviewContent = $"<{exception.Message}>";
         }
     }
 }

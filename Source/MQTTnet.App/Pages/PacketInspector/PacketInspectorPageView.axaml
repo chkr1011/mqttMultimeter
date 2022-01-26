@@ -3,33 +3,135 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:MQTTnet.App.Controls"
+             xmlns:packetInspector="clr-namespace:MQTTnet.App.Pages.PacketInspector"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance packetInspector:PacketInspectorPageViewModel}"
              x:Class="MQTTnet.App.Pages.PacketInspector.PacketInspectorPageView">
+    <Grid RowDefinitions="Auto,*">
 
-    <Grid ColumnDefinitions="2*,Auto,*">
+        <!-- The Tool Bar -->
+        <StackPanel Grid.Row="0"
+                    Classes="tool_bar">
 
-        <Grid Grid.Column="0"
-              RowDefinitions="Auto,*">
-            <Border Grid.Row="0"
-                    Background="#ff0078d7">
-                <StackPanel Margin="2">
-                    <Button Content="Clear"
-                            Command="{Binding Clear}" />
-                </StackPanel>
-            </Border>
+            <!-- The Enable/Disable button -->
+            <ToggleButton Classes="tool_bar_button"
+                          IsChecked="{Binding IsRecordingEnabled}"
+                          ToolTip.Tip="Enable/Disable recording">
+                <Grid>
+                    <Image Source="/Assets/Icons/BreakpointEnabled_16x.png"
+                           IsVisible="{Binding IsRecordingEnabled}" />
+                    <Image Source="/Assets/Icons/BreakpointDisabled_16x.png"
+                           IsVisible="{Binding !IsRecordingEnabled}" />
+                </Grid>
+            </ToggleButton>
 
-            <ListBox Grid.Row="1"
-                     Items="{Binding Packets}"
-                     SelectedItem="{Binding Packets.SelectedItem}" />
+            <!-- The clear items button. -->
+            <Button Classes="tool_bar_button"
+                    Command="{Binding ClearItems}">
+                <Image Source="/Assets/Icons/ClearCollection_16x.png" />
+            </Button>
+        </StackPanel>
+
+        <Grid Grid.Row="1"
+              ColumnDefinitions="3*,Auto,2*">
+
+            <!-- The data grid with items -->
+            <DataGrid Grid.Column="0"
+                      Background="#262626"
+                      SelectedItem="{Binding SelectedPacket}"
+                      Items="{Binding Packets}">
+                <DataGrid.Columns>
+                    <!-- The number column -->
+                    <DataGridTemplateColumn Header="#"
+                                            Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="5,0"
+                                           HorizontalAlignment="Right"
+                                           Classes="code_text"
+                                           Text="{Binding Number}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- The direction column -->
+                    <DataGridTemplateColumn Header="Direction"
+                                            Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid Margin="10,0,0,0">
+                                    <StackPanel Orientation="Horizontal"
+                                                IsVisible="{Binding IsInbound}">
+                                        <Image Width="16"
+                                               Source="/Assets/Icons/Download_16x.png" />
+                                        <TextBlock Margin="10,0"
+                                                   Classes="code_text"
+                                                   Text="Inbound" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal"
+                                                IsVisible="{Binding !IsInbound}">
+                                        <Image Width="16"
+                                               Source="/Assets/Icons/Upload_16x.png" />
+                                        <TextBlock Margin="10,0"
+                                                   Classes="code_text"
+                                                   Text="Outbound" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- The type column -->
+                    <DataGridTemplateColumn Header="Type"
+                                            Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="5,0"
+                                           Classes="code_text"
+                                           Text="{Binding Type}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- The size column -->
+                    <DataGridTemplateColumn Header="Size"
+                                            Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="5,0,10,0"
+                                           HorizontalAlignment="Right"
+                                           Classes="code_text"
+                                           Text="{Binding Length, StringFormat={}{0} bytes}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- The splitter -->
+            <GridSplitter Grid.Column="1" />
+
+            <!-- The details of the selected packet -->
+            <Grid Grid.Column="2"
+                  RowDefinitions="Auto,*">
+                <Border Grid.Row="0"
+                        Height="31"
+                        Background="Black">
+                    <Label Margin="5,0"
+                           Classes="tool_bar_label"
+                           Content="Selected MQTT packet" />
+                </Border>
+
+                <controls:BufferInspectorView Grid.Row="1"
+                                              Margin="10"
+                                              SelectedFormatName="RAW"
+                                              Buffer="{Binding SelectedPacket.Data}" />
+
+            </Grid>
+
         </Grid>
-
-        <GridSplitter Grid.Column="1"
-                      ResizeBehavior="PreviousAndNext" />
-
-        <controls:BufferInspectorView Grid.Column="2"
-                                      DataContext="{Binding Packets.SelectedItem.ContentInspector}" />
     </Grid>
 
 </UserControl>

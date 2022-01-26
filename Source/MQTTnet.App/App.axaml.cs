@@ -7,6 +7,11 @@ using Avalonia.Markup.Xaml;
 using MQTTnet.App.Common;
 using MQTTnet.App.Controls;
 using MQTTnet.App.Main;
+using MQTTnet.App.Pages.Connection;
+using MQTTnet.App.Pages.Inflight;
+using MQTTnet.App.Pages.Info;
+using MQTTnet.App.Pages.Publish;
+using MQTTnet.App.Pages.Subscriptions;
 using MQTTnet.App.Services.Mqtt;
 using SimpleInjector;
 
@@ -21,7 +26,14 @@ public sealed class App : Application
     {
         _container = new Container();
         _container.Options.ResolveUnregisteredConcreteTypes = true;
+
         _container.RegisterSingleton<MqttClientService>();
+
+        _container.RegisterSingleton<ConnectionPageViewModel>();
+        _container.RegisterSingleton<PublishPageViewModel>();
+        _container.RegisterSingleton<SubscriptionsPageViewModel>();
+        _container.RegisterSingleton<InflightPageViewModel>();
+        _container.RegisterSingleton<InfoPageViewModel>();
 
         var viewLocator = new ViewLocator();
         DataTemplates.Add(viewLocator);

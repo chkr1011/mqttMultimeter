@@ -11,7 +11,7 @@
              d:DataContext="{d:DesignInstance inflight:InflightPageItemViewModel}"
              x:Class="MQTTnet.App.Pages.Inflight.InflightPageItemView">
 
-    <Grid RowDefinitions="Auto,*"
+    <Grid RowDefinitions="Auto,*,Auto"
           Margin="10,5,10,10">
 
         <Grid Grid.Row="0"
@@ -43,13 +43,43 @@
 
                 <!-- The Payload -->
                 <TabItem Header="Payload">
-                    <controls:BufferInspectorView Margin="0,10,0,0"
-                                                  Buffer="{Binding Source.Payload}" />
+                    <Grid RowDefinitions="Auto,Auto,*"
+                          ColumnDefinitions="Auto,*">
+                        <!-- Payload Format Indicator -->
+                        <Label Grid.Column="0"
+                               Grid.Row="0"
+                               Content="Payload Format Indicator"
+                               Classes="caption" />
+                        <TextBox IsReadOnly="True"
+                                 Grid.Column="1"
+                                 Grid.Row="0"
+                                 Classes="code_text value"
+                                 Text="{Binding Path=Source.PayloadFormatIndicator}" />
+
+                        <!-- Content Type -->
+                        <Label Grid.Column="0"
+                               Grid.Row="1"
+                               Content="Content Type"
+                               Classes="caption" />
+                        <TextBox IsReadOnly="True"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Classes="code_text value"
+                                 Text="{Binding Path=Source.ContentType}" />
+
+                        <!-- The Payload -->
+                        <controls:BufferInspectorView Grid.Column="0"
+                                                      Grid.ColumnSpan="2"
+                                                      Grid.Row="2"
+                                                      PreviewContent="{Binding PayloadPreview, Mode=OneWayToSource}"
+                                                      Margin="0,10,0,0"
+                                                      Buffer="{Binding Source.Payload}" />
+                    </Grid>
                 </TabItem>
 
                 <!-- The Additional Information -->
                 <TabItem Header="Additional Information">
-                    <Grid Margin="0,10,0,0" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
                           ColumnDefinitions="Auto,*">
                         <!-- The timestamp -->
                         <Label Content="Timestamp"
@@ -93,7 +123,7 @@
                                  Grid.Column="1"
                                  Grid.Row="3"
                                  Classes="code_text value"
-                                 Text="{Binding Path=Source.QualityOfServiceLevel, Converter={x:Static converters:EnumConverters.ExpandQualityOfServiceValue }}" />
+                                 Text="{Binding Path=QualityOfServiceLevel, Converter={x:Static converters:EnumConverters.ExpandQualityOfServiceValue }}" />
 
                         <!-- The response topic -->
                         <Label Grid.Column="0"
@@ -128,28 +158,6 @@
                                   Classes="code_text value"
                                   IsChecked="{Binding Path=Source.Dup}" />
 
-                        <!-- Payload Format Indicator -->
-                        <Label Grid.Column="0"
-                               Grid.Row="7"
-                               Content="Payload Format Indicator"
-                               Classes="caption" />
-                        <TextBox IsReadOnly="True"
-                                 Grid.Column="1"
-                                 Grid.Row="7"
-                                 Classes="code_text value"
-                                 Text="{Binding Path=Source.PayloadFormatIndicator}" />
-
-                        <!-- Content Type -->
-                        <Label Grid.Column="0"
-                               Grid.Row="8"
-                               Content="Content Type"
-                               Classes="caption" />
-                        <TextBox IsReadOnly="True"
-                                 Grid.Column="1"
-                                 Grid.Row="8"
-                                 Classes="code_text value"
-                                 Text="{Binding Path=Source.ContentType}" />
-
                         <!-- Subscription Identifiers -->
                         <Label Grid.Column="0"
                                Grid.Row="9"
@@ -174,6 +182,18 @@
                 </TabItem>
             </TabControl.Items>
         </TabControl>
+
+        <!-- The Replay button -->
+        <Button Classes="image_button"
+                Grid.Row="2"
+                Command="{Binding Repeat}"
+                Margin="0,10,0,0"
+                Background="Green">
+            <StackPanel>
+                <Image Source="/Assets/Icons/RepeatButton_16x.png" />
+                <TextBlock Text="Repeat" />
+            </StackPanel>
+        </Button>
     </Grid>
 
 </UserControl>
