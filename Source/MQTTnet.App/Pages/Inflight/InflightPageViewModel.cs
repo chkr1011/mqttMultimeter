@@ -116,9 +116,11 @@ public sealed class InflightPageViewModel : BaseViewModel
             return Task.CompletedTask;
         }
 
+        var newItem = CreateViewModel(eventArgs.ApplicationMessage);
+
         return Dispatcher.UIThread.InvokeAsync(() =>
         {
-            _itemsSource.Add(CreateViewModel(eventArgs.ApplicationMessage));
+            _itemsSource.Insert(0, newItem);
         });
     }
 }

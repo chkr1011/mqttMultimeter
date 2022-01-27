@@ -98,7 +98,7 @@ public sealed class PacketInspectorPageViewModel : BaseViewModel
 
         Dispatcher.UIThread.InvokeAsync(() =>
         {
-            Packets.Add(viewModel);
+            Packets.Insert(0, viewModel);
         });
     }
 }
