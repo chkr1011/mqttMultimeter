@@ -86,7 +86,7 @@
 
                         <!-- The parsed values -->
                         <UniformGrid Columns="4"
-                                     Margin="10"
+                                     Margin="10,10,0,10"
                                      Grid.Row="1">
                             <UniformGrid.Styles>
                                 <Style Selector="Label">
@@ -102,30 +102,32 @@
                                             Value="0" />
                                     <Setter Property="FontFamily"
                                             Value="Consolas" />
+                                    <Setter Property="CornerRadius"
+                                            Value="0" />
                                 </Style>
                             </UniformGrid.Styles>
 
                             <Label Content="Offset" />
                             <TextBox x:Name="ValueOffset" />
-                            
+
                             <Label Content="Remaining" />
                             <TextBox x:Name="ValueRemaining" />
-                            
+
                             <Label Content="8 bit Binary" />
                             <TextBox x:Name="Value8Bit" />
 
                             <Label Content="Boolean" />
                             <TextBox x:Name="ValueBoolean" />
-                            
+
                             <Label Content="Int8" />
                             <TextBox x:Name="ValueInt8" />
-                            
+
                             <Label Content="Int16" />
                             <TextBox x:Name="ValueInt16" />
 
                             <Label Content="UInt16" />
                             <TextBox x:Name="ValueUInt16" />
-                            
+
                             <Label Content="Int32" />
                             <TextBox x:Name="ValueInt32" />
 
@@ -140,7 +142,7 @@
 
                             <Label Content="ASCII" />
                             <TextBox x:Name="ValueAscii" />
-                            
+
                             <Label Content="UTF-8" />
                             <TextBox x:Name="ValueUTF8" />
 

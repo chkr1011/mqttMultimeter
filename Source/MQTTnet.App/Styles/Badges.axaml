@@ -1,0 +1,23 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="Border.badge">
+        <Setter Property="CornerRadius"
+                Value="5" />
+        <Setter Property="Padding"
+                Value="5" />
+        <Setter Property="Background"
+                Value="#212121" />
+    </Style>
+
+    <Style Selector="Border.badge >> TextBlock">
+        <Setter Property="Foreground"
+                Value="White" />
+    </Style>
+
+</Styles>

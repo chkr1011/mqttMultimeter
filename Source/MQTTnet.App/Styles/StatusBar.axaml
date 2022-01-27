@@ -1,0 +1,20 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <Border Classes="status_bar" />
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="Border.status_bar">
+        <Setter Property="Background"
+                Value="Black" />
+        <Setter Property="Height"
+                Value="24" />
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch" />
+        <Setter Property="Padding"
+                Value="10,0" />
+    </Style>
+
+</Styles>

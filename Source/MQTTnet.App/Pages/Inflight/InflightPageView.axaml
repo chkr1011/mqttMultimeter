@@ -120,7 +120,7 @@
                            Classes="tool_bar_label"
                            Content="Selected application message" />
                 </Border>
-                
+
                 <inflight:InflightPageItemView Grid.Row="1"
                                                DataContext="{Binding SelectedItem}" />
 

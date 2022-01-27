@@ -1,3 +1,4 @@
+using System.Reflection;
 using MQTTnet.App.Common;
 using MQTTnet.App.Pages.Connection;
 using MQTTnet.App.Pages.Inflight;
@@ -23,6 +24,8 @@ public sealed class MainViewModel : BaseViewModel
         InflightPage = inflightPage;
         PacketInspectorPage = packetInspectorPage;
         InfoPage = infoPage;
+
+        Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? string.Empty;
     }
 
     public ConnectionPageViewModel ConnectionPage { get; }
@@ -36,4 +39,6 @@ public sealed class MainViewModel : BaseViewModel
     public PublishPageViewModel PublishPage { get; }
 
     public SubscriptionsPageViewModel SubscriptionsPage { get; }
+
+    public string Version { get; }
 }

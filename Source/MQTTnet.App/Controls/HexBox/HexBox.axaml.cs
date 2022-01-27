@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -7,6 +6,7 @@ using System.Text.RegularExpressions;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using MQTTnet.App.Extensions;
 
 namespace MQTTnet.App.Controls;
@@ -45,11 +45,11 @@ public sealed class HexBox : TemplatedControl
         base.OnApplyTemplate(e);
 
         _contentTextBox = (TextBox)this.GetTemplateChild("PART_ContentTextBox");
-        
+
         Dump();
         UpdateValues();
     }
-
+    
     protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
     {
         base.OnPropertyChanged(change);
@@ -119,7 +119,7 @@ public sealed class HexBox : TemplatedControl
 
         _contentTextBox.Text = contentBuilder.ToString();
         Preview = previewBuilder.ToString();
-        
+
         UpdateValues();
     }
 
@@ -163,11 +163,15 @@ public sealed class HexBox : TemplatedControl
     void UpdateValues()
     {
         var lineBreaks = Regex.Matches(_contentTextBox?.Text?.Substring(0, CaretIndex) ?? "", Environment.NewLine).Count;
-        
-        Debug.WriteLine(CaretIndex);
+
         var offset = (CaretIndex - lineBreaks) / 3;
         var length = Value?.Length ?? 0;
         var remaining = length - offset - 1;
+        if (remaining < 0)
+        {
+            remaining = 0;
+        }
+
         var buffer = Value?.Skip(offset).ToArray() ?? Array.Empty<byte>();
 
         SetValue("ValueOffset", offset.ToString(CultureInfo.InvariantCulture));

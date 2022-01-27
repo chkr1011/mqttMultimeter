@@ -7,9 +7,9 @@
         <AssemblyVersion>0.0.1</AssemblyVersion>
         <NeutralLanguage>en-US</NeutralLanguage>
         <IsPackable>false</IsPackable>
-        <PackageId />
-        <PackageVersion />
-        <Authors />
+        <PackageId/>
+        <PackageVersion/>
+        <Authors/>
         <Company>Christian Kratky</Company>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,22 +18,22 @@
         <Prefer32Bit>false</Prefer32Bit>
     </PropertyGroup>
     <ItemGroup>
-        <Folder Include="Configuration\Service" />
-        <AvaloniaResource Include="Assets\**" />
-        <None Remove="Assets\Icons\arrow_down.png" />
-        <None Remove="Assets\Icons\arrow_up.png" />
+        <Folder Include="Configuration\Service"/>
+        <AvaloniaResource Include="Assets\**"/>
+        <None Remove="Assets\Icons\arrow_down.png"/>
+        <None Remove="Assets\Icons\arrow_up.png"/>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.11" />
-        <PackageReference Include="Avalonia.AvaloniaEdit" Version="0.10.9" />
-        <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.11" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.11" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11" />
-        <PackageReference Include="MessagePack" Version="2.3.85" />
-        <PackageReference Include="MQTTnet" Version="4.0.0-preview1" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-        <PackageReference Include="SimpleInjector" Version="5.3.2" />
+        <PackageReference Include="Avalonia" Version="0.10.11"/>
+        <PackageReference Include="Avalonia.AvaloniaEdit" Version="0.10.9"/>
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.11"/>
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.11"/>
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.11"/>
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.11"/>
+        <PackageReference Include="MessagePack" Version="2.3.85"/>
+        <PackageReference Include="MQTTnet" Version="4.0.0-preview1"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
+        <PackageReference Include="SimpleInjector" Version="5.3.2"/>
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Main\MainWindow.axaml.cs">
@@ -67,9 +67,9 @@
         </Compile>
     </ItemGroup>
     <ItemGroup>
-        <UpToDateCheckInput Remove="Common\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml" />
-        <UpToDateCheckInput Remove="Configuration\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml" />
-        <UpToDateCheckInput Remove="Common\BufferInspector\BufferInspectorView.axaml" />
-        <UpToDateCheckInput Remove="Common\BufferInspector\BufferValueView.axaml" />
+        <UpToDateCheckInput Remove="Common\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml"/>
+        <UpToDateCheckInput Remove="Configuration\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml"/>
+        <UpToDateCheckInput Remove="Common\BufferInspector\BufferInspectorView.axaml"/>
+        <UpToDateCheckInput Remove="Common\BufferInspector\BufferValueView.axaml"/>
     </ItemGroup>
 </Project>
