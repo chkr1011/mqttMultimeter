@@ -11,6 +11,7 @@
         <PackageVersion />
         <Authors />
         <Company>Christian Kratky</Company>
+        <ApplicationIcon>Assets\Icons\App.ico</ApplicationIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>embedded</DebugType>

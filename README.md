@@ -1,8 +1,11 @@
 <p align="center">
 <img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/icon_det_256.png?raw=true" width="196">
 <br/>
-<br/>
-</p>
+<div align="center" style="font-size:32px;font-family:Arial Black;">MQTTnet App</div>
+<div align="center" style="font-size:18px;font-weight:lighter;">The powerfull MQTT debugging, analyzing and testing Tool.</div>
+
+</br>
+</br>
 
 [![Join the chat at https://gitter.im/MQTTnet/community](https://badges.gitter.im/MQTTnet/community.svg)](https://gitter.im/MQTTnet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/chkr1011/MQTTnet/master/LICENSE)
