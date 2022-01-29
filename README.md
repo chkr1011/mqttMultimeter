@@ -1,18 +1,17 @@
 <p align="center">
 <img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/icon_det_256.png?raw=true" width="196">
 <br/>
-<div align="center" style="font-size:32px;">MQTTnet App</div>
-<div align="center" style="font-size:18px;font-weight:lighter;">The powerfull MQTT debugging, analyzing and testing Tool.</div>
 
 </br>
 </br>
 
+[![CI](https://github.com/chkr1011/MQTTnet.App/actions/workflows/ci.yml/badge.svg)](https://github.com/chkr1011/MQTTnet.App/actions/workflows/ci.yml)
 [![Join the chat at https://gitter.im/MQTTnet/community](https://badges.gitter.im/MQTTnet/community.svg)](https://gitter.im/MQTTnet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/chkr1011/MQTTnet/master/LICENSE)
 
 # MQTTnet App
 
-MQTTnet App is a high performance .NET application for MQTT communication testing and analysing.
+_MQTTnet.App_ is a cross platform .NET application for MQTT communication testing and analysing.
 
 The protocol implementation is based on the _MQTTnet_ project. The application uses Avalonia for UI rendering.
 
