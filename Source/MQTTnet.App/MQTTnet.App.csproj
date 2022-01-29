@@ -4,7 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <Product>MQTTnet.App</Product>
-        <AssemblyVersion>0.2.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0</AssemblyVersion>
         <NeutralLanguage>en-US</NeutralLanguage>
         <IsPackable>false</IsPackable>
         <PackageId />
@@ -12,6 +12,7 @@
         <Authors />
         <Company>Christian Kratky</Company>
         <ApplicationIcon>Assets\Icons\App.ico</ApplicationIcon>
+        <FileVersion>0.0.0</FileVersion>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>embedded</DebugType>

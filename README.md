@@ -1,7 +1,7 @@
 <p align="center">
 <img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/icon_det_256.png?raw=true" width="196">
 <br/>
-<div align="center" style="font-size:32px;font-family:Arial Black;">MQTTnet App</div>
+<div align="center" style="font-size:32px;">MQTTnet App</div>
 <div align="center" style="font-size:18px;font-weight:lighter;">The powerfull MQTT debugging, analyzing and testing Tool.</div>
 
 </br>
@@ -12,7 +12,7 @@
 
 # MQTTnet App
 
-MQTTnet App is a high performance .NET application for MQTT communication testing and analysing. 
+MQTTnet App is a high performance .NET application for MQTT communication testing and analysing.
 
 The protocol implementation is based on the _MQTTnet_ project. The application uses Avalonia for UI rendering.
 
