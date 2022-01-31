@@ -1,7 +1,5 @@
 <p align="center">
 <img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/icon_det_256.png?raw=true" width="196">
-<br/>
-
 </br>
 </br>
 

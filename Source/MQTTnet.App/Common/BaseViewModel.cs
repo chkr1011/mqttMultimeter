@@ -7,39 +7,10 @@ using ReactiveUI;
 
 namespace MQTTnet.App.Common;
 
-public abstract class BaseViewModel : ReactiveObject, INotifyDataErrorInfo
+public abstract class BaseViewModel : ReactiveObject
 {
-    readonly Dictionary<string, IEnumerable> _errors = new();
     readonly ViewModelPropertyStore _propertyStore = new();
-
-    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
-
-    public bool HasErrors => _errors.Count > 0;
-
-    public IEnumerable GetErrors(string? propertyName)
-    {
-        if (string.IsNullOrEmpty(propertyName))
-        {
-            return default!;
-        }
-
-        if (_errors.TryGetValue(propertyName, out var errors))
-        {
-            return errors;
-        }
-
-        return default!;
-    }
-
-    protected void ClearErrors()
-    {
-        _errors.Clear();
-
-        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(string.Empty));
-
-        OnPropertyChanged(nameof(HasErrors));
-    }
-
+    
     protected TValue GetValue<TValue>([CallerMemberName] string? propertyName = null)
     {
         if (propertyName == null)
@@ -54,28 +25,7 @@ public abstract class BaseViewModel : ReactiveObject, INotifyDataErrorInfo
     {
         this.RaisePropertyChanged(propertyName);
     }
-
-    protected void SetErrors(string propertyName, params string[] errors)
-    {
-        SetErrors(propertyName, (ICollection)errors);
-    }
-
-    protected void SetErrors(string propertyName, ICollection? errors)
-    {
-        if (errors == null || errors.Count == 0)
-        {
-            _errors.Remove(propertyName);
-        }
-        else
-        {
-            _errors[propertyName] = errors;
-        }
-
-        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-
-        OnPropertyChanged(nameof(HasErrors));
-    }
-
+    
     protected void SetValue<TValue>(TValue value, [CallerMemberName] string? propertyName = null)
     {
         if (propertyName == null)

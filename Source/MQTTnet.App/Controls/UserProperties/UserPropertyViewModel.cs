@@ -4,7 +4,7 @@ using ReactiveUI;
 
 namespace MQTTnet.App.Controls;
 
-public sealed class UserPropertyViewModel : BaseViewModel
+public sealed class UserPropertyViewModel : ReactiveObject
 {
     string _name = string.Empty;
     string _value = string.Empty;

@@ -8,7 +8,6 @@
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance publish:PublishPageViewModel}"
              x:Class="MQTTnet.App.Pages.Publish.PublishPageView">
-
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

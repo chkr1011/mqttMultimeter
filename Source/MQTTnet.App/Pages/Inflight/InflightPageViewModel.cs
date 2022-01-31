@@ -37,6 +37,7 @@ public sealed class InflightPageViewModel : BaseViewModel
 
         var filterTextChanged = this.WhenAnyValue(x => x.FilterText).Throttle(TimeSpan.FromMilliseconds(800)).ObserveOn(RxApp.MainThreadScheduler);
         var filter = new Func<InflightPageItemViewModel, bool>(i => string.IsNullOrEmpty(_filterText) || i.Topic.Contains(_filterText));
+        //var sort = new Comparison<InflightPageItemViewModel>((x, y) => x.Number.CompareTo(y.Number) * -1);
 
         _itemsSource.Connect().RefCount().AutoRefreshOnObservable(_ => filterTextChanged).Filter(filter).Bind(out _items).Subscribe();
     }
