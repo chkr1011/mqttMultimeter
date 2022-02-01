@@ -3,9 +3,9 @@ using Avalonia.Markup.Xaml;
 
 namespace MQTTnet.App.Pages.Subscriptions;
 
-public sealed class SubscriptionOptionsPageView : UserControl
+public sealed class SubscriptionItemView : UserControl
 {
-    public SubscriptionOptionsPageView()
+    public SubscriptionItemView()
     {
         AvaloniaXamlLoader.Load(this);
     }

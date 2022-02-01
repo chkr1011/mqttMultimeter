@@ -1,0 +1,161 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:MQTTnet.App.Controls"
+             xmlns:subscriptions="clr-namespace:MQTTnet.App.Pages.Subscriptions"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance subscriptions:SubscriptionItemViewModel}"
+             x:Class="MQTTnet.App.Pages.Subscriptions.SubscriptionItemView">
+
+    <Grid RowDefinitions="Auto,2*,Auto">
+
+        <StackPanel Grid.Row="0">
+            <TextBox Text="{Binding Name}"
+                     BorderThickness="0"
+                     FontSize="17"
+                     Padding="0"
+                     Background="Transparent" />
+        </StackPanel>
+
+        <!-- The request -->
+        <controls:GroupBox Header="Request"
+                           Grid.Row="1">
+
+            <Grid RowDefinitions="Auto,Auto,Auto,*">
+
+                <Grid ColumnDefinitions="*,Auto"
+                      Grid.Row="0"
+                      Margin="0,10,0,0">
+
+                    <!-- The topic -->
+                    <TextBox Grid.Column="0"
+                             Watermark="Topic"
+                             VerticalAlignment="Center"
+                             Classes="code_text"
+                             Text="{Binding Topic}" />
+
+                    <!-- The buttons -->
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal">
+                        <Button Background="Green"
+                                Margin="10,0,0,0"
+                                MinWidth="100"
+                                Command="{Binding Subscribe}"
+                                IsDefault="True">
+                            <StackPanel>
+                                <Image Source="/Assets/Icons/Filter_16x.png" />
+                                <TextBlock Text="Subscribe" />
+                            </StackPanel>
+                        </Button>
+                        <Button Background="Orange"
+                                MinWidth="100"
+                                Foreground="Black"
+                                Margin="10,0,0,0"
+                                Command="{Binding Unsubscribe}"
+                                IsDefault="True">
+                            <StackPanel>
+                                <Image Source="/Assets/Icons/DeleteFilter_16x.png" />
+                                <TextBlock Text="Unsubscribe" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
+
+                <Grid Grid.Row="1"
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+                      ColumnDefinitions="Auto,*">
+                    <!-- QoS -->
+                    <Label Classes="caption"
+                           Grid.Column="0"
+                           Grid.Row="0"
+                           Content="Quality of Service level (QoS)" />
+                    <controls:QualityOfServiceLevelSelectorView Grid.Column="1"
+                                                                Grid.Row="0"
+                                                                DataContext="{Binding QualityOfServiceLevel}" />
+
+                    <!-- No local -->
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           Classes="caption">No local</Label>
+                    <CheckBox Grid.Row="1"
+                              Grid.Column="1"
+                              IsChecked="{Binding NoLocal}" />
+
+                    <!-- Retain as published -->
+                    <Label Grid.Row="2"
+                           Grid.Column="0"
+                           Classes="caption">Retain as published</Label>
+                    <CheckBox Grid.Row="2"
+                              Grid.Column="1"
+                              IsChecked="{Binding RetainAsPublished}" />
+
+                    <!-- Retain handling -->
+                    <Label Grid.Row="3"
+                           Grid.Column="0"
+                           Classes="caption">Retain handling</Label>
+                    <ContentPresenter Grid.Row="3"
+                                      Grid.Column="1"
+                                      Content="{Binding RetainHandlingSelector}" />
+
+                    <!-- User properties -->
+                    <Label Grid.Row="4"
+                           Grid.Column="0"
+                           Classes="caption">User Properties</Label>
+                    <controls:UserPropertiesView Grid.Row="5"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="2"
+                                                 DataContext="{Binding UserProperties}" />
+                </Grid>
+
+            </Grid>
+        </controls:GroupBox>
+
+        <!-- The response -->
+        <controls:GroupBox Grid.Row="2"
+                           Header="Response">
+            <TabControl>
+                <TabItem Header="General">
+                    <Grid ColumnDefinitions="Auto,*"
+                          RowDefinitions="Auto,Auto,Auto,Auto">
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Classes="caption">Reason code</Label>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Classes="value"
+                                   Text="{Binding Response.ReasonCode}" />
+                        <Label Grid.Row="1"
+                               Grid.Column="0"
+                               Classes="caption">Reason code text</Label>
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Classes="value"
+                                   Text="{Binding Response.ReasonCodeText}" />
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Classes="caption">Reason string</Label>
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Classes="value"
+                                   Text="{Binding Response.ReasonString}" />
+                        <Label Grid.Row="3"
+                               Grid.Column="0"
+                               Classes="caption">Packet identifier</Label>
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="1"
+                                   Classes="value code_text"
+                                   Text="{Binding Response.PacketIdentifier}" />
+                    </Grid>
+                </TabItem>
+                <TabItem Header="User properties">
+                    <controls:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
+                </TabItem>
+            </TabControl>
+        </controls:GroupBox>
+    </Grid>
+
+</UserControl>

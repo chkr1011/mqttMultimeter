@@ -1,10 +1,8 @@
 using System;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using MQTTnet.App.Common;
 using MQTTnet.App.Controls;
 using MQTTnet.App.Main;
 using MQTTnet.App.Pages.Connection;
@@ -48,7 +46,7 @@ public sealed class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            _mainWindow = new MainWindowView
+            _mainWindow = new MainWindow
             {
                 DataContext = _container.GetInstance<MainViewModel>()
             };
@@ -58,39 +56,7 @@ public sealed class App : Application
 
         base.OnFrameworkInitializationCompleted();
     }
-
-    public static Task ShowDialog(Window window)
-    {
-        if (window == null)
-        {
-            throw new ArgumentNullException(nameof(window));
-        }
-
-        return window.ShowDialog(MainWindowView.Instance);
-    }
-
-    public static Task ShowDialog(IDialogViewModel content)
-    {
-        if (content == null)
-        {
-            throw new ArgumentNullException(nameof(content));
-        }
-
-        var host = new Window
-        {
-            Title = content.Title,
-            WindowStartupLocation = WindowStartupLocation.CenterOwner,
-            CanResize = false,
-            SizeToContent = SizeToContent.WidthAndHeight,
-            ShowInTaskbar = false,
-            ShowActivated = true,
-            Content = content,
-            DataContext = content
-        };
-
-        return host.ShowDialog(_mainWindow);
-    }
-
+    
     public static void ShowException(Exception exception)
     {
         var viewModel = new ErrorBoxViewModel
@@ -105,31 +71,6 @@ public sealed class App : Application
             WindowStartupLocation = WindowStartupLocation.CenterOwner
         };
 
-        window.ShowDialog(MainWindowView.Instance);
-
-        //ShowMessage(exception.ToString());
-
-        //ShowDialog(new TextViewModel(exception.ToString()));
-    }
-
-    public static Task ShowMessage(string message)
-    {
-        if (message == null)
-        {
-            throw new ArgumentNullException(nameof(message));
-        }
-
-        var host = new Window
-        {
-            WindowStartupLocation = WindowStartupLocation.CenterOwner,
-            CanResize = false,
-            SizeToContent = SizeToContent.WidthAndHeight,
-            ShowInTaskbar = false,
-            ShowActivated = true,
-            Content = message,
-            DataContext = message
-        };
-
-        return host.ShowDialog(MainWindowView.Instance);
+        window.ShowDialog(MainWindow.Instance);
     }
 }

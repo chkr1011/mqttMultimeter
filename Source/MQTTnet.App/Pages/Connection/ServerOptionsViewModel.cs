@@ -1,11 +1,16 @@
 ﻿using System.Linq;
 using System.Security.Authentication;
 using MQTTnet.App.Common;
+using ReactiveUI;
 
 namespace MQTTnet.App.Pages.Connection;
 
 public sealed class ServerOptionsViewModel : BaseViewModel
 {
+    int _communicationTimeout;
+    int _port;
+    string _host = string.Empty;
+
     public ServerOptionsViewModel()
     {
         Host = "localhost";
@@ -25,18 +30,22 @@ public sealed class ServerOptionsViewModel : BaseViewModel
         TlsVersions.SelectedItem = TlsVersions.FirstOrDefault()!;
     }
 
-    public int CommunicationTimeout { get; set; }
+    public int CommunicationTimeout
+    {
+        get => _communicationTimeout;
+        set => this.RaiseAndSetIfChanged(ref _communicationTimeout, value);
+    }
 
     public string Host
     {
-        get => GetValue<string>();
-        set => SetValue(value);
+        get => _host;
+        set => this.RaiseAndSetIfChanged(ref _host, value);
     }
 
     public int Port
     {
-        get => GetValue<int>();
-        set => SetValue(value);
+        get => _port;
+        set => this.RaiseAndSetIfChanged(ref _port, value);
     }
 
     public ViewModelCollection<TlsVersionViewModel> TlsVersions { get; } = new();

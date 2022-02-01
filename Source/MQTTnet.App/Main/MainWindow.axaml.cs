@@ -5,9 +5,9 @@ using Avalonia.Markup.Xaml;
 
 namespace MQTTnet.App.Main;
 
-public sealed class MainWindowView : Window
+public sealed class MainWindow : Window
 {
-    public MainWindowView()
+    public MainWindow()
     {
         Instance = this;
 
@@ -20,7 +20,7 @@ public sealed class MainWindowView : Window
         DataContextChanged += OnDataContextChanged;
     }
 
-    public static MainWindowView Instance { get; private set; } = default!;
+    public static MainWindow Instance { get; private set; } = default!;
 
     void InitializeComponent()
     {
