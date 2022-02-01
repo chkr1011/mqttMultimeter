@@ -50,8 +50,9 @@
                                 <TextBlock Text="Subscribe" />
                             </StackPanel>
                         </Button>
-                        <Button Background="Red"
+                        <Button Background="Orange"
                                 MinWidth="100"
+                                Foreground="Black"
                                 Margin="10,0,0,0"
                                 Command="{Binding Unsubscribe}"
                                 IsDefault="True">

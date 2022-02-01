@@ -11,6 +11,13 @@
     <Style Selector="StackPanel.tool_bar">
         <Setter Property="Orientation"
                 Value="Horizontal" />
+        <Setter Property="Background"
+                Value="#262626" />
+    </Style>
+
+    <Style Selector="Grid.tool_bar">
+        <Setter Property="Background"
+                Value="#262626" />
     </Style>
 
     <Style Selector="Button.tool_bar_button">

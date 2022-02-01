@@ -39,6 +39,8 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
             Topic = "#"
         };
 
+        newItem.UserProperties.AddItem();
+
         Items.Add(newItem);
     }
 
@@ -46,7 +48,17 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
     {
         Items.Clear();
     }
-    
+
+    public void RemoveItem(SubscriptionItemViewModel item)
+    {
+        if (item == null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+
+        Items.Remove(item);
+    }
+
     public async Task SubscribeItem(SubscriptionItemViewModel item)
     {
         try
@@ -59,53 +71,13 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
             App.ShowException(exception);
         }
     }
-    
+
     public async Task UnsubscribeItem(SubscriptionItemViewModel item)
     {
         try
         {
             var response = await _mqttClientService.Unsubscribe(item);
             item.Response.ApplyResponse(response);
-        }
-        catch (Exception exception)
-        {
-            App.ShowException(exception);
-        }
-    }
-    
-    public async Task CreateSubscription()
-    {
-        try
-        {
-            //var editor = new SubscribeResponseViewModel(_mqttClientService);
-
-            // var window = new SubscriptionEditorView
-            // {
-            //     Title = "Create subscription",
-            //     WindowStartupLocation = WindowStartupLocation.CenterOwner,
-            //     ShowActivated = true,
-            //     SizeToContent = SizeToContent.WidthAndHeight,
-            //     ShowInTaskbar = false,
-            //     CanResize = false,
-            //     DataContext = editor
-            // };
-
-            // await App.ShowDialog(window);
-            //
-            // if (!editor.Subscribed)
-            // {
-            //     return;
-            // }
-
-            // var subscription = new SubscriptionViewModel(editor.ConfigurationPage);
-            //
-            // subscription.UnsubscribedHandler = async () =>
-            // {
-            //     await _mqttClientService.Unsubscribe(editor.ConfigurationPage.Topic);
-            //     Items.Remove(subscription);
-            // };
-            //
-            // Items.Add(subscription);
         }
         catch (Exception exception)
         {

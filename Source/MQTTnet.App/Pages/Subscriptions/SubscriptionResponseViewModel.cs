@@ -6,26 +6,26 @@ namespace MQTTnet.App.Pages.Subscriptions;
 
 public sealed class SubscriptionResponseViewModel : BaseViewModel
 {
+    int? _reasonCode;
     string _reasonCodeText = string.Empty;
     string _reasonString = string.Empty;
-    int? _reasonCode;
+
+    public int? ReasonCode
+    {
+        get => _reasonCode;
+        set => this.RaiseAndSetIfChanged(ref _reasonCode, value);
+    }
 
     public string ReasonCodeText
     {
         get => _reasonCodeText;
         set => this.RaiseAndSetIfChanged(ref _reasonCodeText, value);
     }
-    
+
     public string ReasonString
     {
         get => _reasonString;
         set => this.RaiseAndSetIfChanged(ref _reasonString, value);
-    }
-
-    public int? ReasonCode
-    {
-        get => _reasonCode;
-        set => this.RaiseAndSetIfChanged(ref _reasonCode, value);
     }
 
     public void ApplyResponse(MqttClientSubscribeResult response)

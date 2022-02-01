@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Input;
 using MQTTnet.App.Extensions;
 
 namespace MQTTnet.App.Controls;
@@ -49,7 +48,7 @@ public sealed class HexBox : TemplatedControl
         Dump();
         UpdateValues();
     }
-    
+
     protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
     {
         base.OnPropertyChanged(change);

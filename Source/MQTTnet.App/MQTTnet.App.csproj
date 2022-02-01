@@ -33,7 +33,7 @@
         <PackageReference Include="Avalonia.Diagnostics" Version="0.10.12" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
         <PackageReference Include="MessagePack" Version="2.3.85" />
-        <PackageReference Include="MQTTnet" Version="4.0.0-preview2" />
+        <PackageReference Include="MQTTnet" Version="4.0.0-preview3" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="SimpleInjector" Version="5.3.3" />
     </ItemGroup>
@@ -68,8 +68,8 @@
             <SubType>Code</SubType>
         </Compile>
         <Compile Update="Controls\RetainHandling\RetainHandlingSelectorView.axaml.cs">
-          <DependentUpon>QualityOfServiceLevelSelectorView.axaml</DependentUpon>
-          <SubType>Code</SubType>
+            <DependentUpon>QualityOfServiceLevelSelectorView.axaml</DependentUpon>
+            <SubType>Code</SubType>
         </Compile>
     </ItemGroup>
     <ItemGroup>

@@ -91,7 +91,7 @@
                                  Grid.Column="1"
                                  Grid.Row="0"
                                  Text="{Binding Timestamp}" />
-                        
+
                         <!--Text="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm:ss.fff}}" -->
 
                         <!-- Retain -->

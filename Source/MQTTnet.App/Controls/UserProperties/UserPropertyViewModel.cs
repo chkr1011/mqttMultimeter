@@ -1,5 +1,4 @@
 ﻿using System;
-using MQTTnet.App.Common;
 using ReactiveUI;
 
 namespace MQTTnet.App.Controls;

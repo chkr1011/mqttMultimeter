@@ -42,7 +42,7 @@ public sealed class MqttClientService : IMqttPacketInspector
         _mqttClient = new MqttFactory().CreateMqttClient();
 
         var clientOptionsBuilder = new MqttClientOptionsBuilder().WithCommunicationTimeout(TimeSpan.FromSeconds(options.ServerOptions.CommunicationTimeout))
-            .WithProtocolVersion(options.ProtocolOptions.ProtocolVersions.SelectedItem.Value)
+            .WithProtocolVersion(options.ProtocolOptions.SelectedProtocolVersion.Value)
             .WithClientId(options.SessionOptions.ClientId)
             .WithCleanSession(options.SessionOptions.CleanSession)
             .WithCredentials(options.SessionOptions.User, options.SessionOptions.Password)
@@ -157,14 +157,17 @@ public sealed class MqttClientService : IMqttPacketInspector
             .Build();
 
         var subscribeOptionsBuilder = new MqttClientSubscribeOptionsBuilder().WithTopicFilter(topicFilter);
-        
+
         foreach (var userProperty in subscriptionItem.UserProperties.Items)
         {
-            subscribeOptionsBuilder.WithUserProperty(userProperty.Name, userProperty.Value);
+            if (!string.IsNullOrEmpty(userProperty.Name))
+            {
+                subscribeOptionsBuilder.WithUserProperty(userProperty.Name, userProperty.Value);
+            }
         }
-        
+
         var subscribeOptions = subscribeOptionsBuilder.Build();
-        
+
         var subscribeResult = await _mqttClient.SubscribeAsync(subscribeOptions).ConfigureAwait(false);
 
         return subscribeResult;
