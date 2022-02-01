@@ -18,6 +18,7 @@ public sealed class InflightPageViewModel : BaseViewModel
     readonly SourceList<InflightPageItemViewModel> _itemsSource = new();
     readonly PublishPageViewModel _publishPage;
 
+
     string? _filterText;
     bool _isRecordingEnabled = true;
     int _number;
@@ -35,11 +36,9 @@ public sealed class InflightPageViewModel : BaseViewModel
 
         mqttClientService.ApplicationMessageReceived += OnApplicationMessageReceived;
 
-        var filterTextChanged = this.WhenAnyValue(x => x.FilterText).Throttle(TimeSpan.FromMilliseconds(800)).ObserveOn(RxApp.MainThreadScheduler);
-        var filter = new Func<InflightPageItemViewModel, bool>(i => string.IsNullOrEmpty(_filterText) || i.Topic.Contains(_filterText));
-        //var sort = new Comparison<InflightPageItemViewModel>((x, y) => x.Number.CompareTo(y.Number) * -1);
+        var filter = this.WhenAnyValue(x => x.FilterText).Throttle(TimeSpan.FromMilliseconds(800)).Select(BuildFilter);
 
-        _itemsSource.Connect().RefCount().AutoRefreshOnObservable(_ => filterTextChanged).Filter(filter).Bind(out _items).Subscribe();
+        _itemsSource.Connect().Filter(filter).ObserveOn(RxApp.MainThreadScheduler).Bind(out _items).Subscribe();
     }
 
     public event EventHandler? SwitchToPublishRequested;
@@ -85,6 +84,16 @@ public sealed class InflightPageViewModel : BaseViewModel
         SwitchToPublishRequested?.Invoke(this, EventArgs.Empty);
     }
 
+    Func<InflightPageItemViewModel, bool> BuildFilter(string searchText)
+    {
+        if (string.IsNullOrEmpty(searchText))
+        {
+            return t => true;
+        }
+
+        return t => t.Topic.Contains(searchText, StringComparison.OrdinalIgnoreCase);
+    }
+
     InflightPageItemViewModel CreateViewModel(MqttApplicationMessage applicationMessage)
     {
         var itemViewModel = new InflightPageItemViewModel
@@ -121,7 +130,13 @@ public sealed class InflightPageViewModel : BaseViewModel
 
         return Dispatcher.UIThread.InvokeAsync(() =>
         {
-            _itemsSource.Insert(0, newItem);
+            _itemsSource.Add(newItem);
+
+            // TODO: Move to configuration.
+            if (_itemsSource.Count > 1000)
+            {
+                _itemsSource.RemoveAt(0);
+            }
         });
     }
 }
