@@ -19,9 +19,11 @@
         <RadioButton GroupName="QoS"
                      Content="At most once (0)"
                      IsChecked="{Binding Path=IsLevel0, Mode=TwoWay}" />
+
         <RadioButton GroupName="QoS"
                      Content="At lease once (1)"
                      IsChecked="{Binding Path=IsLevel1, Mode=TwoWay}" />
+
         <RadioButton GroupName="QoS"
                      Content="Exactly once (2)"
                      IsChecked="{Binding Path=IsLevel2, Mode=TwoWay}" />

@@ -13,13 +13,18 @@
             <ControlTemplate>
                 <Grid ColumnDefinitions="Auto,*"
                       RowDefinitions="Auto,*">
+
                     <Label Grid.Row="0"
                            Padding="0"
                            Grid.Column="0"
-                           TextBlock.Foreground="{DynamicResource SystemAccentColor}"
-                           TextBlock.FontWeight="SemiBold"
-                           TextBlock.FontSize="17"
-                           Content="{TemplateBinding Header}" />
+                           Foreground="White"
+                           Content="{TemplateBinding Header}">
+                        <Label.Styles>
+                            <Style Selector="AccessText">
+                                <!-- <Setter Property="FontSize" Value="14"></Setter> -->
+                            </Style>
+                        </Label.Styles>
+                    </Label>
 
                     <!-- The divider line -->
                     <Rectangle Grid.Row="0"
@@ -27,13 +32,12 @@
                                Margin="10,0,0,0"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Center"
-                               Height="1"
-                               Fill="WhiteSmoke" />
+                               Height="2"
+                               Fill="{DynamicResource SystemAccentColor}" />
 
                     <!-- The content. -->
                     <ContentPresenter Grid.Column="0"
                                       Grid.ColumnSpan="2"
-                                      Margin="10,0,0,0"
                                       Content="{TemplateBinding Content}"
                                       Grid.Row="1" />
                 </Grid>

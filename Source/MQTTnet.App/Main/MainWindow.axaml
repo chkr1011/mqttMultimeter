@@ -115,8 +115,29 @@
 
         <!-- The status bar -->
         <Border Classes="status_bar"
+                Background="Red"
                 Grid.Row="1">
             <DockPanel LastChildFill="True">
+
+                <StackPanel DockPanel.Dock="Left"
+                            Orientation="Horizontal">
+                    <!-- The connection status -->
+                    <Border>
+                        <TextBlock Text="Not connected" />
+                    </Border>
+
+                    <Separator />
+
+                    <Border>
+                        <TextBlock Text="0 Publish packets" />
+                    </Border>
+
+                    <Separator />
+
+                    <Border>
+                        <TextBlock Text="0 Packages received" />
+                    </Border>
+                </StackPanel>
 
                 <!-- The version string -->
                 <Border DockPanel.Dock="Right">

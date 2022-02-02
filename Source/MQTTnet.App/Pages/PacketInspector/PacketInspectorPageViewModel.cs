@@ -99,7 +99,7 @@ public sealed class PacketInspectorPageViewModel : BaseViewModel
         Dispatcher.UIThread.InvokeAsync(() =>
         {
             Packets.Add(viewModel);
-            
+
             // TODO: Move to configuration.
             if (Packets.Count > 1000)
             {

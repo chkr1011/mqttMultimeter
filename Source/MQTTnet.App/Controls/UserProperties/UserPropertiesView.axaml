@@ -12,7 +12,8 @@
           Grid.IsSharedSizeScope="True">
 
         <!-- The buttons -->
-        <StackPanel Classes="tool_bar" Grid.Row="0"
+        <StackPanel Classes="tool_bar"
+                    Grid.Row="0"
                     IsVisible="{Binding !IsReadOnly, FallbackValue=False}"
                     Orientation="Horizontal">
             <Button Classes="tool_bar_button"

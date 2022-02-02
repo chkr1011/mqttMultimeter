@@ -16,6 +16,7 @@
             <TextBox Text="{Binding Name}"
                      BorderThickness="0"
                      FontSize="17"
+                     Margin="0,0,0,10"
                      Padding="0"
                      Background="Transparent" />
         </StackPanel>
@@ -40,25 +41,26 @@
                     <!-- The buttons -->
                     <StackPanel Grid.Column="1"
                                 Orientation="Horizontal">
-                        <Button Background="Green"
+                        <Button Background="{DynamicResource SystemAccentColor}"
                                 Margin="10,0,0,0"
                                 MinWidth="100"
                                 Command="{Binding Subscribe}"
                                 IsDefault="True">
                             <StackPanel>
                                 <Image Source="/Assets/Icons/Filter_16x.png" />
-                                <TextBlock Text="Subscribe" />
+                                <TextBlock Margin="0,5,0,0"
+                                           Text="Subscribe" />
                             </StackPanel>
                         </Button>
-                        <Button Background="Orange"
+                        <Button Background="{DynamicResource SystemAccentColor}"
                                 MinWidth="100"
-                                Foreground="Black"
                                 Margin="10,0,0,0"
                                 Command="{Binding Unsubscribe}"
                                 IsDefault="True">
                             <StackPanel>
                                 <Image Source="/Assets/Icons/DeleteFilter_16x.png" />
-                                <TextBlock Text="Unsubscribe" />
+                                <TextBlock Margin="0,5,0,0"
+                                           Text="Unsubscribe" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -73,9 +75,9 @@
                            Grid.Column="0"
                            Grid.Row="0"
                            Content="Quality of Service level (QoS)" />
-                    <controls:QualityOfServiceLevelSelectorView Grid.Column="1"
-                                                                Grid.Row="0"
-                                                                DataContext="{Binding QualityOfServiceLevel}" />
+                    <ContentPresenter Content="{Binding QualityOfServiceLevel}"
+                                      Grid.Column="1"
+                                      Grid.Row="0" />
 
                     <!-- No local -->
                     <Label Grid.Row="1"

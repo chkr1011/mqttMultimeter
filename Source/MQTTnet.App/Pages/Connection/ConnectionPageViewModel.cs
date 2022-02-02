@@ -14,7 +14,7 @@ public sealed class ConnectionPageViewModel : BaseViewModel
     readonly MqttClientService _mqttClientService;
 
     bool _isConnecting;
-    
+
     public ConnectionPageViewModel(MqttClientService mqttClientService)
     {
         _mqttClientService = mqttClientService;
@@ -28,7 +28,7 @@ public sealed class ConnectionPageViewModel : BaseViewModel
     public bool IsConnecting
     {
         get => _isConnecting;
-        private set =>this.RaiseAndSetIfChanged(ref _isConnecting, value);
+        private set => this.RaiseAndSetIfChanged(ref _isConnecting, value);
     }
 
     public MqttNetOptionsViewModel MqttNetOptions { get; } = new();

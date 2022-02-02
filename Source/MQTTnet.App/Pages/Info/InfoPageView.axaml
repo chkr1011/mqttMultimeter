@@ -62,8 +62,8 @@
                Margin="0,10,0,0"
                Classes="OptionGroupLabel" />
         <Label Content="http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html" />
-<!-- -->
-<!-- <avaloniaEdit:TextEditor /> -->
+        <!-- -->
+        <!-- <avaloniaEdit:TextEditor /> -->
 
     </StackPanel>
 </UserControl>

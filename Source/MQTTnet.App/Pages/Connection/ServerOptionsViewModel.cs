@@ -8,8 +8,8 @@ namespace MQTTnet.App.Pages.Connection;
 public sealed class ServerOptionsViewModel : BaseViewModel
 {
     int _communicationTimeout;
-    int _port;
     string _host = string.Empty;
+    int _port;
 
     public ServerOptionsViewModel()
     {

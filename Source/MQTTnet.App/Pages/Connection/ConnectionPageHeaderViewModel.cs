@@ -6,7 +6,7 @@ namespace MQTTnet.App.Pages.Connection;
 public sealed class ConnectionPageHeaderViewModel : BaseViewModel
 {
     bool _isConnected;
-    
+
     public bool IsConnected
     {
         get => _isConnected;

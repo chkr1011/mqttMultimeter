@@ -6,9 +6,16 @@ namespace MQTTnet.App.Pages.Subscriptions;
 
 public sealed class SubscriptionResponseViewModel : BaseViewModel
 {
+    uint? _packetIdentifier;
     int? _reasonCode;
     string _reasonCodeText = string.Empty;
     string _reasonString = string.Empty;
+
+    public uint? PacketIdentifier
+    {
+        get => _packetIdentifier;
+        set => this.RaiseAndSetIfChanged(ref _packetIdentifier, value);
+    }
 
     public int? ReasonCode
     {

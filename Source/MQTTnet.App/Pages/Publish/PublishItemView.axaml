@@ -15,6 +15,7 @@
             <TextBox Text="{Binding Name}"
                      BorderThickness="0"
                      FontSize="17"
+                     Margin="0,0,0,10"
                      Padding="0"
                      Background="Transparent" />
         </StackPanel>
@@ -36,14 +37,16 @@
                              Text="{Binding Topic}" />
 
                     <!-- The send button -->
-                    <Button Background="Green"
+                    <Button Background="{DynamicResource SystemAccentColor}"
                             Grid.Column="1"
+                            Width="100"
                             Margin="10,0,0,0"
                             Command="{Binding Publish}"
                             IsDefault="True">
                         <StackPanel>
                             <Image Source="/Assets/Icons/Send_16x.png" />
-                            <TextBlock Text="Publish" />
+                            <TextBlock Margin="0,5,0,0"
+                                       Text="Publish" />
                         </StackPanel>
                     </Button>
                 </Grid>
@@ -53,8 +56,7 @@
                     <!-- The payload tab -->
                     <TabItem Header="Payload">
                         <Grid RowDefinitions="Auto,Auto,*"
-                              ColumnDefinitions="Auto,*"
-                              Margin="0,10,0,0">
+                              ColumnDefinitions="Auto,*">
 
                             <!-- The content type -->
                             <Label Grid.Column="0"
@@ -107,9 +109,7 @@
                     <!-- The settings tab -->
                     <TabItem Header="Settings">
                         <StackPanel>
-
                             <Grid ColumnDefinitions="Auto,*,Auto"
-                                  Margin="0,10,0,0"
                                   RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
 
                                 <!-- QoS -->
@@ -117,9 +117,9 @@
                                        Grid.Column="0"
                                        Grid.Row="0"
                                        Content="Quality of service (QoS) level" />
-                                <controls:QualityOfServiceLevelSelectorView Grid.Column="1"
-                                                                            Grid.Row="0"
-                                                                            DataContext="{Binding QualityOfServiceLevel}" />
+                                <ContentPresenter Grid.Column="1"
+                                                  Grid.Row="0"
+                                                  Content="{Binding QualityOfServiceLevel}" />
                                 <!-- Retain -->
                                 <Label Classes="caption"
                                        Grid.Column="0"
@@ -185,7 +185,6 @@
                                          Grid.Row="5"
                                          Text="{Binding ResponseTopic}" />
                             </Grid>
-
                         </StackPanel>
                     </TabItem>
 

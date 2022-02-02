@@ -6,6 +6,7 @@
                   DataType="{x:Type subscriptions:SubscriptionItemViewModel}">
 
         <Grid ColumnDefinitions="*,Auto"
+              Height="32"
               Margin="10">
 
             <StackPanel>

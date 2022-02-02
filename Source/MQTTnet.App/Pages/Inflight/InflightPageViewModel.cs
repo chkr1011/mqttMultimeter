@@ -18,7 +18,6 @@ public sealed class InflightPageViewModel : BaseViewModel
     readonly SourceList<InflightPageItemViewModel> _itemsSource = new();
     readonly PublishPageViewModel _publishPage;
 
-
     string? _filterText;
     bool _isRecordingEnabled = true;
     int _number;
