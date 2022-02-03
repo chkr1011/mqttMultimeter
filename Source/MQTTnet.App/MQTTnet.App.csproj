@@ -75,15 +75,13 @@
         </Compile>
     </ItemGroup>
     <ItemGroup>
-        <UpToDateCheckInput Remove="Common\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml"/>
-        <UpToDateCheckInput Remove="Configuration\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml"/>
-        <UpToDateCheckInput Remove="Common\BufferInspector\BufferInspectorView.axaml"/>
-        <UpToDateCheckInput Remove="Common\BufferInspector\BufferValueView.axaml"/>
-        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpPropertyView.axaml"/>
-        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpView.axaml"/>
-    </ItemGroup>
-    <ItemGroup>
         <None Remove="Pages\Info\Readme.md"/>
         <EmbeddedResource Include="Pages\Info\Readme.md"/>
+        <UpToDateCheckInput Remove="Common\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml" />
+        <UpToDateCheckInput Remove="Configuration\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml" />
+        <UpToDateCheckInput Remove="Common\BufferInspector\BufferInspectorView.axaml" />
+        <UpToDateCheckInput Remove="Common\BufferInspector\BufferValueView.axaml" />
+        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpPropertyView.axaml" />
+        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpView.axaml" />
     </ItemGroup>
 </Project>

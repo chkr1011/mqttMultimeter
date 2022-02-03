@@ -1,19 +1,11 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using SimpleInjector;
 
 namespace MQTTnet.App.Common;
 
 sealed class ViewLocator : IDataTemplate
 {
-    readonly Container _container;
-
-    public ViewLocator(Container container)
-    {
-        _container = container ?? throw new ArgumentNullException(nameof(container));
-    }
-
     public IControl Build(object data)
     {
         var viewFullName = data.GetType().FullName!.Replace("ViewModel", "View");
@@ -21,7 +13,7 @@ sealed class ViewLocator : IDataTemplate
 
         if (viewType != null)
         {
-            var control = (Control)_container.GetInstance(viewType)!;
+            var control = (Control)Activator.CreateInstance(viewType)!;
             control.DataContext = data;
             return control;
         }

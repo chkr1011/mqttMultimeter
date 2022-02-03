@@ -52,7 +52,6 @@
                 <TabItem Header="General">
                     <Grid ColumnDefinitions="Auto,Auto,Auto,Auto"
                           RowDefinitions="Auto,Auto,Auto,Auto">
-
                         <Label Grid.Row="0"
                                Grid.Column="0"
                                Classes="caption">Reason code</Label>

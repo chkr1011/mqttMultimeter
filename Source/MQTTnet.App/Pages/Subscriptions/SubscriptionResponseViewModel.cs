@@ -35,6 +35,8 @@ public sealed class SubscriptionResponseViewModel : BaseViewModel
         get => _reasonString;
         set => this.RaiseAndSetIfChanged(ref _reasonString, value);
     }
+    
+    public UserPropertiesViewModel UserProperties { get; } = new();
 
     public UserPropertiesViewModel UserProperties { get; } = new();
 

@@ -19,6 +19,7 @@ public sealed class InfoPageViewModel : BaseViewModel
     {
         _appUpdateService = appUpdateService;
         CurrentAppVersion = appUpdateService.CurrentVersion.ToString();
+        AppVersion = typeof(App).Assembly.GetName().Version?.ToString() ?? "<unknown>";
         MqttNetVersion = typeof(MqttClient).Assembly.GetName().Version?.ToString() ?? "<unknown>";
         DotNetVersion = Environment.Version.ToString();
         AvaloniaVersion = typeof(Label).Assembly.GetName().Version?.ToString() ?? "<unknown>";
@@ -43,6 +44,7 @@ public sealed class InfoPageViewModel : BaseViewModel
         get => _latestAppVersion;
         set => this.RaiseAndSetIfChanged(ref _latestAppVersion, value);
     }
+    public string AppVersion { get; }
 
     public string MqttNetVersion { get; }
 
