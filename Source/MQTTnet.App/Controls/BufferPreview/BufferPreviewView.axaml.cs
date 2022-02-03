@@ -117,21 +117,6 @@ public sealed class BufferInspectorView : TemplatedControl
         SelectFormat();
     }
 
-    void SelectFormat()
-    {
-        if (string.IsNullOrEmpty(SelectedFormatName))
-        {
-            SelectedFormat = Formats.FirstOrDefault();
-        }
-
-        SelectedFormat = Formats.FirstOrDefault(f => f.Name.Equals(SelectedFormatName));
-
-        if (SelectedFormat == null)
-        {
-            SelectedFormat = Formats.FirstOrDefault();
-        }
-    }
-
     public byte[]? Buffer
     {
         get => GetValue(BufferProperty);
@@ -144,12 +129,6 @@ public sealed class BufferInspectorView : TemplatedControl
         set => SetValue(FormatsProperty, value);
     }
 
-    public string? SelectedFormatName
-    {
-        get => GetValue(SelectedFormatNameProperty);
-        set => SetValue(SelectedFormatNameProperty, value);
-    }
-
     public string PreviewContent
     {
         get => GetValue(PreviewContentProperty);
@@ -160,6 +139,12 @@ public sealed class BufferInspectorView : TemplatedControl
     {
         get => GetValue(SelectedFormatProperty);
         set => SetValue(SelectedFormatProperty, value);
+    }
+
+    public string? SelectedFormatName
+    {
+        get => GetValue(SelectedFormatNameProperty);
+        set => SetValue(SelectedFormatNameProperty, value);
     }
 
     public bool ShowRaw
@@ -238,6 +223,21 @@ public sealed class BufferInspectorView : TemplatedControl
         catch (Exception exception)
         {
             PreviewContent = $"<{exception.Message}>";
+        }
+    }
+
+    void SelectFormat()
+    {
+        if (string.IsNullOrEmpty(SelectedFormatName))
+        {
+            SelectedFormat = Formats.FirstOrDefault();
+        }
+
+        SelectedFormat = Formats.FirstOrDefault(f => f.Name.Equals(SelectedFormatName));
+
+        if (SelectedFormat == null)
+        {
+            SelectedFormat = Formats.FirstOrDefault();
         }
     }
 }

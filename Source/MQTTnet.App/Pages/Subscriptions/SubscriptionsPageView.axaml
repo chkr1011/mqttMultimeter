@@ -2,38 +2,65 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:subscriptions="clr-namespace:MQTTnet.App.Pages.Subscriptions"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance subscriptions:SubscriptionsPageViewModel}"
              x:Class="MQTTnet.App.Pages.Subscriptions.SubscriptionsPageView">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Pages/Subscriptions/SubscriptionItemListItem.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
 
-    <Grid ColumnDefinitions="*,Auto,2*,Auto,*">
-        <!-- The subscriptions -->
-        <Grid Grid.Column="0"
-              RowDefinitions="Auto,*">
+        <!-- The list of subscription items. -->
+        <Grid Background="#262626">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0">
-                <Button Command="{Binding CreateSubscription}">Subscribe</Button>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="0"
+                        Margin="0">
+                <Button ToolTip.Tip="Add subscription item"
+                        Classes="tool_bar_button"
+                        Command="{Binding AddItem}">
+                    <Image Source="/Assets/Icons/Add_16x.png" />
+                </Button>
+                <Button ToolTip.Tip="Remove all subscription items"
+                        Classes="tool_bar_button"
+                        Command="{Binding ClearItems}">
+                    <Image Source="/Assets/Icons/ClearCollection_16x.png" />
+                </Button>
             </StackPanel>
 
-            <ListBox Grid.Row="1"
-                     Items="{Binding Subscriptions}">
-                <ListBox.Styles>
-                    <Style Selector="ListBoxItem">
-                        <Setter Property="Padding"
-                                Value="0" />
-                        <Setter Property="HorizontalContentAlignment"
-                                Value="Stretch" />
-                    </Style>
-                </ListBox.Styles>
-            </ListBox>
-
+            <ListBox Background="Transparent"
+                     ItemTemplate="{StaticResource SubscriptionItemViewModelListItem}"
+                     Grid.Row="1"
+                     SelectedItem="{Binding SelectedItem}"
+                     Items="{Binding Items}"
+                     Grid.Column="0"
+                     x:Name="PART_SubscriptionItems" />
         </Grid>
 
+        <!-- The splitter -->
         <GridSplitter Grid.Column="1"
-                      ResizeBehavior="PreviousAndNext"
-                      ResizeDirection="Columns" />
-    </Grid>
+                      Width="1" />
 
+        <!-- The selected subscription. -->
+        <ContentPresenter Margin="10"
+                          Grid.Column="2"
+                          Content="{Binding ElementName=PART_SubscriptionItems, Path=SelectedItem}" />
+    </Grid>
 
 </UserControl>

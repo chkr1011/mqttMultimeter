@@ -7,9 +7,11 @@
         <StyleInclude Source="avares://AvaloniaEdit/AvaloniaEdit.xaml" />
 
         <StyleInclude Source="/Styles/GridSplitter.axaml" />
+        <StyleInclude Source="/Styles/Badges.axaml" />
         <StyleInclude Source="/Styles/Button.axaml" />
         <StyleInclude Source="/Styles/ToolBar.axaml" />
         <StyleInclude Source="/Styles/Sidebar.axaml" />
+        <StyleInclude Source="/Styles/StatusBar.axaml" />
         <StyleInclude Source="/Controls/GroupBox/GroupBox.axaml" />
         <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
         <StyleInclude Source="/Controls/HexBox/HexBox.axaml" />

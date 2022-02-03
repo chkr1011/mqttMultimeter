@@ -16,7 +16,7 @@ public sealed class MqttClientService : IMqttPacketInspector
     readonly AsyncEvent<MqttApplicationMessageReceivedEventArgs> _applicationMessageReceivedEvent = new();
     readonly List<Action<ProcessMqttPacketContext>> _messageInspectors = new();
 
-    IMqttClient? _mqttClient;
+    MqttClient? _mqttClient;
 
     public event Func<MqttApplicationMessageReceivedEventArgs, Task> ApplicationMessageReceived
     {
@@ -42,7 +42,7 @@ public sealed class MqttClientService : IMqttPacketInspector
         _mqttClient = new MqttFactory().CreateMqttClient();
 
         var clientOptionsBuilder = new MqttClientOptionsBuilder().WithCommunicationTimeout(TimeSpan.FromSeconds(options.ServerOptions.CommunicationTimeout))
-            .WithProtocolVersion(options.ProtocolOptions.ProtocolVersions.SelectedItem.Value)
+            .WithProtocolVersion(options.ProtocolOptions.SelectedProtocolVersion.Value)
             .WithClientId(options.SessionOptions.ClientId)
             .WithCleanSession(options.SessionOptions.CleanSession)
             .WithCredentials(options.SessionOptions.User, options.SessionOptions.Password)
@@ -140,39 +140,49 @@ public sealed class MqttClientService : IMqttPacketInspector
         _messageInspectors.Add(handler);
     }
 
-    public async Task<MqttClientSubscribeResult> Subscribe(SubscriptionOptionsPageViewModel configuration)
+    public async Task<MqttClientSubscribeResult> Subscribe(SubscriptionItemViewModel subscriptionItem)
     {
-        if (configuration == null)
+        if (subscriptionItem == null)
         {
-            throw new ArgumentNullException(nameof(configuration));
+            throw new ArgumentNullException(nameof(subscriptionItem));
         }
 
         ThrowIfNotConnected();
 
-        var topicFilter = new MqttTopicFilterBuilder().WithTopic(configuration.Topic)
-            .WithQualityOfServiceLevel(configuration.QualityOfServiceLevel.Value)
-            .WithNoLocal(configuration.NoLocal)
-            .WithRetainHandling(configuration.RetainHandling)
-            .WithRetainAsPublished(configuration.RetainAsPublished)
+        var topicFilter = new MqttTopicFilterBuilder().WithTopic(subscriptionItem.Topic)
+            .WithQualityOfServiceLevel(subscriptionItem.QualityOfServiceLevel.Value)
+            .WithNoLocal(subscriptionItem.NoLocal)
+            .WithRetainHandling(subscriptionItem.RetainHandlingSelector.RetainHandling)
+            .WithRetainAsPublished(subscriptionItem.RetainAsPublished)
             .Build();
 
-        var subscribeOptions = new MqttClientSubscribeOptionsBuilder().WithTopicFilter(topicFilter).Build();
+        var subscribeOptionsBuilder = new MqttClientSubscribeOptionsBuilder().WithTopicFilter(topicFilter);
+
+        foreach (var userProperty in subscriptionItem.UserProperties.Items)
+        {
+            if (!string.IsNullOrEmpty(userProperty.Name))
+            {
+                subscribeOptionsBuilder.WithUserProperty(userProperty.Name, userProperty.Value);
+            }
+        }
+
+        var subscribeOptions = subscribeOptionsBuilder.Build();
 
         var subscribeResult = await _mqttClient.SubscribeAsync(subscribeOptions).ConfigureAwait(false);
 
         return subscribeResult;
     }
 
-    public async Task<MqttClientUnsubscribeResult> Unsubscribe(string topic)
+    public async Task<MqttClientUnsubscribeResult> Unsubscribe(SubscriptionItemViewModel subscriptionItem)
     {
-        if (topic == null)
+        if (subscriptionItem == null)
         {
-            throw new ArgumentNullException(nameof(topic));
+            throw new ArgumentNullException(nameof(subscriptionItem));
         }
 
         ThrowIfNotConnected();
 
-        var unsubscribeResult = await _mqttClient.UnsubscribeAsync(topic);
+        var unsubscribeResult = await _mqttClient.UnsubscribeAsync(subscriptionItem.Topic);
 
         return unsubscribeResult;
     }

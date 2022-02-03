@@ -8,7 +8,6 @@
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance publish:PublishPageViewModel}"
              x:Class="MQTTnet.App.Pages.Publish.PublishPageView">
-
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -33,6 +32,7 @@
 
             <StackPanel Orientation="Horizontal"
                         Grid.Row="0"
+                        Classes="tool_bar"
                         Margin="0">
                 <Button ToolTip.Tip="Add publish item"
                         Classes="tool_bar_button"

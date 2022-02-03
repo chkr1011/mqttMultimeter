@@ -1,4 +1,4 @@
-<Window x:Class="MQTTnet.App.Main.MainWindowView"
+<Window x:Class="MQTTnet.App.Main.MainWindow"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,79 +8,124 @@
         d:DataContext="{d:DesignInstance main:MainViewModel}"
         d:DesignHeight="450"
         d:DesignWidth="800"
+        Icon="/Assets/Icons/App.ico"
         mc:Ignorable="d">
+    <Grid RowDefinitions="*,Auto">
 
-    <TabControl x:Name="Sidebar"
-                Classes="sidebar">
+        <!-- The sidebar -->
+        <TabControl x:Name="Sidebar"
+                    Grid.Row="0"
+                    Classes="sidebar">
 
-        <!-- Connect -->
-        <TabControl.Items>
-            <TabItem Content="{Binding ConnectionPage}">
-                <TabItem.Header>
-                    <Grid ColumnDefinitions="*,Auto">
-                        <TextBlock Grid.Column="0"
-                                   Text="Connect" />
-                        <ContentPresenter Content="{Binding ConnectionPage.Header}"
-                                          Grid.Column="1" />
-                    </Grid>
-                </TabItem.Header>
-            </TabItem>
+            <!-- Connect -->
+            <TabControl.Items>
+                <TabItem Content="{Binding ConnectionPage}">
+                    <TabItem.Header>
+                        <Grid ColumnDefinitions="Auto,Auto,*">
+                            <Image Grid.Column="0"
+                                   Width="16"
+                                   Source="/Assets/Icons/LocalServer_16x.png" />
+                            <Label Grid.Column="1"
+                                   Margin="10,0,0,0"
+                                   Content="Connect" />
+                            <ContentPresenter Grid.Column="2"
+                                              Margin="25,0,0,0"
+                                              HorizontalAlignment="Right"
+                                              Content="{Binding ConnectionPage.Header}" />
+                        </Grid>
+                    </TabItem.Header>
+                </TabItem>
 
-            <!-- Publish -->
-            <TabItem Content="{Binding PublishPage}">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Assets/Icons/Send_16x.png" />
-                        <Label Margin="10,0,0,0"
-                               Content="Publish" />
-                    </StackPanel>
-                </TabItem.Header>
-            </TabItem>
+                <!-- Publish -->
+                <TabItem Content="{Binding PublishPage}">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/Icons/Send_16x.png"
+                                   Width="16" />
+                            <Label Margin="10,0,0,0"
+                                   Content="Publish" />
+                        </StackPanel>
+                    </TabItem.Header>
+                </TabItem>
 
-            <!-- Subscribe -->
-            <TabItem Content="{Binding SubscriptionsPage}">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Assets/Icons/Filter_16x.png" />
-                        <Label Margin="10,0,0,0"
-                               Content="Subscribe" />
-                    </StackPanel>
-                </TabItem.Header>
-            </TabItem>
+                <!-- Subscribe -->
+                <TabItem Content="{Binding SubscriptionsPage}">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/Icons/Filter_16x.png"
+                                   Width="16" />
+                            <Label Margin="10,0,0,0"
+                                   Content="Subscribe" />
+                        </StackPanel>
+                    </TabItem.Header>
+                </TabItem>
 
-            <!-- Inflight -->
-            <TabItem Content="{Binding InflightPage}">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Assets/Icons/MessageQueue_16x.png" />
-                        <Label Margin="10,0,0,0"
-                               Content="Inflight" />
-                    </StackPanel>
-                </TabItem.Header>
-            </TabItem>
+                <!-- Inflight -->
+                <TabItem Content="{Binding InflightPage}">
+                    <TabItem.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center">
+                                <Image Source="/Assets/Icons/MessageQueue_16x.png"
+                                       Width="16" />
+                                <Label Margin="10,0,0,0"
+                                       Content="Inflight" />
+                            </StackPanel>
+                            <Border Classes="badge"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding InflightPage.Items.Count}" />
+                            </Border>
+                        </Grid>
+                    </TabItem.Header>
+                </TabItem>
 
-            <!-- Packet Inspection -->
-            <TabItem Content="{Binding PacketInspectorPage}">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Assets/Icons/Analysis_16x.png" />
-                        <Label Margin="10,0,0,0"
-                               Content="Packet Inspection" />
-                    </StackPanel>
-                </TabItem.Header>
-            </TabItem>
+                <!-- Packet Inspection -->
+                <TabItem Content="{Binding PacketInspectorPage}">
+                    <TabItem.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Assets/Icons/Analysis_16x.png"
+                                       Width="16" />
+                                <Label Margin="10,0,0,0"
+                                       Content="Packet Inspection" />
+                            </StackPanel>
+                            <Border Classes="badge"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding PacketInspectorPage.Packets.Count}" />
+                            </Border>
+                        </Grid>
+                    </TabItem.Header>
+                </TabItem>
 
-            <!-- Info -->
-            <TabItem Content="{Binding InfoPage}">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Assets/Icons/InformationSymbol_16x.png" />
-                        <Label Margin="10,0,0,0"
-                               Content="Info" />
-                    </StackPanel>
-                </TabItem.Header>
-            </TabItem>
-        </TabControl.Items>
-    </TabControl>
+                <!-- Info -->
+                <TabItem Content="{Binding InfoPage}">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/Icons/InformationSymbol_16x.png"
+                                   Width="16" />
+                            <Label Margin="10,0,0,0"
+                                   Content="Info" />
+                        </StackPanel>
+                    </TabItem.Header>
+                </TabItem>
+            </TabControl.Items>
+        </TabControl>
 
+        <!-- The status bar -->
+        <Border Classes="status_bar"
+                Grid.Row="1">
+            <DockPanel LastChildFill="True">
+
+                <!-- The version string -->
+                <Border DockPanel.Dock="Right">
+                    <TextBlock Text="{Binding Version, StringFormat={}v{0}}" />
+                </Border>
+
+                <!-- Filler -->
+                <Border />
+            </DockPanel>
+        </Border>
+    </Grid>
 </Window>

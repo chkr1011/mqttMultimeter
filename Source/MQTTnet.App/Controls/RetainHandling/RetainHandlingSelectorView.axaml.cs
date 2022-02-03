@@ -1,11 +1,11 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnet.App.Pages.Subscriptions;
+namespace MQTTnet.App.Controls;
 
-public class SubscriptionView : UserControl
+public sealed class RetainHandlingSelectorView : UserControl
 {
-    public SubscriptionView()
+    public RetainHandlingSelectorView()
     {
         InitializeComponent();
     }
