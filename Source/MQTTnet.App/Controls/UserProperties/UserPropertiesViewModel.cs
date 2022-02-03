@@ -29,9 +29,14 @@ public sealed class UserPropertiesViewModel : BaseViewModel
         Items.Clear();
     }
 
-    public void Load(List<MqttUserProperty> userProperties)
+    public void Load(List<MqttUserProperty>? userProperties)
     {
         Items.Clear();
+
+        if (userProperties == null)
+        {
+            return;
+        }
 
         foreach (var userProperty in userProperties)
         {
