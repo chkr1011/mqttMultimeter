@@ -188,6 +188,4 @@
                        TextWrapping="Wrap" />
         </ScrollViewer>
     </Grid>
-
-
 </UserControl>
