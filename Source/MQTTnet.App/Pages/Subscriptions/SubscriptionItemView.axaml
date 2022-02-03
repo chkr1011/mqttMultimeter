@@ -106,9 +106,9 @@
                            Grid.Column="0"
                            Classes="caption">User Properties</Label>
                     <ContentPresenter Grid.Row="5"
-                                                 Grid.Column="0"
-                                                 Grid.ColumnSpan="2"
-                                                 ContentTemplate="{Binding UserProperties}" />
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="2"
+                                      ContentTemplate="{Binding UserProperties}" />
                 </Grid>
             </Grid>
         </controls:GroupBox>

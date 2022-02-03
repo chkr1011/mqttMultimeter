@@ -15,6 +15,8 @@
         <Style Selector="TextBlock.version_text">
             <Setter Property="FontFamily"
                     Value="Consolas" />
+            <Setter Property="Margin"
+                    Value="0,0,10,0" />
         </Style>
 
         <Style Selector="Label.h1 AccessText">
@@ -22,6 +24,16 @@
                     Value="14" />
             <Setter Property="FontWeight"
                     Value="Bold" />
+        </Style>
+
+        <Style Selector="TextBlock.no_update_available">
+            <Setter Property="Foreground"
+                    Value="Green" />
+        </Style>
+
+        <Style Selector="TextBlock.update_available">
+            <Setter Property="Foreground"
+                    Value="Orange" />
         </Style>
     </UserControl.Styles>
     <Grid RowDefinitions="Auto,*">
@@ -89,6 +101,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -101,10 +114,23 @@
                        Grid.Column="0"
                        Grid.Row="0"
                        Content="App version" />
-                <TextBlock Text="{Binding AppVersion}"
+                <TextBlock Text="{Binding CurrentAppVersion}"
                            Classes="value version_text"
                            Grid.Column="1"
                            Grid.Row="0" />
+
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="2"
+                            Grid.Row="0">
+                    <TextBlock Text="Latest version:" />
+                    <TextBlock Classes.no_update_available="{Binding !IsUpdateAvailable}"
+                               Classes.update_available="{Binding IsUpdateAvailable}"
+                               Margin="10,0,0,0"
+                               Cursor="Hand"
+                               PointerPressed="OnLatestVersionClicked"
+                               Text="{Binding LatestAppVersion}"
+                               Classes="value version_text" />
+                </StackPanel>
 
                 <Label Classes="caption"
                        Grid.Column="0"
@@ -181,7 +207,8 @@
         </StackPanel>
 
         <!-- The license fill -->
-        <ScrollViewer Margin="10,0,0,0" Grid.Row="1"
+        <ScrollViewer Margin="10,0,0,0"
+                      Grid.Row="1"
                       HorizontalAlignment="Left"
                       Width="640">
             <TextBlock x:Name="Licenses"
