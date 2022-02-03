@@ -94,7 +94,14 @@ jobs:
           name: MQTTnet.App-linux-arm64
           path: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/linux-arm64/publish/
 
-      - name: Create Release
+      - name: Delete release drafts
+        uses: hugo19941994/delete-draft-releases@v1.0.0
+        with:
+          threshold: 1s
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:

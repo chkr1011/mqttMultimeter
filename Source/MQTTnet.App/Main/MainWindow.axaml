@@ -16,10 +16,17 @@
             <Setter Property="Background"
                     Value="DarkGreen" />
         </Style>
-        
+
         <Style Selector="Border.status_bar_not_connected">
             <Setter Property="Background"
                     Value="DarkRed" />
+        </Style>
+
+        <Style Selector="Border.update_available">
+            <Setter Property="Background"
+                    Value="Orange" />
+            <Setter Property="TextBlock.Foreground"
+                    Value="Black" />
         </Style>
     </Window.Styles>
 
@@ -137,8 +144,16 @@
                 </StackPanel>
 
                 <!-- The version string -->
-                <Border DockPanel.Dock="Right">
-                    <TextBlock Text="{Binding Version, StringFormat={}v{0}}" />
+                <Border DockPanel.Dock="Right"
+                        Classes.update_available="{Binding InfoPage.IsUpdateAvailable}"
+                        Margin="0,0,-10,0"
+                        Padding="10,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Version, StringFormat={}v{0}}" />
+                        <TextBlock Margin="10,0,0,0"
+                                   IsVisible="{Binding InfoPage.IsUpdateAvailable}"
+                                   Text="Update available" />
+                    </StackPanel>
                 </Border>
 
                 <!-- Filler -->

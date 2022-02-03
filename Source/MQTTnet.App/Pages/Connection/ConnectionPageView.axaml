@@ -52,7 +52,6 @@
                 <TabItem Header="General">
                     <Grid ColumnDefinitions="Auto,Auto,Auto,Auto"
                           RowDefinitions="Auto,Auto,Auto,Auto">
-                        
                         <Label Grid.Row="0"
                                Grid.Column="0"
                                Classes="caption">Reason code</Label>
@@ -78,13 +77,13 @@
                                Grid.Column="0"
                                Classes="caption">Is session present</Label>
                         <CheckBox Grid.Row="3"
-                                   Grid.Column="1"
-                                   IsEnabled="False"
-                                   Classes="value"
-                                   IsChecked="{Binding Response.IsSessionPresent}" />
+                                  Grid.Column="1"
+                                  IsEnabled="False"
+                                  Classes="value"
+                                  IsChecked="{Binding Response.IsSessionPresent}" />
                     </Grid>
                 </TabItem>
-                
+
                 <!-- The user properties tab -->
                 <TabItem Header="User properties">
                     <controls:UserPropertiesView DataContext="{Binding Response.UserProperties}" />

@@ -12,6 +12,7 @@ using MQTTnet.App.Pages.Info;
 using MQTTnet.App.Pages.Publish;
 using MQTTnet.App.Pages.Subscriptions;
 using MQTTnet.App.Services.Mqtt;
+using MQTTnet.App.Services.Updates;
 using SimpleInjector;
 
 namespace MQTTnet.App;
@@ -28,14 +29,18 @@ public sealed class App : Application
 
         _container.RegisterSingleton<MqttClientService>();
 
+        _container.RegisterSingleton<AppUpdateService>();
+
         _container.RegisterSingleton<ConnectionPageViewModel>();
         _container.RegisterSingleton<PublishPageViewModel>();
         _container.RegisterSingleton<SubscriptionsPageViewModel>();
         _container.RegisterSingleton<InflightPageViewModel>();
         _container.RegisterSingleton<InfoPageViewModel>();
 
-        var viewLocator = new ViewLocator();
+        var viewLocator = new ViewLocator(_container);
         DataTemplates.Add(viewLocator);
+
+        _container.GetInstance<AppUpdateService>().EnableUpdateChecks();
     }
 
     public override void Initialize()
