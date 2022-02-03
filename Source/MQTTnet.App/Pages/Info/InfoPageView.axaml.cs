@@ -42,11 +42,6 @@ public sealed class InfoPageView : UserControl
         Launch("https://github.com/chkr1011/MQTTnet.App");
     }
 
-    void OpenUrlFromButtonContent(object? sender, RoutedEventArgs e)
-    {
-        Launch(((Button)sender).Content as string);
-    }
-    
     void OnReportBug(object? sender, RoutedEventArgs e)
     {
         Launch("https://github.com/chkr1011/MQTTnet.App/issues/new");

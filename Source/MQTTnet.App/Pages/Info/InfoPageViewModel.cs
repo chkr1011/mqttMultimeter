@@ -27,6 +27,8 @@ public sealed class InfoPageViewModel : BaseViewModel
         DispatcherTimer.Run(CheckForUpdates, TimeSpan.FromSeconds(1));
     }
 
+    public string AppVersion { get; }
+
     public string AvaloniaVersion { get; }
 
     public string CurrentAppVersion { get; }
@@ -44,7 +46,6 @@ public sealed class InfoPageViewModel : BaseViewModel
         get => _latestAppVersion;
         set => this.RaiseAndSetIfChanged(ref _latestAppVersion, value);
     }
-    public string AppVersion { get; }
 
     public string MqttNetVersion { get; }
 

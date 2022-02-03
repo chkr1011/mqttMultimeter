@@ -109,9 +109,6 @@
                                       Grid.Column="0"
                                       Grid.ColumnSpan="2"
                                       ContentTemplate="{Binding UserProperties}" />
-                                                 Grid.Column="0"
-                                                 Grid.ColumnSpan="2"
-                                                 ContentTemplate="{Binding UserProperties}" />
                 </Grid>
             </Grid>
         </controls:GroupBox>

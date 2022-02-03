@@ -115,7 +115,6 @@
                        Grid.Row="0"
                        Content="App version" />
                 <TextBlock Text="{Binding CurrentAppVersion}"
-                <TextBlock Text="{Binding AppVersion}"
                            Classes="value version_text"
                            Grid.Column="1"
                            Grid.Row="0" />
@@ -208,7 +207,8 @@
         </StackPanel>
 
         <!-- The license fill -->
-        <ScrollViewer Margin="10,0,0,0" Grid.Row="1"
+        <ScrollViewer Margin="10,0,0,0"
+                      Grid.Row="1"
                       HorizontalAlignment="Left"
                       Width="640">
             <TextBlock x:Name="Licenses"

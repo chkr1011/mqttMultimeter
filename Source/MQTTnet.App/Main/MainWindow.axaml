@@ -16,7 +16,7 @@
             <Setter Property="Background"
                     Value="DarkGreen" />
         </Style>
-        
+
         <Style Selector="Border.status_bar_not_connected">
             <Setter Property="Background"
                     Value="DarkRed" />
