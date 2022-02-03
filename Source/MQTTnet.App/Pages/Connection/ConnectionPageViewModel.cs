@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Avalonia.Threading;
-using MQTTnet.Adapter;
 using MQTTnet.App.Common;
-using MQTTnet.App.Common.ObjectDump;
 using MQTTnet.App.Services.Mqtt;
 using ReactiveUI;
 
@@ -13,29 +11,35 @@ public sealed class ConnectionPageViewModel : BaseViewModel
 {
     readonly MqttClientService _mqttClientService;
 
+    bool _isConnected;
+
     bool _isConnecting;
-    
+
     public ConnectionPageViewModel(MqttClientService mqttClientService)
     {
         _mqttClientService = mqttClientService;
 
-        var timer = new DispatcherTimer(TimeSpan.FromSeconds(0.5), DispatcherPriority.Normal, TimerCallback);
+        var timer = new DispatcherTimer(TimeSpan.FromSeconds(0.5), DispatcherPriority.Normal, CheckConnection);
         timer.Start();
     }
 
-    public ConnectionPageHeaderViewModel Header { get; } = new();
+    public bool IsConnected
+    {
+        get => _isConnected;
+        set => this.RaiseAndSetIfChanged(ref _isConnected, value);
+    }
 
     public bool IsConnecting
     {
         get => _isConnecting;
-        private set =>this.RaiseAndSetIfChanged(ref _isConnecting, value);
+        private set => this.RaiseAndSetIfChanged(ref _isConnecting, value);
     }
 
     public MqttNetOptionsViewModel MqttNetOptions { get; } = new();
 
     public ProtocolOptionsViewModel ProtocolOptions { get; } = new();
 
-    public ObjectDumpViewModel Result { get; } = new();
+    public ConnectResponseViewModel Response { get; } = new();
 
     public ServerOptionsViewModel ServerOptions { get; } = new();
 
@@ -47,13 +51,8 @@ public sealed class ConnectionPageViewModel : BaseViewModel
         {
             IsConnecting = true;
 
-            var result = await _mqttClientService.Connect(this);
-
-            Result.Dump(result);
-        }
-        catch (MqttConnectingFailedException exception)
-        {
-            Result.Dump(exception.Result);
+            var response = await _mqttClientService.Connect(this);
+            Response.ApplyResponse(response);
         }
         catch (Exception exception)
         {
@@ -77,8 +76,8 @@ public sealed class ConnectionPageViewModel : BaseViewModel
         }
     }
 
-    void TimerCallback(object? sender, EventArgs e)
+    void CheckConnection(object? sender, EventArgs e)
     {
-        Header.IsConnected = _mqttClientService.IsConnected;
+        IsConnected = _mqttClientService.IsConnected;
     }
 }

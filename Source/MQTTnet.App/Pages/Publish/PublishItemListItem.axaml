@@ -6,6 +6,7 @@
                   DataType="{x:Type publish:PublishItemViewModel}">
 
         <Grid ColumnDefinitions="*,Auto"
+              Height="32"
               Margin="10">
 
             <StackPanel>

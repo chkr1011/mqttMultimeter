@@ -50,7 +50,7 @@ public sealed class MqttClientService : IMqttPacketInspector
             .WithRequestResponseInformation(options.SessionOptions.RequestResponseInformation)
             .WithKeepAlivePeriod(TimeSpan.FromSeconds(options.SessionOptions.KeepAliveInterval));
 
-        if (options.ServerOptions.Transports.SelectedItem.Transport == Transport.TCP)
+        if (options.ServerOptions.SelectedTransport.Value == Transport.TCP)
         {
             clientOptionsBuilder.WithTcpServer(options.ServerOptions.Host, options.ServerOptions.Port);
         }
@@ -59,11 +59,11 @@ public sealed class MqttClientService : IMqttPacketInspector
             clientOptionsBuilder.WithWebSocketServer(options.ServerOptions.Host);
         }
 
-        if (options.ServerOptions.TlsVersions.SelectedItem.Value != SslProtocols.None)
+        if (options.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
         {
             clientOptionsBuilder.WithTls(o =>
             {
-                o.SslProtocol = options.ServerOptions.TlsVersions.SelectedItem.Value;
+                o.SslProtocol = options.ServerOptions.SelectedTlsVersion.Value;
             });
         }
 
@@ -127,7 +127,7 @@ public sealed class MqttClientService : IMqttPacketInspector
             }
         }
 
-        return _mqttClient.PublishAsync(applicationMessageBuilder.Build());
+        return _mqttClient!.PublishAsync(applicationMessageBuilder.Build());
     }
 
     public void RegisterMessageInspectorHandler(Action<ProcessMqttPacketContext> handler)

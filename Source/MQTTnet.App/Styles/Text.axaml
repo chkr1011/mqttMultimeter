@@ -1,0 +1,55 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="TextBlock">
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+    </Style>
+
+    <Style Selector="Label">
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Padding"
+                Value="0" />
+    </Style>
+
+    <Style Selector="AccessText">
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+    </Style>
+
+    <Style Selector="TextBox">
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+    </Style>
+
+    <Style Selector="NumericUpDown">
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+    </Style>
+
+    <Style Selector="TextBox.code_text">
+        <Setter Property="FontFamily"
+                Value="Consolas" />
+    </Style>
+
+    <Style Selector="TextBlock.code_text">
+        <Setter Property="FontFamily"
+                Value="Consolas" />
+    </Style>
+</Styles>

@@ -10,6 +10,19 @@
         d:DesignWidth="800"
         Icon="/Assets/Icons/App.ico"
         mc:Ignorable="d">
+
+    <Window.Styles>
+        <Style Selector="Border.status_bar_connected">
+            <Setter Property="Background"
+                    Value="DarkGreen" />
+        </Style>
+        
+        <Style Selector="Border.status_bar_not_connected">
+            <Setter Property="Background"
+                    Value="DarkRed" />
+        </Style>
+    </Window.Styles>
+
     <Grid RowDefinitions="*,Auto">
 
         <!-- The sidebar -->
@@ -21,18 +34,12 @@
             <TabControl.Items>
                 <TabItem Content="{Binding ConnectionPage}">
                     <TabItem.Header>
-                        <Grid ColumnDefinitions="Auto,Auto,*">
-                            <Image Grid.Column="0"
-                                   Width="16"
-                                   Source="/Assets/Icons/LocalServer_16x.png" />
-                            <Label Grid.Column="1"
-                                   Margin="10,0,0,0"
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/Icons/LocalServer_16x.png"
+                                   Width="16" />
+                            <Label Margin="10,0,0,0"
                                    Content="Connect" />
-                            <ContentPresenter Grid.Column="2"
-                                              Margin="25,0,0,0"
-                                              HorizontalAlignment="Right"
-                                              Content="{Binding ConnectionPage.Header}" />
-                        </Grid>
+                        </StackPanel>
                     </TabItem.Header>
                 </TabItem>
 
@@ -63,20 +70,13 @@
                 <!-- Inflight -->
                 <TabItem Content="{Binding InflightPage}">
                     <TabItem.Header>
-                        <Grid>
-                            <StackPanel Orientation="Horizontal"
-                                        VerticalAlignment="Center">
-                                <Image Source="/Assets/Icons/MessageQueue_16x.png"
-                                       Width="16" />
-                                <Label Margin="10,0,0,0"
-                                       Content="Inflight" />
-                            </StackPanel>
-                            <Border Classes="badge"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Right">
-                                <TextBlock Text="{Binding InflightPage.Items.Count}" />
-                            </Border>
-                        </Grid>
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <Image Source="/Assets/Icons/MessageQueue_16x.png"
+                                   Width="16" />
+                            <Label Margin="10,0,0,0"
+                                   Content="Inflight" />
+                        </StackPanel>
                     </TabItem.Header>
                 </TabItem>
 
@@ -90,11 +90,6 @@
                                 <Label Margin="10,0,0,0"
                                        Content="Packet Inspection" />
                             </StackPanel>
-                            <Border Classes="badge"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Right">
-                                <TextBlock Text="{Binding PacketInspectorPage.Packets.Count}" />
-                            </Border>
                         </Grid>
                     </TabItem.Header>
                 </TabItem>
@@ -115,8 +110,31 @@
 
         <!-- The status bar -->
         <Border Classes="status_bar"
+                Classes.status_bar_connected="{Binding ConnectionPage.IsConnected}"
+                Classes.status_bar_not_connected="{Binding !ConnectionPage.IsConnected}"
                 Grid.Row="1">
             <DockPanel LastChildFill="True">
+
+                <StackPanel DockPanel.Dock="Left"
+                            Orientation="Horizontal">
+
+                    <!-- The connection status -->
+                    <Border Width="166">
+                        <Grid HorizontalAlignment="Center">
+                            <TextBlock Text="Not connected"
+                                       IsVisible="{Binding !ConnectionPage.IsConnected}" />
+                            <TextBlock Text="Connected"
+                                       IsVisible="{Binding ConnectionPage.IsConnected}" />
+                        </Grid>
+                    </Border>
+
+                    <Separator />
+
+                    <!-- The count of received application messages -->
+                    <Border>
+                        <TextBlock Text="{Binding InflightPage.Items.Count, StringFormat={}{0} application messages received}" />
+                    </Border>
+                </StackPanel>
 
                 <!-- The version string -->
                 <Border DockPanel.Dock="Right">

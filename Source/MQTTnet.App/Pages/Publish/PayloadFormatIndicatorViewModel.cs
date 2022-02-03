@@ -38,7 +38,7 @@ public sealed class PayloadFormatIndicatorViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _isUnspecifiedFilePath, value);
     }
 
-    public byte[] ToPayload(string payloadInput)
+    public byte[] ToPayload(string? payloadInput)
     {
         if (string.IsNullOrEmpty(payloadInput))
         {

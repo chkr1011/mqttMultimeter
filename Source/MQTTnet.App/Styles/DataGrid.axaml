@@ -1,0 +1,30 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+
+    <Style Selector="DataGrid">
+        <Setter Property="SelectionMode"
+                Value="Single" />
+        <Setter Property="CanUserReorderColumns"
+                Value="False" />
+        <Setter Property="CanUserSortColumns"
+                Value="False" />
+        <Setter Property="CanUserResizeColumns"
+                Value="True" />
+        <Setter Property="AutoGenerateColumns"
+                Value="False" />
+        <Setter Property="IsReadOnly"
+                Value="True" />
+    </Style>
+
+    <Style Selector="DataGridCell > Grid Rectangle">
+        <Setter Property="IsVisible"
+                Value="False" />
+    </Style>
+</Styles>

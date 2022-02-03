@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Styles>
         <FluentTheme Mode="Dark" />
-        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+
         <StyleInclude Source="avares://AvaloniaEdit/AvaloniaEdit.xaml" />
 
         <StyleInclude Source="/Styles/GridSplitter.axaml" />
@@ -12,40 +12,22 @@
         <StyleInclude Source="/Styles/ToolBar.axaml" />
         <StyleInclude Source="/Styles/Sidebar.axaml" />
         <StyleInclude Source="/Styles/StatusBar.axaml" />
+        <StyleInclude Source="/Styles/DataGrid.axaml" />
+        <StyleInclude Source="/Styles/Text.axaml" />
+        <StyleInclude Source="/Styles/TabControl.axaml" />
+
         <StyleInclude Source="/Controls/GroupBox/GroupBox.axaml" />
         <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
         <StyleInclude Source="/Controls/HexBox/HexBox.axaml" />
 
-        <Style Selector="DataGrid">
-            <Setter Property="SelectionMode"
-                    Value="Single" />
-            <Setter Property="CanUserReorderColumns"
-                    Value="False" />
-            <Setter Property="CanUserSortColumns"
-                    Value="False" />
-            <Setter Property="CanUserResizeColumns"
-                    Value="True" />
-            <Setter Property="AutoGenerateColumns"
-                    Value="False" />
-            <Setter Property="IsReadOnly"
-                    Value="True" />
-        </Style>
-
-        <Style Selector="DataGridCell > Grid >> Rectangle">
-            <Setter Property="IsVisible"
-                    Value="False" />
-        </Style>
-
-        <Style Selector="Label.tool_bar_label">
-            <Setter Property="FontSize"
-                    Value="12" />
-            <Setter Property="Foreground"
-                    Value="#99ffffff" />
+        <Style Selector="ItemsPresenter">
+            <Setter Property="(KeyboardNavigation.TabNavigation)"
+                    Value="Continue" />
         </Style>
 
         <Style Selector="Label.caption">
             <Setter Property="FontWeight"
-                    Value="SemiBold" />
+                    Value="Normal" />
             <Setter Property="Margin"
                     Value="0,5,20,5" />
         </Style>
@@ -62,62 +44,21 @@
                     Value="10,5,0,5" />
         </Style>
 
-        <Style Selector="ItemsPresenter">
-            <Setter Property="(KeyboardNavigation.TabNavigation)"
-                    Value="Continue" />
-        </Style>
-
-        <Style Selector="TabControl">
-            <Setter Property="Margin"
-                    Value="0" />
-            <Setter Property="Padding"
-                    Value="0" />
-        </Style>
-
-        <Style Selector="TabItem">
-            <Setter Property="Margin"
-                    Value="0,0,10,0" />
-            <Setter Property="Padding"
-                    Value="0" />
-        </Style>
-
-        <Style Selector="TextBlock">
-            <Setter Property="FontFamily"
-                    Value="Segoe UI" />
-            <Setter Property="FontSize"
-                    Value="12" />
-            <Setter Property="VerticalAlignment"
-                    Value="Center" />
-        </Style>
-
-        <Style Selector="TextBox">
-            <Setter Property="FontFamily"
-                    Value="Segoe UI" />
-            <Setter Property="FontSize"
-                    Value="12" />
-            <Setter Property="VerticalContentAlignment"
-                    Value="Center" />
-        </Style>
-
         <Style Selector="TextBox[AcceptsReturn=True]">
             <Setter Property="VerticalContentAlignment"
                     Value="Top" />
         </Style>
 
-        <Style Selector="Label">
-            <Setter Property="FontFamily"
-                    Value="Segoe UI" />
+        <Style Selector="RadioButton">
             <Setter Property="VerticalAlignment"
                     Value="Center" />
         </Style>
 
-        <Style Selector="RadioButton">
-            <Setter Property="FontFamily"
-                    Value="Segoe UI" />
-            <Setter Property="VerticalAlignment"
-                    Value="Center" />
-            <Setter Property="FontSize"
-                    Value="12" />
+        <Style Selector="Image">
+            <Setter Property="Width"
+                    Value="16" />
+            <Setter Property="Height"
+                    Value="16" />
         </Style>
 
         <Style Selector="Button">
@@ -129,69 +70,6 @@
                     Value="26" />
             <Setter Property="VerticalContentAlignment"
                     Value="Center" />
-        </Style>
-
-        <Style Selector="Button.LeftButton" />
-
-        <Style Selector="Button.RightButton">
-            <Setter Property="Margin"
-                    Value="10,0,0,0" />
-        </Style>
-
-        <Style Selector="Label.ValueHeader">
-            <Setter Property="FontWeight"
-                    Value="Bold" />
-            <Setter Property="FontSize"
-                    Value="14" />
-            <Setter Property="Margin"
-                    Value="0,10,0,0" />
-        </Style>
-
-        <Style Selector="Label.FirstValueHeader">
-            <Setter Property="Margin"
-                    Value="0,0,0,0" />
-        </Style>
-
-        <Style Selector="Separator">
-            <Setter Property="HorizontalAlignment"
-                    Value="Stretch" />
-            <Setter Property="Height"
-                    Value="1" />
-            <Setter Property="Background"
-                    Value="WhiteSmoke" />
-            <Setter Property="Margin"
-                    Value="0,10" />
-        </Style>
-
-        <Style Selector="Label.OptionLabel">
-            <Setter Property="VerticalAlignment"
-                    Value="Center" />
-            <Setter Property="Margin"
-                    Value="0,0,10,10" />
-        </Style>
-
-        <Style Selector="Label.OptionGroupLabel">
-            <Setter Property="VerticalAlignment"
-                    Value="Center" />
-            <Setter Property="FontWeight"
-                    Value="SemiBold" />
-            <Setter Property="FontSize"
-                    Value="16" />
-        </Style>
-
-        <Style Selector=":is(Control).OptionValue">
-            <Setter Property="Margin"
-                    Value="0,0,0,10" />
-        </Style>
-
-        <Style Selector="TextBox.code_text">
-            <Setter Property="FontFamily"
-                    Value="Consolas" />
-        </Style>
-
-        <Style Selector="TextBlock.code_text">
-            <Setter Property="FontFamily"
-                    Value="Consolas" />
         </Style>
 
         <Style Selector="ListBoxItem">
@@ -227,25 +105,9 @@
                     Value="HotPink" />
         </Style>
 
-        <Style Selector="Border.BadgeInbound">
-            <Setter Property="Background"
-                    Value="Green" />
-        </Style>
-
-        <Style Selector="Border.BadgeOutbound">
-            <Setter Property="Background"
-                    Value="Blue" />
-        </Style>
-
         <Style Selector="Window">
-            <!-- <Setter Property="Background" Value="#4A4647" /> -->
             <Setter Property="Background"
                     Value="#212121" />
-        </Style>
-
-        <Style Selector="TabControl">
-            <Setter Property="Padding"
-                    Value="0,10,0,0" />
         </Style>
 
     </Application.Styles>

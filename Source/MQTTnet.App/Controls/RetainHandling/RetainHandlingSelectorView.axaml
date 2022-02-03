@@ -16,16 +16,16 @@
             </Style>
         </StackPanel.Styles>
 
-        <RadioButton IsChecked="{Binding IsSendAtSubscribe}"
+        <RadioButton IsChecked="{Binding IsSendAtSubscribe, Mode=TwoWay}"
                      GroupName="RetainHandling"
                      Content="Send at subscribe (0)" />
 
-        <RadioButton IsChecked="{Binding IsSendAtSubscribeIfNewSubscriptionOnly}"
+        <RadioButton IsChecked="{Binding IsSendAtSubscribeIfNewSubscriptionOnly, Mode=TwoWay}"
                      GroupName="RetainHandling"
                      Content="Send at subscribe if new subscription only (1)" />
 
         <RadioButton GroupName="RetainHandling"
-                     IsChecked="{Binding IsDoNotSendOnSubscribe}"
+                     IsChecked="{Binding IsDoNotSendOnSubscribe, Mode=TwoWay}"
                      Content="Do not send on subscribe (2)" />
     </StackPanel>
 </UserControl>

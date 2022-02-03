@@ -32,6 +32,8 @@
         <PackageReference Include="Avalonia.Desktop" Version="0.10.12" />
         <PackageReference Include="Avalonia.Diagnostics" Version="0.10.12" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
+        <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.1" />
+        <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12.1" />
         <PackageReference Include="MessagePack" Version="2.3.85" />
         <PackageReference Include="MQTTnet" Version="4.0.0-preview3" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -77,5 +79,11 @@
         <UpToDateCheckInput Remove="Configuration\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml" />
         <UpToDateCheckInput Remove="Common\BufferInspector\BufferInspectorView.axaml" />
         <UpToDateCheckInput Remove="Common\BufferInspector\BufferValueView.axaml" />
+        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpPropertyView.axaml" />
+        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpView.axaml" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="Pages\Info\Readme.md" />
+      <EmbeddedResource Include="Pages\Info\Readme.md" />
     </ItemGroup>
 </Project>

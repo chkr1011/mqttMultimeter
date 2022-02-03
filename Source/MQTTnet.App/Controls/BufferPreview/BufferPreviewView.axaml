@@ -15,48 +15,49 @@
                 <Grid RowDefinitions="Auto,*">
 
                     <!-- Options -->
-          
-                        <Grid Classes="tool_bar" ColumnDefinitions="Auto,*,Auto">
-                            <StackPanel Orientation="Horizontal"
-                                        Grid.Column="0">
 
-                                <!-- The Text Wrapping button -->
-                                <ToggleButton Classes="tool_bar_button"
-                                              IsChecked="True"
-                                              IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
-                                              x:Name="TextWrappingCheckBox">
-                                    <Image Source="/Assets/Icons/WordWrap_16x.png"
-                                           ToolTip.Tip="Toggle word wrap" />
-                                </ToggleButton>
+                    <Grid Classes="tool_bar"
+                          ColumnDefinitions="Auto,*,Auto">
+                        <StackPanel Orientation="Horizontal"
+                                    Grid.Column="0">
 
-                                <!-- The Copy button -->
-                                <Button Classes="tool_bar_button"
-                                        IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
-                                        x:Name="CopyToClipboardButton">
-                                    <Image Source="/Assets/Icons/Copy_16x.png"
-                                           ToolTip.Tip="Copy to clipboard" />
-                                </Button>
-                            </StackPanel>
+                            <!-- The Text Wrapping button -->
+                            <ToggleButton Classes="tool_bar_button"
+                                          IsChecked="True"
+                                          IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
+                                          x:Name="TextWrappingCheckBox">
+                                <Image Source="/Assets/Icons/WordWrap_16x.png"
+                                       ToolTip.Tip="Toggle word wrap" />
+                            </ToggleButton>
 
-                            <!-- The Format selector -->
-                            <StackPanel Grid.Column="2"
-                                        Orientation="Horizontal">
-                                <Label Classes="tool_bar_label"
-                                       Content="Format"
-                                       Margin="0,0,10,0" />
-                                <ComboBox Classes="tool_bar_combo_box"
-                                          MinWidth="100"
-                                          Items="{Binding Path=Formats, RelativeSource={RelativeSource TemplatedParent}}"
-                                          SelectedItem="{Binding Path=SelectedFormat, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Name}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </StackPanel>
-                        </Grid>
-           
+                            <!-- The Copy button -->
+                            <Button Classes="tool_bar_button"
+                                    IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
+                                    x:Name="CopyToClipboardButton">
+                                <Image Source="/Assets/Icons/Copy_16x.png"
+                                       ToolTip.Tip="Copy to clipboard" />
+                            </Button>
+                        </StackPanel>
+
+                        <!-- The Format selector -->
+                        <StackPanel Grid.Column="2"
+                                    Orientation="Horizontal">
+                            <Label Classes="tool_bar_label"
+                                   Content="Format"
+                                   Margin="0,0,10,0" />
+                            <ComboBox Classes="tool_bar_combo_box"
+                                      MinWidth="100"
+                                      Items="{Binding Path=Formats, RelativeSource={RelativeSource TemplatedParent}}"
+                                      SelectedItem="{Binding Path=SelectedFormat, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+
 
                     <!-- The string preview -->
                     <TextBox Grid.Row="1"
