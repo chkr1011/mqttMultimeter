@@ -1,27 +1,26 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using MQTTnet.App.Common;
 
-namespace MQTTnet.App;
+namespace MQTTnet.App.Common;
 
 sealed class ViewLocator : IDataTemplate
 {
     public IControl Build(object data)
     {
-        var name = data.GetType().FullName!.Replace("ViewModel", "View");
-        var type = Type.GetType(name);
+        var viewFullName = data.GetType().FullName!.Replace("ViewModel", "View");
+        var viewType = Type.GetType(viewFullName);
 
-        if (type != null)
+        if (viewType != null)
         {
-            var control = (Control)Activator.CreateInstance(type)!;
+            var control = (Control)Activator.CreateInstance(viewType)!;
             control.DataContext = data;
             return control;
         }
 
         return new TextBlock
         {
-            Text = "Not Found: " + name
+            Text = "Not Found: " + viewFullName
         };
     }
 

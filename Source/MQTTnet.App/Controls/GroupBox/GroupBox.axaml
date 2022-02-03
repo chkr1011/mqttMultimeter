@@ -38,6 +38,7 @@
                     <!-- The content. -->
                     <ContentPresenter Grid.Column="0"
                                       Grid.ColumnSpan="2"
+                                      Margin="0,10,0,0"
                                       Content="{TemplateBinding Content}"
                                       Grid.Row="1" />
                 </Grid>

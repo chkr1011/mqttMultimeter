@@ -2,13 +2,13 @@
 
 public sealed class TransportViewModel
 {
-    public TransportViewModel(string displayName, Transport transport)
+    public TransportViewModel(string displayName, Transport value)
     {
         DisplayName = displayName;
-        Transport = transport;
+        Value = value;
     }
 
     public string DisplayName { get; }
 
-    public Transport Transport { get; }
+    public Transport Value { get; }
 }

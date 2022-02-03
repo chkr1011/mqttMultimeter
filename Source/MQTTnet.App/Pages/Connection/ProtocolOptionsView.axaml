@@ -9,9 +9,6 @@
              d:DataContext="{d:DesignInstance connection:ProtocolOptionsViewModel}"
              x:Class="MQTTnet.App.Pages.Connection.ProtocolOptionsView">
     <StackPanel>
-        <Label Classes="OptionGroupLabel"
-               Content="Protocol options" />
-
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"
@@ -22,12 +19,10 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Label Classes="OptionLabel"
-                   Grid.Column="0"
+            <Label Grid.Column="0"
                    Grid.Row="0"
                    Content="Version" />
-            <ComboBox Classes="OptionValue"
-                      Grid.Column="1"
+            <ComboBox Grid.Column="1"
                       Grid.Row="0"
                       Items="{Binding ProtocolVersions}"
                       SelectedItem="{Binding SelectedProtocolVersion}">

@@ -10,9 +10,6 @@
              x:Class="MQTTnet.App.Pages.Connection.ServerOptionsView">
 
     <StackPanel>
-        <Label Classes="OptionGroupLabel"
-               Content="Server options" />
-
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"
@@ -27,15 +24,13 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Label Classes="OptionLabel"
-                   Grid.Column="0"
+            <Label Grid.Column="0"
                    Grid.Row="0"
                    Content="Transport protocol" />
-            <ComboBox Classes="OptionValue"
-                      Grid.Column="1"
+            <ComboBox Grid.Column="1"
                       Grid.Row="0"
                       Items="{Binding Transports}"
-                      SelectedItem="{Binding Transports.SelectedItem}">
+                      SelectedItem="{Binding SelectedTransport}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding DisplayName}" />
@@ -43,15 +38,13 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <Label Classes="OptionLabel"
-                   Grid.Column="0"
+            <Label Grid.Column="0"
                    Grid.Row="1"
                    Content="TLS version" />
-            <ComboBox Classes="OptionValue"
-                      Grid.Column="1"
+            <ComboBox Grid.Column="1"
                       Grid.Row="1"
                       Items="{Binding TlsVersions}"
-                      SelectedItem="{Binding TlsVersions.SelectedItem}">
+                      SelectedItem="{Binding SelectedTlsVersion}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding DisplayName}" />
@@ -59,30 +52,24 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <Label Classes="OptionLabel"
-                   Grid.Column="0"
+            <Label Grid.Column="0"
                    Grid.Row="2"
                    Content="Host" />
-            <TextBox Classes="OptionValue"
-                     Grid.Column="1"
+            <TextBox Grid.Column="1"
                      Grid.Row="2"
                      Text="{Binding Host}" />
 
-            <Label Classes="OptionLabel"
-                   Grid.Column="0"
+            <Label Grid.Column="0"
                    Grid.Row="3"
                    Content="Port" />
-            <NumericUpDown Classes="OptionValue"
-                           Grid.Column="1"
+            <NumericUpDown Grid.Column="1"
                            Grid.Row="3"
                            Value="{Binding Port}" />
 
-            <Label Classes="OptionLabel"
-                   Grid.Column="0"
+            <Label Grid.Column="0"
                    Grid.Row="4"
                    Content="Communication timeout" />
-            <NumericUpDown Classes="OptionValue"
-                           Grid.Column="1"
+            <NumericUpDown Grid.Column="1"
                            Grid.Row="4"
                            Value="{Binding CommunicationTimeout}" />
         </Grid>

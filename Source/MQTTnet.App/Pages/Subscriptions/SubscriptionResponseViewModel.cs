@@ -1,4 +1,5 @@
 ﻿using MQTTnet.App.Common;
+using MQTTnet.App.Controls;
 using MQTTnet.Client;
 using ReactiveUI;
 
@@ -34,12 +35,15 @@ public sealed class SubscriptionResponseViewModel : BaseViewModel
         get => _reasonString;
         set => this.RaiseAndSetIfChanged(ref _reasonString, value);
     }
+    
+    public UserPropertiesViewModel UserProperties { get; } = new();
 
     public void ApplyResponse(MqttClientSubscribeResult response)
     {
         ReasonCodeText = response.Items[0].ResultCode.ToString();
         ReasonCode = (int)response.Items[0].ResultCode;
         ReasonString = response.ReasonString;
+        UserProperties.Load(response.UserProperties);
         // TODO: Import Packet Identifier
     }
 
@@ -48,6 +52,7 @@ public sealed class SubscriptionResponseViewModel : BaseViewModel
         ReasonCodeText = response.Items[0].ResultCode.ToString();
         ReasonCode = (int)response.Items[0].ResultCode;
         ReasonString = response.ReasonString;
+        UserProperties.Load(response.UserProperties);
         // TODO: Import Packet Identifier
     }
 }

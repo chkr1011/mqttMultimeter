@@ -25,7 +25,6 @@
                     Value="Continue" />
         </Style>
 
-
         <Style Selector="Label.caption">
             <Setter Property="FontWeight"
                     Value="Normal" />
@@ -71,17 +70,6 @@
                     Value="26" />
             <Setter Property="VerticalContentAlignment"
                     Value="Center" />
-        </Style>
-
-        <Style Selector="Separator">
-            <Setter Property="HorizontalAlignment"
-                    Value="Stretch" />
-            <Setter Property="Height"
-                    Value="1" />
-            <Setter Property="Background"
-                    Value="WhiteSmoke" />
-            <Setter Property="Margin"
-                    Value="0,10" />
         </Style>
 
         <Style Selector="ListBoxItem">

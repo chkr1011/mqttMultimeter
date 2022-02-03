@@ -9,7 +9,7 @@ public sealed class InfoPageViewModel : BaseViewModel
 {
     public InfoPageViewModel()
     {
-        MqttNetAppVersion = typeof(App).Assembly.GetName().Version?.ToString() ?? "<unknown>";
+        AppVersion = typeof(App).Assembly.GetName().Version?.ToString() ?? "<unknown>";
         MqttNetVersion = typeof(MqttClient).Assembly.GetName().Version?.ToString() ?? "<unknown>";
         DotNetVersion = Environment.Version.ToString();
         AvaloniaVersion = typeof(Label).Assembly.GetName().Version?.ToString() ?? "<unknown>";
@@ -19,7 +19,7 @@ public sealed class InfoPageViewModel : BaseViewModel
 
     public string DotNetVersion { get; }
 
-    public string MqttNetAppVersion { get; }
+    public string AppVersion { get; }
 
     public string MqttNetVersion { get; }
 }

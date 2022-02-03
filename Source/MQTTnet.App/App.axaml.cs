@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using MQTTnet.App.Common;
 using MQTTnet.App.Controls;
 using MQTTnet.App.Main;
 using MQTTnet.App.Pages.Connection;

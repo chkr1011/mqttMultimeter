@@ -18,6 +18,8 @@
                 Value="12" />
         <Setter Property="VerticalAlignment"
                 Value="Center" />
+        <Setter Property="Padding"
+                Value="0" />
     </Style>
 
     <Style Selector="AccessText">
@@ -28,6 +30,13 @@
     </Style>
 
     <Style Selector="TextBox">
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+    </Style>
+
+    <Style Selector="NumericUpDown">
         <Setter Property="FontSize"
                 Value="12" />
         <Setter Property="VerticalContentAlignment"

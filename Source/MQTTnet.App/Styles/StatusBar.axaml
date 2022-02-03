@@ -17,13 +17,26 @@
                 Value="10,0" />
     </Style>
 
-    <Style Selector="Border.status_bar > DockPanel > StackPanel > Separator">
+    <Style Selector="Border.status_bar Separator">
         <Setter Property="VerticalAlignment"
                 Value="Stretch" />
         <Setter Property="Background"
                 Value="White" />
         <Setter Property="Margin"
                 Value="5,2" />
+    </Style>
+
+    <Style Selector="Border.status_bar Separator">
+        <Setter Property="VerticalAlignment"
+                Value="Stretch" />
+        <Setter Property="Width"
+                Value="1" />
+        <Setter Property="Height"
+                Value="NaN" />
+        <Setter Property="Background"
+                Value="White" />
+        <Setter Property="Margin"
+                Value="10,2" />
     </Style>
 
 </Styles>
