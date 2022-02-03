@@ -119,7 +119,7 @@
                             Orientation="Horizontal">
 
                     <!-- The connection status -->
-                    <Border Width="146">
+                    <Border Width="166">
                         <Grid HorizontalAlignment="Center">
                             <TextBlock Text="Not connected"
                                        IsVisible="{Binding !ConnectionPage.IsConnected}" />
