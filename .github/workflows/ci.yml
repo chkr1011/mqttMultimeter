@@ -113,14 +113,3 @@ jobs:
           release_name: v${{ env.VERSION }}
           draft: true
           prerelease: false
-          
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/*
-          asset_name: MQTTnet.App-win-x86
-          asset_content_type: application/zip
