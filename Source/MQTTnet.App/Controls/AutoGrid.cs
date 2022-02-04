@@ -26,6 +26,7 @@ public class AutoGrid : Grid
         base.ChildrenChanged(sender, e);
 
         var currentRow = 0;
+        var currentColumn = 0;
 
         foreach (var child in Children)
         {
@@ -34,9 +35,19 @@ public class AutoGrid : Grid
                 if (GetIsNextRow(control))
                 {
                     currentRow++;
+                    currentColumn = 0;
+                }
+
+                var childColumn = GetColumn(control);
+                if (childColumn > 0)
+                {
+                    // This happens when there is an empty column and the next column is
+                    // annotated with the target column.
+                    currentColumn = childColumn;
                 }
 
                 SetRow(control, currentRow);
+                SetColumn(control, currentColumn);
             }
         }
 
