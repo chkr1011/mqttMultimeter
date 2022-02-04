@@ -165,5 +165,5 @@ jobs:
             ${{ github.workspace }}/MQTTnet.App-win-arm64.zip
             ${{ github.workspace }}/MQTTnet.App-osx-x64.zip
             ${{ github.workspace }}/MQTTnet.App-linux-x64.zip
-            ${{ github.workspace }}/MQTTnet.App-linux-arm64.zip
+            ${{ github.workspace }}/MQTTnet.App-linux-arm.zip
             ${{ github.workspace }}/MQTTnet.App-linux-arm64.zip
