@@ -24,7 +24,7 @@ jobs:
 
       # Build applications
       - name: Build win-x86
-        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-x86 build
         uses: vimtor/action-zip@v1
@@ -39,7 +39,7 @@ jobs:
           path: /MQTTnet.App-win-x86.zip
 
       - name: Build win-x64
-        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-x64 build
         uses: vimtor/action-zip@v1
@@ -54,7 +54,7 @@ jobs:
           path: /MQTTnet.App-win-x64.zip
 
       - name: Build win-arm
-        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-arm build
         uses: vimtor/action-zip@v1
@@ -69,7 +69,7 @@ jobs:
           path: /MQTTnet.App-win-arm.zip
 
       - name: Build win-arm64
-        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-arm64 build
         uses: vimtor/action-zip@v1
@@ -84,7 +84,7 @@ jobs:
           path: /MQTTnet.App-win-arm64.zip
 
       - name: Build osx-x64
-        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip osx-x64 build
         uses: vimtor/action-zip@v1
@@ -99,7 +99,7 @@ jobs:
           path: /MQTTnet.App-osx-x64.zip
 
       - name: Build linux-x64
-        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-x64 build
         uses: vimtor/action-zip@v1
@@ -114,7 +114,7 @@ jobs:
           path: /MQTTnet.App-linux-x64.zip
 
       - name: Build linux-arm
-        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-arm build
         uses: vimtor/action-zip@v1
@@ -129,7 +129,7 @@ jobs:
           path: /MQTTnet.App-linux-arm.zip
 
       - name: Build linux-arm64
-        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r linux-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r linux-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-arm64 build
         uses: vimtor/action-zip@v1
