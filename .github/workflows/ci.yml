@@ -3,7 +3,7 @@ name: CI
 on: [ push, pull_request ]
 
 env:
-  VERSION: "1.0.${{github.run_number}}"
+  VERSION: "1.0.0.${{github.run_number}}"
 
 jobs:
   build:
@@ -29,7 +29,7 @@ jobs:
       - name: Zip win-x86 build
         uses: vimtor/action-zip@v1
         with:
-          files: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/win-x86/publish/
+          files: Source/MQTTnet.App/bin/Release/net6.0/win-x86/publish/
           dest: /MQTTnet.App-win-x86.zip
 
       - name: Collect win-x86 artifacts
@@ -44,7 +44,7 @@ jobs:
       - name: Zip win-x64 build
         uses: vimtor/action-zip@v1
         with:
-          files: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/win-x64/publish/
+          files: Source/MQTTnet.App/bin/Release/net6.0/win-x64/publish/
           dest: /MQTTnet.App-win-x64.zip
 
       - name: Collect win-x64 artifacts
