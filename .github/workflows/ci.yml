@@ -27,7 +27,7 @@ jobs:
         run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-x86 build
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/win-x86/publish/
           dest: /MQTTnet.App-win-x86.zip
@@ -42,7 +42,7 @@ jobs:
         run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-x64 build
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/win-x64/publish/
           dest: /MQTTnet.App-win-x64.zip
@@ -57,7 +57,7 @@ jobs:
         run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-arm build
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/win-arm/publish/
           dest: /MQTTnet.App-win-arm.zip
@@ -72,7 +72,7 @@ jobs:
         run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-arm64 build
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/win-arm64/publish/
           dest: /MQTTnet.App-win-arm64.zip
@@ -87,7 +87,7 @@ jobs:
         run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip osx-x64 build
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/osx-x64/publish/
           dest: /MQTTnet.App-osx-x64.zip
@@ -102,7 +102,7 @@ jobs:
         run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-x64 build
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/linux-x64/publish/
           dest: /MQTTnet.App-linux-x64.zip
@@ -117,7 +117,7 @@ jobs:
         run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-arm build
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/linux-arm/publish/
           dest: /MQTTnet.App-linux-arm.zip
@@ -132,7 +132,7 @@ jobs:
         run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r linux-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-arm64 build
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/linux-arm64/publish/
           dest: /MQTTnet.App-linux-arm64.zip
