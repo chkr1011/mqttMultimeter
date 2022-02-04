@@ -30,13 +30,13 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source/MQTTnet.App/bin/Release/net6.0/win-x86/publish/
-          dest: /MQTTnet.App-win-x86.zip
+          dest: MQTTnet.App-win-x86.zip
 
       - name: Collect win-x86 artifacts
         uses: actions/upload-artifact@v2
         with:
           name: MQTTnet.App-win-x86
-          path: /MQTTnet.App-win-x86.zip
+          path: ${{ github.workspace }}/MQTTnet.App-win-x86.zip
 
       - name: Build win-x64
         run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
@@ -45,13 +45,13 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source/MQTTnet.App/bin/Release/net6.0/win-x64/publish/
-          dest: /MQTTnet.App-win-x64.zip
+          dest: MQTTnet.App-win-x64.zip
 
       - name: Collect win-x64 artifacts
         uses: actions/upload-artifact@v2
         with:
           name: MQTTnet.App-win-x64
-          path: /MQTTnet.App-win-x64.zip
+          path: ${{ github.workspace }}/MQTTnet.App-win-x64.zip
 
       - name: Build win-arm
         run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
@@ -60,13 +60,13 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: /home/runner/work/MQTTnet.App/MQTTnet.App/Source/MQTTnet.App/bin/Release/net6.0/win-arm/publish/
-          dest: /MQTTnet.App-win-arm.zip
+          dest: MQTTnet.App-win-arm.zip
 
       - name: Collect win-arm artifacts
         uses: actions/upload-artifact@v2
         with:
           name: MQTTnet.App-win-arm
-          path: /MQTTnet.App-win-arm.zip
+          path: ${{ github.workspace }}/MQTTnet.App-win-arm.zip
 
       - name: Build win-arm64
         run: dotnet publish Source/MQTTnet.App/MQTTnet.App.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}

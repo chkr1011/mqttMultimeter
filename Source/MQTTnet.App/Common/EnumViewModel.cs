@@ -19,7 +19,7 @@ public class EnumViewModel<TEnum> : BaseViewModel where TEnum : Enum
         DisplayValue = Convert.ToString(value) ?? string.Empty;
     }
 
-    public object DisplayValue
+    public object? DisplayValue
     {
         get => _displayValue;
         set => this.RaiseAndSetIfChanged(ref _displayValue, value);

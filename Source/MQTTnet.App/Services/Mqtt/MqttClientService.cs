@@ -17,7 +17,7 @@ public sealed class MqttClientService : IMqttPacketInspector
     readonly List<Action<ProcessMqttPacketContext>> _messageInspectors = new();
     readonly MqttNetEventLogger _mqttNetEventLogger = new();
 
-    MqttClient? _mqttClient;
+    MqttClient _mqttClient;
 
     public MqttClientService()
     {
@@ -68,7 +68,7 @@ public sealed class MqttClientService : IMqttPacketInspector
             clientOptionsBuilder.WithAuthentication(item.SessionOptions.AuthenticationMethod, Convert.FromBase64String(item.SessionOptions.AuthenticationData));
         }
 
-        if (item.ServerOptions.SelectedTransport.Value == Transport.TCP)
+        if (item.ServerOptions.SelectedTransport?.Value == Transport.TCP)
         {
             clientOptionsBuilder.WithTcpServer(item.ServerOptions.Host, item.ServerOptions.Port);
         }
@@ -77,7 +77,7 @@ public sealed class MqttClientService : IMqttPacketInspector
             clientOptionsBuilder.WithWebSocketServer(item.ServerOptions.Host);
         }
 
-        if (item.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
+        if (item.ServerOptions.SelectedTlsVersion?.Value != SslProtocols.None)
         {
             clientOptionsBuilder.WithTls(o =>
             {

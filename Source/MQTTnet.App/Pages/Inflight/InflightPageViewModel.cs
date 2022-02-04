@@ -83,7 +83,7 @@ public sealed class InflightPageViewModel : BaseViewModel
         SwitchToPublishRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    Func<InflightPageItemViewModel, bool> BuildFilter(string searchText)
+    Func<InflightPageItemViewModel, bool> BuildFilter(string? searchText)
     {
         if (string.IsNullOrEmpty(searchText))
         {
@@ -95,9 +95,8 @@ public sealed class InflightPageViewModel : BaseViewModel
 
     InflightPageItemViewModel CreateViewModel(MqttApplicationMessage applicationMessage)
     {
-        var itemViewModel = new InflightPageItemViewModel
+        var itemViewModel = new InflightPageItemViewModel(this)
         {
-            OwnerPage = this,
             Timestamp = DateTime.Now,
             Number = _number++,
             Topic = applicationMessage.Topic,

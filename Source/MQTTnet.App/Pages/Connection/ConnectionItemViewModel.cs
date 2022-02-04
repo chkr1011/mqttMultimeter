@@ -7,8 +7,6 @@ namespace MQTTnet.App.Pages.Connection;
 
 public sealed class ConnectionItemViewModel : BaseViewModel
 {
-    bool _enableLogging;
-    bool _enablePacketInspection;
     string _name = string.Empty;
 
     public ConnectionItemViewModel(ConnectionPageViewModel ownerPage)

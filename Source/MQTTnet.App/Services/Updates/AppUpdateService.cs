@@ -17,9 +17,7 @@ public sealed class AppUpdateService
     public bool IsUpdateAvailable { get; private set; }
 
     public Version? LatestVersion { get; private set; }
-
-    public string UpdateUrl { get; private set; }
-
+    
     public void EnableUpdateChecks()
     {
         Task.Run(DoUpdateChecks);

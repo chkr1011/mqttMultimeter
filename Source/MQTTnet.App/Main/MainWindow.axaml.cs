@@ -29,8 +29,13 @@ public sealed class MainWindow : Window
 
     void OnDataContextChanged(object? sender, EventArgs e)
     {
-        var viewModel = (MainViewModel)DataContext;
+        var viewModel = (MainViewModel?)DataContext;
 
+        if (viewModel == null)
+        {
+            return;
+        }
+        
         viewModel.InflightPage.SwitchToPublishRequested += (_, _) =>
         {
             var sidebar = this.FindControl<TabControl>("Sidebar");
