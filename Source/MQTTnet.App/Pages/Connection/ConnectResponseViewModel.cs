@@ -7,12 +7,12 @@ namespace MQTTnet.App.Pages.Connection;
 
 public sealed class ConnectResponseViewModel : BaseViewModel
 {
-    bool _isSessionPresent;
+    bool? _isSessionPresent;
     int? _reasonCode;
     string _reasonCodeText = string.Empty;
     string _reasonString = string.Empty;
 
-    public bool IsSessionPresent
+    public bool? IsSessionPresent
     {
         get => _isSessionPresent;
         set => this.RaiseAndSetIfChanged(ref _isSessionPresent, value);

@@ -91,11 +91,11 @@
                         <Label Grid.Row="3"
                                Grid.Column="0"
                                Classes="caption">Is session present</Label>
-                        <CheckBox Grid.Row="3"
-                                  Grid.Column="1"
-                                  IsEnabled="False"
-                                  Classes="value"
-                                  IsChecked="{Binding Response.IsSessionPresent}" />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="1"
+                                   IsEnabled="False"
+                                   Classes="value code_text"
+                                   Text="{Binding Response.IsSessionPresent}" />
                     </Grid>
                 </TabItem>
 

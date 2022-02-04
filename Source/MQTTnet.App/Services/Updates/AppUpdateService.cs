@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -9,7 +11,11 @@ public sealed class AppUpdateService
 {
     public AppUpdateService()
     {
-        CurrentVersion = typeof(App).Assembly.GetName().Version ?? new Version(0, 0, 0, 0);
+        var attribute = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false).FirstOrDefault();
+        var productVersion = ((AssemblyInformationalVersionAttribute?)attribute)?.InformationalVersion;
+        Version.TryParse(productVersion, out var assemblyProductVersion);
+
+        CurrentVersion = assemblyProductVersion;
     }
 
     public Version CurrentVersion { get; }
@@ -17,7 +23,7 @@ public sealed class AppUpdateService
     public bool IsUpdateAvailable { get; private set; }
 
     public Version? LatestVersion { get; private set; }
-    
+
     public void EnableUpdateChecks()
     {
         Task.Run(DoUpdateChecks);

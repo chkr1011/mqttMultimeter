@@ -20,16 +20,13 @@ public sealed class InfoPageViewModel : BaseViewModel
         _appUpdateService = appUpdateService ?? throw new ArgumentNullException(nameof(appUpdateService));
         
         CurrentAppVersion = appUpdateService.CurrentVersion.ToString();
-        AppVersion = typeof(App).Assembly.GetName().Version?.ToString() ?? "<unknown>";
         MqttNetVersion = typeof(MqttClient).Assembly.GetName().Version?.ToString() ?? "<unknown>";
         DotNetVersion = Environment.Version.ToString();
         AvaloniaVersion = typeof(Label).Assembly.GetName().Version?.ToString() ?? "<unknown>";
 
         DispatcherTimer.Run(CheckForUpdates, TimeSpan.FromSeconds(1));
     }
-
-    public string AppVersion { get; }
-
+    
     public string AvaloniaVersion { get; }
 
     public string CurrentAppVersion { get; }
