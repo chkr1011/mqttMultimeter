@@ -1,0 +1,194 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:connection="clr-namespace:MQTTnet.App.Pages.Connection"
+             xmlns:controls="clr-namespace:MQTTnet.App.Controls"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance connection:ConnectionItemViewModel}"
+             x:Class="MQTTnet.App.Pages.Connection.ConnectionOptionsView">
+    <ScrollViewer>
+        <StackPanel>
+            <Expander Header="Server"
+                      IsExpanded="True">
+                <controls:AutoGrid Margin="-6"
+                                   ColumnDefinitions="Auto,*,10,Auto,*"
+                                   HorizontalAlignment="Stretch">
+                    <!-- The host -->
+                    <Label Grid.Column="0"
+                           Classes="caption"
+                           Content="Host" />
+                    <TextBox Grid.Column="1"
+                             Text="{Binding ServerOptions.Host}"
+                             Classes="value" />
+
+                    <Label Grid.Column="3"
+                           Classes="caption"
+                           Content="Port" />
+                    <NumericUpDown Classes="value"
+                                   Minimum="0"
+                                   Maximum="65535"
+                                   Value="{Binding ServerOptions.Port}"
+                                   Grid.Column="4" />
+
+                    <!-- The transport -->
+                    <Label Grid.Column="0"
+                           controls:AutoGrid.IsNextRow="True"
+                           Classes="caption"
+                           Content="Transport protocol" />
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal">
+                        <ComboBox Classes="value"
+                                  Width="125"
+                                  Items="{Binding  ServerOptions.Transports}"
+                                  SelectedItem="{Binding  ServerOptions.SelectedTransport}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DisplayValue}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Margin="10,5,0,5"
+                                  Classes="value"
+                                  Items="{Binding ServerOptions.TlsVersions}"
+                                  SelectedItem="{Binding ServerOptions.SelectedTlsVersion}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DisplayValue}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- The MQTT protocol version -->
+                    <Label Grid.Column="3"
+                           Classes="caption"
+                           Content="MQTT protocol version" />
+                    <ComboBox Grid.Column="4"
+                              Classes="value"
+                              Items="{Binding  ServerOptions.ProtocolVersions}"
+                              SelectedItem="{Binding ServerOptions.SelectedProtocolVersion}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DisplayValue}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+
+                    <!-- The timeouts -->
+                    <Label Grid.Column="0"
+                           Classes="caption"
+                           controls:AutoGrid.IsNextRow="True"
+                           Content="Communication timeout" />
+                    <NumericUpDown Grid.Column="1"
+                                   Minimum="0"
+                                   Classes="value"
+                                   Value="{Binding ServerOptions.CommunicationTimeout}" />
+
+                    <Label Grid.Column="3"
+                           Classes="caption"
+                           Content="Keep alive interval" />
+                    <NumericUpDown Grid.Column="4"
+                                   Classes="value"
+                                   Minimum="0"
+                                   Value="{Binding SessionOptions.KeepAliveInterval}" />
+
+                    <Label Grid.Column="0"
+                           Classes="caption"
+                           controls:AutoGrid.IsNextRow="True"
+                           Content="Receive maximum" />
+                    <NumericUpDown Grid.Column="1"
+                                   Minimum="0"
+                                   Classes="value"
+                                   Value="{Binding ServerOptions.ReceiveMaximum}" />
+
+                    <Label Grid.Column="3"
+                           Classes="caption"
+                           Content="Session expiry interval" />
+                    <NumericUpDown Grid.Column="4"
+                                   Classes="value"
+                                   Minimum="0"
+                                   Value="{Binding SessionOptions.SessionExpiryInterval}" />
+
+                    <!-- The client ID -->
+                    <Label controls:AutoGrid.IsNextRow="True"
+                           Grid.Column="0"
+                           Content="Client ID" />
+                    <TextBox Classes="value"
+                             Grid.Column="1"
+                             Text="{Binding SessionOptions.ClientId}" />
+
+                    <!-- The clean session flag -->
+                    <Label Grid.Column="3"
+                           Content="Clean session" />
+                    <CheckBox Grid.Column="4"
+                              IsChecked="{Binding SessionOptions.CleanSession}" />
+
+                    <Label Classes="caption"
+                           controls:AutoGrid.IsNextRow="True"
+                           Grid.Column="0"
+                           Content="Request problem information" />
+                    <CheckBox Classes="value"
+                              Grid.Column="1"
+                              IsChecked="{Binding SessionOptions.RequestProblemInformation}" />
+
+                    <Label Classes="caption"
+                           Grid.Column="3"
+                           Content="Request response information" />
+                    <CheckBox Classes="value"
+                              Grid.Column="4"
+                              IsChecked="{Binding SessionOptions.RequestResponseInformation}" />
+
+
+                </controls:AutoGrid>
+            </Expander>
+
+            <Expander Header="Authentication"
+                      Margin="0,10,0,0">
+                <controls:AutoGrid Margin="-6"
+                                   ColumnDefinitions="Auto,*,10,Auto,*">
+                    <!-- Credentials -->
+                    <Label Grid.Column="0"
+                           controls:AutoGrid.IsNextRow="True"
+                           Classes="caption"
+                           Content="Username" />
+                    <TextBox Text="{Binding SessionOptions.UserName}"
+                             Grid.Column="1"
+                             Classes="value" />
+
+                    <Label Grid.Column="3"
+                           Classes="caption"
+                           Content="Passwort" />
+                    <TextBox Classes="value"
+                             Text="{Binding SessionOptions.Password}"
+                             Grid.Column="4" />
+
+                    <!-- Extended Authentication -->
+                    <Label Grid.Column="0"
+                           controls:AutoGrid.IsNextRow="True"
+                           Classes="caption"
+                           Content="Authentication Method" />
+                    <TextBox Text="{Binding SessionOptions.AuthenticationMethod}"
+                             Grid.Column="1"
+                             Classes="value" />
+
+                    <Label Grid.Column="3"
+                           Classes="caption"
+                           Content="Authentication Data (Base64)" />
+                    <TextBox Classes="value"
+                             Text="{Binding SessionOptions.AuthenticationData}"
+                             Grid.Column="4" />
+                </controls:AutoGrid>
+            </Expander>
+
+            <Expander Header="User Properties"
+                      Margin="0,10,0,0">
+                <ContentPresenter Margin="-6"
+                                  Content="{Binding SessionOptions.UserProperties}" />
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -42,23 +42,23 @@
                         <Button Background="{DynamicResource SystemAccentColor}"
                                 Margin="10,0,0,0"
                                 MinWidth="100"
+                                Classes="image_button"
                                 Command="{Binding Subscribe}"
                                 IsDefault="True">
                             <StackPanel>
                                 <Image Source="/Assets/Icons/Filter_16x.png" />
-                                <TextBlock Margin="0,5,0,0"
-                                           Text="Subscribe" />
+                                <TextBlock Text="Subscribe" />
                             </StackPanel>
                         </Button>
                         <Button Background="{DynamicResource SystemAccentColor}"
                                 MinWidth="100"
                                 Margin="10,0,0,0"
+                                Classes="image_button"
                                 Command="{Binding Unsubscribe}"
                                 IsDefault="True">
                             <StackPanel>
                                 <Image Source="/Assets/Icons/DeleteFilter_16x.png" />
-                                <TextBlock Margin="0,5,0,0"
-                                           Text="Unsubscribe" />
+                                <TextBlock Text="Unsubscribe" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -108,7 +108,7 @@
                     <ContentPresenter Grid.Row="5"
                                       Grid.Column="0"
                                       Grid.ColumnSpan="2"
-                                      ContentTemplate="{Binding UserProperties}" />
+                                      Content="{Binding UserProperties}" />
                 </Grid>
             </Grid>
         </controls:GroupBox>
@@ -126,21 +126,21 @@
                                Classes="caption">Reason code</Label>
                         <TextBlock Grid.Row="0"
                                    Grid.Column="1"
-                                   Classes="value"
+                                   Classes="value code_text"
                                    Text="{Binding Response.ReasonCode}" />
                         <Label Grid.Row="1"
                                Grid.Column="0"
                                Classes="caption">Reason code text</Label>
                         <TextBlock Grid.Row="1"
                                    Grid.Column="1"
-                                   Classes="value"
+                                   Classes="value code_text"
                                    Text="{Binding Response.ReasonCodeText}" />
                         <Label Grid.Row="2"
                                Grid.Column="0"
                                Classes="caption">Reason string</Label>
                         <TextBlock Grid.Row="2"
                                    Grid.Column="1"
-                                   Classes="value"
+                                   Classes="value code_text"
                                    Text="{Binding Response.ReasonString}" />
                         <Label Grid.Row="3"
                                Grid.Column="0"

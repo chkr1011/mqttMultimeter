@@ -7,6 +7,11 @@ public sealed class SubscriptionItemView : UserControl
 {
     public SubscriptionItemView()
     {
+        InitializeComponent();
+    }
+
+    void InitializeComponent()
+    {
         AvaloniaXamlLoader.Load(this);
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Authentication;
 using MQTTnet.App.Common;
+using MQTTnet.Formatter;
 using ReactiveUI;
 
 namespace MQTTnet.App.Pages.Connection;
@@ -11,10 +12,11 @@ public sealed class ServerOptionsViewModel : BaseViewModel
     int _communicationTimeout;
     string _host = string.Empty;
     int _port;
+    int _receiveMaximum;
+    EnumViewModel<MqttProtocolVersion>? _selectedProtocolVersion;
 
-    TlsVersionViewModel? _selectedTlsVersion;
-
-    TransportViewModel? _selectedTransport;
+    EnumViewModel<SslProtocols>? _selectedTlsVersion;
+    EnumViewModel<Transport>? _selectedTransport;
 
     public ServerOptionsViewModel()
     {
@@ -22,16 +24,23 @@ public sealed class ServerOptionsViewModel : BaseViewModel
         Port = 1883;
         CommunicationTimeout = 10;
 
-        Transports.Add(new TransportViewModel("TCP", Transport.TCP));
-        Transports.Add(new TransportViewModel("WebSocket", Transport.WebSocket));
+        Transports.Add(new EnumViewModel<Transport>("TCP", Transport.TCP));
+        Transports.Add(new EnumViewModel<Transport>("WebSocket", Transport.WebSocket));
         SelectedTransport = Transports.FirstOrDefault()!;
 
-        TlsVersions.Add(new TlsVersionViewModel("no TLS", SslProtocols.None));
-        TlsVersions.Add(new TlsVersionViewModel("TLS 1.0", SslProtocols.Tls));
-        TlsVersions.Add(new TlsVersionViewModel("TLS 1.1", SslProtocols.Tls11));
-        TlsVersions.Add(new TlsVersionViewModel("TLS 1.2", SslProtocols.Tls12));
-        TlsVersions.Add(new TlsVersionViewModel("TLS 1.3", SslProtocols.Tls13));
+        TlsVersions.Add(new EnumViewModel<SslProtocols>("no TLS", SslProtocols.None));
+        TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.0", SslProtocols.Tls));
+        TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.1", SslProtocols.Tls11));
+        TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.2", SslProtocols.Tls12));
+        TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.3", SslProtocols.Tls13));
         SelectedTlsVersion = TlsVersions.FirstOrDefault()!;
+
+        ProtocolVersions.Add(new EnumViewModel<MqttProtocolVersion>("3.1.0", MqttProtocolVersion.V310));
+        ProtocolVersions.Add(new EnumViewModel<MqttProtocolVersion>("3.1.1", MqttProtocolVersion.V311));
+        ProtocolVersions.Add(new EnumViewModel<MqttProtocolVersion>("5.0.0", MqttProtocolVersion.V500));
+
+        // 3.1.1 is the mostly used version so we preselect it.
+        SelectedProtocolVersion = ProtocolVersions[1];
     }
 
     public int CommunicationTimeout
@@ -52,19 +61,33 @@ public sealed class ServerOptionsViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _port, value);
     }
 
-    public TlsVersionViewModel? SelectedTlsVersion
+    public ObservableCollection<EnumViewModel<MqttProtocolVersion>> ProtocolVersions { get; } = new();
+
+    public int ReceiveMaximum
+    {
+        get => _receiveMaximum;
+        set => this.RaiseAndSetIfChanged(ref _receiveMaximum, value);
+    }
+
+    public EnumViewModel<MqttProtocolVersion>? SelectedProtocolVersion
+    {
+        get => _selectedProtocolVersion;
+        set => this.RaiseAndSetIfChanged(ref _selectedProtocolVersion, value);
+    }
+
+    public EnumViewModel<SslProtocols>? SelectedTlsVersion
     {
         get => _selectedTlsVersion;
         set => this.RaiseAndSetIfChanged(ref _selectedTlsVersion, value);
     }
 
-    public TransportViewModel? SelectedTransport
+    public EnumViewModel<Transport>? SelectedTransport
     {
         get => _selectedTransport;
         set => this.RaiseAndSetIfChanged(ref _selectedTransport, value);
     }
 
-    public ObservableCollection<TlsVersionViewModel> TlsVersions { get; } = new();
+    public ObservableCollection<EnumViewModel<SslProtocols>> TlsVersions { get; } = new();
 
-    public ObservableCollection<TransportViewModel> Transports { get; } = new();
+    public ObservableCollection<EnumViewModel<Transport>> Transports { get; } = new();
 }

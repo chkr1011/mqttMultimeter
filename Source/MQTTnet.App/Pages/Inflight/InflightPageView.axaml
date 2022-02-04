@@ -83,7 +83,7 @@
                                             HorizontalAlignment="Right"
                                             Margin="5,0">
                                     <Border IsVisible="{Binding Retained}"
-                                            Classes="BadgeRetained Badge"
+                                            Classes="badge badge_retained"
                                             ToolTip.Tip="Retained">
                                         <TextBlock Text="R" />
                                     </Border>

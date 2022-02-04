@@ -15,8 +15,14 @@ public sealed class MqttClientService : IMqttPacketInspector
 {
     readonly AsyncEvent<MqttApplicationMessageReceivedEventArgs> _applicationMessageReceivedEvent = new();
     readonly List<Action<ProcessMqttPacketContext>> _messageInspectors = new();
+    readonly MqttNetEventLogger _mqttNetEventLogger = new();
 
     MqttClient? _mqttClient;
+
+    public MqttClientService()
+    {
+        _mqttNetEventLogger.LogMessagePublished += OnLogMessagePublished;
+    }
 
     public event Func<MqttApplicationMessageReceivedEventArgs, Task> ApplicationMessageReceived
     {
@@ -24,13 +30,15 @@ public sealed class MqttClientService : IMqttPacketInspector
         remove => _applicationMessageReceivedEvent.RemoveHandler(value);
     }
 
+    public event Action<MqttNetLogMessagePublishedEventArgs>? LogMessagePublished;
+
     public bool IsConnected => _mqttClient?.IsConnected == true;
 
-    public async Task<MqttClientConnectResult> Connect(ConnectionPageViewModel options)
+    public async Task<MqttClientConnectResult> Connect(ConnectionItemViewModel item)
     {
-        if (options == null)
+        if (item == null)
         {
-            throw new ArgumentNullException(nameof(options));
+            throw new ArgumentNullException(nameof(item));
         }
 
         if (_mqttClient != null)
@@ -41,39 +49,48 @@ public sealed class MqttClientService : IMqttPacketInspector
 
         _mqttClient = new MqttFactory().CreateMqttClient();
 
-        var clientOptionsBuilder = new MqttClientOptionsBuilder().WithCommunicationTimeout(TimeSpan.FromSeconds(options.ServerOptions.CommunicationTimeout))
-            .WithProtocolVersion(options.ProtocolOptions.SelectedProtocolVersion.Value)
-            .WithClientId(options.SessionOptions.ClientId)
-            .WithCleanSession(options.SessionOptions.CleanSession)
-            .WithCredentials(options.SessionOptions.User, options.SessionOptions.Password)
-            .WithRequestProblemInformation(options.SessionOptions.RequestProblemInformation)
-            .WithRequestResponseInformation(options.SessionOptions.RequestResponseInformation)
-            .WithKeepAlivePeriod(TimeSpan.FromSeconds(options.SessionOptions.KeepAliveInterval));
+        var clientOptionsBuilder = new MqttClientOptionsBuilder().WithCommunicationTimeout(TimeSpan.FromSeconds(item.ServerOptions.CommunicationTimeout))
+            .WithProtocolVersion(item.ServerOptions.SelectedProtocolVersion.Value)
+            .WithClientId(item.SessionOptions.ClientId)
+            .WithCleanSession(item.SessionOptions.CleanSession)
+            .WithCredentials(item.SessionOptions.UserName, item.SessionOptions.Password)
+            .WithRequestProblemInformation(item.SessionOptions.RequestProblemInformation)
+            .WithRequestResponseInformation(item.SessionOptions.RequestResponseInformation)
+            .WithKeepAlivePeriod(TimeSpan.FromSeconds(item.SessionOptions.KeepAliveInterval));
 
-        if (options.ServerOptions.SelectedTransport.Value == Transport.TCP)
+        if (item.SessionOptions.SessionExpiryInterval > 0)
         {
-            clientOptionsBuilder.WithTcpServer(options.ServerOptions.Host, options.ServerOptions.Port);
+            clientOptionsBuilder.WithSessionExpiryInterval((uint)item.SessionOptions.SessionExpiryInterval);
+        }
+
+        if (!string.IsNullOrEmpty(item.SessionOptions.AuthenticationMethod))
+        {
+            clientOptionsBuilder.WithAuthentication(item.SessionOptions.AuthenticationMethod, Convert.FromBase64String(item.SessionOptions.AuthenticationData));
+        }
+
+        if (item.ServerOptions.SelectedTransport.Value == Transport.TCP)
+        {
+            clientOptionsBuilder.WithTcpServer(item.ServerOptions.Host, item.ServerOptions.Port);
         }
         else
         {
-            clientOptionsBuilder.WithWebSocketServer(options.ServerOptions.Host);
+            clientOptionsBuilder.WithWebSocketServer(item.ServerOptions.Host);
         }
 
-        if (options.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
+        if (item.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
         {
             clientOptionsBuilder.WithTls(o =>
             {
-                o.SslProtocol = options.ServerOptions.SelectedTlsVersion.Value;
+                o.SslProtocol = item.ServerOptions.SelectedTlsVersion.Value;
             });
         }
 
         // TODO: To event.
-        if (options.MqttNetOptions.EnablePacketInspection)
-        {
-            clientOptionsBuilder.WithPacketInspector(this);
-        }
+        clientOptionsBuilder.WithPacketInspector(this);
 
         _mqttClient.ApplicationMessageReceivedAsync += OnApplicationMessageReceived;
+
+        _mqttClient.DisconnectedAsync += OnDisconnected;
 
         var result = await _mqttClient.ConnectAsync(clientOptionsBuilder.Build());
 
@@ -190,6 +207,21 @@ public sealed class MqttClientService : IMqttPacketInspector
     Task OnApplicationMessageReceived(MqttApplicationMessageReceivedEventArgs eventArgs)
     {
         return _applicationMessageReceivedEvent.InvokeAsync(eventArgs);
+    }
+
+    Task OnDisconnected(MqttClientDisconnectedEventArgs arg)
+    {
+        if (arg.ClientWasConnected)
+        {
+            //arg.Reason
+        }
+
+        return Task.CompletedTask;
+    }
+
+    void OnLogMessagePublished(object? sender, MqttNetLogMessagePublishedEventArgs e)
+    {
+        LogMessagePublished?.Invoke(e);
     }
 
     void ThrowIfNotConnected()

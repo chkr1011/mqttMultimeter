@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:main="clr-namespace:MQTTnet.App.Main"
-        Title="MQTTnet App"
+        Title="MQTTnet.App"
         d:DataContext="{d:DesignInstance main:MainViewModel}"
         d:DesignHeight="450"
         d:DesignWidth="800"

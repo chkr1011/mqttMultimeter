@@ -7,6 +7,11 @@ public sealed class PublishItemView : UserControl
 {
     public PublishItemView()
     {
+        InitializeComponent();
+    }
+
+    void InitializeComponent()
+    {
         AvaloniaXamlLoader.Load(this);
     }
 }

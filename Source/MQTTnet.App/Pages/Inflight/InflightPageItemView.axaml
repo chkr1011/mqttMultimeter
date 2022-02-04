@@ -10,7 +10,6 @@
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance inflight:InflightPageItemViewModel}"
              x:Class="MQTTnet.App.Pages.Inflight.InflightPageItemView">
-
     <Grid RowDefinitions="Auto,*,Auto"
           Margin="10,5,10,10">
 
@@ -32,7 +31,8 @@
                      Text="{Binding Topic}" />
         </Grid>
 
-        <TabControl Grid.Row="1">
+        <TabControl Grid.Row="1"
+                    Margin="0,10,0,0">
             <TabControl.Styles>
                 <Style Selector="TextBox">
                     <Setter Property="BorderThickness"

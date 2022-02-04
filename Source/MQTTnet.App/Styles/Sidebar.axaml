@@ -47,6 +47,8 @@
                 Value="10,0,0,0" />
         <Setter Property="FontSize"
                 Value="14" />
+        <Setter Property="Height"
+                Value="64" />
         <Setter Property="Padding"
                 Value="20,0,30,0" />
         <Setter Property="VerticalContentAlignment"

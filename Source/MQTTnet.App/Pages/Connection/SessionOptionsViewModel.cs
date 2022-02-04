@@ -1,22 +1,38 @@
 ﻿using System;
 using MQTTnet.App.Common;
+using MQTTnet.App.Controls;
 using ReactiveUI;
 
 namespace MQTTnet.App.Pages.Connection;
 
 public sealed class SessionOptionsViewModel : BaseViewModel
 {
+    string _authenticationData = string.Empty;
+    string _authenticationMethod = string.Empty;
     bool _cleanSession = true;
     string _clientId = string.Empty;
     int _keepAliveInterval = 10;
     string _password = string.Empty;
     bool _requestProblemInformation;
     bool _requestResponseInformation;
-    string _user = string.Empty;
+    int _sessionExpiryInterval;
+    string _userName = string.Empty;
 
     public SessionOptionsViewModel()
     {
         ClientId = "MQTTnet.App-" + Guid.NewGuid();
+    }
+
+    public string AuthenticationData
+    {
+        get => _authenticationData;
+        set => this.RaiseAndSetIfChanged(ref _authenticationData, value);
+    }
+
+    public string AuthenticationMethod
+    {
+        get => _authenticationMethod;
+        set => this.RaiseAndSetIfChanged(ref _authenticationMethod, value);
     }
 
     public bool CleanSession
@@ -55,9 +71,17 @@ public sealed class SessionOptionsViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _requestResponseInformation, value);
     }
 
-    public string User
+    public int SessionExpiryInterval
     {
-        get => _user;
-        set => this.RaiseAndSetIfChanged(ref _user, value);
+        get => _sessionExpiryInterval;
+        set => this.RaiseAndSetIfChanged(ref _sessionExpiryInterval, value);
     }
+
+    public string UserName
+    {
+        get => _userName;
+        set => this.RaiseAndSetIfChanged(ref _userName, value);
+    }
+
+    public UserPropertiesViewModel UserProperties { get; } = new();
 }

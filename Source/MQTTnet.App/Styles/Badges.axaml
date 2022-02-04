@@ -7,8 +7,6 @@
     </Design.PreviewWith>
 
     <Style Selector="Border.badge">
-        <Setter Property="CornerRadius"
-                Value="5" />
         <Setter Property="Padding"
                 Value="5" />
         <Setter Property="Background"
@@ -18,6 +16,18 @@
     <Style Selector="Border.badge TextBlock">
         <Setter Property="Foreground"
                 Value="White" />
+        <Setter Property="FontFamily"
+                Value="Consolas" />
     </Style>
-
+    
+    <Style Selector="Border.badge_retained">
+        <Setter Property="Background"
+                Value="HotPink" />
+    </Style>
+    
+    <Style Selector="Border.badge_retained > TextBlock">
+        <Setter Property="Foreground"
+                Value="Black" />
+    </Style>
+    
 </Styles>
