@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using MQTTnet.App.Common;
@@ -12,8 +13,9 @@ public sealed class ConnectionPageViewModel : BaseViewModel
     readonly MqttClientService _mqttClientService;
 
     bool _isConnected;
-
     bool _isConnecting;
+
+    ConnectionItemViewModel? _selectedItem;
 
     public ConnectionPageViewModel(MqttClientService mqttClientService)
     {
@@ -21,6 +23,35 @@ public sealed class ConnectionPageViewModel : BaseViewModel
 
         var timer = new DispatcherTimer(TimeSpan.FromSeconds(0.5), DispatcherPriority.Normal, CheckConnection);
         timer.Start();
+
+        Items.Add(new ConnectionItemViewModel(this)
+        {
+            Name = "localhost",
+            ServerOptions =
+            {
+                Host = "localhost"
+            }
+        });
+
+        Items.Add(new ConnectionItemViewModel(this)
+        {
+            Name = "Hive MQ",
+            ServerOptions =
+            {
+                Host = "broker.hivemq.com"
+            }
+        });
+
+        Items.Add(new ConnectionItemViewModel(this)
+        {
+            Name = "Mosquitto Test",
+            ServerOptions =
+            {
+                Host = "test.mosquitto.org"
+            }
+        });
+
+        SelectedItem = Items[0];
     }
 
     public bool IsConnected
@@ -35,24 +66,43 @@ public sealed class ConnectionPageViewModel : BaseViewModel
         private set => this.RaiseAndSetIfChanged(ref _isConnecting, value);
     }
 
-    public MqttNetOptionsViewModel MqttNetOptions { get; } = new();
+    public ObservableCollection<ConnectionItemViewModel> Items { get; } = new();
 
-    public ProtocolOptionsViewModel ProtocolOptions { get; } = new();
+    public ConnectionItemViewModel? SelectedItem
+    {
+        get => _selectedItem;
+        set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
+    }
 
-    public ConnectResponseViewModel Response { get; } = new();
+    public void AddItem()
+    {
+        var newItem = new ConnectionItemViewModel(this)
+        {
+            Name = "Untitled",
+            ServerOptions =
+            {
+                Host = "localhost"
+            }
+        };
 
-    public ServerOptionsViewModel ServerOptions { get; } = new();
+        Items.Add(newItem);
+        SelectedItem = newItem;
+    }
 
-    public SessionOptionsViewModel SessionOptions { get; } = new();
+    public void ClearItems()
+    {
+        Items.Clear();
+        SelectedItem = null;
+    }
 
-    public async Task Connect()
+    public async Task Connect(ConnectionItemViewModel item)
     {
         try
         {
             IsConnecting = true;
 
-            var response = await _mqttClientService.Connect(this);
-            Response.ApplyResponse(response);
+            var response = await _mqttClientService.Connect(item);
+            item.Response.ApplyResponse(response);
         }
         catch (Exception exception)
         {
@@ -64,7 +114,7 @@ public sealed class ConnectionPageViewModel : BaseViewModel
         }
     }
 
-    public async Task Disconnect()
+    public async Task Disconnect(ConnectionItemViewModel item)
     {
         try
         {
@@ -74,6 +124,11 @@ public sealed class ConnectionPageViewModel : BaseViewModel
         {
             App.ShowException(exception);
         }
+    }
+
+    public void RemoveItem(ConnectionItemViewModel item)
+    {
+        Items.Remove(item);
     }
 
     void CheckConnection(object? sender, EventArgs e)

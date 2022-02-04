@@ -25,11 +25,12 @@ The protocol implementation is based on the _MQTTnet_ project. The application u
 
 ## Supported operating systems
 
-| OS | x86 | x64 | ARM | ARM64
-|-|-|-|-|-|
-| Windows | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| Linux | | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| macOS |  | :heavy_check_mark: |  |  |
+| OS              | x86                | x64                | ARM                | ARM64              |
+|-----------------|--------------------|--------------------|--------------------|--------------------|
+| Windows         | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Linux           |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| macOS           |                    | :heavy_check_mark: |                    |                    |
+| Raspberry Pi OS |                    |                    | :heavy_check_mark: | :heavy_check_mark: |
 
 ## Supported MQTT versions
 

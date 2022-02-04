@@ -1,11 +1,11 @@
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
 namespace MQTTnet.App.Pages.Connection;
 
-public class ServerOptionsView : UserControl
+public class ConnectionOptionsView : UserControl
 {
-    public ServerOptionsView()
+    public ConnectionOptionsView()
     {
         InitializeComponent();
     }

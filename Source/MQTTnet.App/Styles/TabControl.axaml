@@ -1,10 +1,6 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Design.PreviewWith>
-        <Border Padding="20">
-            <!-- Add Controls for Previewer Here -->
-        </Border>
-    </Design.PreviewWith>
+    <Design.PreviewWith></Design.PreviewWith>
 
     <Style Selector="TabControl">
         <Setter Property="Margin"
@@ -16,6 +12,13 @@
     <Style Selector="TabItem">
         <Setter Property="Padding"
                 Value="0,0,12,0" />
+        <Setter Property="MinHeight"
+                Value="0" />
+    </Style>
+
+    <Style Selector="TabItem > Border > Panel > ContentPresenter">
+        <Setter Property="Margin"
+                Value="0,0,0,10" />
     </Style>
 
 </Styles>

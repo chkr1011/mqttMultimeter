@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace MQTTnet.App.Pages.Inflight;
 
-public class InflightPageItemView : UserControl
+public sealed class InflightPageItemView : UserControl
 {
     public InflightPageItemView()
     {

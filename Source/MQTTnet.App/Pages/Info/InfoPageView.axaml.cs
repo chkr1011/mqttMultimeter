@@ -54,7 +54,7 @@ public sealed class InfoPageView : UserControl
 
     void OpenUrlFromButtonContent(object? sender, RoutedEventArgs e)
     {
-        Launch(((Button)sender).Content as string);
+        Launch((sender as Button)?.Content as string ?? string.Empty);
     }
 
     static string ReadEmbeddedMarkdown()

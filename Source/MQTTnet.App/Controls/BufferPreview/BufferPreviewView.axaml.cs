@@ -177,7 +177,7 @@ public sealed class BufferInspectorView : TemplatedControl
 
         if (change.Property == SelectedFormatProperty)
         {
-            ShowRaw = SelectedFormat.Name == "RAW";
+            ShowRaw = SelectedFormat?.Name == "RAW";
         }
 
         if (change.Property == SelectedFormatNameProperty)
@@ -233,7 +233,7 @@ public sealed class BufferInspectorView : TemplatedControl
             SelectedFormat = Formats.FirstOrDefault();
         }
 
-        SelectedFormat = Formats.FirstOrDefault(f => f.Name.Equals(SelectedFormatName));
+        SelectedFormat = Formats.FirstOrDefault(f =>  string.Equals(f.Name, SelectedFormatName));
 
         if (SelectedFormat == null)
         {

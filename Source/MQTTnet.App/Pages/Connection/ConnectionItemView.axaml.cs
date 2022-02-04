@@ -1,11 +1,11 @@
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
 namespace MQTTnet.App.Pages.Connection;
 
-public class ProtocolOptionsView : UserControl
+public sealed class ConnectionItemView : UserControl
 {
-    public ProtocolOptionsView()
+    public ConnectionItemView()
     {
         InitializeComponent();
     }

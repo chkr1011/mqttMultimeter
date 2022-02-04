@@ -10,7 +10,6 @@
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance inflight:InflightPageItemViewModel}"
              x:Class="MQTTnet.App.Pages.Inflight.InflightPageItemView">
-
     <Grid RowDefinitions="Auto,*,Auto"
           Margin="10,5,10,10">
 
@@ -32,7 +31,8 @@
                      Text="{Binding Topic}" />
         </Grid>
 
-        <TabControl Grid.Row="1">
+        <TabControl Grid.Row="1"
+                    Margin="0,10,0,0">
             <TabControl.Styles>
                 <Style Selector="TextBox">
                     <Setter Property="BorderThickness"
@@ -50,22 +50,20 @@
                                Grid.Row="0"
                                Content="Payload Format Indicator"
                                Classes="caption" />
-                        <TextBox IsReadOnly="True"
-                                 Grid.Column="1"
-                                 Grid.Row="0"
-                                 Classes="code_text value"
-                                 Text="{Binding Path=Source.PayloadFormatIndicator}" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="0"
+                                   Classes="code_text value"
+                                   Text="{Binding Path=Source.PayloadFormatIndicator}" />
 
                         <!-- Content Type -->
                         <Label Grid.Column="0"
                                Grid.Row="1"
                                Content="Content Type"
                                Classes="caption" />
-                        <TextBox IsReadOnly="True"
-                                 Grid.Column="1"
-                                 Grid.Row="1"
-                                 Classes="code_text value"
-                                 Text="{Binding Path=Source.ContentType}" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="1"
+                                   Classes="code_text value"
+                                   Text="{Binding Path=Source.ContentType}" />
 
                         <!-- The Payload -->
                         <controls:BufferInspectorView Grid.Column="0"
@@ -86,90 +84,80 @@
                                Grid.Column="0"
                                Grid.Row="0"
                                Classes="caption" />
-                        <TextBox IsReadOnly="True"
-                                 Classes="value code_text value"
-                                 Grid.Column="1"
-                                 Grid.Row="0"
-                                 Text="{Binding Timestamp}" />
-
-                        <!--Text="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm:ss.fff}}" -->
+                        <TextBlock Classes="value code_text value"
+                                   Grid.Column="1"
+                                   Grid.Row="0"
+                                   Text="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm:ss.fff}, Mode=OneWay}" />
 
                         <!-- Retain -->
                         <Label Grid.Column="0"
                                Grid.Row="1"
                                Content="Retain"
                                Classes="caption" />
-                        <CheckBox IsEnabled="False"
-                                  Grid.Column="1"
-                                  Grid.Row="1"
-                                  Classes="code_text value"
-                                  IsChecked="{Binding Path=Source.Retain}" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="1"
+                                   Classes="code_text value"
+                                   Text="{Binding Path=Source.Retain, Mode=OneWay}" />
 
                         <!-- Topic Alias -->
                         <Label Grid.Column="0"
                                Grid.Row="2"
                                Content="Topic Alias"
                                Classes="caption" />
-                        <TextBox IsReadOnly="False"
-                                 Grid.Column="1"
-                                 Grid.Row="2"
-                                 Classes="code_text value"
-                                 Text="{Binding Path=Source.MessageExpiryInterval}" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="2"
+                                   Classes="code_text value"
+                                   Text="{Binding Path=Source.MessageExpiryInterval}" />
 
                         <!-- The Quality of Service level -->
                         <Label Grid.Column="0"
                                Grid.Row="3"
                                Content="Quality of Service level (QoS)"
                                Classes="caption" />
-                        <TextBox IsReadOnly="True"
-                                 Grid.Column="1"
-                                 Grid.Row="3"
-                                 Classes="code_text value"
-                                 Text="{Binding Path=QualityOfServiceLevel, Converter={x:Static converters:EnumConverters.ExpandQualityOfServiceValue }}" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="3"
+                                   Classes="code_text value"
+                                   Text="{Binding Path=QualityOfServiceLevel, Converter={x:Static converters:EnumConverters.ExpandQualityOfServiceValue }}" />
 
                         <!-- The response topic -->
                         <Label Grid.Column="0"
                                Grid.Row="4"
                                Content="Response topic"
                                Classes="caption" />
-                        <TextBox IsReadOnly="True"
-                                 Grid.Column="1"
-                                 Grid.Row="4"
-                                 Classes="code_text value"
-                                 Text="{Binding Path=Source.ResponseTopic}" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="4"
+                                   Classes="code_text value"
+                                   Text="{Binding Path=Source.ResponseTopic}" />
 
                         <!-- Message Expiry Interval -->
                         <Label Grid.Column="0"
                                Grid.Row="5"
                                Content="Message Expiry Interval"
                                Classes="caption" />
-                        <TextBox IsReadOnly="False"
-                                 Grid.Column="1"
-                                 Grid.Row="5"
-                                 Classes="code_text value"
-                                 Text="{Binding Path=Source.MessageExpiryInterval}" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="5"
+                                   Classes="code_text value"
+                                   Text="{Binding Path=Source.MessageExpiryInterval}" />
 
                         <!-- Dup -->
                         <Label Grid.Column="0"
                                Grid.Row="6"
                                Content="Dup"
                                Classes="caption" />
-                        <CheckBox IsEnabled="False"
-                                  Grid.Column="1"
-                                  Grid.Row="6"
-                                  Classes="code_text value"
-                                  IsChecked="{Binding Path=Source.Dup}" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="6"
+                                   Classes="code_text value"
+                                   Text="{Binding Path=Source.Dup, Mode=OneWay}" />
 
                         <!-- Subscription Identifiers -->
                         <Label Grid.Column="0"
                                Grid.Row="9"
                                Content="Subscription Identifiers"
                                Classes="caption" />
-                        <TextBox IsReadOnly="True"
-                                 Grid.Column="1"
-                                 Grid.Row="9"
-                                 Classes="code_text value"
-                                 Text="{Binding Path=Source.SubscriptionIdentifiers}" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="9"
+                                   Classes="code_text value"
+                                   Text="{Binding Path=Source.SubscriptionIdentifiers, Converter={x:Static converters:EnumConverters.ExpandSubscriptionIdentifiers}}" />
                     </Grid>
                 </TabItem>
 

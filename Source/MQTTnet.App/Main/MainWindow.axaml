@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:main="clr-namespace:MQTTnet.App.Main"
-        Title="MQTTnet App"
+        Title="MQTTnet.App"
         d:DataContext="{d:DesignInstance main:MainViewModel}"
         d:DesignHeight="450"
         d:DesignWidth="800"
@@ -149,7 +149,7 @@
                         Margin="0,0,-10,0"
                         Padding="10,0">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Version, StringFormat={}v{0}}" />
+                        <TextBlock Text="{Binding InfoPage.CurrentAppVersion, StringFormat={}v{0}}" />
                         <TextBlock Margin="10,0,0,0"
                                    IsVisible="{Binding InfoPage.IsUpdateAvailable}"
                                    Text="Update available" />

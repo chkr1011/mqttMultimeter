@@ -9,7 +9,7 @@ namespace MQTTnet.App.Pages.PacketInspector;
 
 public sealed class PacketInspectorPageViewModel : BaseViewModel
 {
-    bool _isRecordingEnabled = true;
+    bool _isRecordingEnabled;
     int _number;
     PacketViewModel? _selectedPacket;
 

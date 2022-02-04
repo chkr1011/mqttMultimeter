@@ -6,11 +6,16 @@ namespace MQTTnet.App.Pages.Inflight;
 
 public sealed class InflightPageItemViewModel
 {
+    public InflightPageItemViewModel(InflightPageViewModel ownerPage)
+    {
+        OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
+    }
+    
     public long Length { get; init; }
 
     public int Number { get; init; }
 
-    public InflightPageViewModel OwnerPage { get; init; }
+    public InflightPageViewModel OwnerPage { get; }
 
     public string PayloadPreview { get; set; } = string.Empty;
 
@@ -22,7 +27,7 @@ public sealed class InflightPageItemViewModel
 
     public DateTime Timestamp { get; init; }
 
-    public string? Topic { get; init; }
+    public string Topic { get; init; }
 
     public UserPropertiesViewModel UserProperties { get; } = new();
 

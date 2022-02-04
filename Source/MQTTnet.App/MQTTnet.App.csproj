@@ -19,6 +19,9 @@
         <DebugSymbols>true</DebugSymbols>
         <Prefer32Bit>false</Prefer32Bit>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DebugType>none</DebugType>
+    </PropertyGroup>
     <ItemGroup>
         <Folder Include="Configuration\Service" />
         <AvaloniaResource Include="Assets\**" />
@@ -34,7 +37,6 @@
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
         <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.1" />
         <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12.1" />
-        <PackageReference Include="MessagePack" Version="2.3.85" />
         <PackageReference Include="MQTTnet" Version="4.0.0-preview3" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="SimpleInjector" Version="5.3.3" />
@@ -45,12 +47,6 @@
         </Compile>
         <Compile Update="Pages\Connection\ConnectionPageView.axaml.cs">
             <DependentUpon>ConnectionPageView.axaml</DependentUpon>
-        </Compile>
-        <Compile Update="Pages\Connection\MqttNetOptionsView.axaml.cs">
-            <DependentUpon>MqttNetOptionsView.axaml</DependentUpon>
-        </Compile>
-        <Compile Update="Pages\Connection\SessionOptionsView.axaml.cs">
-            <DependentUpon>SessionOptionsView.axaml</DependentUpon>
         </Compile>
         <Compile Update="Pages\PacketInspector\PacketInspectorPageView.axaml.cs">
             <DependentUpon>PacketInspectorPageView.axaml</DependentUpon>
@@ -65,12 +61,16 @@
             <DependentUpon>ReceivedApplicationMessageDetailsView.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Compile Update="Controls\HexBox\HexBox.axaml.cs">
+        <Compile Update="Controls\RetainHandling\RetainHandlingSelectorView.axaml.cs">
+            <DependentUpon>QualityOfServiceLevelSelectorView.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Controls\HexBox.axaml.cs">
             <DependentUpon>HexBox.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Compile Update="Controls\RetainHandling\RetainHandlingSelectorView.axaml.cs">
-            <DependentUpon>QualityOfServiceLevelSelectorView.axaml</DependentUpon>
+        <Compile Update="Controls\GroupBox.axaml.cs">
+            <DependentUpon>GroupBox.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
     </ItemGroup>

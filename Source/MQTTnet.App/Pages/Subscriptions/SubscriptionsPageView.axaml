@@ -50,17 +50,17 @@
                      SelectedItem="{Binding SelectedItem}"
                      Items="{Binding Items}"
                      Grid.Column="0"
-                     x:Name="PART_SubscriptionItems" />
+                     x:Name="PART_Items" />
         </Grid>
 
         <!-- The splitter -->
         <GridSplitter Grid.Column="1"
                       Width="1" />
 
-        <!-- The selected subscription. -->
+        <!-- The selected item. -->
         <ContentPresenter Margin="10"
                           Grid.Column="2"
-                          Content="{Binding ElementName=PART_SubscriptionItems, Path=SelectedItem}" />
+                          Content="{Binding ElementName=PART_Items, Path=SelectedItem}" />
     </Grid>
 
 </UserControl>

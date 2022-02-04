@@ -3,31 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Styles>
         <FluentTheme Mode="Dark" />
-
         <StyleInclude Source="avares://AvaloniaEdit/AvaloniaEdit.xaml" />
 
         <StyleInclude Source="/Styles/GridSplitter.axaml" />
         <StyleInclude Source="/Styles/Badges.axaml" />
         <StyleInclude Source="/Styles/Button.axaml" />
         <StyleInclude Source="/Styles/ToolBar.axaml" />
-        <StyleInclude Source="/Styles/Sidebar.axaml" />
         <StyleInclude Source="/Styles/StatusBar.axaml" />
         <StyleInclude Source="/Styles/DataGrid.axaml" />
         <StyleInclude Source="/Styles/Text.axaml" />
         <StyleInclude Source="/Styles/TabControl.axaml" />
+        <StyleInclude Source="/Styles/Expander.axaml" />
 
-        <StyleInclude Source="/Controls/GroupBox/GroupBox.axaml" />
+        <StyleInclude Source="/Styles/Sidebar.axaml" />
+
+        <StyleInclude Source="/Controls/GroupBox.axaml" />
         <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
-        <StyleInclude Source="/Controls/HexBox/HexBox.axaml" />
-
+        <StyleInclude Source="/Controls/HexBox.axaml" />
+        
         <Style Selector="ItemsPresenter">
             <Setter Property="(KeyboardNavigation.TabNavigation)"
                     Value="Continue" />
         </Style>
 
+        <Style Selector=":is(TemplatedControl)">
+            <Setter Property="CornerRadius"
+                    Value="0" />
+        </Style>
+
         <Style Selector="Label.caption">
-            <Setter Property="FontWeight"
-                    Value="Normal" />
             <Setter Property="Margin"
                     Value="0,5,20,5" />
         </Style>
@@ -77,32 +81,6 @@
                     Value="0" />
             <Setter Property="HorizontalContentAlignment"
                     Value="Stretch" />
-        </Style>
-
-        <Style Selector="Border.Badge">
-            <Setter Property="CornerRadius"
-                    Value="5" />
-            <Setter Property="Margin"
-                    Value="3" />
-        </Style>
-
-        <Style Selector="Border.Badge > TextBlock">
-            <Setter Property="FontSize"
-                    Value="10" />
-            <Setter Property="Margin"
-                    Value="5,2" />
-            <Setter Property="Foreground"
-                    Value="Black" />
-        </Style>
-
-        <Style Selector="Border.BadgeLength">
-            <Setter Property="Background"
-                    Value="Gold" />
-        </Style>
-
-        <Style Selector="Border.BadgeRetained">
-            <Setter Property="Background"
-                    Value="HotPink" />
         </Style>
 
         <Style Selector="Window">

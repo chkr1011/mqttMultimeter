@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace MQTTnet.App.Pages.PacketInspector;
 
-public class PacketView : UserControl
+public sealed class PacketView : UserControl
 {
     public PacketView()
     {

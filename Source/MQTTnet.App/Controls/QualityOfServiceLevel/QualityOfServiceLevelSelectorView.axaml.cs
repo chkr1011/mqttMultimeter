@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace MQTTnet.App.Controls;
 
-public class QualityOfServiceLevelSelectorView : UserControl
+public sealed class QualityOfServiceLevelSelectorView : UserControl
 {
     public QualityOfServiceLevelSelectorView()
     {
