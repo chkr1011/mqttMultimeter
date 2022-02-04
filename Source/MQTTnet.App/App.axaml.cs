@@ -52,8 +52,6 @@ public sealed class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            //desktop.MainWindow = new TestWindow();
-
             _mainWindow = new MainWindow
             {
                 DataContext = _container.GetInstance<MainViewModel>()
@@ -64,7 +62,7 @@ public sealed class App : Application
 
         base.OnFrameworkInitializationCompleted();
     }
-
+    
     public static void ShowException(Exception exception)
     {
         var viewModel = new ErrorBoxViewModel
