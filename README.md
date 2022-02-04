@@ -40,10 +40,24 @@ The protocol implementation is based on the _MQTTnet_ project. The application u
 
 ## Screenshots
 
-### Inflight queue
+### Inflight Page
 
 <p align="center">
-<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/AppScreen1.png?raw=true">
+<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/InflightPage.png?raw=true">
+</p>
+
+### Connection Page
+
+<p align="center">
+<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/ConnectionPage.png?raw=true">
+<br/>
+<br/>
+</p>
+
+### Packet Inspection Page
+
+<p align="center">
+<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/PacketInspectionPage.png?raw=true">
 <br/>
 <br/>
 </p>
