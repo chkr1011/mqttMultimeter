@@ -50,14 +50,10 @@ The protocol implementation is based on the _MQTTnet_ project. The application u
 
 <p align="center">
 <img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/ConnectPage.png?raw=true">
-<br/>
-<br/>
 </p>
 
 ### Packet Inspection Page
 
 <p align="center">
 <img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/PacketInspectionPage.png?raw=true">
-<br/>
-<br/>
 </p>
