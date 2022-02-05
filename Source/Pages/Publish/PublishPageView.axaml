@@ -1,0 +1,68 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:publish="clr-namespace:MQTTnetApp.Pages.Publish"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance publish:PublishPageViewModel}"
+             x:Class="MQTTnetApp.Pages.Publish.PublishPageView">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Pages/Publish/PublishItemListItem.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- The list of publish items. -->
+        <Grid Background="#262626">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="0"
+                        Classes="tool_bar"
+                        Margin="0">
+                <Button ToolTip.Tip="Add publish item"
+                        Classes="tool_bar_button"
+                        Command="{Binding AddItem}">
+                    <Image Source="/Assets/Icons/Add_16x.png" />
+                </Button>
+                <Button ToolTip.Tip="Remove all publish items"
+                        Classes="tool_bar_button"
+                        Command="{Binding ClearItems}">
+                    <Image Source="/Assets/Icons/ClearCollection_16x.png" />
+                </Button>
+            </StackPanel>
+
+            <ListBox Background="Transparent"
+                     ItemTemplate="{StaticResource PublishItemViewModelListItem}"
+                     Grid.Row="1"
+                     SelectedItem="{Binding SelectedItem}"
+                     Items="{Binding Items}"
+                     Grid.Column="0"
+                     x:Name="PART_Items" />
+        </Grid>
+
+        <!-- The splitter -->
+        <GridSplitter Grid.Column="1"
+                      Width="1" />
+
+        <!-- The selected item. -->
+        <ContentPresenter Margin="10"
+                          Grid.Column="2"
+                          Content="{Binding ElementName=PART_Items, Path=SelectedItem}" />
+    </Grid>
+
+</UserControl>

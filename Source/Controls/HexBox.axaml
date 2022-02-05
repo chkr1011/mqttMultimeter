@@ -1,0 +1,164 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:MQTTnetApp.Controls">
+    <Design.PreviewWith>
+        <controls:HexBox Width="300"
+                         Height="300" />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|HexBox">
+        <Setter Property="Background"
+                Value="#66000000" />
+        <Setter Property="Template">
+            <ControlTemplate TargetType="{x:Type controls:HexBox}">
+                <Border CornerRadius="{TemplateBinding CornerRadius}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <Grid RowDefinitions="*,Auto">
+
+                        <!-- The HEX content -->
+                        <TextBox IsReadOnly="True"
+                                 Name="PART_ContentTextBox"
+                                 CaretIndex="{Binding CaretIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                 AcceptsReturn="True">
+                            <TextBox.Template>
+                                <ControlTemplate>
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                                        <Grid Margin="10"
+                                              RowDefinitions="Auto,Auto"
+                                              ColumnDefinitions="Auto,Auto,Auto">
+
+                                            <!-- Horizontal ruler -->
+                                            <TextBlock Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       FontFamily="Consolas"
+                                                       FontSize="12"
+                                                       VerticalAlignment="Top"
+                                                       Margin="0,0,10,10"
+                                                       Text="00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F"
+                                                       Foreground="Gray" />
+
+                                            <TextBlock Grid.Row="0"
+                                                       Grid.Column="2"
+                                                       Margin="0,0,0,10"
+                                                       FontFamily="Consolas"
+                                                       VerticalAlignment="Top"
+                                                       FontSize="12"
+                                                       Text="Decoded Text"
+                                                       Foreground="Gray" />
+
+                                            <!-- The hex content -->
+                                            <TextPresenter x:Name="PART_TextPresenter"
+                                                           Grid.Row="1"
+                                                           Grid.Column="1"
+                                                           Margin="0,0,0,0"
+                                                           FontFamily="Consolas"
+                                                           FontSize="12"
+                                                           HorizontalAlignment="Stretch"
+                                                           SelectionStart="{TemplateBinding SelectionStart}"
+                                                           SelectionEnd="{TemplateBinding SelectionEnd}"
+                                                           TextAlignment="{TemplateBinding TextAlignment}"
+                                                           TextWrapping="{TemplateBinding TextWrapping}"
+                                                           PasswordChar="{TemplateBinding PasswordChar}"
+                                                           RevealPassword="{TemplateBinding RevealPassword}"
+                                                           SelectionBrush="{TemplateBinding SelectionBrush}"
+                                                           SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
+                                                           CaretBrush="{TemplateBinding CaretBrush}"
+                                                           CaretIndex="{TemplateBinding CaretIndex}"
+                                                           Text="{TemplateBinding Text}" />
+
+                                            <!-- Decoded text -->
+                                            <TextBlock Grid.Row="1"
+                                                       Grid.Column="2"
+                                                       FontFamily="Consolas"
+                                                       FontSize="12"
+                                                       VerticalAlignment="Top"
+                                                       Text="{Binding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:HexBox}}}"
+                                                       x:Name="PART_PreviewTextBlock"
+                                                       Foreground="Gray" />
+                                        </Grid>
+                                    </ScrollViewer>
+
+                                </ControlTemplate>
+                            </TextBox.Template>
+                        </TextBox>
+
+                        <!-- The parsed values -->
+                        <UniformGrid Columns="4"
+                                     Margin="10,10,0,10"
+                                     Grid.Row="1">
+                            <UniformGrid.Styles>
+                                <Style Selector="Label">
+                                    <Setter Property="Margin"
+                                            Value="0,0,10,0" />
+                                </Style>
+                                <Style Selector="TextBox">
+                                    <Setter Property="Margin"
+                                            Value="0,0,10,0" />
+                                    <Setter Property="IsReadOnly"
+                                            Value="True" />
+                                    <Setter Property="BorderThickness"
+                                            Value="0" />
+                                    <Setter Property="FontFamily"
+                                            Value="Consolas" />
+                                    <Setter Property="CornerRadius"
+                                            Value="0" />
+                                </Style>
+                            </UniformGrid.Styles>
+
+                            <Label Content="Offset" />
+                            <TextBox x:Name="ValueOffset" />
+
+                            <Label Content="Remaining" />
+                            <TextBox x:Name="ValueRemaining" />
+
+                            <Label Content="8 bit Binary" />
+                            <TextBox x:Name="Value8Bit" />
+
+                            <Label Content="Boolean" />
+                            <TextBox x:Name="ValueBoolean" />
+
+                            <Label Content="Int8" />
+                            <TextBox x:Name="ValueInt8" />
+
+                            <Label Content="Int16" />
+                            <TextBox x:Name="ValueInt16" />
+
+                            <Label Content="UInt16" />
+                            <TextBox x:Name="ValueUInt16" />
+
+                            <Label Content="Int32" />
+                            <TextBox x:Name="ValueInt32" />
+
+                            <Label Content="UInt32" />
+                            <TextBox x:Name="ValueUInt32" />
+
+                            <Label Content="Int64" />
+                            <TextBox x:Name="ValueInt64" />
+
+                            <Label Content="UInt64" />
+                            <TextBox x:Name="ValueUInt64" />
+
+                            <Label Content="ASCII" />
+                            <TextBox x:Name="ValueAscii" />
+
+                            <Label Content="UTF-8" />
+                            <TextBox x:Name="ValueUTF8" />
+
+                            <Label Content="UTF-32" />
+                            <TextBox x:Name="ValueUTF32" />
+
+                            <Label Content="Float" />
+                            <TextBox x:Name="ValueFloat" />
+
+                            <Label Content="Double" />
+                            <TextBox x:Name="ValueDouble" />
+                        </UniformGrid>
+
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

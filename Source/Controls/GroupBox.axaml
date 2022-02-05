@@ -1,0 +1,49 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:MQTTnetApp.Controls">
+    <Design.PreviewWith>
+        <controls:GroupBox Header="Header"
+                           Width="200">
+            <TextBlock Text="Content" />
+        </controls:GroupBox>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|GroupBox">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="Auto,*"
+                      RowDefinitions="Auto,*">
+
+                    <Label Grid.Row="0"
+                           Padding="0"
+                           Grid.Column="0"
+                           Foreground="White"
+                           Content="{TemplateBinding Header}">
+                        <Label.Styles>
+                            <Style Selector="AccessText">
+                                <!-- <Setter Property="FontSize" Value="14"></Setter> -->
+                            </Style>
+                        </Label.Styles>
+                    </Label>
+
+                    <!-- The divider line -->
+                    <Rectangle Grid.Row="0"
+                               Grid.Column="1"
+                               Margin="10,0,0,0"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Center"
+                               Height="2"
+                               Fill="{DynamicResource SystemAccentColor}" />
+
+                    <!-- The content. -->
+                    <ContentPresenter Grid.Column="0"
+                                      Grid.ColumnSpan="2"
+                                      Margin="0,10,0,0"
+                                      Content="{TemplateBinding Content}"
+                                      Grid.Row="1" />
+                </Grid>
+
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
