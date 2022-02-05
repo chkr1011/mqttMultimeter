@@ -39,10 +39,10 @@ public sealed class AppUpdateService
                 {
                     var request = new HttpRequestMessage
                     {
-                        RequestUri = new Uri("https://api.github.com/repos/chkr1011/MQTTnet.App/releases")
+                        RequestUri = new Uri("https://api.github.com/repos/chkr1011/MQTTnetApp/releases")
                     };
 
-                    request.Headers.UserAgent.ParseAdd("MQTTnet.App");
+                    request.Headers.UserAgent.ParseAdd("MQTTnetApp");
 
                     var response = await httpClient.SendAsync(request).ConfigureAwait(false);
                     var releasesJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

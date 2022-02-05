@@ -34,22 +34,22 @@ public sealed class InfoPageView : UserControl
 
     void OnLatestVersionClicked(object? sender, PointerPressedEventArgs e)
     {
-        Launch("https://github.com/chkr1011/MQTTnet.App/releases");
+        Launch("https://github.com/chkr1011/MQTTnetApp/releases");
     }
 
     void OnOpenHomepage(object? sender, RoutedEventArgs e)
     {
-        Launch("https://github.com/chkr1011/MQTTnet.App");
+        Launch("https://github.com/chkr1011/MQTTnetApp");
     }
 
     void OnReportBug(object? sender, RoutedEventArgs e)
     {
-        Launch("https://github.com/chkr1011/MQTTnet.App/issues/new");
+        Launch("https://github.com/chkr1011/MQTTnetApp/issues/new");
     }
 
     void OnRequestFeature(object? sender, RoutedEventArgs e)
     {
-        Launch("https://github.com/chkr1011/MQTTnet.App/issues/new");
+        Launch("https://github.com/chkr1011/MQTTnetApp/issues/new");
     }
 
     void OpenUrlFromButtonContent(object? sender, RoutedEventArgs e)
@@ -60,7 +60,7 @@ public sealed class InfoPageView : UserControl
     static string ReadEmbeddedMarkdown()
     {
         var assembly = Assembly.GetExecutingAssembly();
-        using var stream = assembly.GetManifestResourceStream("MQTTnet.App.Pages.Info.Readme.md");
+        using var stream = assembly.GetManifestResourceStream("MQTTnetApp.Pages.Info.Readme.md");
 
         if (stream == null)
         {
