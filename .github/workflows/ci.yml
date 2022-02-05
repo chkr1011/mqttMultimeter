@@ -158,7 +158,7 @@ jobs:
           draft: true
           tag_name: v${{ env.VERSION }}
           generate_release_notes: true
-          discussion_category_name: Announcements
+          discussion_category_name: announcements
           files: |
             ${{ github.workspace }}/MQTTnetApp-WindowsX86.zip
             ${{ github.workspace }}/MQTTnetApp-WindowsX64.zip
