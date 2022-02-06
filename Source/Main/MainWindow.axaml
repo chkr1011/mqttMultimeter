@@ -85,6 +85,15 @@
                         </Grid>
                     </TabItem.Header>
                 </TabItem>
+                
+                <!-- Log -->
+                <TabItem Content="{Binding LogPage}"
+                         ToolTip.Tip="Log">
+                    <TabItem.Header>
+                        <Image Source="/Assets/Icons/Log_16x.png"
+                               Width="16" />
+                    </TabItem.Header>
+                </TabItem>
 
                 <!-- Info -->
                 <TabItem Content="{Binding InfoPage}"
