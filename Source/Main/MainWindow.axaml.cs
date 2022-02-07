@@ -35,7 +35,7 @@ public sealed class MainWindow : Window
         {
             return;
         }
-        
+
         viewModel.InflightPage.SwitchToPublishRequested += (_, _) =>
         {
             var sidebar = this.FindControl<TabControl>("Sidebar");

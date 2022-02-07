@@ -11,7 +11,7 @@ public sealed class InflightPageItemViewModel
     {
         OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
     }
-    
+
     public long Length { get; init; }
 
     public int Number { get; init; }

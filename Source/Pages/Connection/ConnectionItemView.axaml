@@ -12,47 +12,46 @@
     <Grid ColumnDefinitions="*, Auto"
           RowDefinitions="Auto,*,Auto,Auto">
 
-        <!-- The name -->
-        <StackPanel Grid.Row="0">
-            <TextBox Text="{Binding Name}"
-                     BorderThickness="0"
-                     FontSize="17"
-                     Margin="0,0,0,10"
-                     Padding="0"
-                     Background="Transparent" />
-        </StackPanel>
+        <!-- The name and buttons -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,Auto">
+            <TextBox Grid.Column="0"
+                     Classes="page_item_name"
+                     Text="{Binding Name}" />
+
+            <!-- The buttons -->
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <StackPanel.Styles>
+                    <Style Selector="Button">
+                        <Setter Property="Background"
+                                Value="{DynamicResource SystemAccentColor}" />
+                    </Style>
+                </StackPanel.Styles>
+                <Button IsDefault="True"
+                        Classes="image_button"
+                        Margin="0,0,10,0"
+                        Command="{Binding Connect}">
+                    <StackPanel>
+                        <Image Source="/Assets/Icons/Connect_16x.png" />
+                        <TextBlock Text="Connect" />
+                    </StackPanel>
+                </Button>
+                <Button Classes="image_button"
+                        Command="{Binding Disconnect}">
+                    <StackPanel>
+                        <Image Source="/Assets/Icons/Disconnect_16x.png" />
+                        <TextBlock Text="Disconnect" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
 
         <controls:GroupBox Grid.Row="1"
                            Grid.Column="0"
                            Header="Connection options">
             <StackPanel Grid.IsSharedSizeScope="True">
-
-                <!-- The buttons area-->
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Right">
-                    <StackPanel.Styles>
-                        <Style Selector="Button">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource SystemAccentColor}" />
-                        </Style>
-                    </StackPanel.Styles>
-                    <Button IsDefault="True"
-                            Classes="image_button"
-                            Margin="0,0,10,0"
-                            Command="{Binding Connect}">
-                        <StackPanel>
-                            <Image Source="/Assets/Icons/Connect_16x.png" />
-                            <TextBlock Text="Connect" />
-                        </StackPanel>
-                    </Button>
-                    <Button Classes="image_button"
-                            Command="{Binding Disconnect}">
-                        <StackPanel>
-                            <Image Source="/Assets/Icons/Disconnect_16x.png" />
-                            <TextBlock Text="Disconnect" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
 
                 <!-- The connection options -->
                 <connection:ConnectionOptionsView Margin="0,10,0,0" />

@@ -20,7 +20,7 @@
         <Prefer32Bit>false</Prefer32Bit>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DebugType>none</DebugType>
+        <DebugType>none</DebugType>
     </PropertyGroup>
     <ItemGroup>
         <Folder Include="Configuration\Service" />

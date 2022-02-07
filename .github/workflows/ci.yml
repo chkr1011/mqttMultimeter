@@ -84,7 +84,7 @@ jobs:
           path: ${{ github.workspace }}/MQTTnetApp-WindowsARM64.zip
 
       - name: Build osx-x64
-        run: dotnet publish Source/MQTTnetApp.csproj -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/MQTTnetApp.csproj -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=false -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip osx-x64 build
         uses: vimtor/action-zip@v1

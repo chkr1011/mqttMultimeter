@@ -11,16 +11,20 @@
         <StyleInclude Source="/Styles/ToolBar.axaml" />
         <StyleInclude Source="/Styles/StatusBar.axaml" />
         <StyleInclude Source="/Styles/DataGrid.axaml" />
-        <StyleInclude Source="/Styles/Text.axaml" />
         <StyleInclude Source="/Styles/TabControl.axaml" />
         <StyleInclude Source="/Styles/Expander.axaml" />
-
+        <StyleInclude Source="/Styles/NumericUpDown.axaml" />
+        <StyleInclude Source="/Styles/ComboBox.axaml" />
+        
+        <StyleInclude Source="/Styles/Text.axaml" />
+        
+        <StyleInclude Source="/Styles/Components.axaml" />
         <StyleInclude Source="/Styles/Sidebar.axaml" />
 
         <StyleInclude Source="/Controls/GroupBox.axaml" />
         <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
         <StyleInclude Source="/Controls/HexBox.axaml" />
-        
+
         <Style Selector="ItemsPresenter">
             <Setter Property="(KeyboardNavigation.TabNavigation)"
                     Value="Continue" />

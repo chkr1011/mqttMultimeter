@@ -34,6 +34,10 @@
                 Value="12" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
+        <Setter Property="Padding"
+                Value="3" />
+        <Setter Property="MinHeight"
+                Value="26" />
     </Style>
 
     <Style Selector="NumericUpDown">

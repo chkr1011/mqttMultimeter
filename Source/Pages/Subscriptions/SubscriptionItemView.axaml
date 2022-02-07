@@ -11,14 +11,37 @@
              x:Class="MQTTnetApp.Pages.Subscriptions.SubscriptionItemView">
     <Grid RowDefinitions="Auto,2*,Auto">
 
-        <StackPanel Grid.Row="0">
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,Auto">
             <TextBox Text="{Binding Name}"
-                     BorderThickness="0"
-                     FontSize="17"
-                     Margin="0,0,0,10"
-                     Padding="0"
-                     Background="Transparent" />
-        </StackPanel>
+                     Classes="page_item_name" />
+
+            <!-- The buttons -->
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal">
+                <Button Background="{DynamicResource SystemAccentColor}"
+                        MinWidth="100"
+                        Classes="image_button"
+                        Command="{Binding Subscribe}"
+                        IsDefault="True">
+                    <StackPanel>
+                        <Image Source="/Assets/Icons/Filter_16x.png" />
+                        <TextBlock Text="Subscribe" />
+                    </StackPanel>
+                </Button>
+                <Button Background="{DynamicResource SystemAccentColor}"
+                        MinWidth="100"
+                        Margin="10,0,0,0"
+                        Classes="image_button"
+                        Command="{Binding Unsubscribe}"
+                        IsDefault="True">
+                    <StackPanel>
+                        <Image Source="/Assets/Icons/DeleteFilter_16x.png" />
+                        <TextBlock Text="Unsubscribe" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
 
         <!-- The request -->
         <controls:GroupBox Header="Request"
@@ -35,34 +58,6 @@
                              VerticalAlignment="Center"
                              Classes="code_text"
                              Text="{Binding Topic}" />
-
-                    <!-- The buttons -->
-                    <StackPanel Grid.Column="1"
-                                Orientation="Horizontal">
-                        <Button Background="{DynamicResource SystemAccentColor}"
-                                Margin="10,0,0,0"
-                                MinWidth="100"
-                                Classes="image_button"
-                                Command="{Binding Subscribe}"
-                                IsDefault="True">
-                            <StackPanel>
-                                <Image Source="/Assets/Icons/Filter_16x.png" />
-                                <TextBlock Text="Subscribe" />
-                            </StackPanel>
-                        </Button>
-                        <Button Background="{DynamicResource SystemAccentColor}"
-                                MinWidth="100"
-                                Margin="10,0,0,0"
-                                Classes="image_button"
-                                Command="{Binding Unsubscribe}"
-                                IsDefault="True">
-                            <StackPanel>
-                                <Image Source="/Assets/Icons/DeleteFilter_16x.png" />
-                                <TextBlock Text="Unsubscribe" />
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-
                 </Grid>
 
                 <Grid Grid.Row="1"
