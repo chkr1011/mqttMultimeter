@@ -73,7 +73,7 @@ public sealed class InflightPageViewModel : BaseViewModel
         var publishItem = new PublishItemViewModel(_publishPage)
         {
             Name = $"Repeat '{item.Topic}'",
-            ContentType = item.Source.ContentType,
+            ContentType = item.ContentType,
             Topic = item.Topic,
             Payload = item.PayloadPreview
         };
@@ -104,6 +104,8 @@ public sealed class InflightPageViewModel : BaseViewModel
             Length = applicationMessage.Payload?.Length ?? 0L,
             Retained = applicationMessage.Retain,
             Source = applicationMessage,
+            Payload = applicationMessage.Payload ?? Array.Empty<byte>(),
+            ContentType = applicationMessage.ContentType,
             QualityOfServiceLevel = applicationMessage.QualityOfServiceLevel,
             UserProperties =
             {

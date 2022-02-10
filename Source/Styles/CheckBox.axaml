@@ -6,20 +6,14 @@
         </Border>
     </Design.PreviewWith>
 
-    <Styles.Resources>
-        <x:Double x:Key="ComboBoxMinHeight">26</x:Double>
-    </Styles.Resources>
-
-    <Style Selector="ComboBox">
-        <Setter Property="Padding"
-                Value="3" />
+    <Style Selector="CheckBox">
         <Setter Property="MinHeight"
-                Value="16" />
+                Value="26" />
     </Style>
 
-    <Style Selector="ComboBox Viewbox">
+    <Style Selector="RadioButton">
         <Setter Property="MinHeight"
-                Value="16" />
+                Value="26" />
     </Style>
 
 </Styles>

@@ -59,6 +59,8 @@
                     <Style Selector="Button">
                         <Setter Property="Margin"
                                 Value="0,0,10,0" />
+                        <Setter Property="Width"
+                                Value="125" />
                     </Style>
                     <Style Selector="Button TextBlock">
                         <Setter Property="HorizontalAlignment"
@@ -66,27 +68,23 @@
                         <Setter Property="Margin"
                                 Value="0,5,0,0" />
                     </Style>
-                    <Style Selector="Button Image">
-                        <Setter Property="Width"
-                                Value="110" />
-                    </Style>
                 </StackPanel.Styles>
 
                 <Button Click="OnOpenHomepage">
                     <StackPanel>
-                        <Image Source="/Assets/Icons/Home_16x.png" />
+                        <PathIcon Data="{StaticResource home_regular}" />
                         <TextBlock Text="Homepage" />
                     </StackPanel>
                 </Button>
                 <Button Click="OnReportBug">
                     <StackPanel>
-                        <Image Source="/Assets/Icons/NewBug_16x.png" />
+                        <PathIcon Data="{StaticResource bug_regular}" />
                         <TextBlock Text="Report Bug" />
                     </StackPanel>
                 </Button>
                 <Button Click="OnRequestFeature">
                     <StackPanel>
-                        <Image Source="/Assets/Icons/NewPullRequest_16x.png" />
+                        <PathIcon Data="{StaticResource add_square_regular}" />
                         <TextBlock Text="Request Feature" />
                     </StackPanel>
                 </Button>

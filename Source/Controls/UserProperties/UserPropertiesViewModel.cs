@@ -29,7 +29,7 @@ public sealed class UserPropertiesViewModel : BaseViewModel
         Items.Clear();
     }
 
-    public void Load(List<MqttUserProperty>? userProperties)
+    public void Load(IReadOnlyCollection<MqttUserProperty>? userProperties)
     {
         Items.Clear();
 

@@ -1,16 +1,13 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Design.PreviewWith>
-        <Button Classes="image_button"
-                Background="Green">
-            <StackPanel>
-                <Image Source="/Assets/Icons/RepeatButton_16x.png" />
-                <TextBlock Text="Repeat" />
-            </StackPanel>
-        </Button>
-    </Design.PreviewWith>
+    <Design.PreviewWith></Design.PreviewWith>
 
     <Style Selector="Button">
+        <Setter Property="BorderThickness"
+                Value="0" />
+    </Style>
+
+    <Style Selector="ToggleButton">
         <Setter Property="BorderThickness"
                 Value="0" />
     </Style>

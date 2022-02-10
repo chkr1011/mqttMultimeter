@@ -77,7 +77,6 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-
                     <!-- The timeouts -->
                     <Label Grid.Column="0"
                            Classes="caption"
@@ -141,7 +140,6 @@
                     <CheckBox Classes="value"
                               Grid.Column="4"
                               IsChecked="{Binding SessionOptions.RequestResponseInformation}" />
-
 
                 </controls:AutoGrid>
             </Expander>

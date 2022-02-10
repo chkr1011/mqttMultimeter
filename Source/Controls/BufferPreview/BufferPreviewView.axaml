@@ -15,7 +15,6 @@
                 <Grid RowDefinitions="Auto,*">
 
                     <!-- Options -->
-
                     <Grid Classes="tool_bar"
                           ColumnDefinitions="Auto,*,Auto">
                         <StackPanel Orientation="Horizontal"
@@ -26,16 +25,16 @@
                                           IsChecked="True"
                                           IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
                                           x:Name="TextWrappingCheckBox">
-                                <Image Source="/Assets/Icons/WordWrap_16x.png"
-                                       ToolTip.Tip="Toggle word wrap" />
+                                <PathIcon Data="{StaticResource text_wrap_regular}"
+                                          ToolTip.Tip="Toggle word wrap" />
                             </ToggleButton>
 
                             <!-- The Copy button -->
                             <Button Classes="tool_bar_button"
                                     IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
                                     x:Name="CopyToClipboardButton">
-                                <Image Source="/Assets/Icons/Copy_16x.png"
-                                       ToolTip.Tip="Copy to clipboard" />
+                                <PathIcon Data="{StaticResource copy_regular}"
+                                          ToolTip.Tip="Copy to clipboard" />
                             </Button>
                         </StackPanel>
 
@@ -47,6 +46,7 @@
                                    Margin="0,0,10,0" />
                             <ComboBox Classes="tool_bar_combo_box"
                                       MinWidth="100"
+                                      VerticalAlignment="Stretch"
                                       Items="{Binding Path=Formats, RelativeSource={RelativeSource TemplatedParent}}"
                                       SelectedItem="{Binding Path=SelectedFormat, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                                 <ComboBox.ItemTemplate>
@@ -57,7 +57,6 @@
                             </ComboBox>
                         </StackPanel>
                     </Grid>
-
 
                     <!-- The string preview -->
                     <TextBox Grid.Row="1"
