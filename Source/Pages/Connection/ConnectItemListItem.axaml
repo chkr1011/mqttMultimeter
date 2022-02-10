@@ -28,9 +28,10 @@
                     Margin="10,0,0,0"
                     Classes="tool_bar_button"
                     ToolTip.Tip="Delete connect item"
+                    IsVisible="{Binding Path=IsPointerOver, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"
                     Command="{Binding OwnerPage.RemoveItem}"
                     CommandParameter="{Binding .}">
-                <Image Source="/Assets/Icons/Remove_16x.png" />
+                <PathIcon Data="{StaticResource delete_regular}" />
             </Button>
         </Grid>
     </DataTemplate>

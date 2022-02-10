@@ -17,20 +17,15 @@
             <!-- The Enable/Disable button -->
             <ToggleButton Classes="tool_bar_button"
                           IsChecked="{Binding IsRecordingEnabled}"
-                          ToolTip.Tip="Enable/Disable recording">
-                <Grid>
-                    <Image Source="/Assets/Icons/BreakpointEnabled_16x.png"
-                           IsVisible="{Binding IsRecordingEnabled}" />
-                    <Image Source="/Assets/Icons/BreakpointDisabled_16x.png"
-                           IsVisible="{Binding !IsRecordingEnabled}" />
-                </Grid>
+                          ToolTip.Tip="Enable/Disable inflight recording">
+                <PathIcon Data="{StaticResource record_regular}" />
             </ToggleButton>
 
-            <!-- The clear items button -->
+            <!-- The clear items button. -->
             <Button Classes="tool_bar_button"
-                    Command="{Binding ClearItems}"
-                    ToolTip.Tip="Clear all application messages.">
-                <Image Source="/Assets/Icons/ClearCollection_16x.png" />
+                    ToolTip.Tip="Remove all inflight items."
+                    Command="{Binding ClearItems}">
+                <PathIcon Data="{StaticResource delete_regular}" />
             </Button>
 
             <!-- The topic filter text -->

@@ -35,8 +35,7 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
     {
         var newItem = new SubscriptionItemViewModel(this)
         {
-            Name = "Untitled",
-            Topic = "#"
+            Name = "Untitled"
         };
 
         newItem.UserProperties.AddItem();

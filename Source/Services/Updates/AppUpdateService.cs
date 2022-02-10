@@ -15,7 +15,7 @@ public sealed class AppUpdateService
         var productVersion = ((AssemblyInformationalVersionAttribute?)attribute)?.InformationalVersion;
         Version.TryParse(productVersion, out var assemblyProductVersion);
 
-        CurrentVersion = assemblyProductVersion;
+        CurrentVersion = assemblyProductVersion ?? new Version(0, 0, 0, 0);
     }
 
     public Version CurrentVersion { get; }

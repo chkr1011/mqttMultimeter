@@ -1,6 +1,13 @@
 <Application x:Class="MQTTnetApp.App"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Assets/VectorIcons.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
     <Application.Styles>
         <FluentTheme Mode="Dark" />
         <StyleInclude Source="avares://AvaloniaEdit/AvaloniaEdit.xaml" />
@@ -11,16 +18,21 @@
         <StyleInclude Source="/Styles/ToolBar.axaml" />
         <StyleInclude Source="/Styles/StatusBar.axaml" />
         <StyleInclude Source="/Styles/DataGrid.axaml" />
-        <StyleInclude Source="/Styles/Text.axaml" />
         <StyleInclude Source="/Styles/TabControl.axaml" />
         <StyleInclude Source="/Styles/Expander.axaml" />
+        <StyleInclude Source="/Styles/NumericUpDown.axaml" />
+        <StyleInclude Source="/Styles/ComboBox.axaml" />
+        <StyleInclude Source="/Styles/CheckBox.axaml" />
 
+        <StyleInclude Source="/Styles/Text.axaml" />
+
+        <StyleInclude Source="/Styles/Components.axaml" />
         <StyleInclude Source="/Styles/Sidebar.axaml" />
 
         <StyleInclude Source="/Controls/GroupBox.axaml" />
         <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
         <StyleInclude Source="/Controls/HexBox.axaml" />
-        
+
         <Style Selector="ItemsPresenter">
             <Setter Property="(KeyboardNavigation.TabNavigation)"
                     Value="Continue" />
@@ -87,6 +99,5 @@
             <Setter Property="Background"
                     Value="#212121" />
         </Style>
-
     </Application.Styles>
 </Application>

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:main="clr-namespace:MQTTnetApp.Main"
-        Title="MQTTnet.App"
+        Title="MQTTnetApp"
         d:DataContext="{d:DesignInstance main:MainViewModel}"
         d:DesignHeight="450"
         d:DesignWidth="800"
@@ -42,8 +42,7 @@
                 <TabItem Content="{Binding ConnectionPage}"
                          ToolTip.Tip="Connect">
                     <TabItem.Header>
-                        <Image Source="/Assets/Icons/LocalServer_16x.png"
-                               Width="16" />
+                        <PathIcon Data="{StaticResource globe_regular}" />
                     </TabItem.Header>
                 </TabItem>
 
@@ -51,9 +50,7 @@
                 <TabItem Content="{Binding PublishPage}"
                          ToolTip.Tip="Publish">
                     <TabItem.Header>
-                        <Image Source="/Assets/Icons/Send_16x.png"
-                               Width="16" />
-
+                        <PathIcon Data="{StaticResource send_regular}" />
                     </TabItem.Header>
                 </TabItem>
 
@@ -61,8 +58,7 @@
                 <TabItem Content="{Binding SubscriptionsPage}"
                          ToolTip.Tip="Subscribe">
                     <TabItem.Header>
-                        <Image Source="/Assets/Icons/Filter_16x.png"
-                               Width="16" />
+                        <PathIcon Data="{StaticResource filter_regular}" />
                     </TabItem.Header>
                 </TabItem>
 
@@ -70,8 +66,7 @@
                 <TabItem Content="{Binding InflightPage}"
                          ToolTip.Tip="Inflight">
                     <TabItem.Header>
-                        <Image Source="/Assets/Icons/MessageQueue_16x.png"
-                               Width="16" />
+                        <PathIcon Data="{StaticResource apps_list_regular}" />
                     </TabItem.Header>
                 </TabItem>
 
@@ -79,10 +74,7 @@
                 <TabItem Content="{Binding PacketInspectorPage}"
                          ToolTip.Tip="Packet Inspection">
                     <TabItem.Header>
-                        <Grid>
-                            <Image Source="/Assets/Icons/Analysis_16x.png"
-                                   Width="16" />
-                        </Grid>
+                        <PathIcon Data="{StaticResource arrow_swap_regular}" />
                     </TabItem.Header>
                 </TabItem>
                 
@@ -99,8 +91,7 @@
                 <TabItem Content="{Binding InfoPage}"
                          ToolTip.Tip="Info">
                     <TabItem.Header>
-                        <Image Source="/Assets/Icons/InformationSymbol_16x.png"
-                               Width="16" />
+                        <PathIcon Data="{StaticResource info_regular}" />
                     </TabItem.Header>
                 </TabItem>
             </TabControl.Items>

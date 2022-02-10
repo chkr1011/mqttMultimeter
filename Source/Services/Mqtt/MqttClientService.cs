@@ -12,13 +12,13 @@ using MQTTnetApp.Pages.Subscriptions;
 
 namespace MQTTnetApp.Services.Mqtt;
 
-public sealed class MqttClientService : IMqttPacketInspector
+public sealed class MqttClientService
 {
     readonly AsyncEvent<MqttApplicationMessageReceivedEventArgs> _applicationMessageReceivedEvent = new();
-    readonly List<Action<ProcessMqttPacketContext>> _messageInspectors = new();
+    readonly List<Action<InspectMqttPacketEventArgs>> _messageInspectors = new();
     readonly MqttNetEventLogger _mqttNetEventLogger = new();
 
-    MqttClient _mqttClient;
+    MqttClient? _mqttClient;
 
     public MqttClientService()
     {
@@ -86,11 +86,8 @@ public sealed class MqttClientService : IMqttPacketInspector
             });
         }
 
-        // TODO: To event.
-        clientOptionsBuilder.WithPacketInspector(this);
-
         _mqttClient.ApplicationMessageReceivedAsync += OnApplicationMessageReceived;
-
+        _mqttClient.InspectPackage += OnInspectPackage;
         _mqttClient.DisconnectedAsync += OnDisconnected;
 
         var result = await _mqttClient.ConnectAsync(clientOptionsBuilder.Build());
@@ -103,14 +100,6 @@ public sealed class MqttClientService : IMqttPacketInspector
         ThrowIfNotConnected();
 
         return _mqttClient.DisconnectAsync();
-    }
-
-    public void ProcessMqttPacket(ProcessMqttPacketContext context)
-    {
-        foreach (var messageInspector in _messageInspectors)
-        {
-            messageInspector.Invoke(context);
-        }
     }
 
     public Task<MqttClientPublishResult> Publish(PublishItemViewModel item)
@@ -148,7 +137,7 @@ public sealed class MqttClientService : IMqttPacketInspector
         return _mqttClient!.PublishAsync(applicationMessageBuilder.Build());
     }
 
-    public void RegisterMessageInspectorHandler(Action<ProcessMqttPacketContext> handler)
+    public void RegisterMessageInspectorHandler(Action<InspectMqttPacketEventArgs> handler)
     {
         if (handler == null)
         {
@@ -217,6 +206,16 @@ public sealed class MqttClientService : IMqttPacketInspector
             //arg.Reason
         }
 
+        return Task.CompletedTask;
+    }
+
+    Task OnInspectPackage(InspectMqttPacketEventArgs eventArgs)
+    {
+        foreach (var messageInspector in _messageInspectors)
+        {
+            messageInspector.Invoke(eventArgs);
+        }
+        
         return Task.CompletedTask;
     }
 

@@ -56,13 +56,13 @@ public sealed class App : Application
             {
                 DataContext = _container.GetInstance<MainViewModel>()
             };
-            
+
             desktop.MainWindow = _mainWindow;
         }
 
         base.OnFrameworkInitializationCompleted();
     }
-    
+
     public static void ShowException(Exception exception)
     {
         var viewModel = new ErrorBoxViewModel

@@ -233,7 +233,7 @@ public sealed class BufferInspectorView : TemplatedControl
             SelectedFormat = Formats.FirstOrDefault();
         }
 
-        SelectedFormat = Formats.FirstOrDefault(f =>  string.Equals(f.Name, SelectedFormatName));
+        SelectedFormat = Formats.FirstOrDefault(f => string.Equals(f.Name, SelectedFormatName));
 
         if (SelectedFormat == null)
         {

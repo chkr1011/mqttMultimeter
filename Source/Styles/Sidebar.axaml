@@ -69,8 +69,6 @@
     <Style Selector="TabControl.sidebar > TabItem:pointerover /template/ Border#PART_LayoutRoot">
         <Setter Property="Background"
                 Value="{DynamicResource SystemAccentColorLight1}" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource SystemAccentColorLight1}" />
     </Style>
 
     <Style Selector="TabControl.sidebar > TabItem /template/ ContentPresenter#PART_ContentPresenter">

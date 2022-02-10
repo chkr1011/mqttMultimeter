@@ -19,18 +19,14 @@
             <ToggleButton Classes="tool_bar_button"
                           IsChecked="{Binding IsRecordingEnabled}"
                           ToolTip.Tip="Enable/Disable recording">
-                <Grid>
-                    <Image Source="/Assets/Icons/BreakpointEnabled_16x.png"
-                           IsVisible="{Binding IsRecordingEnabled}" />
-                    <Image Source="/Assets/Icons/BreakpointDisabled_16x.png"
-                           IsVisible="{Binding !IsRecordingEnabled}" />
-                </Grid>
+                <PathIcon Data="{StaticResource record_regular}" />
             </ToggleButton>
 
             <!-- The clear items button. -->
             <Button Classes="tool_bar_button"
+                    ToolTip.Tip="Remove all packet items."
                     Command="{Binding ClearItems}">
-                <Image Source="/Assets/Icons/ClearCollection_16x.png" />
+                <PathIcon Data="{StaticResource delete_regular}" />
             </Button>
         </StackPanel>
 
@@ -64,16 +60,14 @@
                                 <Grid Margin="10,0,0,0">
                                     <StackPanel Orientation="Horizontal"
                                                 IsVisible="{Binding IsInbound}">
-                                        <Image Width="16"
-                                               Source="/Assets/Icons/Download_16x.png" />
+                                        <PathIcon Data="{StaticResource arrow_download_regular}" />
                                         <TextBlock Margin="10,0"
                                                    Classes="code_text"
                                                    Text="Inbound" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal"
                                                 IsVisible="{Binding !IsInbound}">
-                                        <Image Width="16"
-                                               Source="/Assets/Icons/Upload_16x.png" />
+                                        <PathIcon Data="{StaticResource arrow_upload_regular}" />
                                         <TextBlock Margin="10,0"
                                                    Classes="code_text"
                                                    Text="Outbound" />

@@ -37,12 +37,12 @@
                 <Button ToolTip.Tip="Add publish item"
                         Classes="tool_bar_button"
                         Command="{Binding AddItem}">
-                    <Image Source="/Assets/Icons/Add_16x.png" />
+                    <PathIcon Data="{StaticResource add_square_regular}" />
                 </Button>
                 <Button ToolTip.Tip="Remove all publish items"
                         Classes="tool_bar_button"
                         Command="{Binding ClearItems}">
-                    <Image Source="/Assets/Icons/ClearCollection_16x.png" />
+                    <PathIcon Data="{StaticResource delete_regular}" />
                 </Button>
             </StackPanel>
 
