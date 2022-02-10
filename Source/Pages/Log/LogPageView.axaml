@@ -2,7 +2,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:log="clr-namespace:MQTTnetApp.Pages.Log"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
-             x:Class="MQTTnetApp.Pages.Log.LogPageView"></UserControl>
+             d:DataContext="{d:DesignInstance log:LogPageViewModel}"
+             x:Class="MQTTnetApp.Pages.Log.LogPageView">
+    <DataGrid Items="{Binding Items}">
+        <DataGrid.Styles>
+           <Style Selector="DataGridRow">
+            <Setter Property="Background" Value="LightRed"></Setter>    
+           </Style>
+        </DataGrid.Styles>
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Timestamp"
+                                Binding="{Binding Timestamp}"
+                                Width="Auto" />
+            <DataGridTextColumn Header="Level"
+                                Binding="{Binding Level}"
+                                Width="Auto" />
+            <DataGridTextColumn Header="Source"
+                                Binding="{Binding Source}"
+                                Width="Auto" />
+            <DataGridTextColumn Header="Message"
+                                Binding="{Binding Message}"
+                                Width="*" />
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

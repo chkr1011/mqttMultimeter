@@ -50,11 +50,11 @@
         <Setter Property="FontSize"
                 Value="14" />
         <Setter Property="Height"
-                Value="56" />
+                Value="58" />
         <Setter Property="Cursor"
                 Value="Hand" />
         <Setter Property="Width"
-                Value="56" />
+                Value="58" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
         <Setter Property="HorizontalContentAlignment"

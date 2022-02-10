@@ -82,8 +82,7 @@
                 <TabItem Content="{Binding LogPage}"
                          ToolTip.Tip="Log">
                     <TabItem.Header>
-                        <Image Source="/Assets/Icons/Log_16x.png"
-                               Width="16" />
+                        <PathIcon Data="{StaticResource stethoscope_regular}" />
                     </TabItem.Header>
                 </TabItem>
 
