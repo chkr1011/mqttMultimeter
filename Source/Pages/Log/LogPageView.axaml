@@ -10,9 +10,10 @@
              x:Class="MQTTnetApp.Pages.Log.LogPageView">
     <DataGrid Items="{Binding Items}">
         <DataGrid.Styles>
-           <Style Selector="DataGridRow">
-            <Setter Property="Background" Value="LightRed"></Setter>    
-           </Style>
+            <Style Selector="DataGridRow">
+                <Setter Property="Background"
+                        Value="LightRed" />
+            </Style>
         </DataGrid.Styles>
         <DataGrid.Columns>
             <DataGridTextColumn Header="Timestamp"
