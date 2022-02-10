@@ -1,0 +1,25 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <Styles.Resources>
+        <x:Double x:Key="ComboBoxMinHeight">26</x:Double>
+    </Styles.Resources>
+
+    <Style Selector="ComboBox">
+        <Setter Property="Padding"
+                Value="3" />
+        <Setter Property="MinHeight"
+                Value="16" />
+    </Style>
+
+    <Style Selector="ComboBox Viewbox">
+        <Setter Property="MinHeight"
+                Value="16" />
+    </Style>
+
+</Styles>

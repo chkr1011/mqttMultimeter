@@ -20,7 +20,7 @@
         <Prefer32Bit>false</Prefer32Bit>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DebugType>none</DebugType>
+        <DebugType>none</DebugType>
     </PropertyGroup>
     <ItemGroup>
         <Folder Include="Configuration\Service" />
@@ -37,7 +37,7 @@
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
         <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.1" />
         <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12.1" />
-        <PackageReference Include="MQTTnet" Version="4.0.0-preview3" />
+        <PackageReference Include="MQTTnet" Version="4.0.0-preview4" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="SimpleInjector" Version="5.3.3" />
     </ItemGroup>

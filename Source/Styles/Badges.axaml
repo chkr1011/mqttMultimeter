@@ -2,7 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <Border Classes="badge" Width="32" Height="32" />
+            <Border Classes="badge"
+                    Width="32"
+                    Height="32" />
         </Border>
     </Design.PreviewWith>
 
@@ -19,15 +21,15 @@
         <Setter Property="FontFamily"
                 Value="Consolas" />
     </Style>
-    
+
     <Style Selector="Border.badge_retained">
         <Setter Property="Background"
                 Value="HotPink" />
     </Style>
-    
+
     <Style Selector="Border.badge_retained > TextBlock">
         <Setter Property="Foreground"
                 Value="Black" />
     </Style>
-    
+
 </Styles>

@@ -6,6 +6,10 @@
         </Border>
     </Design.PreviewWith>
 
+    <Styles.Resources>
+        <x:Double x:Key="TextControlThemeMinHeight">26</x:Double>
+    </Styles.Resources>
+
     <Style Selector="TextBlock">
         <Setter Property="FontSize"
                 Value="12" />
@@ -34,6 +38,8 @@
                 Value="12" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
+        <Setter Property="Padding"
+                Value="3" />
     </Style>
 
     <Style Selector="NumericUpDown">

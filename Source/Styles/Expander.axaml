@@ -3,16 +3,17 @@
     <Design.PreviewWith>
         <Border Padding="20" />
     </Design.PreviewWith>
-    
+
     <Style Selector="Expander">
         <Setter Property="HorizontalContentAlignment"
                 Value="Stretch" />
         <Setter Property="Padding"
                 Value="10,0,0,0" />
     </Style>
-    
+
     <Style Selector="Expander /template/ ToggleButton#ExpanderHeader">
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border x:Name="ToggleButtonBackground">
@@ -49,5 +50,5 @@
             </ControlTemplate>
         </Setter>
     </Style>
-    
+
 </Styles>

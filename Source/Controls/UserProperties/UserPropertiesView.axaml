@@ -19,29 +19,14 @@
             <Button Classes="tool_bar_button"
                     ToolTip.Tip="Add user property"
                     Command="{Binding AddItem}">
-                <Image Source="/Assets/Icons/Add_16x.png" />
+                <PathIcon Data="{StaticResource add_square_regular}" />
             </Button>
             <Button Classes="tool_bar_button"
                     ToolTip.Tip="Remove all user properties"
                     Command="{Binding ClearItems}">
-                <Image Source="/Assets/Icons/ClearCollection_16x.png" />
+                <PathIcon Data="{StaticResource delete_regular}" />
             </Button>
         </StackPanel>
-
-        <!-- The column headers -->
-        <Grid Grid.Row="1"
-              ColumnDefinitions="*,30,2*">
-            <Grid.Styles>
-                <Style Selector="Label">
-                    <Setter Property="FontWeight"
-                            Value="Bold" />
-                </Style>
-            </Grid.Styles>
-            <Label Grid.Column="0"
-                   Content="Name" />
-            <Label Grid.Column="2"
-                   Content="Value" />
-        </Grid>
 
         <!-- The rows -->
         <ScrollViewer Grid.Row="2">
@@ -53,6 +38,7 @@
 
                             <!-- The name. -->
                             <TextBox Grid.Column="0"
+                                     Watermark="Name"
                                      IsReadOnly="{Binding Owner.IsReadOnly}"
                                      Text="{Binding Name, Mode=TwoWay}" />
 
@@ -63,6 +49,7 @@
 
                             <!-- The value. -->
                             <TextBox Grid.Column="2"
+                                     Watermark="Value"
                                      IsReadOnly="{Binding Owner.IsReadOnly}"
                                      Text="{Binding Value, Mode=TwoWay}" />
 
@@ -72,8 +59,8 @@
                                 <Button Classes="tool_bar_button"
                                         Command="{Binding Owner.RemoveItem}"
                                         CommandParameter="{Binding .}">
-                                    <Image Source="/Assets/Icons/Remove_16x.png"
-                                           ToolTip.Tip="Remove user property" />
+                                    <PathIcon Data="{StaticResource delete_regular}"
+                                              ToolTip.Tip="Remove user property" />
                                 </Button>
                             </StackPanel>
                         </Grid>

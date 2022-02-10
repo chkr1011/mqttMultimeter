@@ -12,6 +12,8 @@ public sealed class ConnectionItemViewModel : BaseViewModel
     public ConnectionItemViewModel(ConnectionPageViewModel ownerPage)
     {
         OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
+
+        SessionOptions.UserProperties.AddItem();
     }
 
     public string Name

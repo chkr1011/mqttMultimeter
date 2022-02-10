@@ -20,7 +20,7 @@ public sealed class SessionOptionsViewModel : BaseViewModel
 
     public SessionOptionsViewModel()
     {
-        ClientId = "MQTTnet.App-" + Guid.NewGuid();
+        ClientId = "MQTTnetApp-" + Guid.NewGuid();
     }
 
     public string AuthenticationData

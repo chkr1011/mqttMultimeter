@@ -79,7 +79,7 @@ public sealed class PacketInspectorPageViewModel : BaseViewModel
         }
     }
 
-    void ProcessPacket(ProcessMqttPacketContext context)
+    void ProcessPacket(InspectMqttPacketEventArgs eventArgs)
     {
         if (!_isRecordingEnabled)
         {
@@ -90,10 +90,10 @@ public sealed class PacketInspectorPageViewModel : BaseViewModel
         var viewModel = new PacketViewModel
         {
             Number = number,
-            Type = GetControlPacketType(context.Buffer[0]),
-            Data = context.Buffer,
-            Length = context.Buffer.Length,
-            IsInbound = context.Direction == MqttPacketFlowDirection.Inbound
+            Type = GetControlPacketType(eventArgs.Buffer[0]),
+            Data = eventArgs.Buffer,
+            Length = eventArgs.Buffer.Length,
+            IsInbound = eventArgs.Direction == MqttPacketFlowDirection.Inbound
         };
 
         Dispatcher.UIThread.InvokeAsync(() =>
