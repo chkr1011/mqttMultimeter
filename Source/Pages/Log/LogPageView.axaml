@@ -8,26 +8,108 @@
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance log:LogPageViewModel}"
              x:Class="MQTTnetApp.Pages.Log.LogPageView">
-    <DataGrid Items="{Binding Items}">
-        <DataGrid.Styles>
-            <Style Selector="DataGridRow">
-                <Setter Property="Background"
-                        Value="LightRed" />
-            </Style>
-        </DataGrid.Styles>
-        <DataGrid.Columns>
-            <DataGridTextColumn Header="Timestamp"
-                                Binding="{Binding Timestamp}"
-                                Width="Auto" />
-            <DataGridTextColumn Header="Level"
-                                Binding="{Binding Level}"
-                                Width="Auto" />
-            <DataGridTextColumn Header="Source"
-                                Binding="{Binding Source}"
-                                Width="Auto" />
-            <DataGridTextColumn Header="Message"
-                                Binding="{Binding Message}"
-                                Width="*" />
-        </DataGrid.Columns>
-    </DataGrid>
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- The Tool Bar -->
+        <StackPanel Grid.Column="0"
+                    Classes="tool_bar">
+
+            <!-- The Enable/Disable button -->
+            <ToggleButton Classes="tool_bar_button"
+                          IsChecked="{Binding IsRecordingEnabled}"
+                          ToolTip.Tip="Enable/Disable inflight recording">
+                <PathIcon Data="{StaticResource record_regular}" />
+            </ToggleButton>
+            
+            <!-- The clear items button -->
+            <Button Classes="tool_bar_button"
+                    ToolTip.Tip="Remove all log items."
+                    Command="{Binding ClearItems}">
+                <PathIcon Data="{StaticResource delete_regular}" />
+            </Button>
+            
+        </StackPanel>
+
+        <!-- The log items -->
+        <DataGrid Grid.Row="1"
+                  Items="{Binding Items}">
+            <DataGrid.Styles>
+                <Style Selector="TextBlock.log_information">
+                    <Setter Property="Foreground"
+                            Value="LightGreen" />
+                </Style>
+                <Style Selector="TextBlock.log_warning">
+                    <Setter Property="Foreground"
+                            Value="Yellow" />
+                </Style>
+                <Style Selector="TextBlock.log_error">
+                    <Setter Property="FontSize"
+                            Value="13" />
+                    <Setter Property="FontWeight"
+                            Value="SemiBold" />
+                    <Setter Property="Foreground"
+                            Value="Red" />
+                </Style>
+                <Style Selector="TextBlock.log_verbose">
+                    <Setter Property="Foreground"
+                            Value="WhiteSmoke" />
+                </Style>
+            </DataGrid.Styles>
+            <DataGrid.Columns>
+                <!-- Timestamp column -->
+                <DataGridTemplateColumn Header="Timestamp"
+                                        Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type log:LogItemViewModel}">
+                            <TextBlock Margin="10,0"
+                                       Classes="code_text"
+                                       Text="{Binding Timestamp}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Level column -->
+                <DataGridTemplateColumn Header="Level"
+                                        Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type log:LogItemViewModel}">
+                            <TextBlock Margin="10,0"
+                                       Classes="code_text"
+                                       Text="{Binding Level}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Source column -->
+                <DataGridTemplateColumn Header="Timestamp"
+                                        Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type log:LogItemViewModel}">
+                            <TextBlock Margin="10,0,0,0"
+                                       Classes="code_text"
+                                       Text="{Binding Source}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Message column -->
+                <DataGridTemplateColumn Header="Message"
+                                        Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type log:LogItemViewModel}">
+                            <TextBlock Margin="12,0"
+                                       Classes="code_text"
+                                       ToolTip.Tip="{Binding Exception}"
+                                       Classes.log_information="{Binding IsInformation}"
+                                       Classes.log_warning="{Binding IsWarning}"
+                                       Classes.log_error="{Binding IsError}"
+                                       Classes.log_verbose="{Binding IsVerbose}"
+                                       Text="{Binding Message}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
 </UserControl>

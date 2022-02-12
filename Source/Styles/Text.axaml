@@ -51,11 +51,11 @@
 
     <Style Selector="TextBox.code_text">
         <Setter Property="FontFamily"
-                Value="Consolas" />
+                Value="Inconsolata,Consolas,Monospace,Courier" />
     </Style>
 
     <Style Selector="TextBlock.code_text">
         <Setter Property="FontFamily"
-                Value="Consolas" />
+                Value="Inconsolata,Consolas,Monospace,Courier" />
     </Style>
 </Styles>

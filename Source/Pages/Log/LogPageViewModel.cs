@@ -4,38 +4,55 @@ using Avalonia.Threading;
 using MQTTnet.Diagnostics;
 using MQTTnetApp.Common;
 using MQTTnetApp.Services.Mqtt;
+using ReactiveUI;
 
 namespace MQTTnetApp.Pages.Log;
 
 public sealed class LogPageViewModel : BaseViewModel
 {
-    readonly MqttClientService? _mqttClientService;
+    bool _isRecordingEnabled;
 
     public LogPageViewModel(MqttClientService mqttClientService)
     {
-        _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
+        var mqttClientService1 = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
-        _mqttClientService.LogMessagePublished += MqttClientServiceOnLogMessagePublished;
+        mqttClientService1.LogMessagePublished += MqttClientServiceOnLogMessagePublished;
+    }
+
+    public bool IsRecordingEnabled
+    {
+        get => _isRecordingEnabled;
+        set => this.RaiseAndSetIfChanged(ref _isRecordingEnabled, value);
     }
 
     public ObservableCollection<LogItemViewModel> Items { get; } = new();
-
+    
     public void ClearItems()
     {
         Items.Clear();
     }
-    
-    void MqttClientServiceOnLogMessagePublished(MqttNetLogMessagePublishedEventArgs obj)
+
+    void MqttClientServiceOnLogMessagePublished(MqttNetLogMessagePublishedEventArgs eventArgs)
     {
+        if (!_isRecordingEnabled)
+        {
+            return;
+        }
+
         var newItem = new LogItemViewModel
         {
-            Timestamp = obj.LogMessage.Timestamp.ToString("HH:mm:ss.fff"),
-            Level = obj.LogMessage.Level.ToString(),
-            Source = obj.LogMessage.Source,
-            Message = obj.LogMessage.Message
+            IsVerbose = eventArgs.LogMessage.Level == MqttNetLogLevel.Verbose,
+            IsInformation = eventArgs.LogMessage.Level == MqttNetLogLevel.Info,
+            IsWarning = eventArgs.LogMessage.Level == MqttNetLogLevel.Warning,
+            IsError = eventArgs.LogMessage.Level == MqttNetLogLevel.Error,
+            Timestamp = eventArgs.LogMessage.Timestamp.ToString("HH:mm:ss.fff"),
+            Source = eventArgs.LogMessage.Source,
+            Message = eventArgs.LogMessage.Message,
+            Level = eventArgs.LogMessage.Level.ToString(),
+            Exception = eventArgs.LogMessage.Exception?.ToString()
         };
-        
-        Dispatcher.UIThread.InvokeAsync(() =>
+
+        Dispatcher.UIThread.Post(() =>
         {
             Items.Add(newItem);
         });
