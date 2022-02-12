@@ -2,6 +2,7 @@ using MQTTnetApp.Common;
 using MQTTnetApp.Pages.Connection;
 using MQTTnetApp.Pages.Inflight;
 using MQTTnetApp.Pages.Info;
+using MQTTnetApp.Pages.Log;
 using MQTTnetApp.Pages.PacketInspector;
 using MQTTnetApp.Pages.Publish;
 using MQTTnetApp.Pages.Subscriptions;
@@ -15,7 +16,8 @@ public sealed class MainViewModel : BaseViewModel
         SubscriptionsPageViewModel subscriptionsPage,
         InflightPageViewModel inflightPage,
         PacketInspectorPageViewModel packetInspectorPage,
-        InfoPageViewModel infoPage)
+        InfoPageViewModel infoPage,
+        LogPageViewModel logPage)
     {
         ConnectionPage = connectionPage;
         PublishPage = publishPage;
@@ -23,6 +25,7 @@ public sealed class MainViewModel : BaseViewModel
         InflightPage = inflightPage;
         PacketInspectorPage = packetInspectorPage;
         InfoPage = infoPage;
+        LogPage = logPage;
     }
 
     public ConnectionPageViewModel ConnectionPage { get; }
@@ -34,6 +37,8 @@ public sealed class MainViewModel : BaseViewModel
     public PacketInspectorPageViewModel PacketInspectorPage { get; }
 
     public PublishPageViewModel PublishPage { get; }
+    
+    public LogPageViewModel LogPage { get; }
 
     public SubscriptionsPageViewModel SubscriptionsPage { get; }
 }

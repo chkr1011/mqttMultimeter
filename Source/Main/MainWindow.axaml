@@ -77,6 +77,14 @@
                         <PathIcon Data="{StaticResource arrow_swap_regular}" />
                     </TabItem.Header>
                 </TabItem>
+                
+                <!-- Log -->
+                <TabItem Content="{Binding LogPage}"
+                         ToolTip.Tip="Log">
+                    <TabItem.Header>
+                        <PathIcon Data="{StaticResource stethoscope_regular}" />
+                    </TabItem.Header>
+                </TabItem>
 
                 <!-- Info -->
                 <TabItem Content="{Binding InfoPage}"

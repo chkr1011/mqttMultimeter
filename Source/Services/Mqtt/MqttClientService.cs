@@ -48,7 +48,7 @@ public sealed class MqttClientService
             _mqttClient.Dispose();
         }
 
-        _mqttClient = new MqttFactory().CreateMqttClient();
+        _mqttClient = new MqttFactory(_mqttNetEventLogger).CreateMqttClient();
 
         var clientOptionsBuilder = new MqttClientOptionsBuilder().WithCommunicationTimeout(TimeSpan.FromSeconds(item.ServerOptions.CommunicationTimeout))
             .WithProtocolVersion(item.ServerOptions.SelectedProtocolVersion.Value)
