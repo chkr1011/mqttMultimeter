@@ -3,6 +3,14 @@
     <Design.PreviewWith></Design.PreviewWith>
 
     <Style Selector="Button">
+        <Setter Property="MinWidth"
+                Value="80" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="MinHeight"
+                Value="26" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
         <Setter Property="BorderThickness"
                 Value="0" />
     </Style>
@@ -33,5 +41,10 @@
                 Value="10,5,10,0" />
         <Setter Property="HorizontalAlignment"
                 Value="Center" />
+    </Style>
+
+    <Style Selector="Button:pressed, RepeatButton:pressed, ToggleButton:pressed">
+        <Setter Property="RenderTransform"
+                Value="scale(1.0)" />
     </Style>
 </Styles>

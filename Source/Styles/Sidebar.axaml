@@ -44,25 +44,26 @@
 
     <Style Selector="TabControl.sidebar > TabItem">
         <Setter Property="BorderThickness"
-                Value="0,0,0,0" />
+                Value="0" />
+        <Setter Property="Padding"
+                Value="0" />
         <Setter Property="FontSize"
                 Value="14" />
         <Setter Property="Height"
-                Value="64" />
-        <Setter Property="Padding"
-                Value="20,0,20,0" />
+                Value="58" />
+        <Setter Property="Cursor"
+                Value="Hand" />
+        <Setter Property="Width"
+                Value="58" />
         <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
     </Style>
 
     <Style Selector="TabControl.sidebar > TabItem:selected /template/ Border#PART_SelectedPipe">
         <Setter Property="IsVisible"
                 Value="False" />
-    </Style>
-
-    <Style Selector="TabControl.sidebar > TabItem:pointerover">
-        <Setter Property="Opacity"
-                Value="1" />
     </Style>
 
     <Style Selector="TabControl.sidebar > TabItem:pointerover /template/ Border#PART_LayoutRoot">

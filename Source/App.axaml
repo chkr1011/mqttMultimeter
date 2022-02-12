@@ -77,17 +77,6 @@
                     Value="16" />
         </Style>
 
-        <Style Selector="Button">
-            <Setter Property="MinWidth"
-                    Value="80" />
-            <Setter Property="HorizontalContentAlignment"
-                    Value="Center" />
-            <Setter Property="MinHeight"
-                    Value="26" />
-            <Setter Property="VerticalContentAlignment"
-                    Value="Center" />
-        </Style>
-
         <Style Selector="ListBoxItem">
             <Setter Property="Padding"
                     Value="0" />
