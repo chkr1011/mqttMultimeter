@@ -29,7 +29,7 @@ The protocol implementation is based on the _MQTTnet_ project. The application u
 |-----------------|--------------------|--------------------|--------------------|--------------------|
 | Windows         | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Linux           |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| macOS           |                    | :heavy_check_mark: |                    |                    |
+| macOS           |                    | :heavy_check_mark: |                    | :heavy_check_mark: |
 | Raspberry Pi OS |                    |                    | :heavy_check_mark: | :heavy_check_mark: |
 
 ## Supported MQTT versions

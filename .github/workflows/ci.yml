@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  VERSION: "1.0.0.${{github.run_number}}"
+  VERSION: "1.1.0.${{github.run_number}}"
 
 jobs:
   build:
@@ -34,13 +34,13 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source/bin/Release/net6.0/win-x86/publish/
-          dest: MQTTnetApp-WindowsX86.zip
+          dest: MQTTnetApp-Windows-X86.zip
 
       - name: Collect win-x86 artifacts
         uses: actions/upload-artifact@v2
         with:
           name: MQTTnetApp-WindowsX86
-          path: ${{ github.workspace }}/MQTTnetApp-WindowsX86.zip
+          path: ${{ github.workspace }}/MQTTnetApp-Windows-X86.zip
 
       - name: Build win-x64
         run: dotnet publish Source/MQTTnetApp.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
@@ -49,13 +49,13 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source/bin/Release/net6.0/win-x64/publish/
-          dest: MQTTnetApp-WindowsX64.zip
+          dest: MQTTnetApp-Windows-X64.zip
 
       - name: Collect win-x64 artifacts
         uses: actions/upload-artifact@v2
         with:
           name: MQTTnetApp-win-x64
-          path: ${{ github.workspace }}/MQTTnetApp-WindowsX64.zip
+          path: ${{ github.workspace }}/MQTTnetApp-Windows-X64.zip
 
       - name: Build win-arm
         run: dotnet publish Source/MQTTnetApp.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
@@ -64,13 +64,13 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source/bin/Release/net6.0/win-arm/publish/
-          dest: MQTTnetApp-WindowsARM.zip
+          dest: MQTTnetApp-Windows-ARM.zip
 
       - name: Collect win-arm artifacts
         uses: actions/upload-artifact@v2
         with:
           name: MQTTnetApp-win-arm
-          path: ${{ github.workspace }}/MQTTnetApp-WindowsARM.zip
+          path: ${{ github.workspace }}/MQTTnetApp-Windows-ARM.zip
 
       - name: Build win-arm64
         run: dotnet publish Source/MQTTnetApp.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
@@ -79,28 +79,43 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source/bin/Release/net6.0/win-arm64/publish/
-          dest: MQTTnetApp-WindowsARM64.zip
+          dest: MQTTnetApp-Windows-ARM64.zip
 
       - name: Collect win-arm64 artifacts
         uses: actions/upload-artifact@v2
         with:
           name: MQTTnetApp-win-arm64
-          path: ${{ github.workspace }}/MQTTnetApp-WindowsARM64.zip
+          path: ${{ github.workspace }}/MQTTnetApp-Windows-ARM64.zip
 
       - name: Build osx-x64
-        run: dotnet publish Source/MQTTnetApp.csproj -r osx-x64 -p:Configuration=Release -p:PublishSingleFile=false -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/MQTTnetApp.csproj -r osx.12-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip osx-x64 build
         uses: vimtor/action-zip@v1
         with:
-          files: Source/bin/Release/net6.0/osx-x64/publish/
-          dest: MQTTnetApp-macOSX64.zip
+          files: Source/bin/Release/net6.0/osx.12-x64/publish/
+          dest: MQTTnetApp-macOS-X64.zip
 
       - name: Collect osx-x64 artifacts
         uses: actions/upload-artifact@v2
         with:
           name: MQTTnetApp-osx-x64
-          path: ${{ github.workspace }}/MQTTnetApp-macOSX64.zip
+          path: ${{ github.workspace }}/MQTTnetApp-macOS-X64.zip
+
+      - name: Build osx-arm
+          run: dotnet publish Source/MQTTnetApp.csproj -r osx.12-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+
+      - name: Zip osx-arm build
+        uses: vimtor/action-zip@v1
+        with:
+          files: Source/bin/Release/net6.0/osx.12-arm64/publish/
+          dest: MQTTnetApp-macOS-ARM64.zip
+
+      - name: Collect osx-arm artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: MQTTnetApp-osx-arm
+          path: ${{ github.workspace }}/MQTTnetApp-macOS-ARM64.zip
 
       - name: Build linux-x64
         run: dotnet publish Source/MQTTnetApp.csproj -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
@@ -109,13 +124,13 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source/bin/Release/net6.0/linux-x64/publish/
-          dest: MQTTnetApp-LinuxX64.zip
+          dest: MQTTnetApp-Linux-X64.zip
 
       - name: Collect linux-x64 artifacts
         uses: actions/upload-artifact@v2
         with:
           name: MQTTnetApp-linux-x64
-          path: ${{ github.workspace }}/MQTTnetApp-LinuxX64.zip
+          path: ${{ github.workspace }}/MQTTnetApp-Linux-X64.zip
 
       - name: Build linux-arm
         run: dotnet publish Source/MQTTnetApp.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
@@ -124,13 +139,13 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source/bin/Release/net6.0/linux-arm/publish/
-          dest: MQTTnetApp-LinuxARM.zip
+          dest: MQTTnetApp-Linux-ARM.zip
 
       - name: Collect linux-arm artifacts
         uses: actions/upload-artifact@v2
         with:
           name: MQTTnetApp-linux-arm
-          path: ${{ github.workspace }}/MQTTnetApp-LinuxARM.zip
+          path: ${{ github.workspace }}/MQTTnetApp-Linux-ARM.zip
 
       - name: Build linux-arm64
         run: dotnet publish Source/MQTTnetApp.csproj -r linux-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
@@ -139,13 +154,13 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source/bin/Release/net6.0/linux-arm64/publish/
-          dest: MQTTnetApp-LinuxARM64.zip
+          dest: MQTTnetApp-Linux-ARM64.zip
 
       - name: Collect linux-arm artifacts
         uses: actions/upload-artifact@v2
         with:
           name: MQTTnetApp-linux-arm64
-          path: ${{ github.workspace }}/MQTTnetApp-LinuxARM64.zip
+          path: ${{ github.workspace }}/MQTTnetApp-Linux-ARM64.zip
 
       # Release Management
       - name: Delete release drafts
