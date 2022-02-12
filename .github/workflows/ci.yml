@@ -54,7 +54,7 @@ jobs:
       - name: Collect win-x64 artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-win-x64
+          name: MQTTnetApp-windows-x64
           path: ${{ github.workspace }}/MQTTnetApp-windows-X64.zip
 
       - name: Build win-arm
@@ -69,7 +69,7 @@ jobs:
       - name: Collect win-arm artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-win-arm
+          name: MQTTnetApp-windows-arm
           path: ${{ github.workspace }}/MQTTnetApp-windows-ARM.zip
 
       - name: Build win-arm64
@@ -84,7 +84,7 @@ jobs:
       - name: Collect win-arm64 artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-win-arm64
+          name: MQTTnetApp-windows-arm64
           path: ${{ github.workspace }}/MQTTnetApp-windows-ARM64.zip
 
       - name: Build osx-x64
@@ -179,11 +179,12 @@ jobs:
           generate_release_notes: true
           discussion_category_name: announcements
           files: |
-            ${{ github.workspace }}/MQTTnetApp-WindowsX86.zip
-            ${{ github.workspace }}/MQTTnetApp-WindowsX64.zip
-            ${{ github.workspace }}/MQTTnetApp-WindowsARM.zip
-            ${{ github.workspace }}/MQTTnetApp-WindowsARM64.zip
-            ${{ github.workspace }}/MQTTnetApp-macOSX64.zip
-            ${{ github.workspace }}/MQTTnetApp-LinusX64.zip
-            ${{ github.workspace }}/MQTTnetApp-LinuxARM.zip
-            ${{ github.workspace }}/MQTTnetApp-LinuxARM64.zip
+            ${{ github.workspace }}/MQTTnetApp-windows-X86.zip
+            ${{ github.workspace }}/MQTTnetApp-windows-X64.zip
+            ${{ github.workspace }}/MQTTnetApp-windows-ARM.zip
+            ${{ github.workspace }}/MQTTnetApp-windows-ARM64.zip
+            ${{ github.workspace }}/MQTTnetApp-macOS-X64.zip
+            ${{ github.workspace }}/MQTTnetApp-macOS-ARM64.zip
+            ${{ github.workspace }}/MQTTnetApp-linux-X64.zip
+            ${{ github.workspace }}/MQTTnetApp-linux-ARM.zip
+            ${{ github.workspace }}/MQTTnetApp-linux-ARM64.zip
