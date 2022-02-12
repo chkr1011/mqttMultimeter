@@ -103,7 +103,7 @@ jobs:
           path: ${{ github.workspace }}/MQTTnetApp-macOS-X64.zip
 
       - name: Build osx-arm
-        run: dotnet publish Source/MQTTnetApp.csproj -r osx.12-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/MQTTnetApp.csproj -r osx.12-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip osx-arm build
         uses: vimtor/action-zip@v1
