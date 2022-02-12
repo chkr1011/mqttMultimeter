@@ -57,3 +57,15 @@ The protocol implementation is based on the _MQTTnet_ project. The application u
 <p align="center">
 <img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/PacketInspectionPage.png?raw=true">
 </p>
+
+### Publish Page
+
+<p align="center">
+<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/PublishPage.png?raw=true">
+</p>
+
+### Subscribe Page
+
+<p align="center">
+<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/SubscribePage.png?raw=true">
+</p>
