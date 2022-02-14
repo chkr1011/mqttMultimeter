@@ -9,9 +9,9 @@
 
 # MQTTnet App
 
-_MQTTnet.App_ is a cross platform .NET application for MQTT communication testing and analysing.
+_MQTTnetApp_ alias "MQTT Multimeter" is a cross platform .NET application for MQTT communication testing and analysing.
 
-The protocol implementation is based on the _MQTTnet_ project. The application uses Avalonia for UI rendering.
+The protocol implementation is based on the _MQTTnet_ project. The application uses Avalonia for UI rendering and runs on nearly any platform and CPU architecture.
 
 ## Features
 
