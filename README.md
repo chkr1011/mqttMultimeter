@@ -3,7 +3,7 @@
 </br>
 </br>
 
-[![CI](https://github.com/chkr1011/MQTTnet.App/actions/workflows/ci.yml/badge.svg)](https://github.com/chkr1011/MQTTnet.App/actions/workflows/ci.yml)
+[![CI](https://github.com/chkr1011/MQTTnetApp/actions/workflows/ci.yml/badge.svg)](https://github.com/chkr1011/MQTTnetApp/actions/workflows/ci.yml)
 [![Join the chat at https://gitter.im/MQTTnet/community](https://badges.gitter.im/MQTTnet/community.svg)](https://gitter.im/MQTTnet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/chkr1011/MQTTnet/master/LICENSE)
 
@@ -43,29 +43,29 @@ The protocol implementation is based on the _MQTTnet_ project. The application u
 ### Inflight Page
 
 <p align="center">
-<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/InflightPage.png?raw=true">
+<img src="https://github.com/chkr1011/MQTTnetApp/blob/main/Images/Screenshots/InflightPage.png?raw=true">
 </p>
 
 ### Connect Page
 
 <p align="center">
-<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/ConnectPage.png?raw=true">
+<img src="https://github.com/chkr1011/MQTTnetApp/blob/main/Images/Screenshots/ConnectPage.png?raw=true">
 </p>
 
 ### Packet Inspection Page
 
 <p align="center">
-<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/PacketInspectionPage.png?raw=true">
+<img src="https://github.com/chkr1011/MQTTnetApp/blob/main/Images/Screenshots/PacketInspectionPage.png?raw=true">
 </p>
 
 ### Publish Page
 
 <p align="center">
-<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/PublishPage.png?raw=true">
+<img src="https://github.com/chkr1011/MQTTnetApp/blob/main/Images/Screenshots/PublishPage.png?raw=true">
 </p>
 
 ### Subscribe Page
 
 <p align="center">
-<img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Screenshots/SubscribePage.png?raw=true">
+<img src="https://github.com/chkr1011/MQTTnetApp/blob/main/Images/Screenshots/SubscribePage.png?raw=true">
 </p>
