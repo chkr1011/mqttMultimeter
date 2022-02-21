@@ -34,8 +34,7 @@
                         MinWidth="100"
                         Margin="10,0,0,0"
                         Classes="image_button"
-                        Command="{Binding Unsubscribe}"
-                        IsDefault="True">
+                        Command="{Binding Unsubscribe}">
                     <StackPanel>
                         <PathIcon Data="{StaticResource delete_regular}" />
                         <TextBlock Text="Unsubscribe" />
