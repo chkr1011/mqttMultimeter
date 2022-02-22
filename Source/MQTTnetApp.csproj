@@ -30,14 +30,15 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.12" />
-        <PackageReference Include="Avalonia.AvaloniaEdit" Version="0.10.12.1" />
+        <PackageReference Include="Avalonia.AvaloniaEdit" Version="0.10.12.2" />
         <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.12" />
         <PackageReference Include="Avalonia.Desktop" Version="0.10.12" />
         <PackageReference Include="Avalonia.Diagnostics" Version="0.10.12" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
-        <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.1" />
+        <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.2" />
         <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12.1" />
-        <PackageReference Include="MQTTnet" Version="4.0.0-preview5" />
+        <PackageReference Include="MQTTnet" Version="4.0.0.141" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="SimpleInjector" Version="5.3.3" />
         <PackageReference Include="System.Text.Json" Version="6.0.2" />
     </ItemGroup>
