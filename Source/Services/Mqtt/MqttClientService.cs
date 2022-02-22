@@ -215,7 +215,7 @@ public sealed class MqttClientService
         {
             messageInspector.Invoke(eventArgs);
         }
-        
+
         return Task.CompletedTask;
     }
 

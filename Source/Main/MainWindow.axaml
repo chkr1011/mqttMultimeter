@@ -77,7 +77,7 @@
                         <PathIcon Data="{StaticResource arrow_swap_regular}" />
                     </TabItem.Header>
                 </TabItem>
-                
+
                 <!-- Log -->
                 <TabItem Content="{Binding LogPage}"
                          ToolTip.Tip="Log">

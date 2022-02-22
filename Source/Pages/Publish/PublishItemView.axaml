@@ -32,7 +32,8 @@
         </Grid>
 
         <!-- The request -->
-        <Grid RowDefinitions="Auto,*" Margin="0,10,0,0"
+        <Grid RowDefinitions="Auto,*"
+              Margin="0,10,0,0"
               Grid.Row="1">
 
             <Grid ColumnDefinitions="*,Auto">

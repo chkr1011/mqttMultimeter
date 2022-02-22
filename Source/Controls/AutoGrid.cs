@@ -27,7 +27,7 @@ public sealed class AutoGrid : Grid
     protected override void ChildrenChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         base.ChildrenChanged(sender, e);
-        
+
         if (_cellArrangementPending)
         {
             return;

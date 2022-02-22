@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using MQTTnetApp.Common;
+using MQTTnetApp.Pages.Connection.State;
 using MQTTnetApp.Services.Mqtt;
+using MQTTnetApp.Services.State;
 using ReactiveUI;
 
 namespace MQTTnetApp.Pages.Connection;
@@ -17,41 +20,15 @@ public sealed class ConnectionPageViewModel : BaseViewModel
 
     ConnectionItemViewModel? _selectedItem;
 
-    public ConnectionPageViewModel(MqttClientService mqttClientService)
+    public ConnectionPageViewModel(MqttClientService mqttClientService, StateService stateService)
     {
         _mqttClientService = mqttClientService;
 
         var timer = new DispatcherTimer(TimeSpan.FromSeconds(0.5), DispatcherPriority.Normal, CheckConnection);
         timer.Start();
 
-        Items.Add(new ConnectionItemViewModel(this)
-        {
-            Name = "localhost",
-            ServerOptions =
-            {
-                Host = "localhost"
-            }
-        });
-
-        Items.Add(new ConnectionItemViewModel(this)
-        {
-            Name = "Hive MQ",
-            ServerOptions =
-            {
-                Host = "broker.hivemq.com"
-            }
-        });
-
-        Items.Add(new ConnectionItemViewModel(this)
-        {
-            Name = "Mosquitto Test",
-            ServerOptions =
-            {
-                Host = "test.mosquitto.org"
-            }
-        });
-
-        SelectedItem = Items[0];
+        stateService.Saving += SaveState;
+        LoadState(stateService);
     }
 
     public bool IsConnected
@@ -134,5 +111,19 @@ public sealed class ConnectionPageViewModel : BaseViewModel
     void CheckConnection(object? sender, EventArgs e)
     {
         IsConnected = _mqttClientService.IsConnected;
+    }
+
+    void LoadState(StateService stateService)
+    {
+        stateService.TryGet("Connections", out ConnectionPageState? state);
+        ConnectionPageStateLoader.Apply(this, state);
+
+        SelectedItem = Items.FirstOrDefault();
+    }
+
+    void SaveState(object? sender, SavingStateEventArgs eventArgs)
+    {
+        var state = ConnectionPageStateFactory.Create(this);
+        eventArgs.StateService.Set("Connections", state);
     }
 }

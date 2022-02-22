@@ -26,7 +26,7 @@ public sealed class LogPageViewModel : BaseViewModel
     }
 
     public ObservableCollection<LogItemViewModel> Items { get; } = new();
-    
+
     public void ClearItems()
     {
         Items.Clear();
