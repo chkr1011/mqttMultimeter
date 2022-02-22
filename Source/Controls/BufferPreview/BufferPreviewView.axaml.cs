@@ -82,7 +82,7 @@ public sealed class BufferInspectorView : TemplatedControl
             Convert = b =>
             {
                 var json = MessagePackSerializer.ConvertToJson(b);
-                return JsonSerializerService.Instance.Format(json);
+                return JsonSerializerService.Instance?.Format(json) ?? string.Empty;
             }
         });
 

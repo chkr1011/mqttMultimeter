@@ -172,8 +172,6 @@
                                Classes="code_text value" />
                     <TextBlock Text="- MQTTnet"
                                Classes="code_text value" />
-                    <TextBlock Text="- Newtonsoft.Json"
-                               Classes="code_text value" />
                     <TextBlock Text="- ReactiveUI"
                                Classes="code_text value" />
                     <TextBlock Text="- SimpleInjector"
