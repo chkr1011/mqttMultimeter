@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Controls;
@@ -11,8 +13,6 @@ using Avalonia.Interactivity;
 using MessagePack;
 using MQTTnetApp.Extensions;
 using MQTTnetApp.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace MQTTnetApp.Controls;
 
@@ -60,13 +60,18 @@ public sealed class BufferInspectorView : TemplatedControl
             Convert = HexEncoder.GetString
         });
 
+        var jsonSerializerOptions = new JsonSerializerOptions
+        {
+            WriteIndented = true
+        };
+        
         Formats.Add(new BufferConverter
         {
             Name = "JSON",
             Convert = b =>
             {
                 var json = Encoding.UTF8.GetString(b);
-                return JToken.Parse(json).ToString(Formatting.Indented);
+                return JsonSerializer.Serialize(JsonNode.Parse(json), jsonSerializerOptions);
             }
         });
         

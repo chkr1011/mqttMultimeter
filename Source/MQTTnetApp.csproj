@@ -41,6 +41,7 @@
         <PackageReference Include="MQTTnet" Version="4.0.0.141" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="SimpleInjector" Version="5.3.3" />
+        <PackageReference Include="System.Text.Json" Version="6.0.2" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Main\MainWindow.axaml.cs">

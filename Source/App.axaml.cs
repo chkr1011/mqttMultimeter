@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -9,11 +10,15 @@ using MQTTnetApp.Main;
 using MQTTnetApp.Pages.Connection;
 using MQTTnetApp.Pages.Inflight;
 using MQTTnetApp.Pages.Info;
+using MQTTnetApp.Pages.Log;
+using MQTTnetApp.Pages.PacketInspector;
 using MQTTnetApp.Pages.Publish;
 using MQTTnetApp.Pages.Subscriptions;
+using MQTTnetApp.Services.Data;
 using MQTTnetApp.Services.Mqtt;
+using MQTTnetApp.Services.State;
 using MQTTnetApp.Services.Updates;
-using SimpleInjector;
+using Container = SimpleInjector.Container;
 
 namespace MQTTnetApp;
 
@@ -28,13 +33,17 @@ public sealed class App : Application
         _container.Options.ResolveUnregisteredConcreteTypes = true;
 
         _container.RegisterSingleton<MqttClientService>();
-
         _container.RegisterSingleton<AppUpdateService>();
+        _container.RegisterSingleton<JsonSerializerService>();
+        _container.RegisterSingleton<StateService>();
 
+        _container.RegisterSingleton<MainViewModel>();
         _container.RegisterSingleton<ConnectionPageViewModel>();
         _container.RegisterSingleton<PublishPageViewModel>();
         _container.RegisterSingleton<SubscriptionsPageViewModel>();
+        _container.RegisterSingleton<PacketInspectorPageViewModel>();
         _container.RegisterSingleton<InflightPageViewModel>();
+        _container.RegisterSingleton<LogPageViewModel>();
         _container.RegisterSingleton<InfoPageViewModel>();
 
         var viewLocator = new ViewLocator(_container);
@@ -52,10 +61,14 @@ public sealed class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            var mainViewModel = _container.GetInstance<MainViewModel>();
+
             _mainWindow = new MainWindow
             {
-                DataContext = _container.GetInstance<MainViewModel>()
+                DataContext = mainViewModel
             };
+
+            _mainWindow.Closing += OnMainWindowClosing;
 
             desktop.MainWindow = _mainWindow;
         }
@@ -78,5 +91,10 @@ public sealed class App : Application
         };
 
         window.ShowDialog(MainWindow.Instance);
+    }
+
+    void OnMainWindowClosing(object? sender, CancelEventArgs e)
+    {
+        _container.GetInstance<StateService>().Write().GetAwaiter().GetResult();
     }
 }
