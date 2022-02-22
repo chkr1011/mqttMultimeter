@@ -20,14 +20,14 @@
                           ToolTip.Tip="Enable/Disable inflight recording">
                 <PathIcon Data="{StaticResource record_regular}" />
             </ToggleButton>
-            
+
             <!-- The clear items button -->
             <Button Classes="tool_bar_button"
                     ToolTip.Tip="Remove all log items."
                     Command="{Binding ClearItems}">
                 <PathIcon Data="{StaticResource delete_regular}" />
             </Button>
-            
+
         </StackPanel>
 
         <!-- The log items -->

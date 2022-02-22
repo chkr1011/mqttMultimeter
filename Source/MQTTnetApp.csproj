@@ -38,8 +38,8 @@
         <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.1" />
         <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12.1" />
         <PackageReference Include="MQTTnet" Version="4.0.0-preview5" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="SimpleInjector" Version="5.3.3" />
+        <PackageReference Include="System.Text.Json" Version="6.0.2" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Main\MainWindow.axaml.cs">

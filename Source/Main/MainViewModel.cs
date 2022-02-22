@@ -34,11 +34,11 @@ public sealed class MainViewModel : BaseViewModel
 
     public InfoPageViewModel InfoPage { get; }
 
+    public LogPageViewModel LogPage { get; }
+
     public PacketInspectorPageViewModel PacketInspectorPage { get; }
 
     public PublishPageViewModel PublishPage { get; }
-    
-    public LogPageViewModel LogPage { get; }
 
     public SubscriptionsPageViewModel SubscriptionsPage { get; }
 }
