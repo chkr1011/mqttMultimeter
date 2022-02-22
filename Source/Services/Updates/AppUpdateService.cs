@@ -3,13 +3,19 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
+using MQTTnetApp.Services.Data;
+using MQTTnetApp.Services.Updates.Model;
 
 namespace MQTTnetApp.Services.Updates;
 
 public sealed class AppUpdateService
 {
-    public AppUpdateService()
+    readonly JsonSerializerService _jsonSerializerService;
+
+    public AppUpdateService(JsonSerializerService jsonSerializerService)
     {
+        _jsonSerializerService = jsonSerializerService ?? throw new ArgumentNullException(nameof(jsonSerializerService));
+
         var attribute = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false).FirstOrDefault();
         var productVersion = ((AssemblyInformationalVersionAttribute?)attribute)?.InformationalVersion;
         Version.TryParse(productVersion, out var assemblyProductVersion);
@@ -46,8 +52,8 @@ public sealed class AppUpdateService
                     var response = await httpClient.SendAsync(request).ConfigureAwait(false);
                     var releasesJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                    var releases = JArray.Parse(releasesJson);
-                    var latestReleaseName = releases.SelectToken("[0].name")?.Value<string>() ?? string.Empty;
+                    var releases = _jsonSerializerService.Deserialize<Releases>(releasesJson);
+                    var latestReleaseName = releases?.First().Name ?? string.Empty;
 
                     // Remove the "v" from the version from GitHub. Then it can be safely parsed.
                     LatestVersion = Version.Parse(latestReleaseName.TrimStart('v'));

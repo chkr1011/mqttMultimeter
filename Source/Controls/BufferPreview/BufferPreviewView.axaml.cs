@@ -12,6 +12,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using MessagePack;
 using MQTTnetApp.Extensions;
+using MQTTnetApp.Services.Data;
 using MQTTnetApp.Text;
 
 namespace MQTTnetApp.Controls;
@@ -64,7 +65,7 @@ public sealed class BufferInspectorView : TemplatedControl
         {
             WriteIndented = true
         };
-        
+
         Formats.Add(new BufferConverter
         {
             Name = "JSON",
@@ -74,14 +75,14 @@ public sealed class BufferInspectorView : TemplatedControl
                 return JsonSerializer.Serialize(JsonNode.Parse(json), jsonSerializerOptions);
             }
         });
-        
+
         Formats.Add(new BufferConverter
         {
             Name = "MessagePack",
             Convert = b =>
             {
                 var json = MessagePackSerializer.ConvertToJson(b);
-                return JToken.Parse(json).ToString(Formatting.Indented);
+                return JsonSerializerService.Instance.Format(json);
             }
         });
 

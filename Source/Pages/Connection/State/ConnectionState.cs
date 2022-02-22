@@ -3,7 +3,7 @@
 public sealed class ConnectionState
 {
     public string? ClientId { get; set; }
-    
+
     public string? Host { get; set; }
 
     public string? Name { get; set; }
