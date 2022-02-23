@@ -1,19 +1,11 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace MQTTnetApp.Common;
 
 sealed class ViewLocator : IDataTemplate
 {
-    readonly IServiceProvider _serviceProvider;
-
-    public ViewLocator(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-    }
-
     public IControl Build(object data)
     {
         var viewFullName = data.GetType().FullName!.Replace("ViewModel", "View");
@@ -21,7 +13,8 @@ sealed class ViewLocator : IDataTemplate
 
         if (viewType != null)
         {
-            if (_serviceProvider.GetRequiredService(viewType) is not Control control)
+            var control = Activator.CreateInstance(viewType) as Control;
+            if (control == null)
             {
                 throw new InvalidOperationException($"Unable to create view of type '{viewType.FullName}'.");
             }

@@ -26,12 +26,12 @@ public sealed class App : Application
 {
     static Window? _mainWindow;
 
-    readonly ServiceProvider _serviceProvider;
     readonly StateService _stateService;
+    readonly MainViewModel? _mainViewModel;
 
     public App()
     {
-        _serviceProvider = new ServiceCollection()
+        var serviceProvider = new ServiceCollection()
             //.AddLogging()
             .AddSingleton<MqttClientService>()
             .AddSingleton<AppUpdateService>()
@@ -47,11 +47,12 @@ public sealed class App : Application
             .AddSingleton<InfoPageViewModel>()
             .BuildServiceProvider();
 
-        var viewLocator = new ViewLocator(_serviceProvider);
+        var viewLocator = new ViewLocator();
         DataTemplates.Add(viewLocator);
 
-        _serviceProvider.GetRequiredService<AppUpdateService>().EnableUpdateChecks();
-        _stateService = _serviceProvider.GetRequiredService<StateService>();
+        serviceProvider.GetRequiredService<AppUpdateService>().EnableUpdateChecks();
+        _stateService = serviceProvider.GetRequiredService<StateService>();
+        _mainViewModel = serviceProvider.GetService<MainViewModel>();
     }
 
     public override void Initialize()
@@ -63,11 +64,9 @@ public sealed class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            var mainViewModel = _serviceProvider.GetService<MainViewModel>();
-
             _mainWindow = new MainWindow
             {
-                DataContext = mainViewModel
+                DataContext = _mainViewModel
             };
 
             _mainWindow.Closing += OnMainWindowClosing;
