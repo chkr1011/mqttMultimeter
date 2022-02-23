@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Threading;
@@ -17,8 +16,6 @@ public sealed class ConnectionPageViewModel : BaseViewModel
 
     bool _isConnected;
     bool _isConnecting;
-
-    ConnectionItemViewModel? _selectedItem;
 
     public ConnectionPageViewModel(MqttClientService mqttClientService, StateService stateService)
     {
@@ -43,13 +40,7 @@ public sealed class ConnectionPageViewModel : BaseViewModel
         private set => this.RaiseAndSetIfChanged(ref _isConnecting, value);
     }
 
-    public ObservableCollection<ConnectionItemViewModel> Items { get; } = new();
-
-    public ConnectionItemViewModel? SelectedItem
-    {
-        get => _selectedItem;
-        set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
-    }
+    public PageItemsViewModel<ConnectionItemViewModel> Items { get; } = new();
 
     public void AddItem()
     {
@@ -62,14 +53,14 @@ public sealed class ConnectionPageViewModel : BaseViewModel
             }
         };
 
-        Items.Add(newItem);
-        SelectedItem = newItem;
+        Items.Collection.Add(newItem);
+        Items.SelectedItem = newItem;
     }
 
     public void ClearItems()
     {
-        Items.Clear();
-        SelectedItem = null;
+        Items.Collection.Clear();
+        Items.SelectedItem = null;
     }
 
     public async Task Connect(ConnectionItemViewModel item)
@@ -105,7 +96,7 @@ public sealed class ConnectionPageViewModel : BaseViewModel
 
     public void RemoveItem(ConnectionItemViewModel item)
     {
-        Items.Remove(item);
+        Items.Collection.Remove(item);
     }
 
     void CheckConnection(object? sender, EventArgs e)
@@ -118,7 +109,7 @@ public sealed class ConnectionPageViewModel : BaseViewModel
         stateService.TryGet("Connections", out ConnectionPageState? state);
         ConnectionPageStateLoader.Apply(this, state);
 
-        SelectedItem = Items.FirstOrDefault();
+        Items.SelectedItem = Items.Collection.FirstOrDefault();
     }
 
     void SaveState(object? sender, SavingStateEventArgs eventArgs)

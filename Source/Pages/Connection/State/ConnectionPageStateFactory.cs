@@ -13,7 +13,7 @@ public static class ConnectionPageStateFactory
 
         var state = new ConnectionPageState();
 
-        foreach (var item in viewModel.Items)
+        foreach (var item in viewModel.Items.Collection)
         {
             state.Connections.Add(new ConnectionState
             {
@@ -21,7 +21,12 @@ public static class ConnectionPageStateFactory
                 Host = item.ServerOptions.Host,
                 Port = item.ServerOptions.Port,
                 ClientId = item.SessionOptions.ClientId,
-                UserName = item.SessionOptions.UserName
+                UserName = item.SessionOptions.UserName,
+                AuthenticationMethod = item.SessionOptions.AuthenticationMethod,
+                ProtocolVersion = item.ServerOptions.SelectedProtocolVersion.Value,
+                KeepAliveInterval = item.SessionOptions.KeepAliveInterval,
+                Transport = item.ServerOptions.SelectedTransport.Value,
+                TlsVersion = item.ServerOptions.SelectedTlsVersion.Value
             });
         }
 

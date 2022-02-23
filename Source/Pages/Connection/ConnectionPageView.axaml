@@ -48,8 +48,8 @@
             <ListBox Background="Transparent"
                      ItemTemplate="{StaticResource ConnectItemViewModelListItem}"
                      Grid.Row="1"
-                     SelectedItem="{Binding SelectedItem}"
-                     Items="{Binding Items}"
+                     SelectedItem="{Binding Items.SelectedItem}"
+                     Items="{Binding Items.Collection}"
                      x:Name="PART_Items"
                      Grid.Column="0" />
         </Grid>
