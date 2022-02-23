@@ -40,7 +40,7 @@ public static class ConnectionPageStateLoader
                     Host = "test.mosquitto.org"
                 }
             });
-            
+
             return;
         }
 
@@ -48,7 +48,7 @@ public static class ConnectionPageStateLoader
         {
             target.Items.Add(new ConnectionItemViewModel(target)
             {
-                Name = connectionState.Name ?? String.Empty,
+                Name = connectionState.Name ?? string.Empty,
                 ServerOptions =
                 {
                     Host = connectionState.Host ?? string.Empty,

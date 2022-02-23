@@ -168,9 +168,9 @@
                             Margin="10,0,0,0">
                     <TextBlock Text="- Avalonia"
                                Classes="code_text value" />
-                    <TextBlock Text="- MQTTnet"
+                    <TextBlock Text="- MessagePack for C#"
                                Classes="code_text value" />
-                    <TextBlock Text="- Newtonsoft.Json"
+                    <TextBlock Text="- MQTTnet"
                                Classes="code_text value" />
                     <TextBlock Text="- ReactiveUI"
                                Classes="code_text value" />
