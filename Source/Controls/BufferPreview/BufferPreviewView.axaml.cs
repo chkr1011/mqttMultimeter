@@ -63,7 +63,7 @@ public sealed class BufferInspectorView : TemplatedControl
         {
             WriteIndented = true
         };
-        
+
         Formats.Add(new BufferConverter
         {
             Name = "JSON",
