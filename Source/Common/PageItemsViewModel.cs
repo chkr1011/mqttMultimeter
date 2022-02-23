@@ -15,6 +15,12 @@ public sealed class PageItemsViewModel<TItem> : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
     }
 
+    public void Clear()
+    {
+        Collection.Clear();
+        SelectedItem = default;
+    }
+
     public void MoveItemDown(TItem? item)
     {
         if (item == null)
@@ -47,5 +53,15 @@ public sealed class PageItemsViewModel<TItem> : BaseViewModel
         }
 
         Collection.Move(index, --index);
+    }
+
+    public void RemoveItem(TItem? item)
+    {
+        if (item == null)
+        {
+            return;
+        }
+
+        Collection.Remove(item);
     }
 }

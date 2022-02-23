@@ -159,7 +159,7 @@ public sealed class MqttClientService
         var topicFilter = new MqttTopicFilterBuilder().WithTopic(subscriptionItem.Topic)
             .WithQualityOfServiceLevel(subscriptionItem.QualityOfServiceLevel.Value)
             .WithNoLocal(subscriptionItem.NoLocal)
-            .WithRetainHandling(subscriptionItem.RetainHandlingSelector.RetainHandling)
+            .WithRetainHandling(subscriptionItem.RetainHandling.RetainHandling)
             .WithRetainAsPublished(subscriptionItem.RetainAsPublished)
             .Build();
 

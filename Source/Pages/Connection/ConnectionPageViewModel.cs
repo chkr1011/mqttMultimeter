@@ -57,12 +57,6 @@ public sealed class ConnectionPageViewModel : BaseViewModel
         Items.SelectedItem = newItem;
     }
 
-    public void ClearItems()
-    {
-        Items.Collection.Clear();
-        Items.SelectedItem = null;
-    }
-
     public async Task Connect(ConnectionItemViewModel item)
     {
         try
@@ -92,11 +86,6 @@ public sealed class ConnectionPageViewModel : BaseViewModel
         {
             App.ShowException(exception);
         }
-    }
-
-    public void RemoveItem(ConnectionItemViewModel item)
-    {
-        Items.Collection.Remove(item);
     }
 
     void CheckConnection(object? sender, EventArgs e)

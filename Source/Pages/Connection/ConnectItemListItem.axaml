@@ -23,7 +23,7 @@
                            Text="{Binding ServerOptions.Host}" />
             </StackPanel>
 
-            <!-- The Buttons Button -->
+            <!-- The Buttons -->
             <StackPanel Grid.Column="1"
                         Orientation="Horizontal"
                         IsVisible="{Binding Path=IsPointerOver, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">
@@ -44,7 +44,7 @@
 
                 <Button Classes="tool_bar_button"
                         ToolTip.Tip="Delete item"
-                        Command="{Binding OwnerPage.RemoveItem}"
+                        Command="{Binding OwnerPage.Items.RemoveItem}"
                         CommandParameter="{Binding .}">
                     <PathIcon Data="{StaticResource delete_regular}" />
                 </Button>

@@ -7,9 +7,9 @@
         <AssemblyVersion>0.0.0</AssemblyVersion>
         <NeutralLanguage>en-US</NeutralLanguage>
         <IsPackable>false</IsPackable>
-        <PackageId />
-        <PackageVersion />
-        <Authors />
+        <PackageId/>
+        <PackageVersion/>
+        <Authors/>
         <Company>Christian Kratky</Company>
         <ApplicationIcon>Assets\Icons\App.ico</ApplicationIcon>
         <FileVersion>0.0.0</FileVersion>
@@ -23,24 +23,24 @@
         <DebugType>none</DebugType>
     </PropertyGroup>
     <ItemGroup>
-        <Folder Include="Configuration\Service" />
-        <AvaloniaResource Include="Assets\**" />
-        <None Remove="Assets\Icons\arrow_down.png" />
-        <None Remove="Assets\Icons\arrow_up.png" />
+        <Folder Include="Configuration\Service"/>
+        <AvaloniaResource Include="Assets\**"/>
+        <None Remove="Assets\Icons\arrow_down.png"/>
+        <None Remove="Assets\Icons\arrow_up.png"/>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.12" />
-        <PackageReference Include="Avalonia.AvaloniaEdit" Version="0.10.12.2" />
-        <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.12" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.12" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.12" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
-        <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.2" />
-        <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12.1" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-        <PackageReference Include="MQTTnet" Version="4.0.0.141" />
-        <PackageReference Include="MessagePack" Version="2.3.85" />
-        <PackageReference Include="System.Text.Json" Version="6.0.2" />
+        <PackageReference Include="Avalonia" Version="0.10.12"/>
+        <PackageReference Include="Avalonia.AvaloniaEdit" Version="0.10.12.2"/>
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.12"/>
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.12"/>
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.12"/>
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12"/>
+        <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.2"/>
+        <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12.1"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0"/>
+        <PackageReference Include="MQTTnet" Version="4.0.0.141"/>
+        <PackageReference Include="MessagePack" Version="2.3.85"/>
+        <PackageReference Include="System.Text.Json" Version="6.0.2"/>
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Main\MainWindow.axaml.cs">
@@ -76,13 +76,13 @@
         </Compile>
     </ItemGroup>
     <ItemGroup>
-        <None Remove="Pages\Info\Readme.md" />
-        <EmbeddedResource Include="Pages\Info\Readme.md" />
-        <UpToDateCheckInput Remove="Common\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml" />
-        <UpToDateCheckInput Remove="Configuration\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml" />
-        <UpToDateCheckInput Remove="Common\BufferInspector\BufferInspectorView.axaml" />
-        <UpToDateCheckInput Remove="Common\BufferInspector\BufferValueView.axaml" />
-        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpPropertyView.axaml" />
-        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpView.axaml" />
+        <None Remove="Pages\Info\Readme.md"/>
+        <EmbeddedResource Include="Pages\Info\Readme.md"/>
+        <UpToDateCheckInput Remove="Common\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml"/>
+        <UpToDateCheckInput Remove="Configuration\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml"/>
+        <UpToDateCheckInput Remove="Common\BufferInspector\BufferInspectorView.axaml"/>
+        <UpToDateCheckInput Remove="Common\BufferInspector\BufferValueView.axaml"/>
+        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpPropertyView.axaml"/>
+        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpView.axaml"/>
     </ItemGroup>
 </Project>

@@ -23,16 +23,33 @@
                            Text="{Binding Topic}" />
             </StackPanel>
 
-            <!-- The Delete Button -->
-            <Button Grid.Column="1"
-                    Margin="10,0,0,0"
-                    Classes="tool_bar_button"
-                    ToolTip.Tip="Delete subscription item"
-                    IsVisible="{Binding Path=IsPointerOver, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"
-                    Command="{Binding OwnerPage.RemoveItem}"
-                    CommandParameter="{Binding .}">
-                <PathIcon Data="{StaticResource delete_regular}" />
-            </Button>
+            <!-- The Buttons -->
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        IsVisible="{Binding Path=IsPointerOver, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">
+
+                <Button Classes="tool_bar_button"
+                        ToolTip.Tip="Delete item"
+                        Command="{Binding OwnerPage.Items.RemoveItem}"
+                        CommandParameter="{Binding .}">
+                    <PathIcon Data="{StaticResource delete_regular}" />
+                </Button>
+
+                <Button Classes="tool_bar_button"
+                        ToolTip.Tip="Move item down"
+                        Command="{Binding OwnerPage.Items.MoveItemDown}"
+                        CommandParameter="{Binding .}">
+                    <PathIcon Data="{StaticResource arrow_down_regular}" />
+                </Button>
+
+                <Button Classes="tool_bar_button"
+                        ToolTip.Tip="Delete item"
+                        Command="{Binding OwnerPage.Items.RemoveItem}"
+                        CommandParameter="{Binding .}">
+                    <PathIcon Data="{StaticResource delete_regular}" />
+                </Button>
+
+            </StackPanel>
         </Grid>
     </DataTemplate>
 
