@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
 using MQTTnetApp.Common;
 using MQTTnetApp.Controls;
 using MQTTnetApp.Main;
@@ -18,38 +19,39 @@ using MQTTnetApp.Services.Data;
 using MQTTnetApp.Services.Mqtt;
 using MQTTnetApp.Services.State;
 using MQTTnetApp.Services.Updates;
-using Container = SimpleInjector.Container;
 
 namespace MQTTnetApp;
 
 public sealed class App : Application
 {
     static Window? _mainWindow;
-    readonly Container _container;
+
+    readonly ServiceProvider _serviceProvider;
+    readonly StateService _stateService;
 
     public App()
     {
-        _container = new Container();
-        _container.Options.ResolveUnregisteredConcreteTypes = true;
+        _serviceProvider = new ServiceCollection()
+            //.AddLogging()
+            .AddSingleton<MqttClientService>()
+            .AddSingleton<AppUpdateService>()
+            .AddSingleton<JsonSerializerService>()
+            .AddSingleton<StateService>()
+            .AddSingleton<MainViewModel>()
+            .AddSingleton<ConnectionPageViewModel>()
+            .AddSingleton<PublishPageViewModel>()
+            .AddSingleton<SubscriptionsPageViewModel>()
+            .AddSingleton<PacketInspectorPageViewModel>()
+            .AddSingleton<InflightPageViewModel>()
+            .AddSingleton<LogPageViewModel>()
+            .AddSingleton<InfoPageViewModel>()
+            .BuildServiceProvider();
 
-        _container.RegisterSingleton<MqttClientService>();
-        _container.RegisterSingleton<AppUpdateService>();
-        _container.RegisterSingleton<JsonSerializerService>();
-        _container.RegisterSingleton<StateService>();
-
-        _container.RegisterSingleton<MainViewModel>();
-        _container.RegisterSingleton<ConnectionPageViewModel>();
-        _container.RegisterSingleton<PublishPageViewModel>();
-        _container.RegisterSingleton<SubscriptionsPageViewModel>();
-        _container.RegisterSingleton<PacketInspectorPageViewModel>();
-        _container.RegisterSingleton<InflightPageViewModel>();
-        _container.RegisterSingleton<LogPageViewModel>();
-        _container.RegisterSingleton<InfoPageViewModel>();
-
-        var viewLocator = new ViewLocator(_container);
+        var viewLocator = new ViewLocator(_serviceProvider);
         DataTemplates.Add(viewLocator);
 
-        _container.GetInstance<AppUpdateService>().EnableUpdateChecks();
+        _serviceProvider.GetRequiredService<AppUpdateService>().EnableUpdateChecks();
+        _stateService = _serviceProvider.GetRequiredService<StateService>();
     }
 
     public override void Initialize()
@@ -61,7 +63,7 @@ public sealed class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            var mainViewModel = _container.GetInstance<MainViewModel>();
+            var mainViewModel = _serviceProvider.GetService<MainViewModel>();
 
             _mainWindow = new MainWindow
             {
@@ -95,6 +97,6 @@ public sealed class App : Application
 
     void OnMainWindowClosing(object? sender, CancelEventArgs e)
     {
-        _container.GetInstance<StateService>().Write().GetAwaiter().GetResult();
+        _stateService.Write().GetAwaiter().GetResult();
     }
 }
