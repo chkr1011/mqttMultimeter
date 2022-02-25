@@ -2,10 +2,10 @@
 <img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Icons/icon_det_128.png?raw=true" width="128">
 </p>
 
-[![Downloads](https://img.shields.io/github/downloads/chkr1011/MQTTnetApp/total?color=lightgreen)](https://img.shields.io/github/downloads/chkr1011/MQTTnetApp/total?color=lightgreen)
+[![Downloads](https://img.shields.io/github/downloads/chkr1011/MQTTnetApp/total?color=green)](https://img.shields.io/github/downloads/chkr1011/MQTTnetApp/total?color=green)
 [![CI](https://github.com/chkr1011/MQTTnetApp/actions/workflows/ci.yml/badge.svg)](https://github.com/chkr1011/MQTTnetApp/actions/workflows/ci.yml)
 [![Join the chat at https://gitter.im/MQTTnet/community](https://badges.gitter.im/MQTTnet/community.svg)](https://gitter.im/MQTTnet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/chkr1011/MQTTnet/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://raw.githubusercontent.com/chkr1011/MQTTnet/master/LICENSE)
   
 # MQTTnet App
 
