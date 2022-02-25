@@ -3,7 +3,7 @@
 </p>
 
 [![Downloads](https://img.shields.io/github/downloads/chkr1011/MQTTnetApp/total?color=green)](https://img.shields.io/github/downloads/chkr1011/MQTTnetApp/total?color=green)
-[![CI](https://github.com/chkr1011/MQTTnetApp/actions/workflows/ci.yml/badge.svg)](https://github.com/chkr1011/MQTTnetApp/actions/workflows/ci.yml)
+[![CI](https://img.shields.io/github/workflow/status/chkr1011/MQTTnetApp/CI/main)](https://img.shields.io/github/workflow/status/chkr1011/MQTTnetApp/CI/main)
 [![Join the chat at https://gitter.im/MQTTnet/community](https://badges.gitter.im/MQTTnet/community.svg)](https://gitter.im/MQTTnet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://raw.githubusercontent.com/chkr1011/MQTTnet/master/LICENSE)
   
