@@ -78,8 +78,8 @@ public sealed class InflightPageViewModel : BaseViewModel
             Payload = item.PayloadPreview
         };
 
-        _publishPage.Items.Add(publishItem);
-        _publishPage.SelectedItem = publishItem;
+        _publishPage.Items.Collection.Add(publishItem);
+        _publishPage.Items.SelectedItem = publishItem;
 
         SwitchToPublishRequested?.Invoke(this, EventArgs.Empty);
     }
