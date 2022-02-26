@@ -5,7 +5,7 @@ namespace MQTTnetApp.Pages.Publish.State;
 public sealed class PublishState
 {
     public string? ContentType { get; set; }
-    
+
     public string? Name { get; set; }
 
     public MqttPayloadFormatIndicator PayloadFormatIndicator { get; set; }

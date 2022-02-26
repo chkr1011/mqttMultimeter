@@ -53,7 +53,7 @@ public sealed class App : Application
         _stateService = serviceProvider.GetRequiredService<StateService>();
         _mainViewModel = serviceProvider.GetService<MainViewModel>();
     }
-    
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
