@@ -93,7 +93,7 @@
                        Classes="caption">Retain handling</Label>
                 <ContentPresenter Grid.Row="3"
                                   Grid.Column="1"
-                                  Content="{Binding RetainHandlingSelector}" />
+                                  Content="{Binding RetainHandling}" />
 
                 <!-- User properties -->
                 <Label Grid.Row="4"

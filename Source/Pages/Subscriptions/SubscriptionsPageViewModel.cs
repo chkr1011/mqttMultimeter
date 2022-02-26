@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using MQTTnetApp.Common;
+using MQTTnetApp.Pages.Subscriptions.State;
 using MQTTnetApp.Services.Mqtt;
-using ReactiveUI;
+using MQTTnetApp.Services.State;
 
 namespace MQTTnetApp.Pages.Subscriptions;
 
@@ -12,24 +12,20 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
 {
     readonly MqttClientService _mqttClientService;
 
-    SubscriptionItemViewModel? _selectedItem;
-
-    public SubscriptionsPageViewModel(MqttClientService mqttClientService)
+    public SubscriptionsPageViewModel(MqttClientService mqttClientService, StateService stateService)
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
-        // Make sure that we start with at least one item.
-        AddItem();
-        SelectedItem = Items.FirstOrDefault();
+        if (stateService == null)
+        {
+            throw new ArgumentNullException(nameof(stateService));
+        }
+
+        stateService.Saving += SaveState;
+        LoadState(stateService);
     }
 
-    public ObservableCollection<SubscriptionItemViewModel> Items { get; } = new();
-
-    public SubscriptionItemViewModel? SelectedItem
-    {
-        get => _selectedItem;
-        set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
-    }
+    public PageItemsViewModel<SubscriptionItemViewModel> Items { get; } = new();
 
     public void AddItem()
     {
@@ -40,22 +36,7 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
 
         newItem.UserProperties.AddItem();
 
-        Items.Add(newItem);
-    }
-
-    public void ClearItems()
-    {
-        Items.Clear();
-    }
-
-    public void RemoveItem(SubscriptionItemViewModel item)
-    {
-        if (item == null)
-        {
-            throw new ArgumentNullException(nameof(item));
-        }
-
-        Items.Remove(item);
+        Items.Collection.Add(newItem);
     }
 
     public async Task SubscribeItem(SubscriptionItemViewModel item)
@@ -82,5 +63,19 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
         {
             App.ShowException(exception);
         }
+    }
+
+    void LoadState(StateService stateService)
+    {
+        stateService.TryGet(SubscriptionsPageState.Key, out SubscriptionsPageState? state);
+        SubscriptionsPageStateLoader.Apply(this, state);
+
+        Items.SelectedItem = Items.Collection.FirstOrDefault();
+    }
+
+    void SaveState(object? sender, SavingStateEventArgs eventArgs)
+    {
+        var state = SubscriptionsPageStateFactory.Create(this);
+        eventArgs.StateService.Set(SubscriptionsPageState.Key, state);
     }
 }

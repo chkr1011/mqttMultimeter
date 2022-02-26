@@ -41,7 +41,7 @@ public sealed class SubscriptionItemViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _retainAsPublished, value);
     }
 
-    public RetainHandlingSelectorViewModel RetainHandlingSelector { get; } = new();
+    public RetainHandlingSelectorViewModel RetainHandling { get; } = new();
 
     public string Topic
     {

@@ -40,7 +40,7 @@
                 </Button>
                 <Button ToolTip.Tip="Remove all connection items"
                         Classes="tool_bar_button"
-                        Command="{Binding ClearItems}">
+                        Command="{Binding Items.Clear}">
                     <PathIcon Data="{StaticResource delete_regular}" />
                 </Button>
             </StackPanel>
