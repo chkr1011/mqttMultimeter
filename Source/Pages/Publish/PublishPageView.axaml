@@ -41,7 +41,7 @@
                 </Button>
                 <Button ToolTip.Tip="Remove all publish items"
                         Classes="tool_bar_button"
-                        Command="{Binding ClearItems}">
+                        Command="{Binding  Items.Clear}">
                     <PathIcon Data="{StaticResource delete_regular}" />
                 </Button>
             </StackPanel>
@@ -49,8 +49,8 @@
             <ListBox Background="Transparent"
                      ItemTemplate="{StaticResource PublishItemViewModelListItem}"
                      Grid.Row="1"
-                     SelectedItem="{Binding SelectedItem}"
-                     Items="{Binding Items}"
+                     SelectedItem="{Binding Items.SelectedItem}"
+                     Items="{Binding Items.Collection}"
                      Grid.Column="0"
                      x:Name="PART_Items" />
         </Grid>

@@ -25,9 +25,9 @@ namespace MQTTnetApp;
 public sealed class App : Application
 {
     static Window? _mainWindow;
+    readonly MainViewModel? _mainViewModel;
 
     readonly StateService _stateService;
-    readonly MainViewModel? _mainViewModel;
 
     public App()
     {

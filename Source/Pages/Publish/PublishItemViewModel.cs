@@ -9,21 +9,13 @@ namespace MQTTnetApp.Pages.Publish;
 public sealed class PublishItemViewModel : BaseViewModel
 {
     string? _contentType;
-
     uint _messageExpiryInterval;
-
     string _name = string.Empty;
-
     string? _payload;
-
     string? _responseTopic;
-
     bool _retain;
-
     uint _subscriptionIdentifier;
-
     string? _topic;
-
     ushort _topicAlias;
 
     public PublishItemViewModel(PublishPageViewModel ownerPage)
@@ -62,7 +54,9 @@ public sealed class PublishItemViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _payload, value);
     }
 
-    public PayloadFormatIndicatorViewModel PayloadFormatIndicator { get; } = new();
+    public PayloadFormatIndicatorSelectorViewModel PayloadFormatIndicator { get; } = new();
+
+    public PayloadInputFormatSelectorViewModel PayloadInputFormat { get; } = new();
 
     public QualityOfServiceLevelSelectorViewModel QualityOfServiceLevel { get; } = new();
 

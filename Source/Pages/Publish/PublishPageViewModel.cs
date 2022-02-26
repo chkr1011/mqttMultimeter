@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using MQTTnetApp.Common;
+using MQTTnetApp.Pages.Publish.State;
 using MQTTnetApp.Services.Mqtt;
-using ReactiveUI;
+using MQTTnetApp.Services.State;
 
 namespace MQTTnetApp.Pages.Publish;
 
@@ -12,24 +12,20 @@ public sealed class PublishPageViewModel : BaseViewModel
 {
     readonly MqttClientService _mqttClientService;
 
-    PublishItemViewModel? _selectedItem;
-
-    public PublishPageViewModel(MqttClientService mqttClientService)
+    public PublishPageViewModel(MqttClientService mqttClientService, StateService stateService)
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
-        // Make sure that we start with at least one item.
-        AddItem();
-        SelectedItem = Items.FirstOrDefault();
+        if (stateService == null)
+        {
+            throw new ArgumentNullException(nameof(stateService));
+        }
+
+        stateService.Saving += SaveState;
+        LoadState(stateService);
     }
 
-    public ObservableCollection<PublishItemViewModel> Items { get; } = new();
-
-    public PublishItemViewModel? SelectedItem
-    {
-        get => _selectedItem;
-        set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
-    }
+    public PageItemsViewModel<PublishItemViewModel> Items { get; } = new();
 
     public void AddItem()
     {
@@ -42,14 +38,8 @@ public sealed class PublishPageViewModel : BaseViewModel
         // It will not be send when the name is empty.
         newItem.UserProperties.AddItem();
 
-        Items.Add(newItem);
-        SelectedItem = newItem;
-    }
-
-    public void ClearItems()
-    {
-        Items.Clear();
-        SelectedItem = null;
+        Items.Collection.Add(newItem);
+        Items.SelectedItem = newItem;
     }
 
     public async Task PublishItem(PublishItemViewModel item)
@@ -72,6 +62,20 @@ public sealed class PublishPageViewModel : BaseViewModel
             throw new ArgumentNullException(nameof(item));
         }
 
-        Items.Remove(item);
+        Items.RemoveItem(item);
+    }
+
+    void LoadState(StateService stateService)
+    {
+        stateService.TryGet(PublishPageState.Key, out PublishPageState? state);
+        PublishPageStateLoader.Apply(this, state);
+
+        Items.SelectedItem = Items.Collection.FirstOrDefault();
+    }
+
+    void SaveState(object? sender, SavingStateEventArgs eventArgs)
+    {
+        var state = PublishPageStateFactory.Create(this);
+        eventArgs.StateService.Set(PublishPageState.Key, state);
     }
 }
