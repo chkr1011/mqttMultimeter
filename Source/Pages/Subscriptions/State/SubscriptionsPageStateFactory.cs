@@ -22,7 +22,7 @@ public static class SubscriptionsPageStateFactory
                 NoLocal = item.NoLocal,
                 RetainAsPublished = item.RetainAsPublished,
                 QualityOfServiceLevel = item.QualityOfServiceLevel.Value,
-                RetainHandling = item.RetainHandling.RetainHandling
+                RetainHandling = item.RetainHandling.Value
             });
         }
 

@@ -16,9 +16,10 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
-        // Make sure that we start with at least one item.
-        AddItem();
-        Items.SelectedItem = Items.Collection.FirstOrDefault();
+        if (stateService == null)
+        {
+            throw new ArgumentNullException(nameof(stateService));
+        }
 
         stateService.Saving += SaveState;
         LoadState(stateService);
@@ -66,11 +67,15 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
 
     void LoadState(StateService stateService)
     {
+        stateService.TryGet(SubscriptionsPageState.Key, out SubscriptionsPageState? state);
+        SubscriptionsPageStateLoader.Apply(this, state);
+
+        Items.SelectedItem = Items.Collection.FirstOrDefault();
     }
 
     void SaveState(object? sender, SavingStateEventArgs eventArgs)
     {
         var state = SubscriptionsPageStateFactory.Create(this);
-        eventArgs.StateService.Set("Subscriptions", state);
+        eventArgs.StateService.Set(SubscriptionsPageState.Key, state);
     }
 }

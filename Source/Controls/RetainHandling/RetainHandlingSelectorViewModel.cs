@@ -13,7 +13,7 @@ public sealed class RetainHandlingSelectorViewModel : BaseViewModel
 
     public RetainHandlingSelectorViewModel()
     {
-        RetainHandling = MqttRetainHandling.SendAtSubscribe;
+        Value = MqttRetainHandling.SendAtSubscribe;
     }
 
     public bool IsDoNotSendOnSubscribe
@@ -34,7 +34,7 @@ public sealed class RetainHandlingSelectorViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _sendAtSubscribeIfNewSubscriptionOnly, value);
     }
 
-    public MqttRetainHandling RetainHandling
+    public MqttRetainHandling Value
     {
         get
         {

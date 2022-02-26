@@ -19,9 +19,14 @@ public sealed class ConnectionPageViewModel : BaseViewModel
 
     public ConnectionPageViewModel(MqttClientService mqttClientService, StateService stateService)
     {
-        _mqttClientService = mqttClientService;
+        _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
-        var timer = new DispatcherTimer(TimeSpan.FromSeconds(0.5), DispatcherPriority.Normal, CheckConnection);
+        if (stateService == null)
+        {
+            throw new ArgumentNullException(nameof(stateService));
+        }
+
+        var timer = new DispatcherTimer(TimeSpan.FromSeconds(0.1), DispatcherPriority.Normal, CheckConnection);
         timer.Start();
 
         stateService.Saving += SaveState;
@@ -68,6 +73,9 @@ public sealed class ConnectionPageViewModel : BaseViewModel
         }
         catch (Exception exception)
         {
+            // Ensure proper UI state before showing the exception.
+            IsConnecting = false;
+
             App.ShowException(exception);
         }
         finally
@@ -95,7 +103,7 @@ public sealed class ConnectionPageViewModel : BaseViewModel
 
     void LoadState(StateService stateService)
     {
-        stateService.TryGet("Connections", out ConnectionPageState? state);
+        stateService.TryGet(ConnectionPageState.Key, out ConnectionPageState? state);
         ConnectionPageStateLoader.Apply(this, state);
 
         Items.SelectedItem = Items.Collection.FirstOrDefault();
@@ -104,6 +112,6 @@ public sealed class ConnectionPageViewModel : BaseViewModel
     void SaveState(object? sender, SavingStateEventArgs eventArgs)
     {
         var state = ConnectionPageStateFactory.Create(this);
-        eventArgs.StateService.Set("Connections", state);
+        eventArgs.StateService.Set(ConnectionPageState.Key, state);
     }
 }

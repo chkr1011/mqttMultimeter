@@ -29,10 +29,10 @@
                         IsVisible="{Binding Path=IsPointerOver, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">
 
                 <Button Classes="tool_bar_button"
-                        ToolTip.Tip="Delete item"
-                        Command="{Binding OwnerPage.Items.RemoveItem}"
+                        ToolTip.Tip="Move item up"
+                        Command="{Binding OwnerPage.Items.MoveItemUp}"
                         CommandParameter="{Binding .}">
-                    <PathIcon Data="{StaticResource delete_regular}" />
+                    <PathIcon Data="{StaticResource arrow_up_regular}" />
                 </Button>
 
                 <Button Classes="tool_bar_button"

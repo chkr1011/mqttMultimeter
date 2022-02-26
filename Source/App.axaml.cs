@@ -31,8 +31,7 @@ public sealed class App : Application
 
     public App()
     {
-        var serviceProvider = new ServiceCollection()
-            //.AddLogging()
+        var serviceProvider = new ServiceCollection().AddLogging()
             .AddSingleton<MqttClientService>()
             .AddSingleton<AppUpdateService>()
             .AddSingleton<JsonSerializerService>()
@@ -54,7 +53,7 @@ public sealed class App : Application
         _stateService = serviceProvider.GetRequiredService<StateService>();
         _mainViewModel = serviceProvider.GetService<MainViewModel>();
     }
-
+    
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -72,6 +71,13 @@ public sealed class App : Application
             _mainWindow.Closing += OnMainWindowClosing;
 
             desktop.MainWindow = _mainWindow;
+        }
+        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+        {
+            singleViewPlatform.MainView = new MainView
+            {
+                DataContext = _mainViewModel
+            };
         }
 
         base.OnFrameworkInitializationCompleted();
