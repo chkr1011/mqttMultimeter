@@ -78,7 +78,7 @@ public sealed class BufferInspectorView : TemplatedControl
 
         Formats.Add(new BufferConverter
         {
-            Name = "MessagePack",
+            Name = "MessagePack as JSON",
             Convert = b =>
             {
                 var json = MessagePackSerializer.ConvertToJson(b);

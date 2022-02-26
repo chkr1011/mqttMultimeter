@@ -116,8 +116,8 @@ public sealed class MqttClientService
             .WithRetainFlag(item.Retain)
             .WithMessageExpiryInterval(item.MessageExpiryInterval)
             .WithContentType(item.ContentType)
-            .WithPayloadFormatIndicator(item.PayloadFormatIndicator.ToPayloadFormatIndicator())
-            .WithPayload(item.PayloadFormatIndicator.ToPayload(item.Payload))
+            .WithPayloadFormatIndicator(item.PayloadFormatIndicator.Value)
+            .WithPayload(item.PayloadInputFormat.ConvertPayloadInput(item.Payload))
             .WithSubscriptionIdentifier(item.SubscriptionIdentifier)
             .WithResponseTopic(item.ResponseTopic);
 
@@ -159,7 +159,7 @@ public sealed class MqttClientService
         var topicFilter = new MqttTopicFilterBuilder().WithTopic(subscriptionItem.Topic)
             .WithQualityOfServiceLevel(subscriptionItem.QualityOfServiceLevel.Value)
             .WithNoLocal(subscriptionItem.NoLocal)
-            .WithRetainHandling(subscriptionItem.RetainHandlingSelector.RetainHandling)
+            .WithRetainHandling(subscriptionItem.RetainHandling.Value)
             .WithRetainAsPublished(subscriptionItem.RetainAsPublished)
             .Build();
 
