@@ -23,15 +23,16 @@
         <StyleInclude Source="/Styles/NumericUpDown.axaml" />
         <StyleInclude Source="/Styles/ComboBox.axaml" />
         <StyleInclude Source="/Styles/CheckBox.axaml" />
-
+        
         <StyleInclude Source="/Styles/Text.axaml" />
 
         <StyleInclude Source="/Styles/Components.axaml" />
         <StyleInclude Source="/Styles/Sidebar.axaml" />
 
         <StyleInclude Source="/Controls/GroupBox.axaml" />
-        <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
         <StyleInclude Source="/Controls/HexBox.axaml" />
+        <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
+        <StyleInclude Source="/Controls/Overlay/Overlay.axaml" />
 
         <Style Selector="ItemsPresenter">
             <Setter Property="(KeyboardNavigation.TabNavigation)"

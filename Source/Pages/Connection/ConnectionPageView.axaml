@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:connection="clr-namespace:MQTTnetApp.Pages.Connection"
+             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
@@ -15,53 +16,58 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="1" />
-            <ColumnDefinition Width="3*" />
-        </Grid.ColumnDefinitions>
 
-        <!-- The list of publish items. -->
-        <Grid Background="#262626">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+    <controls:Overlay IsOverlayVisible="{Binding IsConnecting}">
 
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="0"
-                        Classes="tool_bar"
-                        Margin="0">
-                <Button ToolTip.Tip="Add connection item"
-                        Classes="tool_bar_button"
-                        Command="{Binding AddItem}">
-                    <PathIcon Data="{StaticResource add_square_regular}" />
-                </Button>
-                <Button ToolTip.Tip="Remove all connection items"
-                        Classes="tool_bar_button"
-                        Command="{Binding Items.Clear}">
-                    <PathIcon Data="{StaticResource delete_regular}" />
-                </Button>
-            </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
 
-            <ListBox Background="Transparent"
-                     ItemTemplate="{StaticResource ConnectItemViewModelListItem}"
-                     Grid.Row="1"
-                     SelectedItem="{Binding Items.SelectedItem}"
-                     Items="{Binding Items.Collection}"
-                     x:Name="PART_Items"
-                     Grid.Column="0" />
+            <!-- The list of publish items. -->
+            <Grid Background="#262626">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal"
+                            Grid.Row="0"
+                            Classes="tool_bar"
+                            Margin="0">
+                    <Button ToolTip.Tip="Add connection item"
+                            Classes="tool_bar_button"
+                            Command="{Binding AddItem}">
+                        <PathIcon Data="{StaticResource add_square_regular}" />
+                    </Button>
+                    <Button ToolTip.Tip="Remove all connection items"
+                            Classes="tool_bar_button"
+                            Command="{Binding Items.Clear}">
+                        <PathIcon Data="{StaticResource delete_regular}" />
+                    </Button>
+                </StackPanel>
+
+                <ListBox Background="Transparent"
+                         ItemTemplate="{StaticResource ConnectItemViewModelListItem}"
+                         Grid.Row="1"
+                         SelectedItem="{Binding Items.SelectedItem}"
+                         Items="{Binding Items.Collection}"
+                         x:Name="PART_Items"
+                         Grid.Column="0" />
+            </Grid>
+
+            <!-- The splitter -->
+            <GridSplitter Grid.Column="1"
+                          Width="1" />
+
+            <!-- The selected item. -->
+            <ContentPresenter Margin="10"
+                              Grid.Column="2"
+                              Content="{Binding ElementName=PART_Items, Path=SelectedItem}" />
         </Grid>
 
-        <!-- The splitter -->
-        <GridSplitter Grid.Column="1"
-                      Width="1" />
-
-        <!-- The selected item. -->
-        <ContentPresenter Margin="10"
-                          Grid.Column="2"
-                          Content="{Binding ElementName=PART_Items, Path=SelectedItem}" />
-    </Grid>
+    </controls:Overlay>
 
 </UserControl>
