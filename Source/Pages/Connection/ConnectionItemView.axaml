@@ -9,99 +9,99 @@
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance connection:ConnectionItemViewModel}"
              x:Class="MQTTnetApp.Pages.Connection.ConnectionItemView">
-    
-        <Grid ColumnDefinitions="*, Auto"
-              RowDefinitions="Auto,*,Auto,Auto">
 
-            <!-- The name and buttons -->
-            <Grid Grid.Row="0"
-                  ColumnDefinitions="*,Auto">
-                <TextBox Grid.Column="0"
-                         Classes="page_item_name"
-                         Text="{Binding Name}" />
+    <Grid ColumnDefinitions="*, Auto"
+          RowDefinitions="Auto,*,Auto,Auto">
 
-                <!-- The buttons -->
-                <StackPanel Grid.Column="1"
-                            Margin="10,0,0,0"
-                            Orientation="Horizontal">
-                    <StackPanel.Styles>
-                        <Style Selector="Button">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource SystemAccentColor}" />
-                        </Style>
-                    </StackPanel.Styles>
-                    <Button IsDefault="True"
-                            Classes="image_button"
-                            MinWidth="100"
-                            Margin="0,0,10,0"
-                            Command="{Binding Connect}">
-                        <StackPanel>
-                            <PathIcon Data="{StaticResource checkmark_circle_regular}" />
-                            <TextBlock Text="Connect" />
-                        </StackPanel>
-                    </Button>
-                    <Button Classes="image_button"
-                            MinWidth="100"
-                            Command="{Binding Disconnect}">
-                        <StackPanel>
-                            <PathIcon Data="{StaticResource plug_disconnected_regular}" />
-                            <TextBlock Text="Disconnect" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-            </Grid>
+        <!-- The name and buttons -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,Auto">
+            <TextBox Grid.Column="0"
+                     Classes="page_item_name"
+                     Text="{Binding Name}" />
 
-            <!-- The connection options -->
-            <connection:ConnectionOptionsView Grid.Row="1"
-                                              Grid.Column="0"
-                                              Margin="0,10,0,0" />
-
-            <controls:GroupBox Grid.Row="2"
-                               Grid.Column="0"
-                               Header="Response">
-                <TabControl>
-                    <!-- The general tab -->
-                    <TabItem Header="General">
-                        <Grid ColumnDefinitions="Auto,Auto,Auto,Auto"
-                              RowDefinitions="Auto,Auto,Auto,Auto">
-                            <Label Grid.Row="0"
-                                   Grid.Column="0"
-                                   Classes="caption">Reason code</Label>
-                            <TextBlock Grid.Row="0"
-                                       Grid.Column="1"
-                                       Classes="value code_text"
-                                       Text="{Binding Response.ReasonCode}" />
-                            <Label Grid.Row="1"
-                                   Grid.Column="0"
-                                   Classes="caption">Reason code text</Label>
-                            <TextBlock Grid.Row="1"
-                                       Grid.Column="1"
-                                       Classes="value code_text"
-                                       Text="{Binding Response.ReasonCodeText}" />
-                            <Label Grid.Row="2"
-                                   Grid.Column="0"
-                                   Classes="caption">Reason string</Label>
-                            <TextBlock Grid.Row="2"
-                                       Grid.Column="1"
-                                       Classes="value code_text"
-                                       Text="{Binding Response.ReasonString}" />
-                            <Label Grid.Row="3"
-                                   Grid.Column="0"
-                                   Classes="caption">Is session present</Label>
-                            <TextBlock Grid.Row="3"
-                                       Grid.Column="1"
-                                       IsEnabled="False"
-                                       Classes="value code_text"
-                                       Text="{Binding Response.IsSessionPresent}" />
-                        </Grid>
-                    </TabItem>
-
-                    <!-- The user properties tab -->
-                    <TabItem Header="User properties">
-                        <controls:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
-                    </TabItem>
-                </TabControl>
-            </controls:GroupBox>
+            <!-- The buttons -->
+            <StackPanel Grid.Column="1"
+                        Margin="10,0,0,0"
+                        Orientation="Horizontal">
+                <StackPanel.Styles>
+                    <Style Selector="Button">
+                        <Setter Property="Background"
+                                Value="{DynamicResource SystemAccentColor}" />
+                    </Style>
+                </StackPanel.Styles>
+                <Button IsDefault="True"
+                        Classes="image_button"
+                        MinWidth="100"
+                        Margin="0,0,10,0"
+                        Command="{Binding Connect}">
+                    <StackPanel>
+                        <PathIcon Data="{StaticResource checkmark_circle_regular}" />
+                        <TextBlock Text="Connect" />
+                    </StackPanel>
+                </Button>
+                <Button Classes="image_button"
+                        MinWidth="100"
+                        Command="{Binding Disconnect}">
+                    <StackPanel>
+                        <PathIcon Data="{StaticResource plug_disconnected_regular}" />
+                        <TextBlock Text="Disconnect" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
         </Grid>
+
+        <!-- The connection options -->
+        <connection:ConnectionOptionsView Grid.Row="1"
+                                          Grid.Column="0"
+                                          Margin="0,10,0,0" />
+
+        <controls:GroupBox Grid.Row="2"
+                           Grid.Column="0"
+                           Header="Response">
+            <TabControl>
+                <!-- The general tab -->
+                <TabItem Header="General">
+                    <Grid ColumnDefinitions="Auto,Auto,Auto,Auto"
+                          RowDefinitions="Auto,Auto,Auto,Auto">
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Classes="caption">Reason code</Label>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Classes="value code_text"
+                                   Text="{Binding Response.ReasonCode}" />
+                        <Label Grid.Row="1"
+                               Grid.Column="0"
+                               Classes="caption">Reason code text</Label>
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Classes="value code_text"
+                                   Text="{Binding Response.ReasonCodeText}" />
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Classes="caption">Reason string</Label>
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Classes="value code_text"
+                                   Text="{Binding Response.ReasonString}" />
+                        <Label Grid.Row="3"
+                               Grid.Column="0"
+                               Classes="caption">Is session present</Label>
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="1"
+                                   IsEnabled="False"
+                                   Classes="value code_text"
+                                   Text="{Binding Response.IsSessionPresent}" />
+                    </Grid>
+                </TabItem>
+
+                <!-- The user properties tab -->
+                <TabItem Header="User properties">
+                    <controls:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
+                </TabItem>
+            </TabControl>
+        </controls:GroupBox>
+    </Grid>
 
 </UserControl>

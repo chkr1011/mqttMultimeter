@@ -10,13 +10,19 @@
             <ControlTemplate TargetType="{x:Type controls:Overlay}">
                 <Grid>
 
+                    <!-- The regular content -->
                     <ContentPresenter Content="{TemplateBinding Content}"
                                       HorizontalAlignment="Stretch"
                                       VerticalAlignment="Stretch" />
 
+                    <!-- The gray overlay -->
                     <StackPanel IsVisible="{TemplateBinding IsOverlayVisible}"
                                 Background="#BB333333" />
 
+                    <!-- The overlay content -->
+                    <ContentPresenter Content="{TemplateBinding OverlayContent}"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" />
                 </Grid>
 
             </ControlTemplate>

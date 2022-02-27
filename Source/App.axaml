@@ -23,7 +23,7 @@
         <StyleInclude Source="/Styles/NumericUpDown.axaml" />
         <StyleInclude Source="/Styles/ComboBox.axaml" />
         <StyleInclude Source="/Styles/CheckBox.axaml" />
-        
+
         <StyleInclude Source="/Styles/Text.axaml" />
 
         <StyleInclude Source="/Styles/Components.axaml" />

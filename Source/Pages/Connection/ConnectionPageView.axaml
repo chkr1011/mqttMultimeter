@@ -17,7 +17,8 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <controls:Overlay IsOverlayVisible="{Binding IsConnecting}">
+    <controls:Overlay IsOverlayVisible="{Binding IsOverlayVisible}"
+                      OverlayContent="{Binding OverlayContent}">
 
         <Grid>
             <Grid.ColumnDefinitions>
