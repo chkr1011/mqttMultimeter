@@ -12,4 +12,12 @@ public sealed class ProgressIndicatorViewModel : BaseViewModel
         get => _message;
         set => this.RaiseAndSetIfChanged(ref _message, value);
     }
+
+    public static ProgressIndicatorViewModel Create(string message)
+    {
+        return new ProgressIndicatorViewModel
+        {
+            Message = message
+        };
+    }
 }

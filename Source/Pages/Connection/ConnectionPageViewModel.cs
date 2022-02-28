@@ -69,10 +69,7 @@ public sealed class ConnectionPageViewModel : BasePageViewModel
         {
             IsConnecting = true;
 
-            OverlayContent = new ProgressIndicatorViewModel
-            {
-                Message = $"Connecting with '{item.ServerOptions.Host}'..."
-            };
+            OverlayContent = ProgressIndicatorViewModel.Create($"Connecting with '{item.ServerOptions.Host}'...");
 
             var response = await _mqttClientService.Connect(item);
             item.Response.ApplyResponse(response);
@@ -82,6 +79,7 @@ public sealed class ConnectionPageViewModel : BasePageViewModel
             // Ensure proper UI state before showing the exception.
             IsConnecting = false;
 
+            // TODO: In overlay.
             App.ShowException(exception);
         }
         finally

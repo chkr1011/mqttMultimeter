@@ -24,11 +24,11 @@ public sealed class Overlay : ContentControl
 
     protected override void OnKeyDown(KeyEventArgs e)
     {
-        if (IsOverlayVisible)
-        {
-            e.Handled = true;
-            return;
-        }
+        // if (IsOverlayVisible)
+        // {
+        //     e.Handled = true;
+        //     return;
+        // }
 
         base.OnKeyDown(e);
     }

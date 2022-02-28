@@ -12,6 +12,7 @@
 
                     <!-- The regular content -->
                     <ContentPresenter Content="{TemplateBinding Content}"
+                                      IsEnabled="{Binding !IsOverlayVisible, RelativeSource={RelativeSource TemplatedParent}}"
                                       HorizontalAlignment="Stretch"
                                       VerticalAlignment="Stretch" />
 
