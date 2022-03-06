@@ -1,11 +1,11 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnetApp.Pages.Publish;
+namespace MQTTnetApp.Pages.Scripts;
 
-public sealed class PublishPageView : UserControl
+public sealed class ScriptsPageView : UserControl
 {
-    public PublishPageView()
+    public ScriptsPageView()
     {
         InitializeComponent();
     }

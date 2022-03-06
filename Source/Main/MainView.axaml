@@ -71,6 +71,14 @@
                             <PathIcon Data="{StaticResource apps_list_regular}" />
                         </TabItem.Header>
                     </TabItem>
+                    
+                    <!-- Scripts -->
+                    <TabItem Content="{Binding ScriptsPage}"
+                             ToolTip.Tip="Scripts">
+                        <TabItem.Header>
+                            <PathIcon Data="{StaticResource code_regular}" />
+                        </TabItem.Header>
+                    </TabItem>
 
                     <!-- Packet Inspection -->
                     <TabItem Content="{Binding PacketInspectorPage}"

@@ -1,0 +1,48 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:scripts="clr-namespace:MQTTnetApp.Pages.Scripts">
+
+    <DataTemplate x:Key="PublishItemViewModelListItem"
+                  DataType="{x:Type scripts:ScriptItemViewModel}">
+
+        <Grid ColumnDefinitions="*,Auto"
+              Height="32"
+              Margin="10">
+
+            <StackPanel>
+                <TextBlock Text="{Binding Name}"
+                           TextTrimming="CharacterEllipsis"
+                           FontSize="12" />
+            </StackPanel>
+
+            <!-- The Buttons -->
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        IsVisible="{Binding Path=IsPointerOver, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">
+
+                <Button Classes="tool_bar_button"
+                        ToolTip.Tip="Move item up"
+                        Command="{Binding OwnerPage.Items.MoveItemUp}"
+                        CommandParameter="{Binding .}">
+                    <PathIcon Data="{StaticResource arrow_up_regular}" />
+                </Button>
+
+                <Button Classes="tool_bar_button"
+                        ToolTip.Tip="Move item down"
+                        Command="{Binding OwnerPage.Items.MoveItemDown}"
+                        CommandParameter="{Binding .}">
+                    <PathIcon Data="{StaticResource arrow_down_regular}" />
+                </Button>
+
+                <Button Classes="tool_bar_button"
+                        ToolTip.Tip="Delete item"
+                        Command="{Binding OwnerPage.Items.RemoveItem}"
+                        CommandParameter="{Binding .}">
+                    <PathIcon Data="{StaticResource delete_regular}" />
+                </Button>
+
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

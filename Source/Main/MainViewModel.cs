@@ -5,6 +5,7 @@ using MQTTnetApp.Pages.Info;
 using MQTTnetApp.Pages.Log;
 using MQTTnetApp.Pages.PacketInspector;
 using MQTTnetApp.Pages.Publish;
+using MQTTnetApp.Pages.Scripts;
 using MQTTnetApp.Pages.Subscriptions;
 using ReactiveUI;
 
@@ -18,6 +19,7 @@ public sealed class MainViewModel : BaseViewModel
         PublishPageViewModel publishPage,
         SubscriptionsPageViewModel subscriptionsPage,
         InflightPageViewModel inflightPage,
+        ScriptsPageViewModel scriptsPage,
         PacketInspectorPageViewModel packetInspectorPage,
         InfoPageViewModel infoPage,
         LogPageViewModel logPage)
@@ -26,6 +28,7 @@ public sealed class MainViewModel : BaseViewModel
         PublishPage = publishPage;
         SubscriptionsPage = subscriptionsPage;
         InflightPage = inflightPage;
+        ScriptsPage = scriptsPage;
         PacketInspectorPage = packetInspectorPage;
         InfoPage = infoPage;
         LogPage = logPage;
@@ -48,6 +51,8 @@ public sealed class MainViewModel : BaseViewModel
     public PacketInspectorPageViewModel PacketInspectorPage { get; }
 
     public PublishPageViewModel PublishPage { get; }
+
+    public ScriptsPageViewModel ScriptsPage { get; }
 
     public SubscriptionsPageViewModel SubscriptionsPage { get; }
 }
