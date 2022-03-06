@@ -75,6 +75,10 @@
             <DependentUpon>GroupBox.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Compile Update="Controls\Overlay\Overlay.axaml.cs">
+            <DependentUpon>Overlay.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
     <ItemGroup>
         <None Remove="Pages\Info\Readme.md"/>

@@ -1,7 +1,5 @@
 using System;
-using System.ComponentModel;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,8 +22,7 @@ namespace MQTTnetApp;
 
 public sealed class App : Application
 {
-    static Window? _mainWindow;
-    readonly MainViewModel? _mainViewModel;
+    static MainViewModel? _mainViewModel;
 
     readonly StateService _stateService;
 
@@ -63,14 +60,17 @@ public sealed class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            _mainWindow = new MainWindow
+            var mainWindow = new MainWindow
             {
                 DataContext = _mainViewModel
             };
 
-            _mainWindow.Closing += OnMainWindowClosing;
+            mainWindow.Closing += (_, __) =>
+            {
+                _stateService.Write().GetAwaiter().GetResult();
+            };
 
-            desktop.MainWindow = _mainWindow;
+            desktop.MainWindow = mainWindow;
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
@@ -91,17 +91,17 @@ public sealed class App : Application
             Exception = exception.ToString()
         };
 
-        var window = new ErrorBox
+        var errorBox = new ErrorBox
         {
-            DataContext = viewModel,
-            WindowStartupLocation = WindowStartupLocation.CenterOwner
+            DataContext = viewModel
         };
 
-        window.ShowDialog(MainWindow.Instance);
-    }
+        errorBox.Closed += (_, __) =>
+        {
+            // Consider using a Stack so that multiple contents like windows etc. can be stacked.
+            _mainViewModel.OverlayContent = null;
+        };
 
-    void OnMainWindowClosing(object? sender, CancelEventArgs e)
-    {
-        _stateService.Write().GetAwaiter().GetResult();
+        _mainViewModel.OverlayContent = errorBox;
     }
 }

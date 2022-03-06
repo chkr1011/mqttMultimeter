@@ -9,6 +9,7 @@
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance connection:ConnectionItemViewModel}"
              x:Class="MQTTnetApp.Pages.Connection.ConnectionItemView">
+
     <Grid ColumnDefinitions="*, Auto"
           RowDefinitions="Auto,*,Auto,Auto">
 
@@ -102,4 +103,5 @@
             </TabControl>
         </controls:GroupBox>
     </Grid>
+
 </UserControl>

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using MQTTnetApp.Common;
+using MQTTnetApp.Controls;
 using MQTTnetApp.Pages.Connection.State;
 using MQTTnetApp.Services.Mqtt;
 using MQTTnetApp.Services.State;
@@ -10,7 +11,7 @@ using ReactiveUI;
 
 namespace MQTTnetApp.Pages.Connection;
 
-public sealed class ConnectionPageViewModel : BaseViewModel
+public sealed class ConnectionPageViewModel : BasePageViewModel
 {
     readonly MqttClientService _mqttClientService;
 
@@ -68,6 +69,8 @@ public sealed class ConnectionPageViewModel : BaseViewModel
         {
             IsConnecting = true;
 
+            OverlayContent = ProgressIndicatorViewModel.Create($"Connecting with '{item.ServerOptions.Host}'...");
+
             var response = await _mqttClientService.Connect(item);
             item.Response.ApplyResponse(response);
         }
@@ -76,11 +79,13 @@ public sealed class ConnectionPageViewModel : BaseViewModel
             // Ensure proper UI state before showing the exception.
             IsConnecting = false;
 
+            // TODO: In overlay.
             App.ShowException(exception);
         }
         finally
         {
             IsConnecting = false;
+            OverlayContent = null;
         }
     }
 

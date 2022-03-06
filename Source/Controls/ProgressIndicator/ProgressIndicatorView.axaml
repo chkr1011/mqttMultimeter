@@ -1,0 +1,44 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance controls:ProgressIndicatorViewModel}"
+             x:Class="MQTTnetApp.Controls.ProgressIndicatorView">
+    <Border Background="#262626"
+            BorderThickness="1"
+            BorderBrush="Black">
+        <StackPanel Margin="25">
+            <PathIcon Data="{StaticResource spinner_ios_regular}"
+                      Width="32"
+                      Height="32">
+                <PathIcon.Styles>
+                    <Style Selector="PathIcon">
+                        <Style.Animations>
+                            <Animation Duration="0:0:1"
+                                       IterationCount="Infinite">
+                                <KeyFrame Cue="0%">
+                                    <Setter Property="RotateTransform.Angle"
+                                            Value="0.0" />
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="RotateTransform.Angle"
+                                            Value="360.0" />
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                </PathIcon.Styles>
+            </PathIcon>
+
+            <!-- The message -->
+            <TextBlock Margin="0,25,0,0"
+                       FontSize="18"
+                       FontWeight="Light"
+                       Text="{Binding Message}" />
+        </StackPanel>
+    </Border>
+</UserControl>

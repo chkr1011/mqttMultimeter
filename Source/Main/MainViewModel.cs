@@ -6,11 +6,14 @@ using MQTTnetApp.Pages.Log;
 using MQTTnetApp.Pages.PacketInspector;
 using MQTTnetApp.Pages.Publish;
 using MQTTnetApp.Pages.Subscriptions;
+using ReactiveUI;
 
 namespace MQTTnetApp.Main;
 
 public sealed class MainViewModel : BaseViewModel
 {
+    object? _overlayContent;
+
     public MainViewModel(ConnectionPageViewModel connectionPage,
         PublishPageViewModel publishPage,
         SubscriptionsPageViewModel subscriptionsPage,
@@ -35,6 +38,12 @@ public sealed class MainViewModel : BaseViewModel
     public InfoPageViewModel InfoPage { get; }
 
     public LogPageViewModel LogPage { get; }
+
+    public object? OverlayContent
+    {
+        get => _overlayContent;
+        set => this.RaiseAndSetIfChanged(ref _overlayContent, value);
+    }
 
     public PacketInspectorPageViewModel PacketInspectorPage { get; }
 

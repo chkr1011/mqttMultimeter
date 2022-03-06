@@ -13,10 +13,10 @@
                 Value="1" />
         <Setter Property="Margin"
                 Value="0" />
-    </Style>
-
-    <Style Selector="GridSplitter">
         <Setter Property="Background"
                 Value="Black" />
+        <Setter Property="IsTabStop"
+                Value="False" />
     </Style>
+
 </Styles>

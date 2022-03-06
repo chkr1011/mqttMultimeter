@@ -1,42 +1,46 @@
-﻿<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:MQTTnetApp.Controls"
-        mc:Ignorable="d"
-        d:DesignWidth="640"
-        d:DesignHeight="340"
-        Width="640"
-        ShowInTaskbar="False"
-        CanResize="False"
-        Height="320"
-        x:Class="MQTTnetApp.Controls.ErrorBox"
-        d:DataContext="{d:DesignInstance controls:ErrorBoxViewModel}"
-        Title="Error">
-    <Grid RowDefinitions="*,Auto,Auto">
-        <TextBlock FontSize="18"
-                   FontWeight="Light"
-                   TextWrapping="Wrap"
-                   HorizontalAlignment="Center"
-                   Grid.Row="0"
-                   Text="{Binding Message}" />
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
+             mc:Ignorable="d"
+             d:DesignWidth="640"
+             d:DesignHeight="340"
+             Width="640"
+             Height="320"
+             x:Class="MQTTnetApp.Controls.ErrorBox"
+             d:DataContext="{d:DesignInstance controls:ErrorBoxViewModel}">
+    <Border Background="#262626"
+            BorderThickness="1"
+            BorderBrush="Black">
+        <Grid RowDefinitions="*,Auto,Auto">
+            <TextBlock FontSize="18"
+                       FontWeight="Light"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       Grid.Row="0"
+                       Text="{Binding Message}" />
 
-        <Expander Header="Stack Trace"
-                  Grid.Row="1">
-            <TextBox IsReadOnly="True"
-                     Text="{Binding Exception}"
-                     FontFamily="Consolas"
-                     TextWrapping="NoWrap" />
-        </Expander>
+            <Expander Header="Stack Trace"
+                      Grid.Row="1">
+                <TextBox IsReadOnly="True"
+                         BorderThickness="0"
+                         Classes="code_text"
+                         Text="{Binding Exception}"
+                         TextWrapping="NoWrap" />
+            </Expander>
 
-        <Border Grid.Row="2">
-            <StackPanel Margin="10"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                <Button Click="OnButtonCloseClicked">Copy to clipboard</Button>
-                <Button Margin="10,0,0,0"
-                        Click="OnButtonCloseClicked">OK</Button>
-            </StackPanel>
-        </Border>
-    </Grid>
-</Window>
+            <Border Grid.Row="2">
+                <StackPanel Margin="10"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                    <Button Click="OnButtonCopyClicked">Copy to clipboard</Button>
+                    <Button Margin="10,0,0,0"
+                            IsDefault="True"
+                            IsCancel="True"
+                            Click="OnButtonCloseClicked">OK</Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>

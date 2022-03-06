@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:main="clr-namespace:MQTTnetApp.Main"
+             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
              d:DataContext="{d:DesignInstance main:MainViewModel}"
              d:DesignHeight="450"
              d:DesignWidth="800"
@@ -27,116 +28,121 @@
         </Style>
     </UserControl.Styles>
 
-    <Grid RowDefinitions="*,Auto">
+    <!-- The overlay with content like the error box etc. -->
+    <controls:Overlay IsOverlayVisible="{Binding OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
+                      OverlayContent="{Binding OverlayContent}">
 
-        <!-- The sidebar -->
-        <TabControl x:Name="Sidebar"
-                    Grid.Row="0"
-                    Classes="sidebar">
+        <Grid RowDefinitions="*,Auto">
 
-            <!-- Connect -->
-            <TabControl.Items>
-                <TabItem Content="{Binding ConnectionPage}"
-                         ToolTip.Tip="Connect">
-                    <TabItem.Header>
-                        <PathIcon Data="{StaticResource globe_regular}" />
-                    </TabItem.Header>
-                </TabItem>
+            <!-- The sidebar -->
+            <TabControl x:Name="Sidebar"
+                        Grid.Row="0"
+                        Classes="sidebar">
 
-                <!-- Publish -->
-                <TabItem Content="{Binding PublishPage}"
-                         ToolTip.Tip="Publish">
-                    <TabItem.Header>
-                        <PathIcon Data="{StaticResource send_regular}" />
-                    </TabItem.Header>
-                </TabItem>
+                <!-- Connect -->
+                <TabControl.Items>
+                    <TabItem Content="{Binding ConnectionPage}"
+                             ToolTip.Tip="Connect">
+                        <TabItem.Header>
+                            <PathIcon Data="{StaticResource globe_regular}" />
+                        </TabItem.Header>
+                    </TabItem>
 
-                <!-- Subscribe -->
-                <TabItem Content="{Binding SubscriptionsPage}"
-                         ToolTip.Tip="Subscribe">
-                    <TabItem.Header>
-                        <PathIcon Data="{StaticResource filter_regular}" />
-                    </TabItem.Header>
-                </TabItem>
+                    <!-- Publish -->
+                    <TabItem Content="{Binding PublishPage}"
+                             ToolTip.Tip="Publish">
+                        <TabItem.Header>
+                            <PathIcon Data="{StaticResource send_regular}" />
+                        </TabItem.Header>
+                    </TabItem>
 
-                <!-- Inflight -->
-                <TabItem Content="{Binding InflightPage}"
-                         ToolTip.Tip="Inflight">
-                    <TabItem.Header>
-                        <PathIcon Data="{StaticResource apps_list_regular}" />
-                    </TabItem.Header>
-                </TabItem>
+                    <!-- Subscribe -->
+                    <TabItem Content="{Binding SubscriptionsPage}"
+                             ToolTip.Tip="Subscribe">
+                        <TabItem.Header>
+                            <PathIcon Data="{StaticResource filter_regular}" />
+                        </TabItem.Header>
+                    </TabItem>
 
-                <!-- Packet Inspection -->
-                <TabItem Content="{Binding PacketInspectorPage}"
-                         ToolTip.Tip="Packet Inspection">
-                    <TabItem.Header>
-                        <PathIcon Data="{StaticResource arrow_swap_regular}" />
-                    </TabItem.Header>
-                </TabItem>
+                    <!-- Inflight -->
+                    <TabItem Content="{Binding InflightPage}"
+                             ToolTip.Tip="Inflight">
+                        <TabItem.Header>
+                            <PathIcon Data="{StaticResource apps_list_regular}" />
+                        </TabItem.Header>
+                    </TabItem>
 
-                <!-- Log -->
-                <TabItem Content="{Binding LogPage}"
-                         ToolTip.Tip="Log">
-                    <TabItem.Header>
-                        <PathIcon Data="{StaticResource stethoscope_regular}" />
-                    </TabItem.Header>
-                </TabItem>
+                    <!-- Packet Inspection -->
+                    <TabItem Content="{Binding PacketInspectorPage}"
+                             ToolTip.Tip="Packet Inspection">
+                        <TabItem.Header>
+                            <PathIcon Data="{StaticResource arrow_swap_regular}" />
+                        </TabItem.Header>
+                    </TabItem>
 
-                <!-- Info -->
-                <TabItem Content="{Binding InfoPage}"
-                         ToolTip.Tip="Info">
-                    <TabItem.Header>
-                        <PathIcon Data="{StaticResource info_regular}" />
-                    </TabItem.Header>
-                </TabItem>
-            </TabControl.Items>
-        </TabControl>
+                    <!-- Log -->
+                    <TabItem Content="{Binding LogPage}"
+                             ToolTip.Tip="Log">
+                        <TabItem.Header>
+                            <PathIcon Data="{StaticResource stethoscope_regular}" />
+                        </TabItem.Header>
+                    </TabItem>
 
-        <!-- The status bar -->
-        <Border Classes="status_bar"
-                Classes.status_bar_connected="{Binding ConnectionPage.IsConnected}"
-                Classes.status_bar_not_connected="{Binding !ConnectionPage.IsConnected}"
-                Grid.Row="1">
-            <DockPanel LastChildFill="True">
+                    <!-- Info -->
+                    <TabItem Content="{Binding InfoPage}"
+                             ToolTip.Tip="Info">
+                        <TabItem.Header>
+                            <PathIcon Data="{StaticResource info_regular}" />
+                        </TabItem.Header>
+                    </TabItem>
+                </TabControl.Items>
+            </TabControl>
 
-                <StackPanel DockPanel.Dock="Left"
-                            Orientation="Horizontal">
+            <!-- The status bar -->
+            <Border Classes="status_bar"
+                    Classes.status_bar_connected="{Binding ConnectionPage.IsConnected}"
+                    Classes.status_bar_not_connected="{Binding !ConnectionPage.IsConnected}"
+                    Grid.Row="1">
+                <DockPanel LastChildFill="True">
 
-                    <!-- The connection status -->
-                    <Border Width="166">
-                        <Grid HorizontalAlignment="Center">
-                            <TextBlock Text="Not connected"
-                                       IsVisible="{Binding !ConnectionPage.IsConnected}" />
-                            <TextBlock Text="Connected"
-                                       IsVisible="{Binding ConnectionPage.IsConnected}" />
-                        </Grid>
-                    </Border>
+                    <StackPanel DockPanel.Dock="Left"
+                                Orientation="Horizontal">
 
-                    <Separator />
+                        <!-- The connection status -->
+                        <Border Width="166">
+                            <Grid HorizontalAlignment="Center">
+                                <TextBlock Text="Not connected"
+                                           IsVisible="{Binding !ConnectionPage.IsConnected}" />
+                                <TextBlock Text="Connected"
+                                           IsVisible="{Binding ConnectionPage.IsConnected}" />
+                            </Grid>
+                        </Border>
 
-                    <!-- The count of received application messages -->
-                    <Border>
-                        <TextBlock Text="{Binding InflightPage.Items.Count, StringFormat={}{0} application messages received}" />
-                    </Border>
-                </StackPanel>
+                        <Separator />
 
-                <!-- The version string -->
-                <Border DockPanel.Dock="Right"
-                        Classes.update_available="{Binding InfoPage.IsUpdateAvailable}"
-                        Margin="0,0,-10,0"
-                        Padding="10,0">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding InfoPage.CurrentAppVersion, StringFormat={}v{0}}" />
-                        <TextBlock Margin="10,0,0,0"
-                                   IsVisible="{Binding InfoPage.IsUpdateAvailable}"
-                                   Text="Update available" />
+                        <!-- The count of received application messages -->
+                        <Border>
+                            <TextBlock Text="{Binding InflightPage.Items.Count, StringFormat={}{0} application messages received}" />
+                        </Border>
                     </StackPanel>
-                </Border>
 
-                <!-- Filler -->
-                <Border />
-            </DockPanel>
-        </Border>
-    </Grid>
+                    <!-- The version string -->
+                    <Border DockPanel.Dock="Right"
+                            Classes.update_available="{Binding InfoPage.IsUpdateAvailable}"
+                            Margin="0,0,-10,0"
+                            Padding="10,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding InfoPage.CurrentAppVersion, StringFormat={}v{0}}" />
+                            <TextBlock Margin="10,0,0,0"
+                                       IsVisible="{Binding InfoPage.IsUpdateAvailable}"
+                                       Text="Update available" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Filler -->
+                    <Border />
+                </DockPanel>
+            </Border>
+        </Grid>
+    </controls:Overlay>
 </UserControl>

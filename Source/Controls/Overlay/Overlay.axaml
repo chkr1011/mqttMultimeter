@@ -1,0 +1,32 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:MQTTnetApp.Controls">
+    <Design.PreviewWith>
+        <controls:Overlay />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|Overlay">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="{x:Type controls:Overlay}">
+                <Grid>
+
+                    <!-- The regular content -->
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      IsEnabled="{Binding !IsOverlayVisible, RelativeSource={RelativeSource TemplatedParent}}"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch" />
+
+                    <!-- The gray overlay -->
+                    <StackPanel IsVisible="{TemplateBinding IsOverlayVisible}"
+                                Background="#BB333333" />
+
+                    <!-- The overlay content -->
+                    <ContentPresenter Content="{TemplateBinding OverlayContent}"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" />
+                </Grid>
+
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

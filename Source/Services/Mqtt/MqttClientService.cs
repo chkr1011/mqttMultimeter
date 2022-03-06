@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Authentication;
+using System.Threading;
 using System.Threading.Tasks;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Diagnostics;
+using MQTTnet.Exceptions;
 using MQTTnet.Internal;
 using MQTTnetApp.Pages.Connection;
 using MQTTnetApp.Pages.Publish;
@@ -90,9 +92,20 @@ public sealed class MqttClientService
         _mqttClient.InspectPackage += OnInspectPackage;
         _mqttClient.DisconnectedAsync += OnDisconnected;
 
-        var result = await _mqttClient.ConnectAsync(clientOptionsBuilder.Build());
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(item.ServerOptions.CommunicationTimeout));
+        try
+        {
+            return await _mqttClient.ConnectAsync(clientOptionsBuilder.Build(), timeout.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            if (timeout.IsCancellationRequested)
+            {
+                throw new MqttCommunicationTimedOutException();
+            }
 
-        return result;
+            throw;
+        }
     }
 
     public Task Disconnect()
