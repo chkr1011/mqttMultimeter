@@ -16,6 +16,7 @@ using MQTTnetApp.Pages.Scripts;
 using MQTTnetApp.Pages.Subscriptions;
 using MQTTnetApp.Services.Data;
 using MQTTnetApp.Services.Mqtt;
+using MQTTnetApp.Services.Scripting;
 using MQTTnetApp.Services.State;
 using MQTTnetApp.Services.Updates;
 
@@ -33,6 +34,7 @@ public sealed class App : Application
             .AddSingleton<MqttClientService>()
             .AddSingleton<AppUpdateService>()
             .AddSingleton<JsonSerializerService>()
+            .AddSingleton<ScriptEngineService>()
             .AddSingleton<StateService>()
             .AddSingleton<MainViewModel>()
             .AddSingleton<ConnectionPageViewModel>()

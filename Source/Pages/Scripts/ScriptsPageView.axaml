@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="/Pages/Publish/PublishItemListItem.axaml" />
+                <ResourceInclude Source="/Pages/Scripts/ScriptItemListItem.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -19,7 +19,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
 
@@ -56,8 +56,7 @@
         </Grid>
 
         <!-- The splitter -->
-        <GridSplitter Grid.Column="1"
-                      Width="1" />
+        <GridSplitter Grid.Column="1" />
 
         <!-- The selected item. -->
         <ContentPresenter Margin="10"

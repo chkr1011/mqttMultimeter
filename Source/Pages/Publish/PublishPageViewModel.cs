@@ -55,16 +55,6 @@ public sealed class PublishPageViewModel : BaseViewModel
         }
     }
 
-    public void RemoveItem(PublishItemViewModel item)
-    {
-        if (item == null)
-        {
-            throw new ArgumentNullException(nameof(item));
-        }
-
-        Items.RemoveItem(item);
-    }
-
     void LoadState(StateService stateService)
     {
         stateService.TryGet(PublishPageState.Key, out PublishPageState? state);

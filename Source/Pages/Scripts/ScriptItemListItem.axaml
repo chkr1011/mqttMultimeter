@@ -9,7 +9,7 @@
               Height="32"
               Margin="10">
 
-            <StackPanel>
+            <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="{Binding Name}"
                            TextTrimming="CharacterEllipsis"
                            FontSize="12" />

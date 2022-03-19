@@ -19,7 +19,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
 
@@ -56,8 +56,7 @@
         </Grid>
 
         <!-- The splitter -->
-        <GridSplitter Grid.Column="1"
-                      Width="1" />
+        <GridSplitter Grid.Column="1" />
 
         <!-- The selected item. -->
         <ContentPresenter Margin="10"

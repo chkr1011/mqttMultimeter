@@ -6,10 +6,31 @@
         </Border>
     </Design.PreviewWith>
 
-    <Style Selector="GridSplitter">
+    <Style Selector="GridSplitter.vertical_splitter">
+        <Setter Property="ResizeBehavior"
+                Value="PreviousAndNext" />
+        <Setter Property="ResizeDirection"
+                Value="Columns" />
         <Setter Property="Width"
                 Value="1" />
         <Setter Property="MinWidth"
+                Value="1" />
+        <Setter Property="Margin"
+                Value="0" />
+        <Setter Property="Background"
+                Value="Black" />
+        <Setter Property="IsTabStop"
+                Value="False" />
+    </Style>
+
+    <Style Selector="GridSplitter.horizontal_splitter">
+        <Setter Property="ResizeBehavior"
+                Value="PreviousAndNext" />
+        <Setter Property="ResizeDirection"
+                Value="Rows" />
+        <Setter Property="Height"
+                Value="1" />
+        <Setter Property="MinHeight"
                 Value="1" />
         <Setter Property="Margin"
                 Value="0" />

@@ -1,0 +1,95 @@
+<UserControl x:Class="MQTTnetApp.Pages.Scripts.ScriptItemView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:scripts="clr-namespace:MQTTnetApp.Pages.Scripts"
+             xmlns:avaloniaEdit="https://github.com/avaloniaui/avaloniaedit"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance scripts:ScriptItemViewModel}"
+             mc:Ignorable="d">
+    <Grid RowDefinitions="Auto,2*,Auto,*">
+
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,Auto">
+            <TextBox Text="{Binding Name}"
+                     Classes="page_item_name" />
+
+            <!-- The execute button -->
+            <StackPanel Grid.Column="1"
+                        Margin="10,0,0,0"
+                        Orientation="Horizontal">
+                <Button Classes="image_button"
+                        Command="{Binding OpenInExternalEditor}">
+                    <StackPanel>
+                        <PathIcon Data="{StaticResource apps_regular}" />
+                        <TextBlock Text="External Editor" />
+                    </StackPanel>
+                </Button>
+
+                <Button Background="{DynamicResource SystemAccentColor}"
+                        Width="100"
+                        Margin="10,0,0,0"
+                        Classes="image_button"
+                        Command="{Binding Execute}"
+                        IsDefault="True">
+                    <StackPanel>
+                        <PathIcon Data="{StaticResource play_regular}" />
+                        <TextBlock Text="Execute" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- The code editor -->
+        <avaloniaEdit:TextEditor Grid.Row="1"
+                                 Margin="0,10,0,0"
+                                 BorderBrush="#99ffffff"
+                                 Background="#66000000"
+                                 BorderThickness="1"
+                                 ShowLineNumbers="True"
+                                 x:Name="PART_Editor" />
+
+        <!-- The splitter -->
+        <GridSplitter Grid.Row="2"
+                      Margin="0,10" />
+
+        <!-- The output and result -->
+        <Grid Grid.Row="3"
+              RowDefinitions="Auto,Auto,*">
+
+            <TextBlock Grid.Row="0"
+                       FontSize="20"
+                       Text="Output" />
+
+            <!-- The tool bar -->
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="1"
+                        Classes="tool_bar"
+                        Margin="0">
+                <Button ToolTip.Tip="Clear output"
+                        Classes="tool_bar_button"
+                        Command="{Binding ClearOutput}">
+                    <PathIcon Data="{StaticResource delete_regular}" />
+                </Button>
+                <Button ToolTip.Tip="Save to text file"
+                        Classes="tool_bar_button"
+                        Command="{Binding  SaveToTextFile}">
+                    <PathIcon Data="{StaticResource save_regular}" />
+                </Button>
+            </StackPanel>
+
+            <!-- The script text -->
+            <TextBox Classes="code_text"
+                     Grid.Row="2"
+                     VerticalAlignment="Stretch"
+                     AcceptsReturn="True"
+                     AcceptsTab="True"
+                     ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                     ScrollViewer.VerticalScrollBarVisibility="Visible"
+                     Text="{Binding Output}"
+                     IsReadOnly="True" />
+        </Grid>
+    </Grid>
+</UserControl>

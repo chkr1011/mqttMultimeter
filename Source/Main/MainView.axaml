@@ -71,7 +71,7 @@
                             <PathIcon Data="{StaticResource apps_list_regular}" />
                         </TabItem.Header>
                     </TabItem>
-                    
+
                     <!-- Scripts -->
                     <TabItem Content="{Binding ScriptsPage}"
                              ToolTip.Tip="Scripts">
