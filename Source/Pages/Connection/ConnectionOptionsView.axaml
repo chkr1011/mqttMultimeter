@@ -19,17 +19,19 @@
                     <!-- The host -->
                     <Label Grid.Column="0"
                            Classes="caption"
-                           Content="Host" />
+                           Content="{Binding ServerOptions.SelectedTransport.HostDisplayValue}" />
                     <TextBox Grid.Column="1"
                              Text="{Binding ServerOptions.Host}"
                              Classes="value" />
 
                     <Label Grid.Column="3"
                            Classes="caption"
+                           IsVisible="{Binding ServerOptions.SelectedTransport.IsPortAvailable}"
                            Content="Port" />
                     <NumericUpDown Classes="value"
                                    Minimum="0"
                                    Maximum="65535"
+                                   IsVisible="{Binding ServerOptions.SelectedTransport.IsPortAvailable}"
                                    Value="{Binding ServerOptions.Port}"
                                    Grid.Column="4" />
 
@@ -148,7 +150,7 @@
                       Margin="0,10,0,0">
                 <controls:AutoGrid Margin="-6"
                                    ColumnDefinitions="Auto,*,10,Auto,*">
-                    
+
                     <!-- Credentials -->
                     <Label Grid.Column="0"
                            controls:AutoGrid.IsNextRow="True"

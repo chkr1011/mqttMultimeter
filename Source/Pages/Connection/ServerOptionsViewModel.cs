@@ -16,7 +16,7 @@ public sealed class ServerOptionsViewModel : BaseViewModel
     EnumViewModel<MqttProtocolVersion> _selectedProtocolVersion;
 
     EnumViewModel<SslProtocols> _selectedTlsVersion;
-    EnumViewModel<Transport> _selectedTransport;
+    TransportViewModel _selectedTransport;
 
     public ServerOptionsViewModel()
     {
@@ -24,8 +24,17 @@ public sealed class ServerOptionsViewModel : BaseViewModel
         Port = 1883;
         CommunicationTimeout = 10;
 
-        Transports.Add(new EnumViewModel<Transport>("TCP", Transport.TCP));
-        Transports.Add(new EnumViewModel<Transport>("WebSocket", Transport.WebSocket));
+        Transports.Add(new TransportViewModel("TCP", Transport.TCP)
+        {
+            IsPortAvailable = true,
+            HostDisplayValue = "Host"
+        });
+
+        Transports.Add(new TransportViewModel("WebSocket", Transport.WebSocket)
+        {
+            HostDisplayValue = "URI"
+        });
+
         _selectedTransport = Transports.First();
 
         TlsVersions.Add(new EnumViewModel<SslProtocols>("no TLS", SslProtocols.None));
@@ -81,7 +90,7 @@ public sealed class ServerOptionsViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _selectedTlsVersion, value);
     }
 
-    public EnumViewModel<Transport> SelectedTransport
+    public TransportViewModel SelectedTransport
     {
         get => _selectedTransport;
         set => this.RaiseAndSetIfChanged(ref _selectedTransport, value);
@@ -89,5 +98,5 @@ public sealed class ServerOptionsViewModel : BaseViewModel
 
     public ObservableCollection<EnumViewModel<SslProtocols>> TlsVersions { get; } = new();
 
-    public ObservableCollection<EnumViewModel<Transport>> Transports { get; } = new();
+    public ObservableCollection<TransportViewModel> Transports { get; } = new();
 }
