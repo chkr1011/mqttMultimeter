@@ -16,28 +16,9 @@
                 <controls:AutoGrid Margin="-6"
                                    ColumnDefinitions="Auto,*,10,Auto,*"
                                    HorizontalAlignment="Stretch">
-                    <!-- The host -->
-                    <Label Grid.Column="0"
-                           Classes="caption"
-                           Content="{Binding ServerOptions.SelectedTransport.HostDisplayValue}" />
-                    <TextBox Grid.Column="1"
-                             Text="{Binding ServerOptions.Host}"
-                             Classes="value" />
-
-                    <Label Grid.Column="3"
-                           Classes="caption"
-                           IsVisible="{Binding ServerOptions.SelectedTransport.IsPortAvailable}"
-                           Content="Port" />
-                    <NumericUpDown Classes="value"
-                                   Minimum="0"
-                                   Maximum="65535"
-                                   IsVisible="{Binding ServerOptions.SelectedTransport.IsPortAvailable}"
-                                   Value="{Binding ServerOptions.Port}"
-                                   Grid.Column="4" />
 
                     <!-- The transport -->
                     <Label Grid.Column="0"
-                           controls:AutoGrid.IsNextRow="True"
                            Classes="caption"
                            Content="Transport protocol" />
                     <StackPanel Grid.Column="1"
@@ -78,6 +59,26 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+
+                    <!-- The host -->
+                    <Label Grid.Column="0"
+                           controls:AutoGrid.IsNextRow="True"
+                           Classes="caption"
+                           Content="{Binding ServerOptions.SelectedTransport.HostDisplayValue}" />
+                    <TextBox Grid.Column="1"
+                             Text="{Binding ServerOptions.Host}"
+                             Classes="value" />
+
+                    <Label Grid.Column="3"
+                           Classes="caption"
+                           IsVisible="{Binding ServerOptions.SelectedTransport.IsPortAvailable}"
+                           Content="Port" />
+                    <NumericUpDown Classes="value"
+                                   Minimum="0"
+                                   Maximum="65535"
+                                   IsVisible="{Binding ServerOptions.SelectedTransport.IsPortAvailable}"
+                                   Value="{Binding ServerOptions.Port}"
+                                   Grid.Column="4" />
 
                     <!-- The timeouts -->
                     <Label Grid.Column="0"
