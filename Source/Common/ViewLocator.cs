@@ -11,22 +11,22 @@ sealed class ViewLocator : IDataTemplate
         var viewFullName = data.GetType().FullName!.Replace("ViewModel", "View");
         var viewType = Type.GetType(viewFullName);
 
-        if (viewType != null)
+        if (viewType == null)
         {
-            var control = Activator.CreateInstance(viewType) as Control;
-            if (control == null)
+            return new TextBlock
             {
-                throw new InvalidOperationException($"Unable to create view of type '{viewType.FullName}'.");
-            }
-
-            control.DataContext = data;
-            return control;
+                Text = "Not Found: " + viewFullName
+            };
         }
 
-        return new TextBlock
+        if (Activator.CreateInstance(viewType) is not Control control)
         {
-            Text = "Not Found: " + viewFullName
-        };
+            throw new InvalidOperationException($"Unable to create view of type '{viewType.FullName}'.");
+        }
+
+        control.DataContext = data;
+        return control;
+
     }
 
     public bool Match(object data)

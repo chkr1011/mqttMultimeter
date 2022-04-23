@@ -12,25 +12,11 @@ public static class EnumConverters
 
     public static readonly IValueConverter ToEnumValue = new FuncValueConverter<Enum, int>(Convert.ToInt32);
 
-    public static readonly IValueConverter ExpandQualityOfServiceValue = new FuncValueConverter<MqttQualityOfServiceLevel?, string>(v =>
-    {
-        if (!v.HasValue)
-        {
-            return string.Empty;
-        }
+    public static readonly IValueConverter ExpandQualityOfServiceValue = new FuncValueConverter<MqttQualityOfServiceLevel?, string>(v 
+        => !v.HasValue ? string.Empty : $"{Convert.ToString(v)} ({Convert.ToInt32(v)})");
 
-        return $"{Convert.ToString(v)} ({Convert.ToInt32(v)})";
-    });
-
-    public static readonly IValueConverter ExpandSubscriptionIdentifiers = new FuncValueConverter<IEnumerable<uint>?, string>(v =>
-    {
-        if (v == null)
-        {
-            return string.Empty;
-        }
-
-        return string.Join(", ", v);
-    });
+    public static readonly IValueConverter ExpandSubscriptionIdentifiers = new FuncValueConverter<IEnumerable<uint>?, string>(v 
+        => v == null ? string.Empty : string.Join(", ", v));
 
     public static readonly IValueConverter BooleanToTextWrapping = new FuncValueConverter<bool?, TextWrapping>(v =>
     {

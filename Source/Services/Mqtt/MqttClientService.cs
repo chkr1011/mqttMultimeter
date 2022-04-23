@@ -239,7 +239,10 @@ public sealed class MqttClientService
 
     void ThrowIfNotConnected()
     {
-        if (_mqttClient == null || !_mqttClient.IsConnected)
+        if (_mqttClient is not
+            {
+                IsConnected: true
+            })
         {
             throw new InvalidOperationException("The MQTT client is not connected.");
         }

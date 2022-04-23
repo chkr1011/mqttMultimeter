@@ -24,15 +24,7 @@ public sealed class PayloadFormatIndicatorSelectorViewModel : BaseViewModel
 
     public MqttPayloadFormatIndicator Value
     {
-        get
-        {
-            if (IsCharacterData)
-            {
-                return MqttPayloadFormatIndicator.CharacterData;
-            }
-
-            return MqttPayloadFormatIndicator.Unspecified;
-        }
+        get => IsCharacterData ? MqttPayloadFormatIndicator.CharacterData : MqttPayloadFormatIndicator.Unspecified;
 
         set
         {
