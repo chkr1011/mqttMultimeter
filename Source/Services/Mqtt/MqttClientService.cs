@@ -20,7 +20,7 @@ public sealed class MqttClientService
     readonly List<Action<InspectMqttPacketEventArgs>> _messageInspectors = new();
     readonly MqttNetEventLogger _mqttNetEventLogger = new();
 
-    MqttClient? _mqttClient;
+    IMqttClient? _mqttClient;
 
     public MqttClientService()
     {
