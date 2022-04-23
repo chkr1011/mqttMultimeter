@@ -79,7 +79,6 @@ public sealed class ConnectionPageViewModel : BasePageViewModel
             // Ensure proper UI state before showing the exception.
             IsConnecting = false;
 
-            // TODO: In overlay.
             App.ShowException(exception);
         }
         finally
