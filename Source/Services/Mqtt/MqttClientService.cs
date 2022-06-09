@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Threading;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Diagnostics;
@@ -32,6 +34,8 @@ public sealed class MqttClientService
         add => _applicationMessageReceivedEvent.AddHandler(value);
         remove => _applicationMessageReceivedEvent.RemoveHandler(value);
     }
+
+    public event EventHandler<MqttClientDisconnectedEventArgs>? Disconnected;
 
     public event Action<MqttNetLogMessagePublishedEventArgs>? LogMessagePublished;
 
@@ -131,9 +135,13 @@ public sealed class MqttClientService
             .WithContentType(item.ContentType)
             .WithPayloadFormatIndicator(item.PayloadFormatIndicator.Value)
             .WithPayload(item.PayloadInputFormat.ConvertPayloadInput(item.Payload))
-            .WithSubscriptionIdentifier(item.SubscriptionIdentifier)
             .WithResponseTopic(item.ResponseTopic);
 
+        if (item.SubscriptionIdentifier > 0)
+        {
+            applicationMessageBuilder.WithSubscriptionIdentifier(item.SubscriptionIdentifier);
+        }
+        
         if (item.TopicAlias > 0)
         {
             applicationMessageBuilder.WithTopicAlias(item.TopicAlias);
@@ -212,12 +220,12 @@ public sealed class MqttClientService
         return _applicationMessageReceivedEvent.InvokeAsync(eventArgs);
     }
 
-    Task OnDisconnected(MqttClientDisconnectedEventArgs arg)
+    Task OnDisconnected(MqttClientDisconnectedEventArgs eventArgs)
     {
-        if (arg.ClientWasConnected)
+        Dispatcher.UIThread.Post(() =>
         {
-            //arg.Reason
-        }
+            Disconnected?.Invoke(this, eventArgs);  
+        });
 
         return Task.CompletedTask;
     }
