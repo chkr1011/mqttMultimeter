@@ -29,19 +29,19 @@
         <None Remove="Assets\Icons\arrow_up.png" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.13" />
+        <PackageReference Include="Avalonia" Version="0.10.15" />
         <PackageReference Include="Avalonia.AvaloniaEdit" Version="0.10.12.2" />
-        <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.13" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.13" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.13" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.15" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.15" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.15" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.15" />
         <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.2" />
         <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-        <PackageReference Include="MQTTnet" Version="4.0.0.153" />
-        <PackageReference Include="MessagePack" Version="2.3.85" />
-        <PackageReference Include="System.Text.Json" Version="6.0.2" />
+        <PackageReference Include="MQTTnet" Version="4.0.1.184" />
+        <PackageReference Include="MessagePack" Version="2.3.112" />
+        <PackageReference Include="System.Text.Json" Version="6.0.5" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Main\MainView.axaml.cs">
