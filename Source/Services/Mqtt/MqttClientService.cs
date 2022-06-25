@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Security;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
@@ -84,11 +85,16 @@ public sealed class MqttClientService
             clientOptionsBuilder.WithWebSocketServer(item.ServerOptions.Host);
         }
 
-        if (item.ServerOptions.SelectedTlsVersion?.Value != SslProtocols.None)
+        if (item.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
         {
             clientOptionsBuilder.WithTls(o =>
             {
                 o.SslProtocol = item.ServerOptions.SelectedTlsVersion.Value;
+                o.IgnoreCertificateChainErrors = item.ServerOptions.IgnoreCertificateErrors;
+                o.IgnoreCertificateRevocationErrors = item.ServerOptions.IgnoreCertificateErrors;
+                o.CertificateValidationHandler = item.ServerOptions.IgnoreCertificateErrors
+                    ? _ => true
+                    : null;
             });
         }
 
