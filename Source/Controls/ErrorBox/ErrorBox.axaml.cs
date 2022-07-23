@@ -35,6 +35,6 @@ public sealed class ErrorBox : UserControl
 
     void OnButtonCopyClicked(object? sender, RoutedEventArgs e)
     {
-        _ = Application.Current.Clipboard.SetTextAsync(Message);
+        _ = Application.Current?.Clipboard?.SetTextAsync(Message);
     }
 }

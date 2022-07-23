@@ -13,7 +13,7 @@ public sealed class ConnectionItemViewModel : BaseViewModel
     {
         OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
 
-        SessionOptions.UserProperties.AddItem();
+        SessionOptions.UserProperties.AddEmptyItem();
     }
 
     public string Name

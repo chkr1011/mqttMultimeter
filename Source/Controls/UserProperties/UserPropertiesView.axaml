@@ -18,7 +18,7 @@
                     Orientation="Horizontal">
             <Button Classes="tool_bar_button"
                     ToolTip.Tip="Add user property"
-                    Command="{Binding AddItem}">
+                    Command="{Binding AddEmptyItem}">
                 <PathIcon Data="{StaticResource add_square_regular}" />
             </Button>
             <Button Classes="tool_bar_button"
