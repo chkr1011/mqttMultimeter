@@ -10,7 +10,12 @@ public sealed class PayloadInputFormatSelectorViewModel : BaseViewModel
 {
     bool _isBase64String;
     bool _isFilePath;
-    bool _isPlainText = true;
+    bool _isPlainText;
+
+    public PayloadInputFormatSelectorViewModel()
+    {
+        Value = PayloadInputFormat.PlainText;
+    }
 
     public bool IsBase64String
     {
@@ -30,6 +35,36 @@ public sealed class PayloadInputFormatSelectorViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _isPlainText, value);
     }
 
+    public PayloadInputFormat Value
+    {
+        get
+        {
+            if (IsPlainText)
+            {
+                return PayloadInputFormat.PlainText;
+            }
+
+            if (IsBase64String)
+            {
+                return PayloadInputFormat.Base64String;
+            }
+
+            if (IsFilePath)
+            {
+                return PayloadInputFormat.FilePath;
+            }
+
+            throw new NotSupportedException();
+        }
+
+        set
+        {
+            IsPlainText = value == PayloadInputFormat.PlainText;
+            IsBase64String = value == PayloadInputFormat.Base64String;
+            IsFilePath = value == PayloadInputFormat.FilePath;
+        }
+    }
+    
     public byte[] ConvertPayloadInput(string? payloadInput)
     {
         if (string.IsNullOrEmpty(payloadInput))

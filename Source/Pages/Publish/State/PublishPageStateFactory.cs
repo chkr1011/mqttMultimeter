@@ -1,4 +1,5 @@
 ﻿using System;
+using MQTTnetApp.Services.State.Model;
 
 namespace MQTTnetApp.Pages.Publish.State;
 
@@ -15,15 +16,32 @@ public static class PublishPageStateFactory
 
         foreach (var item in viewModel.Items.Collection)
         {
-            state.Publishes.Add(new PublishState
+            var publishState = new PublishState
             {
                 Name = item.Name,
                 Topic = item.Topic,
                 Retain = item.Retain,
                 ContentType = item.ContentType,
+                ResponseTopic = item.ResponseTopic,
+                SubscriptionIdentifier = item.SubscriptionIdentifier,
+                TopicAlias = item.TopicAlias,
+                MessageExpiryInterval = item.MessageExpiryInterval, 
                 PayloadFormatIndicator = item.PayloadFormatIndicator.Value,
-                QualityOfServiceLevel = item.QualityOfServiceLevel.Value
-            });
+                QualityOfServiceLevel = item.QualityOfServiceLevel.Value,
+                PayloadInputFormat = item.PayloadInputFormat.Value,
+                Payload = item.Payload
+            };
+
+            foreach (var userProperty in item.UserProperties.Items)
+            {
+                publishState.UserProperties.Add(new UserProperty
+                {
+                    Name = userProperty.Name,
+                    Value = userProperty.Value
+                });
+            }
+
+            state.Publishes.Add(publishState);
         }
 
         return state;

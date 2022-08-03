@@ -36,7 +36,7 @@ public sealed class PublishPageViewModel : BaseViewModel
 
         // Prepare the UI with at lest one user property.
         // It will not be send when the name is empty.
-        newItem.UserProperties.AddItem();
+        newItem.UserProperties.AddEmptyItem();
 
         Items.Collection.Add(newItem);
         Items.SelectedItem = newItem;

@@ -34,7 +34,7 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
             Name = "Untitled"
         };
 
-        newItem.UserProperties.AddItem();
+        newItem.UserProperties.AddEmptyItem();
 
         Items.Collection.Add(newItem);
     }
