@@ -180,9 +180,7 @@ public sealed class MqttClientService
         {
             throw new ArgumentNullException(nameof(subscriptionItem));
         }
-
-        ThrowIfNotConnected();
-
+        
         var topicFilter = new MqttTopicFilterBuilder().WithTopic(subscriptionItem.Topic)
             .WithQualityOfServiceLevel(subscriptionItem.QualityOfServiceLevel.Value)
             .WithNoLocal(subscriptionItem.NoLocal)
@@ -202,9 +200,9 @@ public sealed class MqttClientService
 
         var subscribeOptions = subscribeOptionsBuilder.Build();
 
-        var subscribeResult = await _mqttClient.SubscribeAsync(subscribeOptions).ConfigureAwait(false);
-
-        return subscribeResult;
+        ThrowIfNotConnected();
+        
+        return await _mqttClient.SubscribeAsync(subscribeOptions).ConfigureAwait(false);
     }
 
     public async Task<MqttClientUnsubscribeResult> Unsubscribe(SubscriptionItemViewModel subscriptionItem)
@@ -216,9 +214,7 @@ public sealed class MqttClientService
 
         ThrowIfNotConnected();
 
-        var unsubscribeResult = await _mqttClient.UnsubscribeAsync(subscriptionItem.Topic);
-
-        return unsubscribeResult;
+        return await _mqttClient.UnsubscribeAsync(subscriptionItem.Topic).ConfigureAwait(false);
     }
 
     Task OnApplicationMessageReceived(MqttApplicationMessageReceivedEventArgs eventArgs)
