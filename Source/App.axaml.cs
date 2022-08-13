@@ -13,6 +13,7 @@ using MQTTnetApp.Pages.Log;
 using MQTTnetApp.Pages.PacketInspector;
 using MQTTnetApp.Pages.Publish;
 using MQTTnetApp.Pages.Subscriptions;
+using MQTTnetApp.Pages.TopicExplorer;
 using MQTTnetApp.Services.Data;
 using MQTTnetApp.Services.Mqtt;
 using MQTTnetApp.Services.State;
@@ -38,6 +39,7 @@ public sealed class App : Application
             .AddSingleton<PublishPageViewModel>()
             .AddSingleton<SubscriptionsPageViewModel>()
             .AddSingleton<PacketInspectorPageViewModel>()
+            .AddSingleton<TopicExplorerPageViewModel>()
             .AddSingleton<InflightPageViewModel>()
             .AddSingleton<LogPageViewModel>()
             .AddSingleton<InfoPageViewModel>()

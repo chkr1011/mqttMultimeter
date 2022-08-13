@@ -60,7 +60,7 @@
                     <TabItem Content="{Binding SubscriptionsPage}"
                              ToolTip.Tip="Subscribe">
                         <TabItem.Header>
-                            <PathIcon Data="{StaticResource filter_regular}" />
+                            <PathIcon Data="{StaticResource add_square_regular}" />
                         </TabItem.Header>
                     </TabItem>
 
@@ -69,6 +69,14 @@
                              ToolTip.Tip="Inflight">
                         <TabItem.Header>
                             <PathIcon Data="{StaticResource apps_list_regular}" />
+                        </TabItem.Header>
+                    </TabItem>
+                    
+                    <!-- Topic Explorer -->
+                    <TabItem Content="{Binding TopicExplorerPage}"
+                             ToolTip.Tip="Topic Explorer">
+                        <TabItem.Header>
+                            <PathIcon Data="{StaticResource branch_regular}" />
                         </TabItem.Header>
                     </TabItem>
 

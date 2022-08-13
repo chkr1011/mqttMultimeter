@@ -1,0 +1,80 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:topicExplorer="clr-namespace:MQTTnetApp.Pages.TopicExplorer"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerPageViewModel}"
+             x:Class="MQTTnetApp.Pages.TopicExplorer.TopicExplorerPageView">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Pages/TopicExplorer/TopicExplorerTreeNode.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- The tree of topics. -->
+        <Grid Background="#262626">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="0"
+                        Margin="0">
+
+                <!-- The Enable/Disable button -->
+                <ToggleButton Classes="tool_bar_button"
+                              IsChecked="{Binding IsRecordingEnabled}"
+                              ToolTip.Tip="Enable/Disable recording">
+                    <PathIcon Data="{StaticResource record_regular}" />
+                </ToggleButton>
+
+                <Button ToolTip.Tip="Remove all topic nodes"
+                        Classes="tool_bar_button"
+                        Command="{Binding Clear}">
+                    <PathIcon Data="{StaticResource delete_regular}" />
+                </Button>
+            </StackPanel>
+
+            <TreeView Background="Transparent"
+                      ItemTemplate="{StaticResource TopicExplorerTreeNode}"
+                      Grid.Row="1"
+                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                      SelectedItem="{Binding SelectedNode, Mode=TwoWay}"
+                      Items="{Binding Nodes}"
+                      Grid.Column="0"
+                      x:Name="PART_Items">
+                <TreeView.Styles>
+                    <Style d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerTreeNodeViewModel}"
+                           Selector="TreeViewItem">
+                        <Setter Property="Background"
+                                Value="Transparent" />
+                        <Setter Property="IsExpanded"
+                                Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
+                    </Style>
+                </TreeView.Styles>
+            </TreeView>
+        </Grid>
+
+        <!-- The splitter -->
+        <GridSplitter Grid.Column="1"
+                      Width="1" />
+
+        <ContentPresenter Grid.Column="2"
+                          Content="{Binding ElementName=PART_Items, Path=SelectedItem.Item}" />
+
+    </Grid>
+
+</UserControl>

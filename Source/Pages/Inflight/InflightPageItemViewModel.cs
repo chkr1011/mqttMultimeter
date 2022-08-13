@@ -7,18 +7,15 @@ namespace MQTTnetApp.Pages.Inflight;
 
 public sealed class InflightPageItemViewModel
 {
-    public InflightPageItemViewModel(InflightPageViewModel ownerPage)
-    {
-        OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
-    }
+    public event Action? DeleteRequested;
+    
+    public event Action? RepeatRequested;
 
     public string ContentType { get; init; } = string.Empty;
 
     public long Length { get; init; }
 
     public int Number { get; init; }
-
-    public InflightPageViewModel OwnerPage { get; }
 
     public byte[] Payload { get; init; } = Array.Empty<byte>();
 
@@ -36,8 +33,37 @@ public sealed class InflightPageItemViewModel
 
     public UserPropertiesViewModel UserProperties { get; } = new();
 
+    public static InflightPageItemViewModel Create(MqttApplicationMessage applicationMessage, int number)
+    {
+        var itemViewModel = new InflightPageItemViewModel
+        {
+            Timestamp = DateTime.Now,
+            Number = number,
+            Topic = applicationMessage.Topic,
+            Length = applicationMessage.Payload?.Length ?? 0L,
+            Retained = applicationMessage.Retain,
+            Source = applicationMessage,
+            Payload = applicationMessage.Payload ?? Array.Empty<byte>(),
+            ContentType = applicationMessage.ContentType,
+            QualityOfServiceLevel = applicationMessage.QualityOfServiceLevel,
+            UserProperties =
+            {
+                IsReadOnly = true
+            }
+        };
+
+        itemViewModel.UserProperties.Load(applicationMessage.UserProperties);
+
+        return itemViewModel;
+    }
+
+    public void Delete()
+    {
+        DeleteRequested?.Invoke();
+    }
+
     public void Repeat()
     {
-        OwnerPage.RepeatItem(this);
+        RepeatRequested?.Invoke();
     }
 }

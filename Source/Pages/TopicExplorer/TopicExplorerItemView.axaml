@@ -1,0 +1,55 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:inflight="clr-namespace:MQTTnetApp.Pages.Inflight"
+             xmlns:topicExplorer="clr-namespace:MQTTnetApp.Pages.TopicExplorer"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemViewModel}"
+             d:DesignHeight="450"
+             x:Class="MQTTnetApp.Pages.TopicExplorer.TopicExplorerItemView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+
+        <!-- ToolBar -->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0"
+                    Margin="0">
+
+            <!-- The Enable/Disable button -->
+            <ToggleButton Classes="tool_bar_button"
+                          IsChecked="{Binding TrackLatestMessage}"
+                          ToolTip.Tip="Track latest message">
+                <PathIcon Data="{StaticResource arrow_next_regular}" />
+            </ToggleButton>
+
+            <Button ToolTip.Tip="Remove all messages"
+                    Classes="tool_bar_button"
+                    Command="{Binding Clear}">
+                <PathIcon Data="{StaticResource delete_regular}" />
+            </Button>
+        </StackPanel>
+
+        <!-- Messages -->
+        <ListBox Grid.Row="1"
+                 Margin="0,0,0,10"
+                 SelectedItem="{Binding SelectedMessage, Mode=TwoWay}"
+                 Items="{Binding Messages}" />
+
+        <GridSplitter Grid.Row="2"
+                      HorizontalAlignment="Stretch"
+                      Classes="grid_splitter_vertical" />
+
+        <!-- Message details -->
+        <inflight:InflightPageItemView Grid.Row="3"
+                                       DataContext="{Binding SelectedMessage.InflightItem}" />
+    </Grid>
+
+
+</UserControl>

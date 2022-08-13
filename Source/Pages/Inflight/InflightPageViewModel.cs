@@ -68,22 +68,6 @@ public sealed class InflightPageViewModel : BaseViewModel
         _itemsSource.Clear();
     }
 
-    public void RepeatItem(InflightPageItemViewModel item)
-    {
-        var publishItem = new PublishItemViewModel(_publishPage)
-        {
-            Name = $"Repeat '{item.Topic}'",
-            ContentType = item.ContentType,
-            Topic = item.Topic,
-            Payload = item.PayloadPreview
-        };
-
-        _publishPage.Items.Collection.Add(publishItem);
-        _publishPage.Items.SelectedItem = publishItem;
-
-        SwitchToPublishRequested?.Invoke(this, EventArgs.Empty);
-    }
-
     Func<InflightPageItemViewModel, bool> BuildFilter(string? searchText)
     {
         if (string.IsNullOrEmpty(searchText))
@@ -96,24 +80,12 @@ public sealed class InflightPageViewModel : BaseViewModel
 
     InflightPageItemViewModel CreateViewModel(MqttApplicationMessage applicationMessage)
     {
-        var itemViewModel = new InflightPageItemViewModel(this)
-        {
-            Timestamp = DateTime.Now,
-            Number = _number++,
-            Topic = applicationMessage.Topic,
-            Length = applicationMessage.Payload?.Length ?? 0L,
-            Retained = applicationMessage.Retain,
-            Source = applicationMessage,
-            Payload = applicationMessage.Payload ?? Array.Empty<byte>(),
-            ContentType = applicationMessage.ContentType,
-            QualityOfServiceLevel = applicationMessage.QualityOfServiceLevel,
-            UserProperties =
-            {
-                IsReadOnly = true
-            }
-        };
+        var itemViewModel = InflightPageItemViewModel.Create(applicationMessage, _number++);
 
-        itemViewModel.UserProperties.Load(applicationMessage.UserProperties);
+        itemViewModel.RepeatRequested += () =>
+        {
+            RepeatItem(itemViewModel);
+        };
 
         return itemViewModel;
     }
@@ -139,5 +111,21 @@ public sealed class InflightPageViewModel : BaseViewModel
                 _itemsSource.RemoveAt(0);
             }
         });
+    }
+
+    void RepeatItem(InflightPageItemViewModel item)
+    {
+        var publishItem = new PublishItemViewModel(_publishPage)
+        {
+            Name = $"Repeat '{item.Topic}'",
+            ContentType = item.ContentType,
+            Topic = item.Topic,
+            Payload = item.PayloadPreview
+        };
+
+        _publishPage.Items.Collection.Add(publishItem);
+        _publishPage.Items.SelectedItem = publishItem;
+
+        SwitchToPublishRequested?.Invoke(this, EventArgs.Empty);
     }
 }

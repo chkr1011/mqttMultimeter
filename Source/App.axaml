@@ -34,6 +34,11 @@
         <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
         <StyleInclude Source="/Controls/Overlay/Overlay.axaml" />
 
+        <Style Selector="ToolTip">
+            <Setter Property="MaxWidth"
+                    Value="999999" />
+        </Style>
+
         <Style Selector="ItemsPresenter">
             <Setter Property="(KeyboardNavigation.TabNavigation)"
                     Value="Continue" />
