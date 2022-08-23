@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:inflight="clr-namespace:MQTTnetApp.Pages.Inflight"
              xmlns:topicExplorer="clr-namespace:MQTTnetApp.Pages.TopicExplorer"
+             xmlns:converters="clr-namespace:MQTTnetApp.Converters"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemViewModel}"
@@ -37,10 +38,68 @@
         </StackPanel>
 
         <!-- Messages -->
-        <ListBox Grid.Row="1"
-                 Margin="0,0,0,10"
-                 SelectedItem="{Binding SelectedMessage, Mode=TwoWay}"
-                 Items="{Binding Messages}" />
+        <DataGrid Grid.Row="1"
+                  Items="{Binding Messages}"
+                  SelectedItem="{Binding SelectedMessage, Mode=TwoWay}"
+                  Margin="0,0,0,10">
+            <DataGrid.Columns>
+
+                <!-- Timestamp -->
+                <DataGridTemplateColumn d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemMessageViewModel}"
+                                        Header="Timestamp">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
+                            <TextBlock Margin="10,0"
+                                       Text="{Binding Timestamp, StringFormat={}{0:yyyy-MM-ddTHH:mm:ss.ffff}}"
+                                       Classes="code_text" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Payload -->
+                <DataGridTemplateColumn Header="Payload"
+                                        CellStyleClasses="code_text"
+                                        d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemMessageViewModel}"
+                                        Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
+                            <TextBlock Margin="10,0"
+                                       Text="{Binding Payload}"
+                                       Classes="code_text" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Flags -->
+                <DataGridTemplateColumn d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemMessageViewModel}"
+                                        Header="Flags">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right"
+                                        Margin="5,0">
+                                <Border IsVisible="{Binding Retain}"
+                                        Classes="badge badge_retain">
+                                    <TextBlock />
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Delay -->
+                <DataGridTemplateColumn d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemMessageViewModel}"
+                                        Header="Delay">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
+                            <TextBlock Margin="10,0"
+                                       Text="{Binding Delay, Converter={x:Static converters:TimeSpanToLongStringConverter.Instance}}"
+                                       Classes="code_text" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <GridSplitter Grid.Row="2"
                       HorizontalAlignment="Stretch"

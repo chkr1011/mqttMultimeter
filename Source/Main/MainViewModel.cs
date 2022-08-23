@@ -1,3 +1,4 @@
+using System;
 using MQTTnetApp.Common;
 using MQTTnetApp.Pages.Connection;
 using MQTTnetApp.Pages.Inflight;
@@ -24,15 +25,17 @@ public sealed class MainViewModel : BaseViewModel
         InfoPageViewModel infoPage,
         LogPageViewModel logPage)
     {
-        ConnectionPage = connectionPage;
-        PublishPage = publishPage;
-        SubscriptionsPage = subscriptionsPage;
-        InflightPage = inflightPage;
-        TopicExplorerPage = topicExplorerPage;
-        PacketInspectorPage = packetInspectorPage;
-        InfoPage = infoPage;
-        LogPage = logPage;
+        ConnectionPage = AttachEvents(connectionPage);
+        PublishPage = AttachEvents(publishPage);
+        SubscriptionsPage = AttachEvents(subscriptionsPage);
+        InflightPage = AttachEvents(inflightPage);
+        TopicExplorerPage = AttachEvents(topicExplorerPage);
+        PacketInspectorPage = AttachEvents(packetInspectorPage);
+        InfoPage = AttachEvents(infoPage);
+        LogPage = AttachEvents(logPage);
     }
+
+    public event EventHandler? ActivatePageRequested;
 
     public ConnectionPageViewModel ConnectionPage { get; }
 
@@ -55,4 +58,10 @@ public sealed class MainViewModel : BaseViewModel
     public SubscriptionsPageViewModel SubscriptionsPage { get; }
 
     public TopicExplorerPageViewModel TopicExplorerPage { get; }
+
+    TPage AttachEvents<TPage>(TPage page) where TPage : BasePageViewModel
+    {
+        page.ActivationRequested += (_, __) => ActivatePageRequested?.Invoke(page, EventArgs.Empty);
+        return page;
+    }
 }

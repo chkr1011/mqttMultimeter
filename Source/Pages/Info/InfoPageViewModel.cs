@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace MQTTnetApp.Pages.Info;
 
-public sealed class InfoPageViewModel : BaseViewModel
+public sealed class InfoPageViewModel : BasePageViewModel
 {
     readonly AppUpdateService _appUpdateService;
 

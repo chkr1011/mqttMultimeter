@@ -18,6 +18,18 @@ public sealed class MainView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
+    void OnActivatePageRequested(object? sender, EventArgs e)
+    {
+        var sidebar = this.FindControl<TabControl>("Sidebar");
+        foreach (TabItem tabItem in sidebar.Items)
+        {
+            if (ReferenceEquals(sender, tabItem.Content))
+            {
+                sidebar.SelectedItem = tabItem;
+            }
+        }
+    }
+
     void OnDataContextChanged(object? sender, EventArgs e)
     {
         var viewModel = (MainViewModel?)DataContext;
@@ -27,10 +39,6 @@ public sealed class MainView : UserControl
             return;
         }
 
-        viewModel.InflightPage.SwitchToPublishRequested += (_, _) =>
-        {
-            var sidebar = this.FindControl<TabControl>("Sidebar");
-            sidebar.SelectedIndex = 1;
-        };
+        viewModel.ActivatePageRequested += OnActivatePageRequested;
     }
 }

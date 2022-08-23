@@ -9,7 +9,8 @@
              d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemMessageViewModel}"
              x:Class="MQTTnetApp.Pages.TopicExplorer.TopicExplorerItemMessageView">
 
-    <StackPanel Orientation="Horizontal" Margin="10">
+    <StackPanel Orientation="Horizontal"
+                Margin="10">
         <TextBlock Classes="code_text"
                    Text="{Binding Timestamp, StringFormat={}{0:HH:mm:ss.fff}}" />
         <TextBlock Classes="code_text"
@@ -19,7 +20,7 @@
         <TextBlock Classes="code_text"
                    Margin="0,0,10,0"
                    FontStyle="Italic"
-                   Text="{Binding PayloadString}" />
+                   Text="{Binding Payload}" />
     </StackPanel>
 
 </UserControl>

@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MQTTnetApp.Common;
+using MQTTnetApp.Pages.Inflight;
 using MQTTnetApp.Pages.Publish.State;
 using MQTTnetApp.Services.Mqtt;
 using MQTTnetApp.Services.State;
 
 namespace MQTTnetApp.Pages.Publish;
 
-public sealed class PublishPageViewModel : BaseViewModel
+public sealed class PublishPageViewModel : BasePageViewModel
 {
     readonly MqttClientService _mqttClientService;
 
@@ -63,6 +64,27 @@ public sealed class PublishPageViewModel : BaseViewModel
         }
 
         Items.RemoveItem(item);
+    }
+
+    public void RepeatMessage(InflightPageItemViewModel inflightPageItem)
+    {
+        if (inflightPageItem == null)
+        {
+            throw new ArgumentNullException(nameof(inflightPageItem));
+        }
+
+        var publishItem = new PublishItemViewModel(this)
+        {
+            Name = $"Repeat '{inflightPageItem.Topic}'",
+            ContentType = inflightPageItem.ContentType,
+            Topic = inflightPageItem.Topic,
+            Payload = inflightPageItem.PayloadPreview
+        };
+
+        Items.Collection.Add(publishItem);
+        Items.SelectedItem = publishItem;
+
+        RequestActivation();
     }
 
     void LoadState(StateService stateService)

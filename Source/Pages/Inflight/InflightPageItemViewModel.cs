@@ -7,9 +7,9 @@ namespace MQTTnetApp.Pages.Inflight;
 
 public sealed class InflightPageItemViewModel
 {
-    public event Action? DeleteRequested;
-    
-    public event Action? RepeatRequested;
+    public event EventHandler? DeleteRetainedMessageRequested;
+
+    public event EventHandler? RepeatMessageRequested;
 
     public string ContentType { get; init; } = string.Empty;
 
@@ -23,7 +23,7 @@ public sealed class InflightPageItemViewModel
 
     public MqttQualityOfServiceLevel QualityOfServiceLevel { get; init; }
 
-    public bool Retained { get; init; }
+    public bool Retain { get; init; }
 
     public MqttApplicationMessage? Source { get; init; }
 
@@ -41,7 +41,7 @@ public sealed class InflightPageItemViewModel
             Number = number,
             Topic = applicationMessage.Topic,
             Length = applicationMessage.Payload?.Length ?? 0L,
-            Retained = applicationMessage.Retain,
+            Retain = applicationMessage.Retain,
             Source = applicationMessage,
             Payload = applicationMessage.Payload ?? Array.Empty<byte>(),
             ContentType = applicationMessage.ContentType,
@@ -57,13 +57,13 @@ public sealed class InflightPageItemViewModel
         return itemViewModel;
     }
 
-    public void Delete()
+    public void DeleteRetainedMessage()
     {
-        DeleteRequested?.Invoke();
+        DeleteRetainedMessageRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    public void Repeat()
+    public void RepeatMessage()
     {
-        RepeatRequested?.Invoke();
+        RepeatMessageRequested?.Invoke(this, EventArgs.Empty);
     }
 }

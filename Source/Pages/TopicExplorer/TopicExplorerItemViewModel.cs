@@ -1,21 +1,26 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 using MQTTnet;
 using MQTTnetApp.Common;
+using MQTTnetApp.Pages.Inflight;
 using ReactiveUI;
 
 namespace MQTTnetApp.Pages.TopicExplorer;
 
 public sealed class TopicExplorerItemViewModel : BaseViewModel
 {
+    readonly TopicExplorerPageViewModel _ownerPage;
+
     string? _currentPayload;
     TopicExplorerItemMessageViewModel? _selectedMessage;
     bool _trackLatestMessage;
 
-    public TopicExplorerItemViewModel()
+    public TopicExplorerItemViewModel(TopicExplorerPageViewModel ownerPage)
     {
+        _ownerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
+
         Messages.CollectionChanged += OnMessagesChanged;
     }
 
@@ -31,7 +36,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
 
     public bool HasPayload => CurrentPayload != null;
 
-    public ObservableCollection<TopicExplorerItemMessageViewModel> Messages { get; } = new();
+    public CollectionViewModel<TopicExplorerItemMessageViewModel> Messages { get; } = new();
 
     public TopicExplorerItemMessageViewModel? SelectedMessage
     {
@@ -58,7 +63,30 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
             throw new ArgumentNullException(nameof(message));
         }
 
-        Messages.Add(new TopicExplorerItemMessageViewModel(message));
+        string payload;
+        try
+        {
+            payload = Encoding.UTF8.GetString(message.Payload ?? ReadOnlySpan<byte>.Empty);
+        }
+        catch
+        {
+            // Ignore error.
+            payload = string.Empty;
+        }
+
+        var timestamp = DateTime.Now;
+        var duration = TimeSpan.Zero;
+        var lastMessage = Messages.LastOrDefault();
+        if (lastMessage != null)
+        {
+            duration = timestamp - lastMessage.Timestamp;
+        }
+
+        var viewModel = new TopicExplorerItemMessageViewModel(timestamp, message, payload, duration);
+        viewModel.InflightItem.RepeatMessageRequested += (s, _) => _ownerPage.RepeatMessage((InflightPageItemViewModel)s!);
+        viewModel.InflightItem.DeleteRetainedMessageRequested += (s, _) => _ownerPage.DeleteRetainedMessage((InflightPageItemViewModel)s!);
+
+        Messages.Add(viewModel);
 
         if (TrackLatestMessage)
         {
@@ -77,6 +105,6 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
 
     void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        CurrentPayload = Messages.LastOrDefault()?.PayloadString ?? string.Empty;
+        CurrentPayload = Messages.LastOrDefault()?.Payload ?? string.Empty;
     }
 }

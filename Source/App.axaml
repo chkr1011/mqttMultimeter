@@ -6,6 +6,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="/Assets/VectorIcons.axaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="AppLightGreen">#2200EE00</SolidColorBrush>
         </ResourceDictionary>
     </Application.Resources>
     <Application.Styles>

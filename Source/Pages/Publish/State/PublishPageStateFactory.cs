@@ -25,7 +25,7 @@ public static class PublishPageStateFactory
                 ResponseTopic = item.ResponseTopic,
                 SubscriptionIdentifier = item.SubscriptionIdentifier,
                 TopicAlias = item.TopicAlias,
-                MessageExpiryInterval = item.MessageExpiryInterval, 
+                MessageExpiryInterval = item.MessageExpiryInterval,
                 PayloadFormatIndicator = item.PayloadFormatIndicator.Value,
                 QualityOfServiceLevel = item.QualityOfServiceLevel.Value,
                 PayloadInputFormat = item.PayloadInputFormat.Value,

@@ -1,0 +1,48 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:topicExplorer="clr-namespace:MQTTnetApp.Pages.TopicExplorer"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerTreeNodeViewModel}"
+             x:Class="MQTTnetApp.Pages.TopicExplorer.TopicExplorerTreeNodeView">
+    <StackPanel Orientation="Horizontal">
+
+        <!-- The topic name -->
+        <StackPanel Orientation="Horizontal"
+                    TextBlock.FontSize="13">
+            <TextBlock Classes="code_text"
+                       Text="{Binding Name}" />
+
+            <TextBlock Text="="
+                       FontStyle="Italic"
+                       IsVisible="{Binding Item.HasPayload}"
+                       Margin="10,0" />
+        </StackPanel>
+
+        <!-- The latest payload -->
+        <TextBlock Classes="code_text"
+                   FontSize="13"
+                   TextTrimming="CharacterEllipsis"
+                   FontStyle="Italic"
+                   Text="{Binding Item.CurrentPayload}" />
+
+        <!-- The statistics -->
+        <StackPanel Margin="10,0,0,0"
+                    Orientation="Horizontal">
+            <StackPanel.Styles>
+                <Style Selector="TextBlock">
+                    <Setter Property="VerticalAlignment"
+                            Value="Center" />
+                </Style>
+            </StackPanel.Styles>
+
+            <TextBlock Classes="code_text"
+                       IsVisible="{Binding !Item.Messages.IsEmpty}"
+                       Text="{Binding Path=Item.Messages.Count, StringFormat={}({0} messages)}" />
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

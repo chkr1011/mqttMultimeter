@@ -3,8 +3,8 @@
 public enum PayloadInputFormat
 {
     PlainText,
-    
+
     Base64String,
-    
+
     FilePath
 }

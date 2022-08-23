@@ -64,7 +64,7 @@ public sealed class PayloadInputFormatSelectorViewModel : BaseViewModel
             IsFilePath = value == PayloadInputFormat.FilePath;
         }
     }
-    
+
     public byte[] ConvertPayloadInput(string? payloadInput)
     {
         if (string.IsNullOrEmpty(payloadInput))

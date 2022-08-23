@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using MQTTnet;
 using MQTTnetApp.Common;
 using MQTTnetApp.Pages.Inflight;
@@ -8,26 +7,28 @@ namespace MQTTnetApp.Pages.TopicExplorer;
 
 public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
 {
-    public TopicExplorerItemMessageViewModel(MqttApplicationMessage applicationMessage)
+    public TopicExplorerItemMessageViewModel(DateTime timestamp, MqttApplicationMessage applicationMessage, string payload, TimeSpan delay)
     {
-        Timestamp = DateTime.Now;
-
-        try
+        if (applicationMessage == null)
         {
-            PayloadString = Encoding.UTF8.GetString(applicationMessage.Payload ?? ReadOnlySpan<byte>.Empty);
-        }
-        catch
-        {
-            // Ignore error.
-            PayloadString = string.Empty;
+            throw new ArgumentNullException(nameof(applicationMessage));
         }
 
+        Timestamp = timestamp;
+        Payload = payload ?? throw new ArgumentNullException(nameof(payload));
+        Retain = applicationMessage.Retain;
+
+        Delay = delay;
         InflightItem = InflightPageItemViewModel.Create(applicationMessage, 0);
     }
 
-    public InflightPageItemViewModel InflightItem { get; }
+    public TimeSpan Delay { get; init; }
 
-    public string PayloadString { get; }
+    public InflightPageItemViewModel InflightItem { get; init; }
 
-    public DateTime Timestamp { get; }
+    public string Payload { get; init; }
+
+    public bool Retain { get; init; }
+
+    public DateTime Timestamp { get; init; }
 }

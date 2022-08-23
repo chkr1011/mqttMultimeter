@@ -12,7 +12,7 @@
     <UserControl.Styles>
         <Style Selector="Border.status_bar_connected">
             <Setter Property="Background"
-                    Value="DarkGreen" />
+                    Value="{StaticResource AppLightGreen}" />
         </Style>
 
         <Style Selector="Border.status_bar_not_connected">
@@ -71,7 +71,7 @@
                             <PathIcon Data="{StaticResource apps_list_regular}" />
                         </TabItem.Header>
                     </TabItem>
-                    
+
                     <!-- Topic Explorer -->
                     <TabItem Content="{Binding TopicExplorerPage}"
                              ToolTip.Tip="Topic Explorer">
@@ -111,7 +111,7 @@
                     Classes.status_bar_connected="{Binding ConnectionPage.IsConnected}"
                     Classes.status_bar_not_connected="{Binding !ConnectionPage.IsConnected}"
                     Grid.Row="1">
-                
+
                 <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto">
                     <!-- The connection status -->
                     <Border Grid.Column="0">
@@ -120,19 +120,21 @@
                                        IsVisible="{Binding !ConnectionPage.IsConnected}" />
                             <TextBlock Text="Connected"
                                        IsVisible="{Binding ConnectionPage.IsConnected}" />
-                                
-                            <TextBlock Margin="10,0,0,0" Text="{Binding ConnectionPage.DisconnectedReason.Reason}" />
-                            <TextBlock Margin="10,0,0,0" Text="{Binding ConnectionPage.DisconnectedReason.AdditionalInformation}" />
+
+                            <TextBlock Margin="10,0,0,0"
+                                       Text="{Binding ConnectionPage.DisconnectedReason.Reason}" />
+                            <TextBlock Margin="10,0,0,0"
+                                       Text="{Binding ConnectionPage.DisconnectedReason.AdditionalInformation}" />
                         </StackPanel>
                     </Border>
-                    
+
                     <Separator Grid.Column="2" />
-                    
+
                     <!-- The count of inflight items -->
                     <Border Grid.Column="3">
                         <TextBlock Text="{Binding InflightPage.Items.Count, StringFormat={}{0} application messages received}" />
                     </Border>
-                    
+
                     <!-- The version string -->
                     <Border Grid.Column="4"
                             Classes.update_available="{Binding InfoPage.IsUpdateAvailable}"

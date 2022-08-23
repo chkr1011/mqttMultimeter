@@ -3,78 +3,143 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:topicExplorer="clr-namespace:MQTTnetApp.Pages.TopicExplorer"
+             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerPageViewModel}"
              x:Class="MQTTnetApp.Pages.TopicExplorer.TopicExplorerPageView">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="/Pages/TopicExplorer/TopicExplorerTreeNode.axaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="1" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <controls:Overlay IsOverlayVisible="{Binding Path=OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
+                      OverlayContent="{Binding OverlayContent}">
 
-        <!-- The tree of topics. -->
-        <Grid Background="#262626">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="0"
-                        Margin="0">
+            <!-- The tree of topics. -->
+            <Grid Grid.Column="0"
+                  Background="#262626">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-                <!-- The Enable/Disable button -->
-                <ToggleButton Classes="tool_bar_button"
-                              IsChecked="{Binding IsRecordingEnabled}"
-                              ToolTip.Tip="Enable/Disable recording">
-                    <PathIcon Data="{StaticResource record_regular}" />
-                </ToggleButton>
+                <!-- Tool Bar -->
+                <StackPanel Classes="tool_bar"
+                            Orientation="Horizontal"
+                            Grid.Row="0"
+                            Margin="0">
 
-                <Button ToolTip.Tip="Remove all topic nodes"
-                        Classes="tool_bar_button"
-                        Command="{Binding Clear}">
-                    <PathIcon Data="{StaticResource delete_regular}" />
-                </Button>
-            </StackPanel>
+                    <!-- The Enable/Disable button -->
+                    <ToggleButton Classes="tool_bar_button"
+                                  IsChecked="{Binding IsRecordingEnabled}"
+                                  ToolTip.Tip="Enable/Disable recording">
+                        <PathIcon Data="{StaticResource record_regular}" />
+                    </ToggleButton>
 
-            <TreeView Background="Transparent"
-                      ItemTemplate="{StaticResource TopicExplorerTreeNode}"
+                    <!-- The Enable/Disable highlighting -->
+                    <ToggleButton Classes="tool_bar_button"
+                                  IsChecked="{Binding HighlightChanges}"
+                                  ToolTip.Tip="Enable/Disable highlighting">
+                        <PathIcon Data="{StaticResource highlight_regular}" />
+                    </ToggleButton>
+
+                    <Button ToolTip.Tip="Expand selected tree"
+                            Classes="tool_bar_button"
+                            Command="{Binding ExpandSelectedTree}">
+                        <PathIcon Data="{StaticResource arrow_maximize_regular}" />
+                    </Button>
+
+                    <Button ToolTip.Tip="Collapse all nodes"
+                            Classes="tool_bar_button"
+                            Command="{Binding CollapseAll}">
+                        <PathIcon Data="{StaticResource arrow_minimize_vertical_regular}" />
+                    </Button>
+
+                    <Button ToolTip.Tip="Remove all topic nodes"
+                            Classes="tool_bar_button"
+                            Command="{Binding Clear}">
+                        <PathIcon Data="{StaticResource delete_regular}" />
+                    </Button>
+                </StackPanel>
+
+                <TreeView Background="Transparent"
+                          Grid.Row="1"
+                          x:Name="PART_Items"
+                          SelectedItem="{Binding SelectedNode, Mode=TwoWay}"
+                          Items="{Binding Nodes}"
+                          Grid.Column="0">
+                    <TreeView.ItemTemplate>
+                        <TreeDataTemplate ItemsSource="{Binding Nodes}">
+                            <ContentPresenter Content="{Binding}" />
+                        </TreeDataTemplate>
+                    </TreeView.ItemTemplate>
+                    <TreeView.Styles>
+                        <Style d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerTreeNodeViewModel}"
+                               Selector="TreeViewItem">
+                            <Setter Property="IsExpanded"
+                                    Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
+                        </Style>
+                        <Style Selector="TreeViewItem.highlight">
+                            <Setter Property="Background"
+                                    Value="#2200EE00" />
+                        </Style>
+                    </TreeView.Styles>
+                </TreeView>
+
+                <!-- No data overlay -->
+                <Grid Grid.Column="0"
                       Grid.Row="1"
-                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                      SelectedItem="{Binding SelectedNode, Mode=TwoWay}"
-                      Items="{Binding Nodes}"
-                      Grid.Column="0"
-                      x:Name="PART_Items">
-                <TreeView.Styles>
-                    <Style d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerTreeNodeViewModel}"
-                           Selector="TreeViewItem">
-                        <Setter Property="Background"
-                                Value="Transparent" />
-                        <Setter Property="IsExpanded"
-                                Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
-                    </Style>
-                </TreeView.Styles>
-            </TreeView>
+                      Margin="0,-30,0,0"
+                      IsVisible="{Binding !HasNodes}"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch">
+                    <StackPanel HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock FontSize="20"
+                                   Text="No data available" />
+                        <TextBlock Margin="0,10,0,0"
+                                   FontSize="14"
+                                   Text="In order to get any data in the Topic Explorer perform the following steps:" />
+                        <TextBlock Margin="0,10,0,0"
+                                   FontSize="14"
+                                   Text="1. Enable the Topic Explorer via the Tool Bar above." />
+                        <TextBlock FontSize="14"
+                                   Margin="0,10,0,0"
+                                   Text="2. Connect to a MQTT broker via the Connect page." />
+                        <TextBlock FontSize="14"
+                                   Margin="0,10,0,0"
+                                   Text="3. Subscribe to any topic via the Subscribe page." />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <!-- The splitter -->
+            <GridSplitter Grid.Column="1"
+                          Width="1" />
+
+            <Grid Grid.Column="2">
+                <ContentPresenter Content="{Binding ElementName=PART_Items, Path=SelectedItem.Item}" />
+            </Grid>
+
+            <!-- No data overlay -->
+            <Grid Grid.Column="2"
+                  IsVisible="{Binding !HasNodeSelected}"
+                  VerticalAlignment="Stretch"
+                  HorizontalAlignment="Stretch">
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <TextBlock FontSize="20"
+                               Text="No message selected" />
+                </StackPanel>
+            </Grid>
+
         </Grid>
 
-        <!-- The splitter -->
-        <GridSplitter Grid.Column="1"
-                      Width="1" />
-
-        <ContentPresenter Grid.Column="2"
-                          Content="{Binding ElementName=PART_Items, Path=SelectedItem.Item}" />
-
-    </Grid>
+    </controls:Overlay>
 
 </UserControl>

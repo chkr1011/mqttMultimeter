@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using DynamicData;
 using DynamicData.Binding;
 using MQTTnetApp.Common;
@@ -11,18 +12,21 @@ public sealed class TopicExplorerTreeNodeViewModel : BaseViewModel
 {
     bool _isExpanded;
 
-    public TopicExplorerTreeNodeViewModel(string name)
+    public TopicExplorerTreeNodeViewModel(string name, TopicExplorerTreeNodeViewModel? parent, TopicExplorerPageViewModel ownerPage)
     {
-        Name = name;
+        OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Parent = parent;
 
-        Children.Connect().Sort(SortExpressionComparer<TopicExplorerTreeNodeViewModel>.Ascending(t => t.Name)).Bind(out var nodes).Subscribe();
+        NodesSource.Connect().Sort(SortExpressionComparer<TopicExplorerTreeNodeViewModel>.Ascending(t => t.Name)).Bind(out var nodes).Subscribe();
 
         Nodes = nodes;
 
-        Item = new TopicExplorerItemViewModel();
+        Item = new TopicExplorerItemViewModel(ownerPage);
+        Item.Messages.CollectionChanged += OnMessagesChanged;
     }
 
-    public SourceList<TopicExplorerTreeNodeViewModel> Children { get; } = new();
+    public event EventHandler? MessagesChanged;
 
     public bool IsExpanded
     {
@@ -35,4 +39,16 @@ public sealed class TopicExplorerTreeNodeViewModel : BaseViewModel
     public string Name { get; }
 
     public ReadOnlyObservableCollection<TopicExplorerTreeNodeViewModel> Nodes { get; }
+
+    public SourceList<TopicExplorerTreeNodeViewModel> NodesSource { get; } = new();
+
+    public TopicExplorerPageViewModel OwnerPage { get; }
+
+    TopicExplorerTreeNodeViewModel? Parent { get; }
+
+    void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        Parent?.OnMessagesChanged(sender, e);
+        MessagesChanged?.Invoke(sender, e);
+    }
 }
