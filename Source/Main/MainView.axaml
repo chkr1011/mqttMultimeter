@@ -132,7 +132,7 @@
 
                     <!-- The count of inflight items -->
                     <Border Grid.Column="3">
-                        <TextBlock Text="{Binding InflightPage.Items.Count, StringFormat={}{0} application messages received}" />
+                        <TextBlock Text="{Binding InflightPage.Counter, StringFormat={}{0} messages received}" />
                     </Border>
 
                     <!-- The version string -->
