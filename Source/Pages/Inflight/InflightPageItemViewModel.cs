@@ -7,10 +7,9 @@ namespace MQTTnetApp.Pages.Inflight;
 
 public sealed class InflightPageItemViewModel
 {
-    public InflightPageItemViewModel(InflightPageViewModel ownerPage)
-    {
-        OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
-    }
+    public event EventHandler? DeleteRetainedMessageRequested;
+
+    public event EventHandler? RepeatMessageRequested;
 
     public string ContentType { get; init; } = string.Empty;
 
@@ -18,15 +17,13 @@ public sealed class InflightPageItemViewModel
 
     public int Number { get; init; }
 
-    public InflightPageViewModel OwnerPage { get; }
-
     public byte[] Payload { get; init; } = Array.Empty<byte>();
 
     public string PayloadPreview { get; set; } = string.Empty;
 
     public MqttQualityOfServiceLevel QualityOfServiceLevel { get; init; }
 
-    public bool Retained { get; init; }
+    public bool Retain { get; init; }
 
     public MqttApplicationMessage? Source { get; init; }
 
@@ -36,8 +33,37 @@ public sealed class InflightPageItemViewModel
 
     public UserPropertiesViewModel UserProperties { get; } = new();
 
-    public void Repeat()
+    public static InflightPageItemViewModel Create(MqttApplicationMessage applicationMessage, int number)
     {
-        OwnerPage.RepeatItem(this);
+        var itemViewModel = new InflightPageItemViewModel
+        {
+            Timestamp = DateTime.Now,
+            Number = number,
+            Topic = applicationMessage.Topic,
+            Length = applicationMessage.Payload?.Length ?? 0L,
+            Retain = applicationMessage.Retain,
+            Source = applicationMessage,
+            Payload = applicationMessage.Payload ?? Array.Empty<byte>(),
+            ContentType = applicationMessage.ContentType,
+            QualityOfServiceLevel = applicationMessage.QualityOfServiceLevel,
+            UserProperties =
+            {
+                IsReadOnly = true
+            }
+        };
+
+        itemViewModel.UserProperties.Load(applicationMessage.UserProperties);
+
+        return itemViewModel;
+    }
+
+    public void DeleteRetainedMessage()
+    {
+        DeleteRetainedMessageRequested?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void RepeatMessage()
+    {
+        RepeatMessageRequested?.Invoke(this, EventArgs.Empty);
     }
 }

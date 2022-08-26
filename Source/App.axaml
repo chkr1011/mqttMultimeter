@@ -6,6 +6,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="/Assets/VectorIcons.axaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="AppLightGreen">#2200EE00</SolidColorBrush>
         </ResourceDictionary>
     </Application.Resources>
     <Application.Styles>
@@ -33,6 +35,11 @@
         <StyleInclude Source="/Controls/HexBox.axaml" />
         <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
         <StyleInclude Source="/Controls/Overlay/Overlay.axaml" />
+
+        <Style Selector="ToolTip">
+            <Setter Property="MaxWidth"
+                    Value="999999" />
+        </Style>
 
         <Style Selector="ItemsPresenter">
             <Setter Property="(KeyboardNavigation.TabNavigation)"

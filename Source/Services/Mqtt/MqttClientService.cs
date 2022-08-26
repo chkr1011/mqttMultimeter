@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Security;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Threading;
 using MQTTnet;
 using MQTTnet.Client;
@@ -92,9 +90,7 @@ public sealed class MqttClientService
                 o.SslProtocol = item.ServerOptions.SelectedTlsVersion.Value;
                 o.IgnoreCertificateChainErrors = item.ServerOptions.IgnoreCertificateErrors;
                 o.IgnoreCertificateRevocationErrors = item.ServerOptions.IgnoreCertificateErrors;
-                o.CertificateValidationHandler = item.ServerOptions.IgnoreCertificateErrors
-                    ? _ => true
-                    : null;
+                o.CertificateValidationHandler = item.ServerOptions.IgnoreCertificateErrors ? _ => true : null;
             });
         }
 
@@ -125,6 +121,18 @@ public sealed class MqttClientService
         return _mqttClient.DisconnectAsync();
     }
 
+    public Task<MqttClientPublishResult> Publish(MqttApplicationMessage message, CancellationToken cancellationToken)
+    {
+        if (message == null)
+        {
+            throw new ArgumentNullException(nameof(message));
+        }
+
+        ThrowIfNotConnected();
+
+        return _mqttClient!.PublishAsync(message, cancellationToken);
+    }
+
     public Task<MqttClientPublishResult> Publish(PublishItemViewModel item)
     {
         if (item == null)
@@ -147,7 +155,7 @@ public sealed class MqttClientService
         {
             applicationMessageBuilder.WithSubscriptionIdentifier(item.SubscriptionIdentifier);
         }
-        
+
         if (item.TopicAlias > 0)
         {
             applicationMessageBuilder.WithTopicAlias(item.TopicAlias);
@@ -202,9 +210,7 @@ public sealed class MqttClientService
 
         var subscribeOptions = subscribeOptionsBuilder.Build();
 
-        var subscribeResult = await _mqttClient.SubscribeAsync(subscribeOptions).ConfigureAwait(false);
-
-        return subscribeResult;
+        return await _mqttClient!.SubscribeAsync(subscribeOptions).ConfigureAwait(false);
     }
 
     public async Task<MqttClientUnsubscribeResult> Unsubscribe(SubscriptionItemViewModel subscriptionItem)
@@ -216,9 +222,7 @@ public sealed class MqttClientService
 
         ThrowIfNotConnected();
 
-        var unsubscribeResult = await _mqttClient.UnsubscribeAsync(subscriptionItem.Topic);
-
-        return unsubscribeResult;
+        return await _mqttClient.UnsubscribeAsync(subscriptionItem.Topic).ConfigureAwait(false);
     }
 
     Task OnApplicationMessageReceived(MqttApplicationMessageReceivedEventArgs eventArgs)
@@ -230,7 +234,7 @@ public sealed class MqttClientService
     {
         Dispatcher.UIThread.Post(() =>
         {
-            Disconnected?.Invoke(this, eventArgs);  
+            Disconnected?.Invoke(this, eventArgs);
         });
 
         return Task.CompletedTask;

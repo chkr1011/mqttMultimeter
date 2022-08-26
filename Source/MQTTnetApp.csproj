@@ -23,7 +23,6 @@
         <DebugType>none</DebugType>
     </PropertyGroup>
     <ItemGroup>
-        <Folder Include="Configuration\Service" />
         <AvaloniaResource Include="Assets\**" />
         <None Remove="Assets\Icons\arrow_down.png" />
         <None Remove="Assets\Icons\arrow_up.png" />

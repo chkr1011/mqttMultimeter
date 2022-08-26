@@ -43,7 +43,8 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <CheckBox Margin="10,0,0,0" IsChecked="{Binding ServerOptions.IgnoreCertificateErrors}"
+                        <CheckBox Margin="10,0,0,0"
+                                  IsChecked="{Binding ServerOptions.IgnoreCertificateErrors}"
                                   Content="Ignore certificate errors" />
                     </StackPanel>
 

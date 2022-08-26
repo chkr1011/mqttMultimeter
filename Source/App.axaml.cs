@@ -13,6 +13,7 @@ using MQTTnetApp.Pages.Log;
 using MQTTnetApp.Pages.PacketInspector;
 using MQTTnetApp.Pages.Publish;
 using MQTTnetApp.Pages.Subscriptions;
+using MQTTnetApp.Pages.TopicExplorer;
 using MQTTnetApp.Services.Data;
 using MQTTnetApp.Services.Mqtt;
 using MQTTnetApp.Services.State;
@@ -29,18 +30,21 @@ public sealed class App : Application
     public App()
     {
         var serviceProvider = new ServiceCollection().AddLogging()
+            // Services
             .AddSingleton<MqttClientService>()
             .AddSingleton<AppUpdateService>()
             .AddSingleton<JsonSerializerService>()
             .AddSingleton<StateService>()
-            .AddSingleton<MainViewModel>()
+            // Pages
             .AddSingleton<ConnectionPageViewModel>()
             .AddSingleton<PublishPageViewModel>()
             .AddSingleton<SubscriptionsPageViewModel>()
             .AddSingleton<PacketInspectorPageViewModel>()
+            .AddSingleton<TopicExplorerPageViewModel>()
             .AddSingleton<InflightPageViewModel>()
             .AddSingleton<LogPageViewModel>()
             .AddSingleton<InfoPageViewModel>()
+            .AddSingleton<MainViewModel>()
             .BuildServiceProvider();
 
         var viewLocator = new ViewLocator();
@@ -99,9 +103,9 @@ public sealed class App : Application
         errorBox.Closed += (_, __) =>
         {
             // Consider using a Stack so that multiple contents like windows etc. can be stacked.
-            _mainViewModel.OverlayContent = null;
+            _mainViewModel!.OverlayContent = null;
         };
 
-        _mainViewModel.OverlayContent = errorBox;
+        _mainViewModel!.OverlayContent = errorBox;
     }
 }

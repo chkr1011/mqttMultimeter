@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using DynamicData;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnetApp.Common;
+using MQTTnetApp.Controls;
 using MQTTnetApp.Pages.Publish;
 using MQTTnetApp.Services.Mqtt;
 using ReactiveUI;
 
 namespace MQTTnetApp.Pages.Inflight;
 
-public sealed class InflightPageViewModel : BaseViewModel
+public sealed class InflightPageViewModel : BasePageViewModel
 {
     readonly ReadOnlyObservableCollection<InflightPageItemViewModel> _items;
     readonly SourceList<InflightPageItemViewModel> _itemsSource = new();
+    readonly MqttClientService _mqttClientService;
     readonly PublishPageViewModel _publishPage;
 
     string? _filterText;
@@ -27,11 +30,7 @@ public sealed class InflightPageViewModel : BaseViewModel
 
     public InflightPageViewModel(MqttClientService mqttClientService, PublishPageViewModel publishPage)
     {
-        if (mqttClientService == null)
-        {
-            throw new ArgumentNullException(nameof(mqttClientService));
-        }
-
+        _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
         _publishPage = publishPage;
 
         mqttClientService.ApplicationMessageReceived += OnApplicationMessageReceived;
@@ -40,8 +39,6 @@ public sealed class InflightPageViewModel : BaseViewModel
 
         _itemsSource.Connect().Filter(filter).ObserveOn(RxApp.MainThreadScheduler).Bind(out _items).Subscribe();
     }
-
-    public event EventHandler? SwitchToPublishRequested;
 
     public string? FilterText
     {
@@ -68,22 +65,6 @@ public sealed class InflightPageViewModel : BaseViewModel
         _itemsSource.Clear();
     }
 
-    public void RepeatItem(InflightPageItemViewModel item)
-    {
-        var publishItem = new PublishItemViewModel(_publishPage)
-        {
-            Name = $"Repeat '{item.Topic}'",
-            ContentType = item.ContentType,
-            Topic = item.Topic,
-            Payload = item.PayloadPreview
-        };
-
-        _publishPage.Items.Collection.Add(publishItem);
-        _publishPage.Items.SelectedItem = publishItem;
-
-        SwitchToPublishRequested?.Invoke(this, EventArgs.Empty);
-    }
-
     Func<InflightPageItemViewModel, bool> BuildFilter(string? searchText)
     {
         if (string.IsNullOrEmpty(searchText))
@@ -94,26 +75,16 @@ public sealed class InflightPageViewModel : BaseViewModel
         return t => t.Topic.Contains(searchText, StringComparison.OrdinalIgnoreCase);
     }
 
-    InflightPageItemViewModel CreateViewModel(MqttApplicationMessage applicationMessage)
+    InflightPageItemViewModel CreateItemViewModel(MqttApplicationMessage applicationMessage)
     {
-        var itemViewModel = new InflightPageItemViewModel(this)
+        var itemViewModel = InflightPageItemViewModel.Create(applicationMessage, _number++);
+
+        itemViewModel.RepeatMessageRequested += (_, __) =>
         {
-            Timestamp = DateTime.Now,
-            Number = _number++,
-            Topic = applicationMessage.Topic,
-            Length = applicationMessage.Payload?.Length ?? 0L,
-            Retained = applicationMessage.Retain,
-            Source = applicationMessage,
-            Payload = applicationMessage.Payload ?? Array.Empty<byte>(),
-            ContentType = applicationMessage.ContentType,
-            QualityOfServiceLevel = applicationMessage.QualityOfServiceLevel,
-            UserProperties =
-            {
-                IsReadOnly = true
-            }
+            RepeatApplicationMessage(itemViewModel);
         };
 
-        itemViewModel.UserProperties.Load(applicationMessage.UserProperties);
+        itemViewModel.DeleteRetainedMessageRequested += OnDeleteRetainedMessageRequested;
 
         return itemViewModel;
     }
@@ -127,7 +98,7 @@ public sealed class InflightPageViewModel : BaseViewModel
             return Task.CompletedTask;
         }
 
-        var newItem = CreateViewModel(eventArgs.ApplicationMessage);
+        var newItem = CreateItemViewModel(eventArgs.ApplicationMessage);
 
         return Dispatcher.UIThread.InvokeAsync(() =>
         {
@@ -139,5 +110,37 @@ public sealed class InflightPageViewModel : BaseViewModel
                 _itemsSource.RemoveAt(0);
             }
         });
+    }
+
+    void OnDeleteRetainedMessageRequested(object? sender, EventArgs e)
+    {
+        var item = (InflightPageItemViewModel)sender!;
+        OverlayContent = ProgressIndicatorViewModel.Create($"Deleting retained message...\r\n\r\n{item.Topic}");
+
+        Dispatcher.UIThread.InvokeAsync(async () =>
+        {
+            try
+            {
+                var message = new MqttApplicationMessageBuilder().WithTopic(item.Topic)
+                    .WithQualityOfServiceLevel(item.QualityOfServiceLevel)
+                    .WithPayload(ArraySegment<byte>.Empty)
+                    .Build();
+
+                await _mqttClientService.Publish(message, CancellationToken.None);
+            }
+            catch (Exception exception)
+            {
+                App.ShowException(exception);
+            }
+            finally
+            {
+                OverlayContent = null;
+            }
+        });
+    }
+
+    void RepeatApplicationMessage(InflightPageItemViewModel item)
+    {
+        _publishPage.RepeatMessage(item);
     }
 }
