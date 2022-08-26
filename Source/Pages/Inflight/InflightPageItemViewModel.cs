@@ -15,7 +15,7 @@ public sealed class InflightPageItemViewModel
 
     public long Length { get; init; }
 
-    public int Number { get; init; }
+    public long Number { get; init; }
 
     public byte[] Payload { get; init; } = Array.Empty<byte>();
 
@@ -33,7 +33,7 @@ public sealed class InflightPageItemViewModel
 
     public UserPropertiesViewModel UserProperties { get; } = new();
 
-    public static InflightPageItemViewModel Create(MqttApplicationMessage applicationMessage, int number)
+    public static InflightPageItemViewModel Create(MqttApplicationMessage applicationMessage, long number)
     {
         var itemViewModel = new InflightPageItemViewModel
         {

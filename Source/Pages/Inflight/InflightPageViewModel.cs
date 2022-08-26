@@ -24,7 +24,7 @@ public sealed class InflightPageViewModel : BasePageViewModel
 
     string? _filterText;
     bool _isRecordingEnabled = true;
-    int _number;
+    long _counter;
 
     InflightPageItemViewModel? _selectedItem;
 
@@ -39,6 +39,8 @@ public sealed class InflightPageViewModel : BasePageViewModel
 
         _itemsSource.Connect().Filter(filter).ObserveOn(RxApp.MainThreadScheduler).Bind(out _items).Subscribe();
     }
+
+    public long Counter => _counter;
 
     public string? FilterText
     {
@@ -77,7 +79,10 @@ public sealed class InflightPageViewModel : BasePageViewModel
 
     InflightPageItemViewModel CreateItemViewModel(MqttApplicationMessage applicationMessage)
     {
-        var itemViewModel = InflightPageItemViewModel.Create(applicationMessage, _number++);
+        var counter = Interlocked.Increment(ref _counter);
+        this.RaisePropertyChanged(nameof(Counter));
+        
+        var itemViewModel = InflightPageItemViewModel.Create(applicationMessage, counter);
 
         itemViewModel.RepeatMessageRequested += (_, __) =>
         {

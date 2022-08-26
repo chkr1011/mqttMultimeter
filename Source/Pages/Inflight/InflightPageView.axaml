@@ -121,7 +121,7 @@
                             Background="Black">
                         <Label Margin="5,0"
                                Classes="tool_bar_label"
-                               Content="Selected application message" />
+                               Content="Selected message" />
                     </Border>
 
                     <inflight:InflightPageItemView Grid.Row="1"
