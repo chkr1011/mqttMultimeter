@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using DynamicData;
 using DynamicData.Binding;
+using MQTTnet;
 using MQTTnetApp.Common;
 using ReactiveUI;
 
@@ -21,9 +22,6 @@ public sealed class TopicExplorerTreeNodeViewModel : BaseViewModel
         NodesSource.Connect().Sort(SortExpressionComparer<TopicExplorerTreeNodeViewModel>.Ascending(t => t.Name)).Bind(out var nodes).Subscribe();
 
         Nodes = nodes;
-
-        Item = new TopicExplorerItemViewModel(ownerPage);
-        Item.Messages.CollectionChanged += OnMessagesChanged;
     }
 
     public event EventHandler? MessagesChanged;
@@ -34,7 +32,7 @@ public sealed class TopicExplorerTreeNodeViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _isExpanded, value);
     }
 
-    public TopicExplorerItemViewModel Item { get; }
+    public TopicExplorerItemViewModel? Item { get; private set; }
 
     public string Name { get; }
 
@@ -45,6 +43,17 @@ public sealed class TopicExplorerTreeNodeViewModel : BaseViewModel
     public TopicExplorerPageViewModel OwnerPage { get; }
 
     TopicExplorerTreeNodeViewModel? Parent { get; }
+
+    public void AddMessage(MqttApplicationMessage message)
+    {
+        if (Item == null)
+        {
+            Item = new TopicExplorerItemViewModel(OwnerPage);
+            Item.Messages.CollectionChanged += OnMessagesChanged;
+        }
+
+        Item.AddMessage(message);
+    }
 
     void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {

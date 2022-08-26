@@ -18,7 +18,7 @@
 
             <TextBlock Text="="
                        FontStyle="Italic"
-                       IsVisible="{Binding Item.HasPayload}"
+                       IsVisible="{Binding Item.HasPayload, FallbackValue=False}"
                        Margin="10,0" />
         </StackPanel>
 
@@ -27,22 +27,16 @@
                    FontSize="13"
                    TextTrimming="CharacterEllipsis"
                    FontStyle="Italic"
-                   Text="{Binding Item.CurrentPayload}" />
+                   Text="{Binding Item.CurrentPayload, FallbackValue=''}" />
 
         <!-- The statistics -->
-        <StackPanel Margin="10,0,0,0"
-                    Orientation="Horizontal">
-            <StackPanel.Styles>
-                <Style Selector="TextBlock">
-                    <Setter Property="VerticalAlignment"
-                            Value="Center" />
-                </Style>
-            </StackPanel.Styles>
-
-            <TextBlock Classes="code_text"
-                       IsVisible="{Binding !Item.Messages.IsEmpty}"
-                       Text="{Binding Path=Item.Messages.Count, StringFormat={}({0} messages)}" />
-        </StackPanel>
+        <TextBlock Classes="code_text"
+                   FontSize="13"
+                   TextTrimming="CharacterEllipsis"
+                   FontStyle="Italic"
+                   Margin="10,0,0,0"
+                   IsVisible="{Binding !Item.Messages.IsEmpty, FallbackValue=False}"
+                   Text="{Binding Path=Item.Messages.Count, StringFormat={}({0} messages), FallbackValue=0}" />
 
     </StackPanel>
 </UserControl>

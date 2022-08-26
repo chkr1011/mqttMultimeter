@@ -56,14 +56,12 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
 
     public bool HasNodes => Nodes.Count > 0;
 
-    public bool HasNodeSelected => _selectedNode != null;
-
     public bool HighlightChanges
     {
         get => _highlightChanges;
         set => this.RaiseAndSetIfChanged(ref _highlightChanges, value);
     }
-
+    
     public bool IsRecordingEnabled
     {
         get => _isRecordingEnabled;
@@ -75,11 +73,7 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
     public TopicExplorerTreeNodeViewModel? SelectedNode
     {
         get => _selectedNode;
-        set
-        {
-            this.RaiseAndSetIfChanged(ref _selectedNode, value);
-            this.RaisePropertyChanged(nameof(HasNodeSelected));
-        }
+        set => this.RaiseAndSetIfChanged(ref _selectedNode, value);
     }
 
     public void Clear()
@@ -170,7 +164,7 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
 
             if (index == path.Length - 1)
             {
-                targetNode.Item.AddMessage(message);
+                targetNode.AddMessage(message);
             }
 
             fullTopic.Append('/');
