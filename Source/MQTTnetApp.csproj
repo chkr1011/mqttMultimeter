@@ -38,7 +38,7 @@
         <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-        <PackageReference Include="MQTTnet" Version="4.1.0.247" />
+        <PackageReference Include="MQTTnet" Version="4.1.0.272" />
         <PackageReference Include="MessagePack" Version="2.4.35" />
         <PackageReference Include="System.Text.Json" Version="6.0.5" />
     </ItemGroup>
