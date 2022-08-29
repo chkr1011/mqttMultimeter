@@ -33,6 +33,9 @@ public sealed class MainViewModel : BaseViewModel
         PacketInspectorPage = AttachEvents(packetInspectorPage);
         InfoPage = AttachEvents(infoPage);
         LogPage = AttachEvents(logPage);
+
+        InflightPage.RepeatMessageRequested += item => PublishPage.RepeatMessage(item);
+        topicExplorerPage.RepeatMessageRequested += item => PublishPage.RepeatMessage(item);
     }
 
     public event EventHandler? ActivatePageRequested;
