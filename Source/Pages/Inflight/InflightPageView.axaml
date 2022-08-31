@@ -19,21 +19,33 @@
             <StackPanel Grid.Column="0"
                         Classes="tool_bar">
 
-                <!-- The Enable/Disable button -->
+                <!-- The Enable/Disable button. -->
                 <ToggleButton Classes="tool_bar_button"
                               IsChecked="{Binding IsRecordingEnabled}"
-                              ToolTip.Tip="Enable/Disable inflight recording">
+                              ToolTip.Tip="Enable/Disable recording">
                     <PathIcon Data="{StaticResource record_regular}" />
                 </ToggleButton>
 
                 <!-- The clear items button. -->
                 <Button Classes="tool_bar_button"
-                        ToolTip.Tip="Remove all inflight items."
+                        ToolTip.Tip="Remove all items."
                         Command="{Binding ClearItems}">
                     <PathIcon Data="{StaticResource delete_regular}" />
                 </Button>
 
-                <!-- The topic filter text -->
+                <!-- The export/import buttons. -->
+                <Button Classes="tool_bar_button"
+                        ToolTip.Tip="Export all items to a file."
+                        Command="{Binding ExportItems}">
+                    <PathIcon Data="{StaticResource save_regular}" />
+                </Button>
+                <Button Classes="tool_bar_button"
+                        ToolTip.Tip="Import all items from a file."
+                        Command="{Binding ImportItems}">
+                    <PathIcon Data="{StaticResource folder_open_regular}" />
+                </Button>
+
+                <!-- The topic filter text. -->
                 <TextBox Width="200"
                          Classes="tool_bar_text_box"
                          Watermark="Topic filter"

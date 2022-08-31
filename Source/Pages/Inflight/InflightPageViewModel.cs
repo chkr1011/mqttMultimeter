@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Threading;
 using DynamicData;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnetApp.Common;
 using MQTTnetApp.Controls;
-using MQTTnetApp.Pages.Publish;
+using MQTTnetApp.Main;
+using MQTTnetApp.Pages.Inflight.Export;
 using MQTTnetApp.Services.Mqtt;
 using ReactiveUI;
 
@@ -17,21 +22,33 @@ namespace MQTTnetApp.Pages.Inflight;
 
 public sealed class InflightPageViewModel : BasePageViewModel
 {
+    const string ExportDialogTitle = "Export Inflight items";
+
+    static readonly FileDialogFilter ExportDialogFilter = new()
+    {
+        Name = "MQTT Inflight item exports",
+        Extensions = new List<string>
+        {
+            "mqtt_inflight"
+        }
+    };
+
+    readonly InflightPageItemExportService _exportService;
     readonly ReadOnlyObservableCollection<InflightPageItemViewModel> _items;
     readonly SourceList<InflightPageItemViewModel> _itemsSource = new();
     readonly MqttClientService _mqttClientService;
-    readonly PublishPageViewModel _publishPage;
+
+    long _counter;
 
     string? _filterText;
     bool _isRecordingEnabled = true;
-    long _counter;
 
     InflightPageItemViewModel? _selectedItem;
 
-    public InflightPageViewModel(MqttClientService mqttClientService, PublishPageViewModel publishPage)
+    public InflightPageViewModel(MqttClientService mqttClientService, InflightPageItemExportService exportService)
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
-        _publishPage = publishPage;
+        _exportService = exportService ?? throw new ArgumentNullException(nameof(exportService));
 
         mqttClientService.ApplicationMessageReceived += OnApplicationMessageReceived;
 
@@ -39,6 +56,8 @@ public sealed class InflightPageViewModel : BasePageViewModel
 
         _itemsSource.Connect().Filter(filter).ObserveOn(RxApp.MainThreadScheduler).Bind(out _items).Subscribe();
     }
+
+    public event Action<InflightPageItemViewModel>? RepeatMessageRequested;
 
     public long Counter => _counter;
 
@@ -62,9 +81,71 @@ public sealed class InflightPageViewModel : BasePageViewModel
         set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
     }
 
+    public Task AppendMessage(MqttApplicationMessage message)
+    {
+        if (message == null)
+        {
+            throw new ArgumentNullException(nameof(message));
+        }
+
+        var newItem = CreateItemViewModel(message);
+
+        return Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            _itemsSource.Add(newItem);
+
+            // TODO: Move to configuration.
+            if (_itemsSource.Count > 1000)
+            {
+                _itemsSource.RemoveAt(0);
+            }
+        });
+    }
+
     public void ClearItems()
     {
         _itemsSource.Clear();
+    }
+
+    public async Task ExportItems()
+    {
+        var saveFileDialog = new SaveFileDialog
+        {
+            Title = ExportDialogTitle
+        };
+
+        saveFileDialog.Filters?.Add(ExportDialogFilter);
+
+        var fileName = await saveFileDialog.ShowAsync(MainWindow.Instance);
+        if (string.IsNullOrEmpty(fileName))
+        {
+            return;
+        }
+
+        await _exportService.Export(this, fileName);
+    }
+
+    public async Task ImportItems()
+    {
+        var openFileDialog = new OpenFileDialog
+        {
+            Title = ExportDialogTitle
+        };
+
+        openFileDialog.Filters?.Add(ExportDialogFilter);
+
+        var fileName = (await openFileDialog.ShowAsync(MainWindow.Instance))?.FirstOrDefault();
+        if (string.IsNullOrEmpty(fileName))
+        {
+            return;
+        }
+
+        if (!File.Exists(fileName))
+        {
+            return;
+        }
+
+        await _exportService.Import(this, fileName);
     }
 
     Func<InflightPageItemViewModel, bool> BuildFilter(string? searchText)
@@ -81,10 +162,10 @@ public sealed class InflightPageViewModel : BasePageViewModel
     {
         var counter = Interlocked.Increment(ref _counter);
         this.RaisePropertyChanged(nameof(Counter));
-        
-        var itemViewModel = InflightPageItemViewModel.Create(applicationMessage, counter);
 
-        itemViewModel.RepeatMessageRequested += (_, __) =>
+        var itemViewModel = InflightPageItemViewModelFactory.Create(applicationMessage, counter);
+
+        itemViewModel.RepeatMessageRequested += (_, _) =>
         {
             RepeatApplicationMessage(itemViewModel);
         };
@@ -103,18 +184,7 @@ public sealed class InflightPageViewModel : BasePageViewModel
             return Task.CompletedTask;
         }
 
-        var newItem = CreateItemViewModel(eventArgs.ApplicationMessage);
-
-        return Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            _itemsSource.Add(newItem);
-
-            // TODO: Move to configuration.
-            if (_itemsSource.Count > 1000)
-            {
-                _itemsSource.RemoveAt(0);
-            }
-        });
+        return AppendMessage(eventArgs.ApplicationMessage);
     }
 
     void OnDeleteRetainedMessageRequested(object? sender, EventArgs e)
@@ -146,6 +216,6 @@ public sealed class InflightPageViewModel : BasePageViewModel
 
     void RepeatApplicationMessage(InflightPageItemViewModel item)
     {
-        _publishPage.RepeatMessage(item);
+        RepeatMessageRequested?.Invoke(item);
     }
 }
