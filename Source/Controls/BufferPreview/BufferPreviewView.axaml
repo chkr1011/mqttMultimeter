@@ -4,7 +4,7 @@
         xmlns:converters="clr-namespace:MQTTnetApp.Converters">
     <Design.PreviewWith>
         <controls:BufferInspectorView Width="800"
-                                      Buffer="{x:Static controls:BufferInspectorView.TestData}"
+                                      Buffer="{x:Static controls:BufferPreviewTestData.Payload}"
                                       Height="600" />
     </Design.PreviewWith>
 
@@ -35,6 +35,13 @@
                                     x:Name="CopyToClipboardButton">
                                 <PathIcon Data="{StaticResource copy_regular}"
                                           ToolTip.Tip="Copy to clipboard" />
+                            </Button>
+                            
+                            <!-- The Save button -->
+                            <Button Classes="tool_bar_button"
+                                    x:Name="SaveToFileButton">
+                                <PathIcon Data="{StaticResource save_regular}"
+                                          ToolTip.Tip="Save to file" />
                             </Button>
                         </StackPanel>
 
