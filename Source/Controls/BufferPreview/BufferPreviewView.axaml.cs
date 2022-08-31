@@ -10,6 +10,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using AvaloniaEdit;
+using AvaloniaEdit.TextMate;
+using AvaloniaEdit.TextMate.Grammars;
 using MessagePack;
 using MQTTnetApp.Extensions;
 using MQTTnetApp.Services.Data;
@@ -27,11 +30,15 @@ public sealed class BufferInspectorView : TemplatedControl
 
     public static readonly StyledProperty<bool> ShowRawProperty = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(ShowRaw));
 
-    public static readonly StyledProperty<string> PreviewContentProperty = AvaloniaProperty.Register<BufferInspectorView, string>(nameof(PreviewContent));
-
     public static readonly StyledProperty<string?> SelectedFormatNameProperty = AvaloniaProperty.Register<BufferInspectorView, string?>(nameof(SelectedFormatName), "UTF-8");
 
+    readonly RegistryOptions _textEditorRegistryOptions = new(ThemeName.Dark);
+
+    string _content = string.Empty;
     Button? _copyToClipboardButton;
+    string? _currentTextEditorLanguage;
+    TextEditor? _textEditor;
+    TextMate.Installation? _textMateInstallation;
 
     public BufferInspectorView()
     {
@@ -73,7 +80,8 @@ public sealed class BufferInspectorView : TemplatedControl
             {
                 var json = Encoding.UTF8.GetString(b);
                 return JsonSerializer.Serialize(JsonNode.Parse(json), jsonSerializerOptions);
-            }
+            },
+            LanguageExtension = ".jsonc"
         });
 
         Formats.Add(new BufferConverter
@@ -83,7 +91,8 @@ public sealed class BufferInspectorView : TemplatedControl
             {
                 var json = MessagePackSerializer.ConvertToJson(b);
                 return JsonSerializerService.Instance?.Format(json) ?? string.Empty;
-            }
+            },
+            LanguageExtension = ".jsonc"
         });
 
         Formats.Add(new BufferConverter
@@ -117,7 +126,8 @@ public sealed class BufferInspectorView : TemplatedControl
             {
                 var xml = Encoding.UTF8.GetString(b);
                 return XDocument.Parse(xml).ToString(SaveOptions.None);
-            }
+            },
+            LanguageExtension = ".xml"
         });
 
         SelectFormat();
@@ -133,12 +143,6 @@ public sealed class BufferInspectorView : TemplatedControl
     {
         get => GetValue(FormatsProperty);
         set => SetValue(FormatsProperty, value);
-    }
-
-    public string PreviewContent
-    {
-        get => GetValue(PreviewContentProperty);
-        set => SetValue(PreviewContentProperty, value);
     }
 
     public BufferConverter? SelectedFormat
@@ -169,6 +173,10 @@ public sealed class BufferInspectorView : TemplatedControl
         _copyToClipboardButton = (Button)this.GetTemplateChild("CopyToClipboardButton");
         _copyToClipboardButton.Click += OnCopyToClipboard;
 
+        _textEditor = (TextEditor)this.GetTemplateChild("TextEditor");
+        _textMateInstallation = _textEditor.InstallTextMate(_textEditorRegistryOptions);
+        SyncTextEditor();
+
         ReadBuffer();
     }
 
@@ -194,42 +202,37 @@ public sealed class BufferInspectorView : TemplatedControl
 
     void OnCopyToClipboard(object? sender, RoutedEventArgs e)
     {
-        var clipboardContent = PreviewContent;
-
-        if (!string.IsNullOrEmpty(clipboardContent))
+        if (!string.IsNullOrEmpty(_content))
         {
-            Application.Current?.Clipboard?.SetTextAsync(clipboardContent);
+            Application.Current?.Clipboard?.SetTextAsync(_content);
         }
     }
 
     void ReadBuffer()
     {
-        var buffer = Buffer;
-        if (buffer == null)
-        {
-            buffer = Array.Empty<byte>();
-        }
-
-        if (buffer.Length == 0)
-        {
-            PreviewContent = string.Empty;
-            return;
-        }
-
         var format = SelectedFormat;
         if (format == null)
         {
             throw new InvalidOperationException();
         }
 
-        try
+        if ((Buffer?.Length ?? 0) == 0)
         {
-            PreviewContent = format.Convert?.Invoke(buffer) ?? string.Empty;
+            _content = string.Empty;
         }
-        catch (Exception exception)
+        else
         {
-            PreviewContent = $"<{exception.Message}>";
+            try
+            {
+                _content = format.Convert?.Invoke(Buffer!) ?? string.Empty;
+            }
+            catch (Exception exception)
+            {
+                _content = $"<{exception.Message}>";
+            }
         }
+
+        SyncTextEditor();
     }
 
     void SelectFormat()
@@ -244,6 +247,44 @@ public sealed class BufferInspectorView : TemplatedControl
         if (SelectedFormat == null)
         {
             SelectedFormat = Formats.FirstOrDefault();
+        }
+    }
+
+    void SyncTextEditor()
+    {
+        if (_textEditor == null)
+        {
+            return;
+        }
+
+        _textEditor.Text = _content;
+
+        if (SelectedFormat == null)
+        {
+            return;
+        }
+
+        if (_textMateInstallation == null)
+        {
+            return;
+        }
+
+        // Avoid updating the language all the time even without a change!
+        if (string.Equals(_currentTextEditorLanguage, SelectedFormat.LanguageExtension))
+        {
+            return;
+        }
+
+        _currentTextEditorLanguage = SelectedFormat.LanguageExtension;
+
+        if (SelectedFormat.LanguageExtension == null)
+        {
+            _textMateInstallation.SetGrammar(_currentTextEditorLanguage);
+        }
+        else
+        {
+            _textMateInstallation.SetGrammar(
+                _textEditorRegistryOptions.GetScopeByLanguageId(_textEditorRegistryOptions.GetLanguageByExtension(SelectedFormat.LanguageExtension).Id));
         }
     }
 }

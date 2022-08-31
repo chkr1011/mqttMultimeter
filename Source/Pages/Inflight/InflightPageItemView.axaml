@@ -69,7 +69,6 @@
                         <controls:BufferInspectorView Grid.Column="0"
                                                       Grid.ColumnSpan="2"
                                                       Grid.Row="2"
-                                                      PreviewContent="{Binding PayloadPreview, Mode=OneWayToSource}"
                                                       Margin="0,10,0,0"
                                                       Buffer="{Binding Payload}" />
                     </Grid>
@@ -178,7 +177,7 @@
                     Orientation="Horizontal"
                     Margin="0,10,0,0">
 
-            <Button Classes="image_button"
+            <Button Classes="image_button image_button_horizontal"
                     Command="{Binding RepeatMessage}"
                     Background="{DynamicResource SystemAccentColor}">
                 <StackPanel>
@@ -187,7 +186,7 @@
                 </StackPanel>
             </Button>
 
-            <Button Classes="image_button"
+            <Button Classes="image_button image_button_horizontal"
                     Command="{Binding DeleteRetainedMessage}"
                     Margin="10,0,0,0"
                     Background="{DynamicResource SystemAccentColor}">

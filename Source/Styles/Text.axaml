@@ -1,5 +1,6 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:avaloniaEdit="https://github.com/avaloniaui/avaloniaedit">
     <Design.PreviewWith>
         <Border Padding="20">
             <!-- Add Controls for Previewer Here -->
@@ -55,6 +56,11 @@
     </Style>
 
     <Style Selector="TextBlock.code_text">
+        <Setter Property="FontFamily"
+                Value="Inconsolata,Consolas,Monospace,Courier" />
+    </Style>
+    
+    <Style Selector="avaloniaEdit|TextEditor.code_text">
         <Setter Property="FontFamily"
                 Value="Inconsolata,Consolas,Monospace,Courier" />
     </Style>

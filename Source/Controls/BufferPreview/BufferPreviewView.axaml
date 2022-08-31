@@ -1,7 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:MQTTnetApp.Controls"
-        xmlns:converters="clr-namespace:MQTTnetApp.Converters">
+        xmlns:avaloniaEdit="https://github.com/avaloniaui/avaloniaedit">
     <Design.PreviewWith>
         <controls:BufferInspectorView Width="800"
                                       Buffer="{x:Static controls:BufferInspectorView.TestData}"
@@ -58,18 +58,14 @@
                         </StackPanel>
                     </Grid>
 
-                    <!-- The string preview -->
-                    <TextBox Grid.Row="1"
-                             IsReadOnly="True"
-                             Classes="code_text"
-                             BorderThickness="0"
-                             Text="{Binding PreviewContent, RelativeSource={RelativeSource TemplatedParent}}"
-                             IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
-                             TextWrapping="{Binding ElementName=TextWrappingCheckBox, Path=IsChecked, Converter={x:Static converters:EnumConverters.BooleanToTextWrapping}}"
-                             VerticalContentAlignment="Top"
-                             x:Name="PART_StringContent" />
+                    <avaloniaEdit:TextEditor WordWrap="{Binding ElementName=TextWrappingCheckBox, Path=IsChecked}"
+                                             IsReadOnly="True"
+                                             x:Name="TextEditor"
+                                             Classes="code_text"
+                                             Grid.Row="1"
+                                             ShowLineNumbers="True"
+                                             IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}" />
 
-                    <!-- The raw preview -->
                     <controls:HexBox Grid.Row="1"
                                      BorderThickness="0"
                                      IsVisible="{Binding ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
