@@ -8,6 +8,10 @@
             </ResourceDictionary.MergedDictionaries>
 
             <SolidColorBrush x:Key="AppLightGreen">#2200EE00</SolidColorBrush>
+            
+            <!-- Patch some ugly parts of the default theme. -->
+            <Thickness x:Key="TextControlBorderThemeThickness">1</Thickness>
+            <Thickness x:Key="TextControlBorderThemeThicknessFocused">1</Thickness>
         </ResourceDictionary>
     </Application.Resources>
     <Application.Styles>

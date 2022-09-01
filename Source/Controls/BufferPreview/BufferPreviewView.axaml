@@ -11,68 +11,84 @@
     <Style Selector="controls|BufferInspectorView">
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type controls:BufferInspectorView}">
-                <!-- The text base previews. -->
-                <Grid RowDefinitions="Auto,*">
+                <Border BorderThickness="{DynamicResource TextControlBorderThemeThickness}">
 
-                    <!-- Options -->
-                    <Grid Classes="tool_bar"
-                          ColumnDefinitions="Auto,*,Auto">
-                        <StackPanel Orientation="Horizontal"
-                                    Grid.Column="0">
+                    <!-- The text base previews. -->
+                    <Grid RowDefinitions="Auto,*">
 
-                            <!-- The Text Wrapping button -->
-                            <ToggleButton Classes="tool_bar_button"
-                                          IsChecked="True"
-                                          IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
-                                          x:Name="TextWrappingCheckBox">
-                                <PathIcon Data="{StaticResource text_wrap_regular}"
-                                          ToolTip.Tip="Toggle word wrap" />
-                            </ToggleButton>
+                        <!-- Options -->
+                        <Grid Classes="tool_bar"
+                              ColumnDefinitions="Auto,*,Auto">
+                            <StackPanel Orientation="Horizontal"
+                                        Classes="tool_bar"
+                                        Grid.Column="0">
 
-                            <!-- The Copy button -->
-                            <Button Classes="tool_bar_button"
-                                    IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
-                                    x:Name="CopyToClipboardButton">
-                                <PathIcon Data="{StaticResource copy_regular}"
-                                          ToolTip.Tip="Copy to clipboard" />
-                            </Button>
-                        </StackPanel>
+                                <!-- The Text Wrapping button -->
+                                <ToggleButton Classes="tool_bar_button"
+                                              IsChecked="True"
+                                              IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
+                                              x:Name="TextWrappingCheckBox">
+                                    <PathIcon Data="{StaticResource text_wrap_regular}"
+                                              ToolTip.Tip="Toggle word wrap" />
+                                </ToggleButton>
 
-                        <!-- The Format selector -->
-                        <StackPanel Grid.Column="2"
-                                    Orientation="Horizontal">
-                            <Label Classes="tool_bar_label"
-                                   Content="Format"
-                                   Margin="0,0,10,0" />
-                            <ComboBox Classes="tool_bar_combo_box"
-                                      MinWidth="100"
-                                      VerticalAlignment="Stretch"
-                                      Items="{Binding Path=Formats, RelativeSource={RelativeSource TemplatedParent}}"
-                                      SelectedItem="{Binding Path=SelectedFormat, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name}" />
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </StackPanel>
+                                <!-- The Copy button -->
+                                <Button Classes="tool_bar_button"
+                                        IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
+                                        x:Name="CopyToClipboardButton">
+                                    <PathIcon Data="{StaticResource copy_regular}"
+                                              ToolTip.Tip="Copy to clipboard" />
+                                </Button>
+                            </StackPanel>
+
+                            <!-- The Format selector -->
+                            <StackPanel Grid.Column="2"
+                                        Orientation="Horizontal">
+                                <Label Classes="tool_bar_label"
+                                       Content="Format"
+                                       Margin="0,0,10,0" />
+                                <ComboBox Classes="tool_bar_combo_box"
+                                          MinWidth="100"
+                                          VerticalAlignment="Stretch"
+                                          Items="{Binding Path=Formats, RelativeSource={RelativeSource TemplatedParent}}"
+                                          SelectedItem="{Binding Path=SelectedFormat, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <avaloniaEdit:TextEditor WordWrap="{Binding ElementName=TextWrappingCheckBox, Path=IsChecked}"
+                                                 IsReadOnly="True"
+                                                 x:Name="TextEditor"
+                                                 Classes="code_text"
+                                                 Background="{DynamicResource TextControlBackground}"
+                                                 BorderThickness="{DynamicResource TextControlBorderThemeThicknessFocused}"
+                                                 Grid.Row="1"
+                                                 ShowLineNumbers="True"
+                                                 IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                        <controls:HexBox Grid.Row="1"
+                                         BorderThickness="0"
+                                         IsVisible="{Binding ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
+                                         Value="{Binding Buffer, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Grid>
-
-                    <avaloniaEdit:TextEditor WordWrap="{Binding ElementName=TextWrappingCheckBox, Path=IsChecked}"
-                                             IsReadOnly="True"
-                                             x:Name="TextEditor"
-                                             Classes="code_text"
-                                             Grid.Row="1"
-                                             ShowLineNumbers="True"
-                                             IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}" />
-
-                    <controls:HexBox Grid.Row="1"
-                                     BorderThickness="0"
-                                     IsVisible="{Binding ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
-                                     Value="{Binding Buffer, RelativeSource={RelativeSource TemplatedParent}}" />
-                </Grid>
+                </Border>
             </ControlTemplate>
         </Setter>
     </Style>
-
+    
+    <Style Selector="controls|BufferInspectorView /template/ Border">
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource TextControlBorderBrush}" />
+    </Style>
+    
+    <Style Selector="controls|BufferInspectorView:focus-within /template/ Border">
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource TextControlBorderBrushFocused}" />
+    </Style>
+    
 </Styles>

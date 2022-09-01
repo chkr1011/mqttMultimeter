@@ -25,7 +25,6 @@
             <TextBox IsReadOnly="True"
                      Grid.Row="1"
                      Grid.Column="0"
-                     BorderThickness="0"
                      Grid.ColumnSpan="2"
                      Classes="value code_text"
                      Text="{Binding Topic}" />
