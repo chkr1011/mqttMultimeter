@@ -12,7 +12,6 @@ using MQTTnet.Client;
 using MQTTnetApp.Common;
 using MQTTnetApp.Controls;
 using MQTTnetApp.Pages.Inflight;
-using MQTTnetApp.Pages.Publish;
 using MQTTnetApp.Services.Mqtt;
 using ReactiveUI;
 
@@ -21,7 +20,6 @@ namespace MQTTnetApp.Pages.TopicExplorer;
 public sealed class TopicExplorerPageViewModel : BasePageViewModel
 {
     readonly MqttClientService _mqttClientService;
-    readonly PublishPageViewModel _publishPage;
     readonly SourceList<TopicExplorerTreeNodeViewModel> _rootNodes = new();
 
     bool _highlightChanges = true;
@@ -29,7 +27,7 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
 
     TopicExplorerTreeNodeViewModel? _selectedNode;
 
-    public TopicExplorerPageViewModel(MqttClientService mqttClientService, PublishPageViewModel publishPage)
+    public TopicExplorerPageViewModel(MqttClientService mqttClientService)
     {
         if (mqttClientService == null)
         {
@@ -44,7 +42,6 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
         mqttClientService.ApplicationMessageReceived += OnMqttMessageReceived;
 
         _mqttClientService = mqttClientService;
-        _publishPage = publishPage ?? throw new ArgumentNullException(nameof(publishPage));
 
         _rootNodes.Connect()
             .Sort(SortExpressionComparer<TopicExplorerTreeNodeViewModel>.Ascending(t => t.Name))
@@ -54,6 +51,8 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
         Nodes = bindingData;
     }
 
+    public event Action<InflightPageItemViewModel>? RepeatMessageRequested;
+
     public bool HasNodes => Nodes.Count > 0;
 
     public bool HighlightChanges
@@ -61,7 +60,7 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
         get => _highlightChanges;
         set => this.RaiseAndSetIfChanged(ref _highlightChanges, value);
     }
-    
+
     public bool IsRecordingEnabled
     {
         get => _isRecordingEnabled;
@@ -138,8 +137,7 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
             throw new ArgumentNullException(nameof(item));
         }
 
-        _publishPage.RepeatMessage(item);
-        _publishPage.RequestActivation();
+        RepeatMessageRequested?.Invoke(item);
     }
 
     void InsertNode(string[] path, MqttApplicationMessage message)

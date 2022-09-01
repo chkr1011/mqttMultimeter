@@ -4,8 +4,13 @@ namespace MQTTnetApp.Text;
 
 public static class BinaryEncoder
 {
-    public static string GetString(byte[] buffer)
+    public static string GetString(byte[]? buffer)
     {
+        if (buffer == null)
+        {
+            return string.Empty;
+        }
+        
         if (buffer.Length == 0)
         {
             return string.Empty;

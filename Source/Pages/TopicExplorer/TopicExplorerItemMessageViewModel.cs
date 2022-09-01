@@ -19,7 +19,7 @@ public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
         Retain = applicationMessage.Retain;
 
         Delay = delay;
-        InflightItem = InflightPageItemViewModel.Create(applicationMessage, 0);
+        InflightItem = InflightPageItemViewModelFactory.Create(applicationMessage, 0);
     }
 
     public TimeSpan Delay { get; init; }

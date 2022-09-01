@@ -8,6 +8,7 @@ using MQTTnetApp.Controls;
 using MQTTnetApp.Main;
 using MQTTnetApp.Pages.Connection;
 using MQTTnetApp.Pages.Inflight;
+using MQTTnetApp.Pages.Inflight.Export;
 using MQTTnetApp.Pages.Info;
 using MQTTnetApp.Pages.Log;
 using MQTTnetApp.Pages.PacketInspector;
@@ -35,6 +36,7 @@ public sealed class App : Application
             .AddSingleton<AppUpdateService>()
             .AddSingleton<JsonSerializerService>()
             .AddSingleton<StateService>()
+            .AddSingleton<InflightPageItemExportService>()
             // Pages
             .AddSingleton<ConnectionPageViewModel>()
             .AddSingleton<PublishPageViewModel>()

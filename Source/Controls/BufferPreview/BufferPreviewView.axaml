@@ -4,7 +4,7 @@
         xmlns:avaloniaEdit="https://github.com/avaloniaui/avaloniaedit">
     <Design.PreviewWith>
         <controls:BufferInspectorView Width="800"
-                                      Buffer="{x:Static controls:BufferInspectorView.TestData}"
+                                      Buffer="{x:Static controls:BufferPreviewTestData.Payload}"
                                       Height="600" />
     </Design.PreviewWith>
 
@@ -32,14 +32,21 @@
                                               ToolTip.Tip="Toggle word wrap" />
                                 </ToggleButton>
 
-                                <!-- The Copy button -->
-                                <Button Classes="tool_bar_button"
-                                        IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
-                                        x:Name="CopyToClipboardButton">
-                                    <PathIcon Data="{StaticResource copy_regular}"
-                                              ToolTip.Tip="Copy to clipboard" />
-                                </Button>
-                            </StackPanel>
+                            <!-- The Copy button -->
+                            <Button Classes="tool_bar_button"
+                                    IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
+                                    x:Name="CopyToClipboardButton">
+                                <PathIcon Data="{StaticResource copy_regular}"
+                                          ToolTip.Tip="Copy to clipboard" />
+                            </Button>
+                            
+                            <!-- The Save button -->
+                            <Button Classes="tool_bar_button"
+                                    x:Name="SaveToFileButton">
+                                <PathIcon Data="{StaticResource save_regular}"
+                                          ToolTip.Tip="Save to file" />
+                            </Button>
+                        </StackPanel>
 
                             <!-- The Format selector -->
                             <StackPanel Grid.Column="2"

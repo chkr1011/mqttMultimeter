@@ -52,7 +52,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="0"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.PayloadFormatIndicator}" />
+                                   Text="{Binding Path=PayloadFormatIndicator}" />
 
                         <!-- Content Type -->
                         <Label Grid.Column="0"
@@ -95,7 +95,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="1"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.Retain, Mode=OneWay}" />
+                                   Text="{Binding Path=Retain, Mode=OneWay}" />
 
                         <!-- Topic Alias -->
                         <Label Grid.Column="0"
@@ -105,7 +105,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="2"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.MessageExpiryInterval}" />
+                                   Text="{Binding Path=MessageExpiryInterval}" />
 
                         <!-- The Quality of Service level -->
                         <Label Grid.Column="0"
@@ -125,7 +125,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="4"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.ResponseTopic}" />
+                                   Text="{Binding Path=ResponseTopic}" />
 
                         <!-- Message Expiry Interval -->
                         <Label Grid.Column="0"
@@ -135,7 +135,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="5"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.MessageExpiryInterval}" />
+                                   Text="{Binding Path=MessageExpiryInterval}" />
 
                         <!-- Dup -->
                         <Label Grid.Column="0"
@@ -145,7 +145,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="6"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.Dup, Mode=OneWay}" />
+                                   Text="{Binding Path=Dup, Mode=OneWay}" />
 
                         <!-- Subscription Identifiers -->
                         <Label Grid.Column="0"
@@ -155,13 +155,13 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="9"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.SubscriptionIdentifiers, Converter={x:Static converters:EnumConverters.ExpandSubscriptionIdentifiers}}" />
+                                   Text="{Binding Path=SubscriptionIdentifiers, Converter={x:Static converters:EnumConverters.ExpandSubscriptionIdentifiers}}" />
                     </Grid>
                 </TabItem>
 
                 <!-- The Correlation Data -->
                 <TabItem Header="Correlation Data">
-                    <controls:BufferInspectorView Buffer="{Binding Source.CorrelationData}" />
+                    <controls:BufferInspectorView Buffer="{Binding CorrelationData}" />
                 </TabItem>
 
                 <!-- The User Properties -->

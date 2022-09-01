@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Threading;
 using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Controls;
@@ -13,8 +15,10 @@ using Avalonia.Interactivity;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
 using AvaloniaEdit.TextMate.Grammars;
+using Avalonia.Threading;
 using MessagePack;
 using MQTTnetApp.Extensions;
+using MQTTnetApp.Main;
 using MQTTnetApp.Services.Data;
 using MQTTnetApp.Text;
 
@@ -22,6 +26,11 @@ namespace MQTTnetApp.Controls;
 
 public sealed class BufferInspectorView : TemplatedControl
 {
+    static readonly JsonSerializerOptions JsonSerializerOptions = new()
+    {
+        WriteIndented = true
+    };
+
     public static readonly StyledProperty<byte[]?> BufferProperty = AvaloniaProperty.Register<BufferInspectorView, byte[]?>(nameof(Buffer));
 
     public static readonly StyledProperty<BufferConverter?> SelectedFormatProperty = AvaloniaProperty.Register<BufferInspectorView, BufferConverter?>(nameof(SelectedFormat));
@@ -130,6 +139,13 @@ public sealed class BufferInspectorView : TemplatedControl
             LanguageExtension = ".xml"
         });
 
+
+    Button? _saveToFileButton;
+
+    public BufferInspectorView()
+    {
+        Formats = SharedConverters;
+
         SelectFormat();
     }
 
@@ -157,14 +173,43 @@ public sealed class BufferInspectorView : TemplatedControl
         set => SetValue(SelectedFormatNameProperty, value);
     }
 
+    static ObservableCollection<BufferConverter> SharedConverters { get; } = new()
+    {
+        new BufferConverter("ASCII", b => Encoding.ASCII.GetString(b)),
+        new BufferConverter("Base64", Convert.ToBase64String),
+        new BufferConverter("Binary", BinaryEncoder.GetString),
+        new BufferConverter("HEX", HexEncoder.GetString),
+        new BufferConverter("JSON",
+            b =>
+            {
+                var json = Encoding.UTF8.GetString(b);
+                return JsonSerializer.Serialize(JsonNode.Parse(json), JsonSerializerOptions);
+            }),
+
+        new BufferConverter("MessagePack as JSON",
+            b =>
+            {
+                var json = MessagePackSerializer.ConvertToJson(b);
+                return JsonSerializerService.Instance?.Format(json) ?? string.Empty;
+            }),
+
+        new BufferConverter("RAW", _ => "RAW"), // Special case!
+        new BufferConverter("Unicode", b => Encoding.Unicode.GetString(b)),
+        new BufferConverter("UTF-8", b => Encoding.UTF8.GetString(b)),
+        new BufferConverter("UTF-32", b => Encoding.UTF32.GetString(b)),
+        new BufferConverter("XML",
+            b =>
+            {
+                var xml = Encoding.UTF8.GetString(b);
+                return XDocument.Parse(xml).ToString(SaveOptions.None);
+            })
+    };
+
     public bool ShowRaw
     {
         get => GetValue(ShowRawProperty);
         set => SetValue(ShowRawProperty, value);
     }
-
-    // TODO: Fix
-    public static byte[] TestData => Encoding.UTF8.GetBytes("Hallo");
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
@@ -177,6 +222,8 @@ public sealed class BufferInspectorView : TemplatedControl
         _textMateInstallation = _textEditor.InstallTextMate(_textEditorRegistryOptions);
         SyncTextEditor();
 
+        _saveToFileButton = (Button)this.GetTemplateChild("SaveToFileButton");
+        _saveToFileButton.Click += OnSaveToFile;
         ReadBuffer();
     }
 
@@ -208,8 +255,36 @@ public sealed class BufferInspectorView : TemplatedControl
         }
     }
 
+    void OnSaveToFile(object? sender, RoutedEventArgs e)
+    {
+        var saveFileDialog = new SaveFileDialog();
+        saveFileDialog.Filters!.Add(new FileDialogFilter
+        {
+            Name = "Binary file",
+            Extensions = new List<string>
+            {
+                "bin"
+            }
+        });
+
+        Dispatcher.UIThread.InvokeAsync(async () =>
+        {
+            var fileName = await saveFileDialog.ShowAsync(MainWindow.Instance);
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                await File.WriteAllBytesAsync(fileName, Buffer ?? Array.Empty<byte>(), CancellationToken.None);
+            }
+        });
+    }
+
     void ReadBuffer()
     {
+        if (Buffer == null || Buffer.Length == 0)
+        {
+            PreviewContent = string.Empty;
+            return;
+        }
+
         var format = SelectedFormat;
         if (format == null)
         {
