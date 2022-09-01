@@ -11,8 +11,7 @@
     <StackPanel Orientation="Horizontal">
 
         <!-- The topic name -->
-        <StackPanel Orientation="Horizontal"
-                    TextBlock.FontSize="13">
+        <StackPanel Orientation="Horizontal">
             <TextBlock Classes="code_text"
                        Text="{Binding Name}" />
 
@@ -24,14 +23,12 @@
 
         <!-- The latest payload -->
         <TextBlock Classes="code_text"
-                   FontSize="13"
                    TextTrimming="CharacterEllipsis"
                    FontStyle="Italic"
                    Text="{Binding Item.CurrentPayload, FallbackValue=''}" />
 
         <!-- The statistics -->
         <TextBlock Classes="code_text"
-                   FontSize="13"
                    TextTrimming="CharacterEllipsis"
                    FontStyle="Italic"
                    Margin="10,0,0,0"

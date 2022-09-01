@@ -73,7 +73,7 @@
                                                  x:Name="TextEditor"
                                                  Classes="code_text"
                                                  Background="{DynamicResource TextControlBackground}"
-                                                 BorderThickness="{DynamicResource TextControlBorderThemeThicknessFocused}"
+                                                 BorderThickness="0"
                                                  Grid.Row="1"
                                                  ShowLineNumbers="True"
                                                  IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}" />

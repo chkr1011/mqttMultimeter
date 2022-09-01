@@ -12,10 +12,10 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
 using AvaloniaEdit.TextMate.Grammars;
-using Avalonia.Threading;
 using MessagePack;
 using MQTTnetApp.Extensions;
 using MQTTnetApp.Main;
@@ -46,101 +46,9 @@ public sealed class BufferInspectorView : TemplatedControl
     string _content = string.Empty;
     Button? _copyToClipboardButton;
     string? _currentTextEditorLanguage;
+    Button? _saveToFileButton;
     TextEditor? _textEditor;
     TextMate.Installation? _textMateInstallation;
-
-    public BufferInspectorView()
-    {
-        Formats = new ObservableCollection<BufferConverter>();
-
-        Formats.Add(new BufferConverter
-        {
-            Name = "ASCII",
-            Convert = b => Encoding.ASCII.GetString(b)
-        });
-
-        Formats.Add(new BufferConverter
-        {
-            Name = "Base64",
-            Convert = Convert.ToBase64String
-        });
-
-        Formats.Add(new BufferConverter
-        {
-            Name = "Binary",
-            Convert = BinaryEncoder.GetString
-        });
-
-        Formats.Add(new BufferConverter
-        {
-            Name = "HEX",
-            Convert = HexEncoder.GetString
-        });
-
-        var jsonSerializerOptions = new JsonSerializerOptions
-        {
-            WriteIndented = true
-        };
-
-        Formats.Add(new BufferConverter
-        {
-            Name = "JSON",
-            Convert = b =>
-            {
-                var json = Encoding.UTF8.GetString(b);
-                return JsonSerializer.Serialize(JsonNode.Parse(json), jsonSerializerOptions);
-            },
-            LanguageExtension = ".jsonc"
-        });
-
-        Formats.Add(new BufferConverter
-        {
-            Name = "MessagePack as JSON",
-            Convert = b =>
-            {
-                var json = MessagePackSerializer.ConvertToJson(b);
-                return JsonSerializerService.Instance?.Format(json) ?? string.Empty;
-            },
-            LanguageExtension = ".jsonc"
-        });
-
-        Formats.Add(new BufferConverter
-        {
-            Name = "RAW",
-            Convert = null // Special case!
-        });
-
-        Formats.Add(new BufferConverter
-        {
-            Name = "Unicode",
-            Convert = b => Encoding.Unicode.GetString(b)
-        });
-
-        Formats.Add(new BufferConverter
-        {
-            Name = "UTF-8",
-            Convert = b => Encoding.UTF8.GetString(b)
-        });
-
-        Formats.Add(new BufferConverter
-        {
-            Name = "UTF-32",
-            Convert = b => Encoding.UTF32.GetString(b)
-        });
-
-        Formats.Add(new BufferConverter
-        {
-            Name = "XML",
-            Convert = b =>
-            {
-                var xml = Encoding.UTF8.GetString(b);
-                return XDocument.Parse(xml).ToString(SaveOptions.None);
-            },
-            LanguageExtension = ".xml"
-        });
-
-
-    Button? _saveToFileButton;
 
     public BufferInspectorView()
     {
@@ -175,11 +83,12 @@ public sealed class BufferInspectorView : TemplatedControl
 
     static ObservableCollection<BufferConverter> SharedConverters { get; } = new()
     {
-        new BufferConverter("ASCII", b => Encoding.ASCII.GetString(b)),
-        new BufferConverter("Base64", Convert.ToBase64String),
-        new BufferConverter("Binary", BinaryEncoder.GetString),
-        new BufferConverter("HEX", HexEncoder.GetString),
+        new BufferConverter("ASCII", null, b => Encoding.ASCII.GetString(b)),
+        new BufferConverter("Base64", null, Convert.ToBase64String),
+        new BufferConverter("Binary", null, BinaryEncoder.GetString),
+        new BufferConverter("HEX", null, HexEncoder.GetString),
         new BufferConverter("JSON",
+            "jsonc",
             b =>
             {
                 var json = Encoding.UTF8.GetString(b);
@@ -187,17 +96,19 @@ public sealed class BufferInspectorView : TemplatedControl
             }),
 
         new BufferConverter("MessagePack as JSON",
+            "jsonc",
             b =>
             {
                 var json = MessagePackSerializer.ConvertToJson(b);
                 return JsonSerializerService.Instance?.Format(json) ?? string.Empty;
             }),
 
-        new BufferConverter("RAW", _ => "RAW"), // Special case!
-        new BufferConverter("Unicode", b => Encoding.Unicode.GetString(b)),
-        new BufferConverter("UTF-8", b => Encoding.UTF8.GetString(b)),
-        new BufferConverter("UTF-32", b => Encoding.UTF32.GetString(b)),
+        new BufferConverter("RAW", null, _ => "RAW"), // Special case!
+        new BufferConverter("Unicode", null, b => Encoding.Unicode.GetString(b)),
+        new BufferConverter("UTF-8", null, b => Encoding.UTF8.GetString(b)),
+        new BufferConverter("UTF-32", null, b => Encoding.UTF32.GetString(b)),
         new BufferConverter("XML",
+            "xml",
             b =>
             {
                 var xml = Encoding.UTF8.GetString(b);
@@ -279,12 +190,6 @@ public sealed class BufferInspectorView : TemplatedControl
 
     void ReadBuffer()
     {
-        if (Buffer == null || Buffer.Length == 0)
-        {
-            PreviewContent = string.Empty;
-            return;
-        }
-
         var format = SelectedFormat;
         if (format == null)
         {
@@ -299,7 +204,7 @@ public sealed class BufferInspectorView : TemplatedControl
         {
             try
             {
-                _content = format.Convert?.Invoke(Buffer!) ?? string.Empty;
+                _content = format.Convert(Buffer!);
             }
             catch (Exception exception)
             {
@@ -358,8 +263,7 @@ public sealed class BufferInspectorView : TemplatedControl
         }
         else
         {
-            _textMateInstallation.SetGrammar(
-                _textEditorRegistryOptions.GetScopeByLanguageId(_textEditorRegistryOptions.GetLanguageByExtension(SelectedFormat.LanguageExtension).Id));
+            _textMateInstallation.SetGrammar(_textEditorRegistryOptions.GetScopeByLanguageId(_currentTextEditorLanguage));
         }
     }
 }

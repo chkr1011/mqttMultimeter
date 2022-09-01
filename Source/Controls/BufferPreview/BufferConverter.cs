@@ -6,15 +6,16 @@ public sealed class BufferConverter
 {
     readonly Func<byte[], string> _convertCallback;
 
-    public BufferConverter(string name, string languageExtension Func<byte[], string> convert)
+    public BufferConverter(string name, string? languageExtension, Func<byte[], string> convert)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
+        LanguageExtension = languageExtension;
         _convertCallback = convert ?? throw new ArgumentNullException(nameof(convert));
     }
 
-    public string Name { get; }
-
     public string? LanguageExtension { get; }
+
+    public string Name { get; }
 
     public string Convert(byte[]? buffer)
     {

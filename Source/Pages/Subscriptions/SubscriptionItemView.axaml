@@ -10,7 +10,6 @@
              d:DataContext="{d:DesignInstance subscriptions:SubscriptionItemViewModel}"
              x:Class="MQTTnetApp.Pages.Subscriptions.SubscriptionItemView">
     <Grid RowDefinitions="Auto,2*,Auto">
-
         <Grid Grid.Row="0"
               ColumnDefinitions="*,Auto">
             <TextBox Text="{Binding Name}"
@@ -60,6 +59,7 @@
             </Grid>
 
             <Grid Grid.Row="1"
+                  Margin="0,5,0,0"
                   RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
                   ColumnDefinitions="Auto,*">
                 <!-- QoS -->
