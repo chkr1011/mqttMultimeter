@@ -125,13 +125,13 @@ public sealed class BufferInspectorView : TemplatedControl
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-
-        _copyToClipboardButton = (Button)this.GetTemplateChild("CopyToClipboardButton");
-        _copyToClipboardButton.Click += OnCopyToClipboard;
-
+        
         _textEditor = (TextEditor)this.GetTemplateChild("TextEditor");
         _textMateInstallation = _textEditor.InstallTextMate(_textEditorRegistryOptions);
         SyncTextEditor();
+
+        _copyToClipboardButton = (Button)this.GetTemplateChild("CopyToClipboardButton");
+        _copyToClipboardButton.Click += OnCopyToClipboard;
 
         _saveToFileButton = (Button)this.GetTemplateChild("SaveToFileButton");
         _saveToFileButton.Click += OnSaveToFile;

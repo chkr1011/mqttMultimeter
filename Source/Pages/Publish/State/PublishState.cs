@@ -16,8 +16,6 @@ public sealed class PublishState
 
     public MqttPayloadFormatIndicator PayloadFormatIndicator { get; set; }
 
-    public PayloadInputFormat PayloadInputFormat { get; set; }
-
     public MqttQualityOfServiceLevel QualityOfServiceLevel { get; set; }
 
     public string? ResponseTopic { get; set; }

@@ -22,9 +22,7 @@ public sealed class PublishItemViewModel : BaseViewModel
     {
         OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
 
-        Payload = string.Empty;
         PayloadFormatIndicator.IsUnspecified = true;
-
         Response.UserProperties.IsReadOnly = true;
     }
 
@@ -55,9 +53,7 @@ public sealed class PublishItemViewModel : BaseViewModel
     }
 
     public PayloadFormatIndicatorSelectorViewModel PayloadFormatIndicator { get; } = new();
-
-    public PayloadInputFormatSelectorViewModel PayloadInputFormat { get; } = new();
-
+    
     public QualityOfServiceLevelSelectorViewModel QualityOfServiceLevel { get; } = new();
 
     public PublishResponseViewModel Response { get; } = new();

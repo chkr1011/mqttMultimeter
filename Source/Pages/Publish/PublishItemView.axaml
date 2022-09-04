@@ -88,39 +88,15 @@
                                Grid.Row="2"
                                VerticalAlignment="Top"
                                Classes="caption">Payload</Label>
-                        <TextBox Grid.Row="2"
-                                 Grid.Column="1"
-                                 Classes="code_text value"
-                                 AcceptsReturn="True"
-                                 Text="{Binding Path=Payload, Mode=TwoWay}"
-                                 VerticalAlignment="Stretch" />
 
-                        <!-- The payload input format -->
-                        <Label Grid.Column="0"
-                               Grid.Row="3"
-                               Classes="caption">Payload input format</Label>
-                        <StackPanel Grid.Row="3"
-                                    Classes="value"
-                                    Grid.Column="1"
-                                    Orientation="Horizontal">
-                            <StackPanel.Styles>
-                                <Style Selector="RadioButton">
-                                    <Setter Property="Margin"
-                                            Value="0,0,10,0" />
-                                </Style>
-                            </StackPanel.Styles>
-                            <RadioButton Content="Plain UTF-8 text"
-                                         IsChecked="{Binding PayloadInputFormat.IsPlainText}" />
-                            <RadioButton Content="Base64 string"
-                                         IsChecked="{Binding PayloadInputFormat.IsBase64String}" />
-                            <RadioButton Content="File path"
-                                         IsChecked="{Binding PayloadInputFormat.IsFilePath}" />
-                        </StackPanel>
+                        <controls:BufferEditor Grid.Row="2"
+                                               Payload="{Binding Payload, Mode=TwoWay}"
+                                               Grid.Column="1" />
                     </Grid>
                 </TabItem>
 
-                <!-- The settings tab -->
-                <TabItem Header="Settings">
+                <!-- The Properties tab -->
+                <TabItem Header="Properties">
                     <StackPanel>
                         <Grid ColumnDefinitions="Auto,*,Auto"
                               RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">

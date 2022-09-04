@@ -74,7 +74,7 @@ public sealed class MqttClientService
             clientOptionsBuilder.WithAuthentication(item.SessionOptions.AuthenticationMethod, Convert.FromBase64String(item.SessionOptions.AuthenticationData));
         }
 
-        if (item.ServerOptions.SelectedTransport?.Value == Transport.TCP)
+        if (item.ServerOptions.SelectedTransport.Value == Transport.TCP)
         {
             clientOptionsBuilder.WithTcpServer(item.ServerOptions.Host, item.ServerOptions.Port);
         }
@@ -148,7 +148,7 @@ public sealed class MqttClientService
             .WithMessageExpiryInterval(item.MessageExpiryInterval)
             .WithContentType(item.ContentType)
             .WithPayloadFormatIndicator(item.PayloadFormatIndicator.Value)
-            .WithPayload(item.PayloadInputFormat.ConvertPayloadInput(item.Payload))
+            .WithPayload(item.Payload)
             .WithResponseTopic(item.ResponseTopic);
 
         if (item.SubscriptionIdentifier > 0)

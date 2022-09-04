@@ -1,0 +1,119 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:MQTTnetApp.Controls"
+        xmlns:avaloniaEdit="https://github.com/avaloniaui/avaloniaedit">
+    <Design.PreviewWith>
+        <controls:BufferEditor Width="800"
+                               Payload="{x:Static controls:BufferPreviewTestData.PayloadString}"
+                               Height="600" />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|BufferEditor > Border">
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource TextControlBorderBrush}" />
+    </Style>
+
+    <Style Selector="controls|BufferEditor:focus-within > Border">
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource TextControlBorderBrushFocused}" />
+    </Style>
+
+    <Style Selector="controls|BufferEditor">
+        <Setter Property="Template">
+            <ControlTemplate TargetType="{x:Type controls:BufferEditor}">
+                <Border BorderThickness="{DynamicResource TextControlBorderThemeThickness}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!-- The tool bar. -->
+                        <Grid Grid.Row="0"
+                              Classes="tool_bar">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- The buttons -->
+                            <StackPanel Orientation="Horizontal">
+                                <!-- The Text Wrapping button -->
+                                <ToggleButton Classes="tool_bar_button"
+                                              IsChecked="True"
+                                              x:Name="TextWrappingCheckBox">
+                                    <PathIcon Data="{StaticResource text_wrap_regular}"
+                                              ToolTip.Tip="Toggle word wrap" />
+                                </ToggleButton>
+                                
+                                <!-- The Copy button -->
+                                <Button Classes="tool_bar_button"
+                                        x:Name="CopyToClipboardButton">
+                                    <PathIcon Data="{StaticResource copy_regular}"
+                                              ToolTip.Tip="Copy to clipboard" />
+                                </Button>
+                            
+                                <!-- The Save button -->
+                                <Button Classes="tool_bar_button"
+                                        x:Name="SaveToFileButton">
+                                    <PathIcon Data="{StaticResource save_regular}"
+                                              ToolTip.Tip="Save to file" />
+                                </Button>
+                                
+                                <!-- The Reformat button -->
+                                <Button Classes="tool_bar_button"
+                                        x:Name="ReformatButton">
+                                    <PathIcon Data="{StaticResource code_regular}"
+                                              ToolTip.Tip="Reformat" />
+                                </Button>
+                            </StackPanel>
+
+                            <!-- The format -->
+                            <StackPanel Orientation="Horizontal"
+                                        Grid.Column="2">
+                                <StackPanel.Styles>
+                                    <Style Selector="RadioButton">
+                                        <Setter Property="Margin"
+                                                Value="0,0,10,0" />
+                                    </Style>
+                                </StackPanel.Styles>
+
+                                <Label Content="Format"
+                                       Classes="tool_bar_label"
+                                       Margin="0,0,10,0" />
+
+                                <RadioButton GroupName="PayloadType"
+                                             IsChecked="{Binding Path=IsText, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
+                                             Content="Text" />
+
+                                <RadioButton GroupName="PayloadType"
+                                             IsChecked="{Binding Path=IsJson, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
+                                             Content="JSON" />
+
+                                <RadioButton GroupName="PayloadType"
+                                             IsChecked="{Binding Path=IsXml, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
+                                             Content="XML" />
+
+                                <RadioButton GroupName="PayloadType"
+                                             IsChecked="{Binding Path=IsBase64, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
+                                             Content="Base64" />
+                                
+                                <RadioButton GroupName="PayloadType"
+                                             IsChecked="{Binding Path=IsPath, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
+                                             Content="Path" />
+                            </StackPanel>
+                        </Grid>
+
+                        <avaloniaEdit:TextEditor Grid.Row="1"
+                                                 x:Name="TextEditor"
+                                                 WordWrap="{Binding ElementName=TextWrappingCheckBox, Path=IsChecked}"
+                                                 Background="{DynamicResource TextControlBackground}"
+                                                 Classes="code_text"
+                                                 ShowLineNumbers="True" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
