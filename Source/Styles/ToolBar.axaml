@@ -2,6 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith></Design.PreviewWith>
 
+    <Styles.Resources>
+        <SolidColorBrush x:Key="ToolBarGray">#99FFFFFF</SolidColorBrush>
+    </Styles.Resources>
+
     <Style Selector="StackPanel.tool_bar">
         <Setter Property="Orientation"
                 Value="Horizontal" />
@@ -92,6 +96,15 @@
         <Setter Property="FontSize"
                 Value="12" />
         <Setter Property="Foreground"
-                Value="#99FFFFFF" />
+                Value="{StaticResource ToolBarGray}" />
+    </Style>
+
+    <Style Selector="Separator.tool_bar_separator">
+        <Setter Property="Width"
+                Value="1" />
+        <Setter Property="Margin"
+                Value="2,6" />
+        <Setter Property="Background"
+                Value="{StaticResource ToolBarGray}" />
     </Style>
 </Styles>

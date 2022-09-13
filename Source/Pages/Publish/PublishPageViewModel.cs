@@ -55,17 +55,7 @@ public sealed class PublishPageViewModel : BasePageViewModel
             App.ShowException(exception);
         }
     }
-
-    public void RemoveItem(PublishItemViewModel item)
-    {
-        if (item == null)
-        {
-            throw new ArgumentNullException(nameof(item));
-        }
-
-        Items.RemoveItem(item);
-    }
-
+    
     public void RepeatMessage(InflightPageItemViewModel inflightPageItem)
     {
         if (inflightPageItem == null)

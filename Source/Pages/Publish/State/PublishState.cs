@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using MQTTnet.Protocol;
 using MQTTnetApp.Services.State.Model;
 
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+// ReSharper disable PropertyCanBeMadeInitOnly.Global
+
 namespace MQTTnetApp.Pages.Publish.State;
 
 public sealed class PublishState

@@ -2,7 +2,7 @@
 
 public enum BufferFormat
 {
-    Text,
+    Plain,
     
     Base64,
     

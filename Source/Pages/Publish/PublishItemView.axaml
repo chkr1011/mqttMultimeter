@@ -90,7 +90,8 @@
                                Classes="caption">Payload</Label>
 
                         <controls:BufferEditor Grid.Row="2"
-                                               Payload="{Binding Payload, Mode=TwoWay}"
+                                               Buffer="{Binding Payload, Mode=TwoWay}"
+                                               BufferFormat="{Binding PayloadFormat}"
                                                Grid.Column="1" />
                     </Grid>
                 </TabItem>

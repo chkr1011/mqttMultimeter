@@ -25,7 +25,7 @@ public static class PublishPageStateLoader
     }
 
     static PublishItemViewModel CreateItem(PublishPageViewModel ownerPage, PublishState publishState)
-    {        
+    {
         var item = new PublishItemViewModel(ownerPage)
         {
             Name = publishState.Name ?? string.Empty,
@@ -36,7 +36,7 @@ public static class PublishPageStateLoader
             SubscriptionIdentifier = publishState.SubscriptionIdentifier,
             TopicAlias = publishState.TopicAlias,
             MessageExpiryInterval = publishState.MessageExpiryInterval,
-            Payload = publishState.Payload,
+            Payload = publishState.Payload ?? string.Empty,
             PayloadFormatIndicator =
             {
                 Value = publishState.PayloadFormatIndicator

@@ -11,7 +11,7 @@ public sealed class PublishItemViewModel : BaseViewModel
     string? _contentType;
     uint _messageExpiryInterval;
     string _name = string.Empty;
-    string? _payload;
+    string _payload = string.Empty;
     string? _responseTopic;
     bool _retain;
     uint _subscriptionIdentifier;
@@ -46,14 +46,16 @@ public sealed class PublishItemViewModel : BaseViewModel
 
     public PublishPageViewModel OwnerPage { get; }
 
-    public string? Payload
+    public string Payload
     {
         get => _payload;
         set => this.RaiseAndSetIfChanged(ref _payload, value);
     }
 
+    public BufferFormat PayloadFormat { get; set; }
+
     public PayloadFormatIndicatorSelectorViewModel PayloadFormatIndicator { get; } = new();
-    
+
     public QualityOfServiceLevelSelectorViewModel QualityOfServiceLevel { get; } = new();
 
     public PublishResponseViewModel Response { get; } = new();

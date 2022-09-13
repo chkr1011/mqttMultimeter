@@ -88,7 +88,7 @@ public sealed class BufferInspectorView : TemplatedControl
         new BufferConverter("Binary", null, BinaryEncoder.GetString),
         new BufferConverter("HEX", null, HexEncoder.GetString),
         new BufferConverter("JSON",
-            "jsonc",
+            "source.json.comments",
             b =>
             {
                 var json = Encoding.UTF8.GetString(b);
@@ -96,7 +96,7 @@ public sealed class BufferInspectorView : TemplatedControl
             }),
 
         new BufferConverter("MessagePack as JSON",
-            "jsonc",
+            "source.json.comments",
             b =>
             {
                 var json = MessagePackSerializer.ConvertToJson(b);
@@ -108,7 +108,7 @@ public sealed class BufferInspectorView : TemplatedControl
         new BufferConverter("UTF-8", null, b => Encoding.UTF8.GetString(b)),
         new BufferConverter("UTF-32", null, b => Encoding.UTF32.GetString(b)),
         new BufferConverter("XML",
-            "xml",
+            "text.xml",
             b =>
             {
                 var xml = Encoding.UTF8.GetString(b);
@@ -171,7 +171,7 @@ public sealed class BufferInspectorView : TemplatedControl
         var saveFileDialog = new SaveFileDialog();
         saveFileDialog.Filters!.Add(new FileDialogFilter
         {
-            Name = "Binary file",
+            Name = "Binary files",
             Extensions = new List<string>
             {
                 "bin"
@@ -250,14 +250,14 @@ public sealed class BufferInspectorView : TemplatedControl
         }
 
         // Avoid updating the language all the time even without a change!
-        if (string.Equals(_currentTextEditorLanguage, SelectedFormat.LanguageExtension))
+        if (string.Equals(_currentTextEditorLanguage, SelectedFormat.Grammar))
         {
             return;
         }
 
-        _currentTextEditorLanguage = SelectedFormat.LanguageExtension;
+        _currentTextEditorLanguage = SelectedFormat.Grammar;
 
-        if (SelectedFormat.LanguageExtension == null)
+        if (SelectedFormat.Grammar == null)
         {
             _textMateInstallation.SetGrammar(_currentTextEditorLanguage);
         }

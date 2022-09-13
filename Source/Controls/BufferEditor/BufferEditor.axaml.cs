@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
 using AvaloniaEdit.TextMate.Grammars;
 using MQTTnetApp.Extensions;
+using MQTTnetApp.Main;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -15,9 +21,37 @@ namespace MQTTnetApp.Controls;
 
 public sealed class BufferEditor : TemplatedControl
 {
-    public static readonly StyledProperty<string?> PayloadProperty = AvaloniaProperty.Register<BufferInspectorView, string?>(nameof(Payload));
+    static readonly List<FileDialogFilter> FileDialogFilters = new()
+    {
+        new FileDialogFilter
+        {
+            Name = "Text files",
+            Extensions = new List<string>
+            {
+                "txt"
+            }
+        },
+        new FileDialogFilter
+        {
+            Name = "JSON files",
+            Extensions = new List<string>
+            {
+                "json"
+            }
+        },
+        new FileDialogFilter
+        {
+            Name = "XML files",
+            Extensions = new List<string>
+            {
+                "xml"
+            }
+        }
+    };
 
-    public static readonly StyledProperty<bool> IsTextProperty = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(IsText));
+    public static readonly StyledProperty<string?> BufferProperty = AvaloniaProperty.Register<BufferInspectorView, string?>(nameof(Buffer));
+
+    public static readonly StyledProperty<bool> IsTextProperty = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(IsText), true);
 
     public static readonly StyledProperty<bool> IsBase64Property = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(IsBase64));
 
@@ -27,9 +61,13 @@ public sealed class BufferEditor : TemplatedControl
 
     public static readonly StyledProperty<bool> IsPathProperty = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(IsPath));
 
+    public static readonly StyledProperty<BufferFormat> BufferFormatProperty = AvaloniaProperty.Register<BufferInspectorView, BufferFormat>(nameof(BufferFormat));
+
     readonly RegistryOptions _textEditorRegistryOptions = new(ThemeName.Dark);
+
     Button? _copyToClipboardButton;
     bool _isUpdatingTextInternally;
+    Button? _loadFromFileButton;
     Button? _reformatButton;
     Button? _saveToFileButton;
 
@@ -41,22 +79,34 @@ public sealed class BufferEditor : TemplatedControl
         IsText = true;
     }
 
+    public string? Buffer
+    {
+        get => GetValue(BufferProperty);
+        set => SetValue(BufferProperty, value);
+    }
+
+    public BufferFormat BufferFormat
+    {
+        get => GetValue(BufferFormatProperty);
+        set => SetValue(BufferFormatProperty, value);
+    }
+
     public bool IsBase64
     {
         get => GetValue(IsBase64Property);
         set => SetValue(IsBase64Property, value);
     }
 
-    public bool IsPath
-    {
-        get => GetValue(IsPathProperty);
-        set => SetValue(IsPathProperty, value);
-    }
-
     public bool IsJson
     {
         get => GetValue(IsJsonProperty);
         set => SetValue(IsJsonProperty, value);
+    }
+
+    public bool IsPath
+    {
+        get => GetValue(IsPathProperty);
+        set => SetValue(IsPathProperty, value);
     }
 
     public bool IsText
@@ -69,12 +119,6 @@ public sealed class BufferEditor : TemplatedControl
     {
         get => GetValue(IsXmlProperty);
         set => SetValue(IsXmlProperty, value);
-    }
-
-    public string? Payload
-    {
-        get => GetValue(PayloadProperty);
-        set => SetValue(PayloadProperty, value);
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -91,18 +135,22 @@ public sealed class BufferEditor : TemplatedControl
         _saveToFileButton = (Button)this.GetTemplateChild("SaveToFileButton");
         _saveToFileButton.Click += OnSaveToFile;
 
+        _loadFromFileButton = (Button)this.GetTemplateChild("LoadFromFileButton");
+        _loadFromFileButton.Click += OnLoadFromFile;
+
         _reformatButton = (Button)this.GetTemplateChild("ReformatButton");
         _reformatButton.Click += OnReformat;
 
         SyncText();
-        SyncLanguage();
+        SyncGrammar();
+        SyncBufferFormat();
     }
 
     protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == PayloadProperty)
+        if (change.Property == BufferProperty)
         {
             if (!_isUpdatingTextInternally)
             {
@@ -115,36 +163,63 @@ public sealed class BufferEditor : TemplatedControl
                  change.Property == IsXmlProperty ||
                  change.Property == IsPathProperty)
         {
-            SyncLanguage();
+            SyncGrammar();
+            SyncBufferFormat();
         }
     }
 
     void OnCopyToClipboard(object? sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(Payload))
+        if (!string.IsNullOrEmpty(Buffer))
         {
-            Application.Current?.Clipboard?.SetTextAsync(Payload);
+            Application.Current?.Clipboard?.SetTextAsync(Buffer);
         }
+    }
+
+    void OnLoadFromFile(object? sender, RoutedEventArgs e)
+    {
+        Dispatcher.UIThread.InvokeAsync(async () =>
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filters!.AddRange(FileDialogFilters);
+
+            var fileName = (await openFileDialog.ShowAsync(MainWindow.Instance))?.FirstOrDefault();
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                try
+                {
+                    Buffer = await File.ReadAllTextAsync(fileName, CancellationToken.None);
+                }
+                catch (FileNotFoundException)
+                {
+                    // Ignore this case!
+                }
+                catch (Exception exception)
+                {
+                    App.ShowException(exception);
+                }
+            }
+        });
     }
 
     void OnReformat(object? sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrEmpty(Payload))
+        if (string.IsNullOrEmpty(Buffer))
         {
             return;
         }
-        
+
         try
         {
             if (IsJson)
             {
-                var json = JToken.Parse(Payload);
-                Payload = json.ToString(Formatting.Indented);
+                var json = JToken.Parse(Buffer);
+                Buffer = json.ToString(Formatting.Indented);
             }
             else if (IsXml)
             {
-                var xml = XDocument.Parse(Payload);
-                Payload = xml.ToString(SaveOptions.None);
+                var xml = XDocument.Parse(Buffer);
+                Buffer = xml.ToString(SaveOptions.None);
             }
         }
         catch
@@ -155,7 +230,31 @@ public sealed class BufferEditor : TemplatedControl
 
     void OnSaveToFile(object? sender, RoutedEventArgs e)
     {
-        // TODO:
+        var saveFileDialog = new SaveFileDialog();
+        saveFileDialog.Filters!.AddRange(FileDialogFilters);
+
+        // TODO: Not working!
+        if (IsJson)
+        {
+            saveFileDialog.DefaultExtension = ".json";
+        }
+        else if (IsXml)
+        {
+            saveFileDialog.DefaultExtension = ".xml";
+        }
+        else
+        {
+            saveFileDialog.DefaultExtension = ".txt";
+        }
+
+        Dispatcher.UIThread.InvokeAsync(async () =>
+        {
+            var fileName = await saveFileDialog.ShowAsync(MainWindow.Instance);
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                await File.WriteAllTextAsync(fileName, Buffer ?? string.Empty, CancellationToken.None);
+            }
+        });
     }
 
     void OnTextEditorTextChanged(object? sender, EventArgs e)
@@ -165,7 +264,7 @@ public sealed class BufferEditor : TemplatedControl
         _isUpdatingTextInternally = true;
         try
         {
-            Payload = text;
+            Buffer = text;
         }
         finally
         {
@@ -173,7 +272,25 @@ public sealed class BufferEditor : TemplatedControl
         }
     }
 
-    void SyncLanguage()
+    void SyncBufferFormat()
+    {
+        if (IsText || IsJson || IsXml)
+        {
+            BufferFormat = BufferFormat.Plain;
+        }
+        else if (IsBase64)
+        {
+            BufferFormat = BufferFormat.Base64;
+        }
+        else if (IsPath)
+        {
+            BufferFormat = BufferFormat.Path;
+        }
+
+        // It may happen that noting is selected while the selection is changed!
+    }
+
+    void SyncGrammar()
     {
         if (_textMateInstallation == null)
         {
@@ -182,11 +299,11 @@ public sealed class BufferEditor : TemplatedControl
 
         if (IsJson)
         {
-            _textMateInstallation.SetGrammar(_textEditorRegistryOptions.GetScopeByLanguageId("jsonc"));
+            _textMateInstallation.SetGrammar("source.json.comments");
         }
         else if (IsXml)
         {
-            _textMateInstallation.SetGrammar(_textEditorRegistryOptions.GetScopeByLanguageId("xml"));
+            _textMateInstallation.SetGrammar("text.xml");
         }
         else
         {
@@ -201,6 +318,6 @@ public sealed class BufferEditor : TemplatedControl
             return;
         }
 
-        _textEditor.Text = Payload;
+        _textEditor.Text = Buffer;
     }
 }

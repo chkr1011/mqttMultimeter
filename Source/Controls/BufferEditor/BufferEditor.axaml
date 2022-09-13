@@ -4,7 +4,7 @@
         xmlns:avaloniaEdit="https://github.com/avaloniaui/avaloniaedit">
     <Design.PreviewWith>
         <controls:BufferEditor Width="800"
-                               Payload="{x:Static controls:BufferPreviewTestData.PayloadString}"
+                               Buffer="{x:Static controls:BufferPreviewTestData.PayloadString}"
                                Height="600" />
     </Design.PreviewWith>
 
@@ -21,7 +21,7 @@
     <Style Selector="controls|BufferEditor">
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type controls:BufferEditor}">
-                <Border BorderThickness="{DynamicResource TextControlBorderThemeThickness}">
+                <Border BorderThickness="{DynamicResource TextControlBorderThemeThickness}" Background="{DynamicResource TextControlBackground}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -47,6 +47,8 @@
                                               ToolTip.Tip="Toggle word wrap" />
                                 </ToggleButton>
                                 
+                                <Separator Classes="tool_bar_separator"/>
+                                
                                 <!-- The Copy button -->
                                 <Button Classes="tool_bar_button"
                                         x:Name="CopyToClipboardButton">
@@ -60,6 +62,15 @@
                                     <PathIcon Data="{StaticResource save_regular}"
                                               ToolTip.Tip="Save to file" />
                                 </Button>
+                                
+                                <!-- The open button -->
+                                <Button Classes="tool_bar_button"
+                                        x:Name="LoadFromFileButton"
+                                        ToolTip.Tip="Load from file">
+                                    <PathIcon Data="{StaticResource folder_open_regular}" />
+                                </Button>
+                                
+                                <Separator Classes="tool_bar_separator"/>
                                 
                                 <!-- The Reformat button -->
                                 <Button Classes="tool_bar_button"
@@ -108,7 +119,8 @@
                         <avaloniaEdit:TextEditor Grid.Row="1"
                                                  x:Name="TextEditor"
                                                  WordWrap="{Binding ElementName=TextWrappingCheckBox, Path=IsChecked}"
-                                                 Background="{DynamicResource TextControlBackground}"
+                                                 Background="Transparent"
+                                                 Margin="5"
                                                  Classes="code_text"
                                                  ShowLineNumbers="True" />
                     </Grid>
