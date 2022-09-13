@@ -7,9 +7,7 @@
 [![Join the chat at https://gitter.im/MQTTnet/community](https://badges.gitter.im/MQTTnet/community.svg)](https://gitter.im/MQTTnet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://raw.githubusercontent.com/chkr1011/MQTTnetApp/main/LICENSE)
   
-# MQTTnet App
-
-_MQTTnet App_ alias "MQTT Multimeter" is a cross platform .NET application for MQTT communication testing and analysing.
+**MQTT Multimeter** alias MQTTnetApp is a cross platform .NET application for MQTT communication testing and analysing.
 
 The protocol implementation is based on the _MQTTnet_ project. The application uses Avalonia for UI rendering and runs on nearly any platform and CPU architecture.
 
