@@ -13,6 +13,9 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
+using AvaloniaEdit;
+using AvaloniaEdit.TextMate;
+using AvaloniaEdit.TextMate.Grammars;
 using MessagePack;
 using MQTTnetApp.Extensions;
 using MQTTnetApp.Main;
@@ -36,16 +39,21 @@ public sealed class BufferInspectorView : TemplatedControl
 
     public static readonly StyledProperty<bool> ShowRawProperty = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(ShowRaw));
 
-    public static readonly StyledProperty<string> PreviewContentProperty = AvaloniaProperty.Register<BufferInspectorView, string>(nameof(PreviewContent));
-
     public static readonly StyledProperty<string?> SelectedFormatNameProperty = AvaloniaProperty.Register<BufferInspectorView, string?>(nameof(SelectedFormatName), "UTF-8");
 
+    readonly RegistryOptions _textEditorRegistryOptions = new(ThemeName.Dark);
+
+    string _content = string.Empty;
     Button? _copyToClipboardButton;
+    string? _currentTextEditorLanguage;
     Button? _saveToFileButton;
+    TextEditor? _textEditor;
+    TextMate.Installation? _textMateInstallation;
 
     public BufferInspectorView()
     {
         Formats = SharedConverters;
+
         SelectFormat();
     }
 
@@ -59,12 +67,6 @@ public sealed class BufferInspectorView : TemplatedControl
     {
         get => GetValue(FormatsProperty);
         set => SetValue(FormatsProperty, value);
-    }
-
-    public string PreviewContent
-    {
-        get => GetValue(PreviewContentProperty);
-        set => SetValue(PreviewContentProperty, value);
     }
 
     public BufferConverter? SelectedFormat
@@ -81,11 +83,12 @@ public sealed class BufferInspectorView : TemplatedControl
 
     static ObservableCollection<BufferConverter> SharedConverters { get; } = new()
     {
-        new BufferConverter("ASCII", b => Encoding.ASCII.GetString(b)),
-        new BufferConverter("Base64", Convert.ToBase64String),
-        new BufferConverter("Binary", BinaryEncoder.GetString),
-        new BufferConverter("HEX", HexEncoder.GetString),
+        new BufferConverter("ASCII", null, b => Encoding.ASCII.GetString(b)),
+        new BufferConverter("Base64", null, Convert.ToBase64String),
+        new BufferConverter("Binary", null, BinaryEncoder.GetString),
+        new BufferConverter("HEX", null, HexEncoder.GetString),
         new BufferConverter("JSON",
+            "source.json.comments",
             b =>
             {
                 var json = Encoding.UTF8.GetString(b);
@@ -93,17 +96,19 @@ public sealed class BufferInspectorView : TemplatedControl
             }),
 
         new BufferConverter("MessagePack as JSON",
+            "source.json.comments",
             b =>
             {
                 var json = MessagePackSerializer.ConvertToJson(b);
                 return JsonSerializerService.Instance?.Format(json) ?? string.Empty;
             }),
 
-        new BufferConverter("RAW", _ => "RAW"), // Special case!
-        new BufferConverter("Unicode", b => Encoding.Unicode.GetString(b)),
-        new BufferConverter("UTF-8", b => Encoding.UTF8.GetString(b)),
-        new BufferConverter("UTF-32", b => Encoding.UTF32.GetString(b)),
+        new BufferConverter("RAW", null, _ => "RAW"), // Special case!
+        new BufferConverter("Unicode", null, b => Encoding.Unicode.GetString(b)),
+        new BufferConverter("UTF-8", null, b => Encoding.UTF8.GetString(b)),
+        new BufferConverter("UTF-32", null, b => Encoding.UTF32.GetString(b)),
         new BufferConverter("XML",
+            "text.xml",
             b =>
             {
                 var xml = Encoding.UTF8.GetString(b);
@@ -120,13 +125,16 @@ public sealed class BufferInspectorView : TemplatedControl
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
+        
+        _textEditor = (TextEditor)this.GetTemplateChild("TextEditor");
+        _textMateInstallation = _textEditor.InstallTextMate(_textEditorRegistryOptions);
+        SyncTextEditor();
 
         _copyToClipboardButton = (Button)this.GetTemplateChild("CopyToClipboardButton");
         _copyToClipboardButton.Click += OnCopyToClipboard;
 
         _saveToFileButton = (Button)this.GetTemplateChild("SaveToFileButton");
         _saveToFileButton.Click += OnSaveToFile;
-
         ReadBuffer();
     }
 
@@ -152,11 +160,9 @@ public sealed class BufferInspectorView : TemplatedControl
 
     void OnCopyToClipboard(object? sender, RoutedEventArgs e)
     {
-        var clipboardContent = PreviewContent;
-
-        if (!string.IsNullOrEmpty(clipboardContent))
+        if (!string.IsNullOrEmpty(_content))
         {
-            Application.Current?.Clipboard?.SetTextAsync(clipboardContent);
+            Application.Current?.Clipboard?.SetTextAsync(_content);
         }
     }
 
@@ -165,7 +171,7 @@ public sealed class BufferInspectorView : TemplatedControl
         var saveFileDialog = new SaveFileDialog();
         saveFileDialog.Filters!.Add(new FileDialogFilter
         {
-            Name = "Binary file",
+            Name = "Binary files",
             Extensions = new List<string>
             {
                 "bin"
@@ -184,26 +190,29 @@ public sealed class BufferInspectorView : TemplatedControl
 
     void ReadBuffer()
     {
-        if (Buffer == null || Buffer.Length == 0)
-        {
-            PreviewContent = string.Empty;
-            return;
-        }
-
         var format = SelectedFormat;
         if (format == null)
         {
             throw new InvalidOperationException();
         }
 
-        try
+        if ((Buffer?.Length ?? 0) == 0)
         {
-            PreviewContent = format.Convert(Buffer);
+            _content = string.Empty;
         }
-        catch (Exception exception)
+        else
         {
-            PreviewContent = $"<{exception.Message}>";
+            try
+            {
+                _content = format.Convert(Buffer!);
+            }
+            catch (Exception exception)
+            {
+                _content = $"<{exception.Message}>";
+            }
         }
+
+        SyncTextEditor();
     }
 
     void SelectFormat()
@@ -218,6 +227,43 @@ public sealed class BufferInspectorView : TemplatedControl
         if (SelectedFormat == null)
         {
             SelectedFormat = Formats.FirstOrDefault();
+        }
+    }
+
+    void SyncTextEditor()
+    {
+        if (_textEditor == null)
+        {
+            return;
+        }
+
+        _textEditor.Text = _content;
+
+        if (SelectedFormat == null)
+        {
+            return;
+        }
+
+        if (_textMateInstallation == null)
+        {
+            return;
+        }
+
+        // Avoid updating the language all the time even without a change!
+        if (string.Equals(_currentTextEditorLanguage, SelectedFormat.Grammar))
+        {
+            return;
+        }
+
+        _currentTextEditorLanguage = SelectedFormat.Grammar;
+
+        if (SelectedFormat.Grammar == null)
+        {
+            _textMateInstallation.SetGrammar(_currentTextEditorLanguage);
+        }
+        else
+        {
+            _textMateInstallation.SetGrammar(_textEditorRegistryOptions.GetScopeByLanguageId(_currentTextEditorLanguage));
         }
     }
 }

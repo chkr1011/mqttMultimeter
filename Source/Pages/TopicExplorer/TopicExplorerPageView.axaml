@@ -41,6 +41,14 @@
                                   ToolTip.Tip="Enable/Disable recording">
                         <PathIcon Data="{StaticResource record_regular}" />
                     </ToggleButton>
+                    
+                    <Button ToolTip.Tip="Remove all topic nodes"
+                            Classes="tool_bar_button"
+                            Command="{Binding Clear}">
+                        <PathIcon Data="{StaticResource delete_regular}" />
+                    </Button>
+                    
+                    <Separator Classes="tool_bar_separator"/>
 
                     <!-- The Enable/Disable highlighting -->
                     <ToggleButton Classes="tool_bar_button"
@@ -60,12 +68,7 @@
                             Command="{Binding CollapseAll}">
                         <PathIcon Data="{StaticResource arrow_minimize_vertical_regular}" />
                     </Button>
-
-                    <Button ToolTip.Tip="Remove all topic nodes"
-                            Classes="tool_bar_button"
-                            Command="{Binding Clear}">
-                        <PathIcon Data="{StaticResource delete_regular}" />
-                    </Button>
+                    
                 </StackPanel>
 
                 <TreeView Background="Transparent"

@@ -44,10 +44,6 @@ public static class PublishPageStateLoader
             QualityOfServiceLevel =
             {
                 Value = publishState.QualityOfServiceLevel
-            },
-            PayloadInputFormat =
-            {
-                Value = publishState.PayloadInputFormat
             }
         };
 

@@ -28,7 +28,6 @@ public static class PublishPageStateFactory
                 MessageExpiryInterval = item.MessageExpiryInterval,
                 PayloadFormatIndicator = item.PayloadFormatIndicator.Value,
                 QualityOfServiceLevel = item.QualityOfServiceLevel.Value,
-                PayloadInputFormat = item.PayloadInputFormat.Value,
                 Payload = item.Payload
             };
 

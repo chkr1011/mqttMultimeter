@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Authentication;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
@@ -9,6 +11,7 @@ using MQTTnet.Client;
 using MQTTnet.Diagnostics;
 using MQTTnet.Exceptions;
 using MQTTnet.Internal;
+using MQTTnetApp.Controls;
 using MQTTnetApp.Pages.Connection;
 using MQTTnetApp.Pages.Publish;
 using MQTTnetApp.Pages.Subscriptions;
@@ -74,7 +77,7 @@ public sealed class MqttClientService
             clientOptionsBuilder.WithAuthentication(item.SessionOptions.AuthenticationMethod, Convert.FromBase64String(item.SessionOptions.AuthenticationData));
         }
 
-        if (item.ServerOptions.SelectedTransport?.Value == Transport.TCP)
+        if (item.ServerOptions.SelectedTransport.Value == Transport.TCP)
         {
             clientOptionsBuilder.WithTcpServer(item.ServerOptions.Host, item.ServerOptions.Port);
         }
@@ -142,13 +145,31 @@ public sealed class MqttClientService
 
         ThrowIfNotConnected();
 
+        byte[] payload;
+        if (item.PayloadFormat == BufferFormat.Plain)
+        {
+            payload = Encoding.UTF8.GetBytes(item.Payload);
+        }
+        else if (item.PayloadFormat == BufferFormat.Base64)
+        {
+            payload = Convert.FromBase64String(item.Payload);
+        }
+        else if (item.PayloadFormat == BufferFormat.Path)
+        {
+            payload = File.ReadAllBytes(item.Payload);
+        }
+        else
+        {
+            throw new NotSupportedException();
+        }
+
         var applicationMessageBuilder = new MqttApplicationMessageBuilder().WithTopic(item.Topic)
             .WithQualityOfServiceLevel(item.QualityOfServiceLevel.Value)
             .WithRetainFlag(item.Retain)
             .WithMessageExpiryInterval(item.MessageExpiryInterval)
             .WithContentType(item.ContentType)
             .WithPayloadFormatIndicator(item.PayloadFormatIndicator.Value)
-            .WithPayload(item.PayloadInputFormat.ConvertPayloadInput(item.Payload))
+            .WithPayload(payload)
             .WithResponseTopic(item.ResponseTopic);
 
         if (item.SubscriptionIdentifier > 0)
