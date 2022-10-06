@@ -26,10 +26,6 @@ sealed class ViewLocator : IDataTemplate
                 _viewTypeCache[viewModelTypeName] = viewType;
             }
         }
-        else
-        {
-            Debug.WriteLine($"View type cached for {viewModelTypeName}.");
-        }
 
         if (viewType != null)
         {

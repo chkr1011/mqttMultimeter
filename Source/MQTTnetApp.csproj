@@ -24,8 +24,6 @@
     </PropertyGroup>
     <ItemGroup>
         <AvaloniaResource Include="Assets\**" />
-        <None Remove="Assets\Icons\arrow_down.png" />
-        <None Remove="Assets\Icons\arrow_up.png" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.18" />

@@ -7,6 +7,7 @@ public sealed class PacketViewModel
     public bool IsInbound { get; init; }
 
     public long Length { get; init; }
+    
     public int Number { get; init; }
 
     public string? Type { get; init; }

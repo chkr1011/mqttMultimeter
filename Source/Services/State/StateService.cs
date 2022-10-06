@@ -78,7 +78,7 @@ public sealed class StateService
         foreach (var state in _state)
         {
             var path = Path.Combine(GeneratePath(), state.Key + ".json");
-            _logger.LogInformation($"Writing state to '{path}'.");
+            _logger.LogInformation($"Writing state to '{path}'");
 
             var json = _jsonSerializerService.Serialize(state.Value);
             await File.WriteAllTextAsync(path, json).ConfigureAwait(false);

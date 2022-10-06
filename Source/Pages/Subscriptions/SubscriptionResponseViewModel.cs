@@ -13,6 +13,11 @@ public sealed class SubscriptionResponseViewModel : BaseViewModel
     string _reasonCodeText = string.Empty;
     string _reasonString = string.Empty;
 
+    public SubscriptionResponseViewModel()
+    {
+        UserProperties.IsReadOnly = true;
+    }
+
     public uint? PacketIdentifier
     {
         get => _packetIdentifier;
@@ -44,8 +49,8 @@ public sealed class SubscriptionResponseViewModel : BaseViewModel
         ReasonCodeText = response.Items.First().ResultCode.ToString();
         ReasonCode = (int)response.Items.First().ResultCode;
         ReasonString = response.ReasonString;
+        PacketIdentifier = response.PacketIdentifier;
         UserProperties.Load(response.UserProperties);
-        // TODO: Import Packet Identifier
     }
 
     public void ApplyResponse(MqttClientUnsubscribeResult response)
@@ -53,7 +58,7 @@ public sealed class SubscriptionResponseViewModel : BaseViewModel
         ReasonCodeText = response.Items.First().ResultCode.ToString();
         ReasonCode = (int)response.Items.First().ResultCode;
         ReasonString = response.ReasonString;
+        PacketIdentifier = response.PacketIdentifier;
         UserProperties.Load(response.UserProperties);
-        // TODO: Import Packet Identifier
     }
 }
