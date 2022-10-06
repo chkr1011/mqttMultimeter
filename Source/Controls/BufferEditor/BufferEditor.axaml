@@ -21,7 +21,8 @@
     <Style Selector="controls|BufferEditor">
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type controls:BufferEditor}">
-                <Border BorderThickness="{DynamicResource TextControlBorderThemeThickness}" Background="{DynamicResource TextControlBackground}">
+                <Border BorderThickness="{DynamicResource TextControlBorderThemeThickness}"
+                        Background="{DynamicResource TextControlBackground}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -46,32 +47,32 @@
                                     <PathIcon Data="{StaticResource text_wrap_regular}"
                                               ToolTip.Tip="Toggle word wrap" />
                                 </ToggleButton>
-                                
-                                <Separator Classes="tool_bar_separator"/>
-                                
+
+                                <Separator Classes="tool_bar_separator" />
+
                                 <!-- The Copy button -->
                                 <Button Classes="tool_bar_button"
                                         x:Name="CopyToClipboardButton">
                                     <PathIcon Data="{StaticResource copy_regular}"
                                               ToolTip.Tip="Copy to clipboard" />
                                 </Button>
-                            
+
                                 <!-- The Save button -->
                                 <Button Classes="tool_bar_button"
                                         x:Name="SaveToFileButton">
                                     <PathIcon Data="{StaticResource save_regular}"
                                               ToolTip.Tip="Save to file" />
                                 </Button>
-                                
+
                                 <!-- The open button -->
                                 <Button Classes="tool_bar_button"
                                         x:Name="LoadFromFileButton"
                                         ToolTip.Tip="Load from file">
                                     <PathIcon Data="{StaticResource folder_open_regular}" />
                                 </Button>
-                                
-                                <Separator Classes="tool_bar_separator"/>
-                                
+
+                                <Separator Classes="tool_bar_separator" />
+
                                 <!-- The Reformat button -->
                                 <Button Classes="tool_bar_button"
                                         x:Name="ReformatButton">
@@ -109,7 +110,7 @@
                                 <RadioButton GroupName="PayloadType"
                                              IsChecked="{Binding Path=IsBase64, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
                                              Content="Base64" />
-                                
+
                                 <RadioButton GroupName="PayloadType"
                                              IsChecked="{Binding Path=IsPath, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
                                              Content="Path" />

@@ -9,9 +9,9 @@
             </ResourceDictionary.MergedDictionaries>
 
             <SolidColorBrush x:Key="AppLightGreen">#2200EE00</SolidColorBrush>
-            
+
             <system:Double x:Key="ControlContentThemeFontSize">12</system:Double>
-            
+
             <!-- Patch some ugly parts of the default theme. -->
             <Thickness x:Key="TextControlBorderThemeThickness">1</Thickness>
             <Thickness x:Key="TextControlBorderThemeThicknessFocused">1</Thickness>
@@ -46,9 +46,10 @@
         <StyleInclude Source="/Controls/CertificatePicker/CertificatePicker.axaml" />
 
         <Style Selector="DataGridCell">
-            <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+            <Setter Property="FontSize"
+                    Value="{DynamicResource ControlContentThemeFontSize}" />
         </Style>
-        
+
         <Style Selector="ToolTip">
             <Setter Property="MaxWidth"
                     Value="999999" />

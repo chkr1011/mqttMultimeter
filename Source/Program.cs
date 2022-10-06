@@ -14,11 +14,13 @@ static class Program
     // Do not remove this method! It is required for the Designer.
     static AppBuilder BuildAvaloniaApp()
     {
+        var appBuilder = AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect();
+        
         if (Debugger.IsAttached)
         {
-            return AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect().LogToTrace();
+            appBuilder = appBuilder.LogToTrace();
         }
-        
-        return AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect();
+
+        return appBuilder;
     }
 }

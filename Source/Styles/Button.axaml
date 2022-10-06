@@ -36,12 +36,12 @@
         <Setter Property="HorizontalAlignment"
                 Value="Center" />
     </Style>
-    
+
     <Style Selector="Button.image_button_horizontal > StackPanel">
-            <Setter Property="Orientation"
-                    Value="Horizontal" />
-            <Setter Property="VerticalAlignment"
-                    Value="Center" />
+        <Setter Property="Orientation"
+                Value="Horizontal" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
     </Style>
 
     <Style Selector="Button.image_button TextBlock">
@@ -50,12 +50,12 @@
         <Setter Property="HorizontalAlignment"
                 Value="Center" />
     </Style>
-    
+
     <Style Selector="Button.image_button_horizontal TextBlock">
-            <Setter Property="Margin"
-                    Value="5,0,5,0" />
-            <Setter Property="HorizontalAlignment"
-                    Value="Center" />
+        <Setter Property="Margin"
+                Value="5,0,5,0" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
     </Style>
 
     <Style Selector="Button:pressed, RepeatButton:pressed, ToggleButton:pressed">

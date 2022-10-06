@@ -10,7 +10,7 @@ public static class BinaryEncoder
         {
             return string.Empty;
         }
-        
+
         if (buffer.Length == 0)
         {
             return string.Empty;

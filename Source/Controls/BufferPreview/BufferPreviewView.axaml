@@ -11,7 +11,8 @@
     <Style Selector="controls|BufferInspectorView">
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type controls:BufferInspectorView}">
-                <Border BorderThickness="{DynamicResource TextControlBorderThemeThickness}" Background="{DynamicResource TextControlBackground}">
+                <Border BorderThickness="{DynamicResource TextControlBorderThemeThickness}"
+                        Background="{DynamicResource TextControlBackground}">
 
                     <!-- The text base previews. -->
                     <Grid RowDefinitions="Auto,*">
@@ -31,7 +32,7 @@
                                     <PathIcon Data="{StaticResource text_wrap_regular}"
                                               ToolTip.Tip="Toggle word wrap" />
                                 </ToggleButton>
-                                
+
                                 <Separator Classes="tool_bar_separator" />
 
                                 <!-- The Copy button -->

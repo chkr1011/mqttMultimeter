@@ -11,7 +11,7 @@ public static class InflightPageItemViewModelFactory
         {
             throw new ArgumentNullException(nameof(message));
         }
-        
+
         var itemViewModel = new InflightPageItemViewModel(message)
         {
             Timestamp = DateTime.Now,
