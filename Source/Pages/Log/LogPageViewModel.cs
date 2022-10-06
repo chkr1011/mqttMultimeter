@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace MQTTnetApp.Pages.Log;
 
-public sealed class LogPageViewModel : BaseViewModel
+public sealed class LogPageViewModel : BasePageViewModel
 {
     bool _isRecordingEnabled;
 

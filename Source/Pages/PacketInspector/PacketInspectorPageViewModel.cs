@@ -7,7 +7,7 @@ using ReactiveUI;
 
 namespace MQTTnetApp.Pages.PacketInspector;
 
-public sealed class PacketInspectorPageViewModel : BaseViewModel
+public sealed class PacketInspectorPageViewModel : BasePageViewModel
 {
     bool _isRecordingEnabled;
     int _number;

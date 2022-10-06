@@ -8,66 +8,80 @@
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance controls:UserPropertiesViewModel}"
              x:Class="MQTTnetApp.Controls.UserPropertiesView">
-    <Grid RowDefinitions="Auto,Auto,*"
-          Grid.IsSharedSizeScope="True">
+    
+    <UserControl.Styles>
+        <!-- <Style Selector="controls|UserPropertiesView > Border"> -->
+        <!--     <Setter Property="BorderBrush" -->
+        <!--             Value="{DynamicResource TextControlBorderBrush}" /> -->
+        <!-- </Style> -->
+        <!-- -->
+        <!-- <Style Selector="controls|UserPropertiesView:focus-within > Border"> -->
+        <!--     <Setter Property="BorderBrush" -->
+        <!--             Value="{DynamicResource TextControlBorderBrushFocused}" /> -->
+        <!-- </Style> -->
+    </UserControl.Styles>
+    
+    <Border>
+        <Grid RowDefinitions="Auto,Auto,*"
+              Grid.IsSharedSizeScope="True">
 
-        <!-- The buttons -->
-        <StackPanel Classes="tool_bar"
-                    Grid.Row="0"
-                    IsVisible="{Binding !IsReadOnly, FallbackValue=False}"
-                    Orientation="Horizontal">
-            <Button Classes="tool_bar_button"
-                    ToolTip.Tip="Add user property"
-                    Command="{Binding AddItem}">
-                <PathIcon Data="{StaticResource add_square_regular}" />
-            </Button>
-            <Button Classes="tool_bar_button"
-                    ToolTip.Tip="Remove all user properties"
-                    Command="{Binding ClearItems}">
-                <PathIcon Data="{StaticResource delete_regular}" />
-            </Button>
-        </StackPanel>
+            <!-- The buttons -->
+            <StackPanel Classes="tool_bar"
+                        Grid.Row="0"
+                        IsVisible="{Binding !IsReadOnly, FallbackValue=False}"
+                        Orientation="Horizontal">
+                <Button Classes="tool_bar_button"
+                        ToolTip.Tip="Add user property"
+                        Command="{Binding AddEmptyItem}">
+                    <PathIcon Data="{StaticResource add_square_regular}" />
+                </Button>
+                <Button Classes="tool_bar_button"
+                        ToolTip.Tip="Remove all user properties"
+                        Command="{Binding ClearItems}">
+                    <PathIcon Data="{StaticResource delete_regular}" />
+                </Button>
+            </StackPanel>
 
-        <!-- The rows -->
-        <ScrollViewer Grid.Row="2">
-            <ItemsControl Items="{Binding Items}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type controls:UserPropertyViewModel}">
-                        <Grid Margin="0,5"
-                              ColumnDefinitions="*,30,2*,Auto">
+            <!-- The rows -->
+            <ScrollViewer Grid.Row="2">
+                <ItemsControl Items="{Binding Items}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type controls:UserPropertyViewModel}">
+                            <Grid Margin="0,5"
+                                  ColumnDefinitions="*,30,2*,Auto">
 
-                            <!-- The name. -->
-                            <TextBox Grid.Column="0"
-                                     Watermark="Name"
-                                     IsReadOnly="{Binding Owner.IsReadOnly}"
-                                     Text="{Binding Name, Mode=TwoWay}" />
+                                <!-- The name. -->
+                                <TextBox Grid.Column="0"
+                                         Watermark="Name"
+                                         IsReadOnly="{Binding Owner.IsReadOnly}"
+                                         Text="{Binding Name, Mode=TwoWay}" />
 
-                            <TextBlock Grid.Column="1"
-                                       Margin="10,0"
-                                       FontWeight="Bold"
-                                       FontSize="18">=</TextBlock>
+                                <TextBlock Grid.Column="1"
+                                           Margin="10,0"
+                                           FontWeight="Bold"
+                                           FontSize="18">=</TextBlock>
 
-                            <!-- The value. -->
-                            <TextBox Grid.Column="2"
-                                     Watermark="Value"
-                                     IsReadOnly="{Binding Owner.IsReadOnly}"
-                                     Text="{Binding Value, Mode=TwoWay}" />
+                                <!-- The value. -->
+                                <TextBox Grid.Column="2"
+                                         Watermark="Value"
+                                         IsReadOnly="{Binding Owner.IsReadOnly}"
+                                         Text="{Binding Value, Mode=TwoWay}" />
 
-                            <!-- The context actions -->
-                            <StackPanel Grid.Column="3"
-                                        Margin="10,0,0,0">
-                                <Button Classes="tool_bar_button"
-                                        Command="{Binding Owner.RemoveItem}"
-                                        CommandParameter="{Binding .}">
-                                    <PathIcon Data="{StaticResource delete_regular}"
-                                              ToolTip.Tip="Remove user property" />
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-
-    </Grid>
+                                <!-- The context actions -->
+                                <StackPanel Grid.Column="3"
+                                            Margin="10,0,0,0">
+                                    <Button Classes="tool_bar_button"
+                                            Command="{Binding Owner.RemoveItem}"
+                                            CommandParameter="{Binding .}">
+                                        <PathIcon Data="{StaticResource delete_regular}"
+                                                  ToolTip.Tip="Remove user property" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </Border>
 </UserControl>

@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MQTTnetApp.Common;
+using MQTTnetApp.Pages.Inflight;
 using MQTTnetApp.Pages.Publish.State;
 using MQTTnetApp.Services.Mqtt;
 using MQTTnetApp.Services.State;
 
 namespace MQTTnetApp.Pages.Publish;
 
-public sealed class PublishPageViewModel : BaseViewModel
+public sealed class PublishPageViewModel : BasePageViewModel
 {
     readonly MqttClientService _mqttClientService;
 
@@ -36,7 +37,7 @@ public sealed class PublishPageViewModel : BaseViewModel
 
         // Prepare the UI with at lest one user property.
         // It will not be send when the name is empty.
-        newItem.UserProperties.AddItem();
+        newItem.UserProperties.AddEmptyItem();
 
         Items.Collection.Add(newItem);
         Items.SelectedItem = newItem;
@@ -54,15 +55,26 @@ public sealed class PublishPageViewModel : BaseViewModel
             App.ShowException(exception);
         }
     }
-
-    public void RemoveItem(PublishItemViewModel item)
+    
+    public void RepeatMessage(InflightPageItemViewModel inflightPageItem)
     {
-        if (item == null)
+        if (inflightPageItem == null)
         {
-            throw new ArgumentNullException(nameof(item));
+            throw new ArgumentNullException(nameof(inflightPageItem));
         }
 
-        Items.RemoveItem(item);
+        var publishItem = new PublishItemViewModel(this)
+        {
+            Name = $"Repeat '{inflightPageItem.Topic}'",
+            ContentType = inflightPageItem.ContentType,
+            Topic = inflightPageItem.Topic,
+            Payload = inflightPageItem.PayloadPreview
+        };
+
+        Items.Collection.Add(publishItem);
+        Items.SelectedItem = publishItem;
+
+        RequestActivation();
     }
 
     void LoadState(StateService stateService)

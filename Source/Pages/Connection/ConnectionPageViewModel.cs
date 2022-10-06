@@ -32,7 +32,15 @@ public sealed class ConnectionPageViewModel : BasePageViewModel
 
         stateService.Saving += SaveState;
         LoadState(stateService);
+
+        mqttClientService.Disconnected += (_, e) =>
+        {
+            DisconnectedReason.Reason = e.Reason.ToString();
+            DisconnectedReason.AdditionalInformation = e.ReasonString;
+        };
     }
+
+    public DisconnectedReasonViewModel DisconnectedReason { get; } = new();
 
     public bool IsConnected
     {
@@ -73,6 +81,8 @@ public sealed class ConnectionPageViewModel : BasePageViewModel
 
             var response = await _mqttClientService.Connect(item);
             item.Response.ApplyResponse(response);
+
+            DisconnectedReason.Clear();
         }
         catch (Exception exception)
         {

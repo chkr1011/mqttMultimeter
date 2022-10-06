@@ -36,7 +36,8 @@
 
             <!-- The message -->
             <TextBlock Margin="0,25,0,0"
-                       FontSize="18"
+                       FontSize="16"
+                       TextAlignment="Center"
                        FontWeight="Light"
                        Text="{Binding Message}" />
         </StackPanel>

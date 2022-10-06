@@ -11,6 +11,7 @@ public sealed class ServerOptionsViewModel : BaseViewModel
 {
     int _communicationTimeout;
     string _host = string.Empty;
+    bool _ignoreCertificateErrors;
     int _port;
     int _receiveMaximum;
     EnumViewModel<MqttProtocolVersion> _selectedProtocolVersion;
@@ -62,6 +63,12 @@ public sealed class ServerOptionsViewModel : BaseViewModel
     {
         get => _host;
         set => this.RaiseAndSetIfChanged(ref _host, value);
+    }
+
+    public bool IgnoreCertificateErrors
+    {
+        get => _ignoreCertificateErrors;
+        set => this.RaiseAndSetIfChanged(ref _ignoreCertificateErrors, value);
     }
 
     public int Port

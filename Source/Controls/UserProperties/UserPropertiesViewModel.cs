@@ -19,9 +19,20 @@ public sealed class UserPropertiesViewModel : BaseViewModel
 
     public ObservableCollection<UserPropertyViewModel> Items { get; } = new();
 
-    public void AddItem()
+    public void AddEmptyItem()
     {
-        Items.Add(new UserPropertyViewModel(this));
+        AddItem(string.Empty, string.Empty);
+    }
+
+    public void AddItem(string name, string value)
+    {
+        var item = new UserPropertyViewModel(this)
+        {
+            Name = name,
+            Value = value
+        };
+
+        Items.Add(item);
     }
 
     public void ClearItems()

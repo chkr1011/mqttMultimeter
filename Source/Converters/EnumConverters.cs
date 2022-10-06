@@ -8,10 +8,6 @@ namespace MQTTnetApp.Converters;
 
 public static class EnumConverters
 {
-    public static readonly IValueConverter ToEnumString = new FuncValueConverter<Enum, string?>(Convert.ToString);
-
-    public static readonly IValueConverter ToEnumValue = new FuncValueConverter<Enum, int>(Convert.ToInt32);
-
     public static readonly IValueConverter ExpandQualityOfServiceValue = new FuncValueConverter<MqttQualityOfServiceLevel?, string>(v =>
     {
         if (!v.HasValue)

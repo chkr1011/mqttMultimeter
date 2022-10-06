@@ -1,0 +1,26 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:topicExplorer="clr-namespace:MQTTnetApp.Pages.TopicExplorer"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemMessageViewModel}"
+             x:Class="MQTTnetApp.Pages.TopicExplorer.TopicExplorerItemMessageView">
+
+    <StackPanel Orientation="Horizontal"
+                Margin="10">
+        <TextBlock Classes="code_text"
+                   Text="{Binding Timestamp, StringFormat={}{0:HH:mm:ss.fff}}" />
+        <TextBlock Classes="code_text"
+                   Margin="10,0"
+                   Text="="
+                   FontStyle="Italic" />
+        <TextBlock Classes="code_text"
+                   Margin="0,0,10,0"
+                   FontStyle="Italic"
+                   Text="{Binding Payload}" />
+    </StackPanel>
+
+</UserControl>

@@ -13,23 +13,13 @@
     <Grid RowDefinitions="Auto,*,Auto"
           Margin="10,5,10,10">
 
-        <Grid Grid.Row="0"
-              ColumnDefinitions="Auto,*"
-              RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
-
-            <!-- The topic -->
-            <Label Content="Topic"
-                   Grid.Row="0"
-                   Grid.Column="0"
-                   Classes="caption" />
-            <TextBox IsReadOnly="True"
-                     Grid.Row="1"
-                     Grid.Column="0"
-                     BorderThickness="0"
-                     Grid.ColumnSpan="2"
-                     Classes="value code_text"
-                     Text="{Binding Topic}" />
-        </Grid>
+        <!-- The topic -->
+        <TextBox IsReadOnly="True"
+                 Grid.Row="0"
+                 Grid.Column="0"
+                 ToolTip.Tip="Topic"
+                 Classes="value code_text"
+                 Text="{Binding Topic}" />
 
         <TabControl Grid.Row="1"
                     Margin="0,10,0,0">
@@ -53,7 +43,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="0"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.PayloadFormatIndicator}" />
+                                   Text="{Binding Path=PayloadFormatIndicator}" />
 
                         <!-- Content Type -->
                         <Label Grid.Column="0"
@@ -69,14 +59,13 @@
                         <controls:BufferInspectorView Grid.Column="0"
                                                       Grid.ColumnSpan="2"
                                                       Grid.Row="2"
-                                                      PreviewContent="{Binding PayloadPreview, Mode=OneWayToSource}"
                                                       Margin="0,10,0,0"
                                                       Buffer="{Binding Payload}" />
                     </Grid>
                 </TabItem>
 
-                <!-- The Additional Information -->
-                <TabItem Header="Additional Information">
+                <!-- The Properties -->
+                <TabItem Header="Properties">
                     <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
                           ColumnDefinitions="Auto,*">
                         <!-- The timestamp -->
@@ -97,7 +86,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="1"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.Retain, Mode=OneWay}" />
+                                   Text="{Binding Path=Retain, Mode=OneWay}" />
 
                         <!-- Topic Alias -->
                         <Label Grid.Column="0"
@@ -107,7 +96,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="2"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.MessageExpiryInterval}" />
+                                   Text="{Binding Path=MessageExpiryInterval}" />
 
                         <!-- The Quality of Service level -->
                         <Label Grid.Column="0"
@@ -127,7 +116,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="4"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.ResponseTopic}" />
+                                   Text="{Binding Path=ResponseTopic}" />
 
                         <!-- Message Expiry Interval -->
                         <Label Grid.Column="0"
@@ -137,7 +126,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="5"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.MessageExpiryInterval}" />
+                                   Text="{Binding Path=MessageExpiryInterval}" />
 
                         <!-- Dup -->
                         <Label Grid.Column="0"
@@ -147,7 +136,7 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="6"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.Dup, Mode=OneWay}" />
+                                   Text="{Binding Path=Dup, Mode=OneWay}" />
 
                         <!-- Subscription Identifiers -->
                         <Label Grid.Column="0"
@@ -157,13 +146,13 @@
                         <TextBlock Grid.Column="1"
                                    Grid.Row="9"
                                    Classes="code_text value"
-                                   Text="{Binding Path=Source.SubscriptionIdentifiers, Converter={x:Static converters:EnumConverters.ExpandSubscriptionIdentifiers}}" />
+                                   Text="{Binding Path=SubscriptionIdentifiers, Converter={x:Static converters:EnumConverters.ExpandSubscriptionIdentifiers}}" />
                     </Grid>
                 </TabItem>
 
                 <!-- The Correlation Data -->
                 <TabItem Header="Correlation Data">
-                    <controls:BufferInspectorView Buffer="{Binding Source.CorrelationData}" />
+                    <controls:BufferInspectorView Buffer="{Binding CorrelationData}" />
                 </TabItem>
 
                 <!-- The User Properties -->
@@ -173,17 +162,31 @@
             </TabControl.Items>
         </TabControl>
 
-        <!-- The Replay button -->
-        <Button Classes="image_button"
-                Grid.Row="2"
-                Command="{Binding Repeat}"
-                Margin="0,10,0,0"
-                Background="{DynamicResource SystemAccentColor}">
-            <StackPanel>
-                <PathIcon Data="{StaticResource mail_copy_regular}" />
-                <TextBlock Text="Repeat" />
-            </StackPanel>
-        </Button>
+        <!-- The buttons -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    Margin="0,10,0,0">
+
+            <Button Classes="image_button image_button_horizontal"
+                    Command="{Binding RepeatMessage}"
+                    Background="{DynamicResource SystemAccentColor}">
+                <StackPanel>
+                    <PathIcon Data="{StaticResource mail_copy_regular}" />
+                    <TextBlock Text="Repeat message" />
+                </StackPanel>
+            </Button>
+
+            <Button Classes="image_button image_button_horizontal"
+                    Command="{Binding DeleteRetainedMessage}"
+                    Margin="10,0,0,0"
+                    Background="{DynamicResource SystemAccentColor}">
+                <StackPanel>
+                    <PathIcon Data="{StaticResource delete_regular}" />
+                    <TextBlock Text="Delete retained message" />
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
     </Grid>
 
 </UserControl>

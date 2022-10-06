@@ -8,7 +8,7 @@ using MQTTnetApp.Services.State;
 
 namespace MQTTnetApp.Pages.Subscriptions;
 
-public sealed class SubscriptionsPageViewModel : BaseViewModel
+public sealed class SubscriptionsPageViewModel : BasePageViewModel
 {
     readonly MqttClientService _mqttClientService;
 
@@ -34,7 +34,7 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
             Name = "Untitled"
         };
 
-        newItem.UserProperties.AddItem();
+        newItem.UserProperties.AddEmptyItem();
 
         Items.Collection.Add(newItem);
     }
