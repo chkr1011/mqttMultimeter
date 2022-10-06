@@ -1,0 +1,35 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:MQTTnetApp.Controls">
+    <Design.PreviewWith>
+        <controls:CertificatePicker Width="500" />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|CertificatePicker">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border>
+                    <Grid ColumnDefinitions="*,Auto">
+
+                        <!-- The status text -->
+                        <TextBlock Text="No certificate selected"
+                                   Grid.Column="0"
+                                   IsVisible="{Binding !IsCertificateSelected, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Foreground="Orange" />
+
+                        <TextBlock Grid.Column="0"
+                                   ToolTip.Tip="{TemplateBinding Path}"
+                                   Text="{TemplateBinding Path}"
+                                   Foreground="LightGreen" />
+
+                        <!-- The select button -->
+                        <Button Margin="10,0,0,0"
+                                x:Name="PART_PickButton"
+                                Grid.Column="1"
+                                Content="Select certificate file" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

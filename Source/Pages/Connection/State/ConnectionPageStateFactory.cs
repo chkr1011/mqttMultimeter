@@ -15,7 +15,7 @@ public static class ConnectionPageStateFactory
 
         foreach (var item in viewModel.Items.Collection)
         {
-            state.Connections.Add(new ConnectionState
+            var itemState = new ConnectionState
             {
                 Name = item.Name,
                 Host = item.ServerOptions.Host,
@@ -26,8 +26,17 @@ public static class ConnectionPageStateFactory
                 ProtocolVersion = item.ServerOptions.SelectedProtocolVersion.Value,
                 KeepAliveInterval = item.SessionOptions.KeepAliveInterval,
                 Transport = item.ServerOptions.SelectedTransport.Value,
-                TlsVersion = item.ServerOptions.SelectedTlsVersion.Value
-            });
+                TlsVersion = item.ServerOptions.SelectedTlsVersion.Value,
+                IgnoreCertificateErrors = item.ServerOptions.IgnoreCertificateErrors,
+                CertificatePath = item.SessionOptions.CertificatePath
+            };
+
+            if (item.SessionOptions.SaveCertificatePassword)
+            {
+                itemState.CertificatePassword = item.SessionOptions.CertificatePassword;
+            }
+
+            state.Connections.Add(itemState);
         }
 
         return state;

@@ -9,12 +9,15 @@ public sealed class SessionOptionsViewModel : BaseViewModel
 {
     string _authenticationData = string.Empty;
     string _authenticationMethod = string.Empty;
+    string _certificatePassword = string.Empty;
+    string _certificatePath = string.Empty;
     bool _cleanSession = true;
     string _clientId = string.Empty;
     int _keepAliveInterval = 10;
     string _password = string.Empty;
     bool _requestProblemInformation;
     bool _requestResponseInformation;
+    bool _saveCertificatePassword;
     int _sessionExpiryInterval;
     string _userName = string.Empty;
 
@@ -33,6 +36,18 @@ public sealed class SessionOptionsViewModel : BaseViewModel
     {
         get => _authenticationMethod;
         set => this.RaiseAndSetIfChanged(ref _authenticationMethod, value);
+    }
+
+    public string CertificatePassword
+    {
+        get => _certificatePassword;
+        set => this.RaiseAndSetIfChanged(ref _certificatePassword, value);
+    }
+
+    public string CertificatePath
+    {
+        get => _certificatePath;
+        set => this.RaiseAndSetIfChanged(ref _certificatePath, value);
     }
 
     public bool CleanSession
@@ -69,6 +84,12 @@ public sealed class SessionOptionsViewModel : BaseViewModel
     {
         get => _requestResponseInformation;
         set => this.RaiseAndSetIfChanged(ref _requestResponseInformation, value);
+    }
+
+    public bool SaveCertificatePassword
+    {
+        get => _saveCertificatePassword;
+        set => this.RaiseAndSetIfChanged(ref _saveCertificatePassword, value);
     }
 
     public int SessionExpiryInterval

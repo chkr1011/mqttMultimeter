@@ -33,6 +33,7 @@
         <StyleInclude Source="/Controls/HexBox.axaml" />
         <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
         <StyleInclude Source="/Controls/Overlay/Overlay.axaml" />
+        <StyleInclude Source="/Controls/CertificatePicker/CertificatePicker.axaml" />
 
         <Style Selector="ItemsPresenter">
             <Setter Property="(KeyboardNavigation.TabNavigation)"
