@@ -33,23 +33,23 @@
                     <PathIcon Data="{StaticResource delete_regular}" />
                 </Button>
 
-                <Separator Classes="tool_bar_separator"/>
-                
+                <Separator Classes="tool_bar_separator" />
+
                 <!-- The export/import buttons. -->
                 <Button Classes="tool_bar_button"
                         ToolTip.Tip="Export all items to a file."
                         Command="{Binding ExportItems}">
                     <PathIcon Data="{StaticResource save_regular}" />
                 </Button>
-                
+
                 <Button Classes="tool_bar_button"
                         ToolTip.Tip="Import all items from a file."
                         Command="{Binding ImportItems}">
                     <PathIcon Data="{StaticResource folder_open_regular}" />
                 </Button>
 
-                <Separator Classes="tool_bar_separator"/>
-                
+                <Separator Classes="tool_bar_separator" />
+
                 <!-- The topic filter text. -->
                 <TextBox Width="200"
                          Classes="tool_bar_text_box"

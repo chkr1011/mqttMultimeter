@@ -55,7 +55,7 @@ public sealed class PublishPageViewModel : BasePageViewModel
             App.ShowException(exception);
         }
     }
-    
+
     public void RepeatMessage(InflightPageItemViewModel inflightPageItem)
     {
         if (inflightPageItem == null)

@@ -10,7 +10,7 @@ public static class HexEncoder
         {
             return string.Empty;
         }
-        
+
         if (buffer.Length == 0)
         {
             return string.Empty;

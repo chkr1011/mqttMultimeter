@@ -125,7 +125,7 @@ public sealed class BufferInspectorView : TemplatedControl
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-        
+
         _textEditor = (TextEditor)this.GetTemplateChild("TextEditor");
         _textMateInstallation = _textEditor.InstallTextMate(_textEditorRegistryOptions);
         SyncTextEditor();
