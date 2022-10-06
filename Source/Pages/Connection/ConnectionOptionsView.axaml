@@ -186,6 +186,30 @@
                     <TextBox Classes="value"
                              Text="{Binding SessionOptions.AuthenticationData}"
                              Grid.Column="4" />
+
+                    <!-- Certificate -->
+                    <Label Grid.Column="0"
+                           controls:AutoGrid.IsNextRow="True"
+                           Classes="caption"
+                           Content="Certificate" />
+                    <controls:CertificatePicker Grid.Column="1"
+                                                Path="{Binding SessionOptions.CertificatePath}" />
+
+                    <Label Grid.Column="3"
+                           Classes="caption"
+                           Content="Certificate Password" />
+
+                    <TextBox PasswordChar="*"
+                             Grid.Column="4"
+                             Text="{Binding SessionOptions.CertificatePassword, Mode=TwoWay}" />
+
+                    <Label Grid.Column="0"
+                           controls:AutoGrid.IsNextRow="True"
+                           Classes="caption"
+                           Content="Save certificate password" />
+                    <CheckBox Grid.Column="1"
+                              IsChecked="{Binding  SessionOptions.SaveCertificatePassword, Mode=TwoWay}"
+                              ToolTip.Tip="The password will be stored in clear text on this computer when activated!" />
                 </controls:AutoGrid>
             </Expander>
 

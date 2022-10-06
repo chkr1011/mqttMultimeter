@@ -7,9 +7,15 @@ public sealed class ConnectionState
 {
     public string? AuthenticationMethod { get; set; }
 
+    public string? CertificatePassword { get; set; }
+
+    public string? CertificatePath { get; set; }
+
     public string? ClientId { get; set; }
 
     public string? Host { get; set; }
+
+    public bool IgnoreCertificateErrors { get; set; }
 
     public int KeepAliveInterval { get; set; }
 
