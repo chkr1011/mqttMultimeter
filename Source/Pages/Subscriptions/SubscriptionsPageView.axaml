@@ -58,9 +58,9 @@
                       Width="1" />
 
         <!-- The selected item. -->
-        <ContentPresenter Margin="10"
+        <subscriptions:SubscriptionItemView Margin="10"
                           Grid.Column="2"
-                          Content="{Binding ElementName=PART_Items, Path=SelectedItem}" />
+                          DataContext="{Binding ElementName=PART_Items, Path=SelectedItem}" />
     </Grid>
 
 </UserControl>

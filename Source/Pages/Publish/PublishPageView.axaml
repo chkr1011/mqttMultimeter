@@ -64,9 +64,9 @@
                           Width="1" />
 
             <!-- The selected item. -->
-            <ContentPresenter Margin="10"
+            <publish:PublishItemView Margin="10"
                               Grid.Column="2"
-                              Content="{Binding ElementName=PART_Items, Path=SelectedItem}" />
+                              DataContext="{Binding ElementName=PART_Items, Path=SelectedItem}" />
         </Grid>
 
     </controls:Overlay>

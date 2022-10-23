@@ -107,9 +107,9 @@
                                    Grid.Column="0"
                                    Grid.Row="0"
                                    Content="Quality of service (QoS) level" />
-                            <ContentPresenter Grid.Column="1"
+                            <controls:QualityOfServiceLevelSelectorView Grid.Column="1"
                                               Grid.Row="0"
-                                              Content="{Binding QualityOfServiceLevel}" />
+                                              DataContext="{Binding QualityOfServiceLevel}" />
                             <!-- Retain -->
                             <Label Classes="caption"
                                    Grid.Column="0"

@@ -215,8 +215,8 @@
 
             <Expander Header="User Properties"
                       Margin="0,10,0,0">
-                <ContentPresenter Margin="-6"
-                                  Content="{Binding SessionOptions.UserProperties}" />
+                <controls:UserPropertiesView Margin="-6"
+                                  DataContext="{Binding SessionOptions.UserProperties}" />
             </Expander>
         </StackPanel>
     </ScrollViewer>

@@ -67,7 +67,7 @@
                        Grid.Column="0"
                        Grid.Row="0"
                        Content="Quality of Service level (QoS)" />
-                <ContentPresenter Content="{Binding QualityOfServiceLevel}"
+                <controls:QualityOfServiceLevelSelectorView DataContext="{Binding QualityOfServiceLevel}"
                                   Grid.Column="1"
                                   Grid.Row="0" />
 
@@ -91,18 +91,18 @@
                 <Label Grid.Row="3"
                        Grid.Column="0"
                        Classes="caption">Retain handling</Label>
-                <ContentPresenter Grid.Row="3"
+                <controls:RetainHandlingSelectorView Grid.Row="3"
                                   Grid.Column="1"
-                                  Content="{Binding RetainHandling}" />
+                                  DataContext="{Binding RetainHandling}" />
 
                 <!-- User properties -->
                 <Label Grid.Row="4"
                        Grid.Column="0"
                        Classes="caption">User Properties</Label>
-                <ContentPresenter Grid.Row="5"
+                <controls:UserPropertiesView Grid.Row="5"
                                   Grid.Column="0"
                                   Grid.ColumnSpan="2"
-                                  Content="{Binding UserProperties}" />
+                                  DataContext="{Binding UserProperties}" />
             </Grid>
         </Grid>
 
@@ -146,7 +146,7 @@
                 </TabItem>
                 <!-- The user properties -->
                 <TabItem Header="User properties">
-                    <ContentPresenter Content="{Binding Response.UserProperties}" />
+                    <controls:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
                 </TabItem>
             </TabControl>
         </controls:GroupBox>
