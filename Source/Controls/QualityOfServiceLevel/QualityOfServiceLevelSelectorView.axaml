@@ -9,23 +9,17 @@
              d:DataContext="{d:DesignInstance controls:QualityOfServiceLevelSelectorViewModel}"
              x:Class="MQTTnetApp.Controls.QualityOfServiceLevelSelectorView">
     <StackPanel Orientation="Horizontal">
-        <StackPanel.Styles>
-            <Style Selector="RadioButton">
-                <Setter Property="Margin"
-                        Value="0,0,10,0" />
-            </Style>
-        </StackPanel.Styles>
+        <CheckBox Content="At most once - 0"
+                  Classes="radio-button"
+                  IsChecked="{Binding Path=IsLevel0, Mode=TwoWay}" />
 
-        <RadioButton GroupName="QoS"
-                     Content="At most once (0)"
-                     IsChecked="{Binding Path=IsLevel0, Mode=TwoWay}" />
+        <CheckBox Margin="10,0"
+                  Content="At lease once - 1"
+                  Classes="radio-button"
+                  IsChecked="{Binding Path=IsLevel1, Mode=TwoWay}" />
 
-        <RadioButton GroupName="QoS"
-                     Content="At lease once (1)"
-                     IsChecked="{Binding Path=IsLevel1, Mode=TwoWay}" />
-
-        <RadioButton GroupName="QoS"
-                     Content="Exactly once (2)"
-                     IsChecked="{Binding Path=IsLevel2, Mode=TwoWay}" />
+        <CheckBox Content="Exactly once - 2"
+                  Classes="radio-button"
+                  IsChecked="{Binding Path=IsLevel2, Mode=TwoWay}" />
     </StackPanel>
 </UserControl>

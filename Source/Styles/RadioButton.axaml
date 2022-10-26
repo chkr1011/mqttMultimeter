@@ -5,21 +5,10 @@
             <!-- Add Controls for Previewer Here -->
         </Border>
     </Design.PreviewWith>
-
-    <Style Selector="CheckBox">
-        <Setter Property="MinHeight"
-                Value="26" />
-    </Style>
-
+    
     <Style Selector="RadioButton">
         <Setter Property="MinHeight"
                 Value="26" />
-    </Style>
-
-    <!-- This is a fake radio button because the radio button from avalonia has binding bugs! -->
-    <Style Selector="CheckBox.radio-button">
-        <Setter Property="CornerRadius"
-                Value="50" />
     </Style>
     
 </Styles>

@@ -71,16 +71,14 @@
                                     Classes="value"
                                     Grid.Column="1"
                                     Orientation="Horizontal">
-                            <StackPanel.Styles>
-                                <Style Selector="RadioButton">
-                                    <Setter Property="Margin"
-                                            Value="0,0,10,0" />
-                                </Style>
-                            </StackPanel.Styles>
-                            <RadioButton Content="Unspecified"
-                                         IsChecked="{Binding PayloadFormatIndicator.IsUnspecified}" />
-                            <RadioButton Content="Character data"
-                                         IsChecked="{Binding PayloadFormatIndicator.IsCharacterData}" />
+
+                            <CheckBox Classes="radio-button"
+                                      Content="Unspecified"
+                                      IsChecked="{Binding PayloadFormatIndicator.IsUnspecified}" />
+                            <CheckBox Classes="radio-button"
+                                      Margin="10,0,0,0"
+                                      Content="Character data"
+                                      IsChecked="{Binding PayloadFormatIndicator.IsCharacterData}" />
                         </StackPanel>
 
                         <!-- The payload -->
@@ -108,8 +106,8 @@
                                    Grid.Row="0"
                                    Content="Quality of service (QoS) level" />
                             <controls:QualityOfServiceLevelSelectorView Grid.Column="1"
-                                              Grid.Row="0"
-                                              DataContext="{Binding QualityOfServiceLevel}" />
+                                                                        Grid.Row="0"
+                                                                        DataContext="{Binding QualityOfServiceLevel}" />
                             <!-- Retain -->
                             <Label Classes="caption"
                                    Grid.Column="0"

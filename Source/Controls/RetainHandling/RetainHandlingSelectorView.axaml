@@ -9,23 +9,17 @@
              d:DataContext="{d:DesignInstance controls:RetainHandlingSelectorViewModel}"
              x:Class="MQTTnetApp.Controls.RetainHandlingSelectorView">
     <StackPanel Orientation="Horizontal">
-        <StackPanel.Styles>
-            <Style Selector="RadioButton">
-                <Setter Property="Margin"
-                        Value="0,0,10,0" />
-            </Style>
-        </StackPanel.Styles>
+        <CheckBox IsChecked="{Binding IsSendAtSubscribe, Mode=TwoWay}"
+                  Classes="radio-button"
+                  Content="Send at subscribe (0)" />
 
-        <RadioButton IsChecked="{Binding IsSendAtSubscribe, Mode=TwoWay}"
-                     GroupName="RetainHandling"
-                     Content="Send at subscribe (0)" />
+        <CheckBox Margin="10,0"
+                  IsChecked="{Binding IsSendAtSubscribeIfNewSubscriptionOnly, Mode=TwoWay}"
+                  Classes="radio-button"
+                  Content="Send at subscribe if new subscription only (1)" />
 
-        <RadioButton IsChecked="{Binding IsSendAtSubscribeIfNewSubscriptionOnly, Mode=TwoWay}"
-                     GroupName="RetainHandling"
-                     Content="Send at subscribe if new subscription only (1)" />
-
-        <RadioButton GroupName="RetainHandling"
-                     IsChecked="{Binding IsDoNotSendOnSubscribe, Mode=TwoWay}"
-                     Content="Do not send on subscribe (2)" />
+        <CheckBox Classes="radio-button"
+                  IsChecked="{Binding IsDoNotSendOnSubscribe, Mode=TwoWay}"
+                  Content="Do not send on subscribe (2)" />
     </StackPanel>
 </UserControl>
