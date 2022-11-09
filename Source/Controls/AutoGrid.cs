@@ -24,7 +24,7 @@ public sealed class AutoGrid : Grid
         element.SetValue(IsNextRowProperty, value);
     }
 
-    protected override void ChildrenChanged(object sender, NotifyCollectionChangedEventArgs e)
+    protected override void ChildrenChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         base.ChildrenChanged(sender, e);
 

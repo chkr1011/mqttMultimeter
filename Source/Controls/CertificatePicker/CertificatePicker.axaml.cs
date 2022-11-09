@@ -39,9 +39,8 @@ public sealed class CertificatePicker : TemplatedControl
         _pickButton = (Button)this.GetTemplateChild("PART_PickButton");
         _pickButton.Click += OnPickButtonClicked;
     }
-
-
-    protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
+    
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
 

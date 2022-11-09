@@ -8,47 +8,47 @@
         <Setter Property="HorizontalContentAlignment"
                 Value="Stretch" />
         <Setter Property="Padding"
-                Value="10,0,0,0" />
+                Value="5" />
     </Style>
 
-    <Style Selector="Expander /template/ ToggleButton#ExpanderHeader">
-        <Setter Property="HorizontalContentAlignment"
-                Value="Left" />
-        <Setter Property="Template">
-            <ControlTemplate>
-                <Border x:Name="ToggleButtonBackground">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <ContentPresenter x:Name="PART_ContentPresenter"
-                                          Margin="{TemplateBinding Padding}"
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalContentAlignment="Center"
-                                          Background="Transparent"
-                                          BorderBrush="Transparent"
-                                          BorderThickness="0"
-                                          Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          TextBlock.Foreground="{DynamicResource ExpanderForeground}" />
-                        <Border x:Name="ExpandCollapseChevronBorder"
-                                Grid.Column="1"
-                                Width="32"
-                                Height="32"
-                                Margin="0"
-                                RenderTransformOrigin="50%,50%">
-                            <Path x:Name="ExpandCollapseChevron"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  RenderTransformOrigin="50%,50%"
-                                  Stretch="None"
-                                  Stroke="{DynamicResource ExpanderChevronForeground}"
-                                  StrokeThickness="1" />
-                            <Border.RenderTransform>
-                                <RotateTransform />
-                            </Border.RenderTransform>
-                        </Border>
-                    </Grid>
-                </Border>
-            </ControlTemplate>
-        </Setter>
-    </Style>
+    <!-- <Style Selector="Expander /template/ ToggleButton#ExpanderHeader"> -->
+    <!--     <Setter Property="HorizontalContentAlignment" -->
+    <!--             Value="Left" /> -->
+    <!--     <Setter Property="Template"> -->
+    <!--         <ControlTemplate> -->
+    <!--             <Border x:Name="ToggleButtonBackground"> -->
+    <!--                 <Grid ColumnDefinitions="*,Auto"> -->
+    <!--                     <ContentPresenter x:Name="PART_ContentPresenter" -->
+    <!--                                       Margin="{TemplateBinding Padding}" -->
+    <!--                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" -->
+    <!--                                       VerticalContentAlignment="Center" -->
+    <!--                                       Background="Transparent" -->
+    <!--                                       BorderBrush="Transparent" -->
+    <!--                                       BorderThickness="0" -->
+    <!--                                       Content="{TemplateBinding Content}" -->
+    <!--                                       ContentTemplate="{TemplateBinding ContentTemplate}" -->
+    <!--                                       TextBlock.Foreground="{DynamicResource ExpanderForeground}" /> -->
+    <!--                     <Border x:Name="ExpandCollapseChevronBorder" -->
+    <!--                             Grid.Column="1" -->
+    <!--                             Width="32" -->
+    <!--                             Height="32" -->
+    <!--                             Margin="0" -->
+    <!--                             RenderTransformOrigin="50%,50%"> -->
+    <!--                         <Path x:Name="ExpandCollapseChevron" -->
+    <!--                               HorizontalAlignment="Center" -->
+    <!--                               VerticalAlignment="Center" -->
+    <!--                               RenderTransformOrigin="50%,50%" -->
+    <!--                               Stretch="None" -->
+    <!--                               Stroke="{DynamicResource ExpanderChevronForeground}" -->
+    <!--                               StrokeThickness="1" /> -->
+    <!--                         <Border.RenderTransform> -->
+    <!--                             <RotateTransform /> -->
+    <!--                         </Border.RenderTransform> -->
+    <!--                     </Border> -->
+    <!--                 </Grid> -->
+    <!--             </Border> -->
+    <!--         </ControlTemplate> -->
+    <!--     </Setter> -->
+    <!-- </Style> -->
 
 </Styles>

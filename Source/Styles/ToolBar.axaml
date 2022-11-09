@@ -102,6 +102,7 @@
     <Style Selector="Separator.tool_bar_separator">
         <Setter Property="Width"
                 Value="1" />
+        <Setter Property="Height" Value="NaN" />
         <Setter Property="Margin"
                 Value="2,6" />
         <Setter Property="Background"

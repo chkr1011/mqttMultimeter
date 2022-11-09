@@ -21,6 +21,12 @@ public sealed class MainView : UserControl
     void OnActivatePageRequested(object? sender, EventArgs e)
     {
         var sidebar = this.FindControl<TabControl>("Sidebar");
+
+        if (sidebar == null)
+        {
+            return;
+        }
+        
         foreach (TabItem tabItem in sidebar.Items)
         {
             if (ReferenceEquals(sender, tabItem.Content))

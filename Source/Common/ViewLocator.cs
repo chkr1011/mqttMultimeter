@@ -10,8 +10,13 @@ sealed class ViewLocator : IDataTemplate
 {
     readonly Dictionary<string, Type> _viewTypeCache = new();
 
-    public IControl Build(object viewModel)
+    public IControl Build(object? viewModel)
     {
+        if (viewModel == null)
+        {
+            return new TextBlock();
+        }
+        
         var viewModelTypeName = viewModel.GetType().FullName!;
 
         if (!_viewTypeCache.TryGetValue(viewModelTypeName, out var viewType))
@@ -44,7 +49,7 @@ sealed class ViewLocator : IDataTemplate
         };
     }
 
-    public bool Match(object data)
+    public bool Match(object? data)
     {
         return data is BaseViewModel;
     }
