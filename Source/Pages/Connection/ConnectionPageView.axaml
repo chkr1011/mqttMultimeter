@@ -28,12 +28,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- The list of publish items. -->
-            <Grid Background="#262626">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
+            <Grid Background="#262626" RowDefinitions="Auto,*">
                 <StackPanel Orientation="Horizontal"
                             Grid.Row="0"
                             Classes="tool_bar"
