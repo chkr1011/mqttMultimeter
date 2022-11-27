@@ -8,32 +8,47 @@
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerTreeNodeViewModel}"
              x:Class="MQTTnetApp.Pages.TopicExplorer.TopicExplorerTreeNodeView">
-    <StackPanel Orientation="Horizontal">
 
-        <!-- The topic name -->
+    <StackPanel Orientation="Vertical" Margin="0,3">
+
         <StackPanel Orientation="Horizontal">
-            <TextBlock Classes="code_text"
-                       Text="{Binding Name}" />
 
-            <TextBlock Text="="
+            <!-- The topic name -->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Classes="code_text"
+                           Text="{Binding Name}" />
+
+                <TextBlock Text="="
+                           FontStyle="Italic"
+                           IsVisible="{Binding Item.HasPayload, FallbackValue=False}"
+                           Margin="10,0" />
+            </StackPanel>
+
+            <!-- The latest payload -->
+            <TextBlock Classes="code_text"
+                       TextTrimming="CharacterEllipsis"
+                       TextWrapping="NoWrap"
                        FontStyle="Italic"
-                       IsVisible="{Binding Item.HasPayload, FallbackValue=False}"
-                       Margin="10,0" />
+                       Text="{Binding Item.CurrentPayload, FallbackValue=''}" />
         </StackPanel>
 
-        <!-- The latest payload -->
-        <TextBlock Classes="code_text"
-                   TextTrimming="CharacterEllipsis"
-                   FontStyle="Italic"
-                   Text="{Binding Item.CurrentPayload, FallbackValue=''}" />
-
         <!-- The statistics -->
-        <TextBlock Classes="code_text"
-                   TextTrimming="CharacterEllipsis"
-                   FontStyle="Italic"
-                   Margin="10,0,0,0"
-                   IsVisible="{Binding !Item.Messages.IsEmpty, FallbackValue=False}"
-                   Text="{Binding Path=Item.Messages.Count, StringFormat={}({0} messages), FallbackValue=0}" />
+        <StackPanel TextBlock.Foreground="Gray" Orientation="Horizontal" Margin="0,3" IsVisible="{Binding !Item.Messages.IsEmpty, FallbackValue=False}">
+            <TextBlock Classes="code_text"
+                       FontSize="10"
+                       TextTrimming="CharacterEllipsis"
+                       Text="{Binding Path=Item.Messages.Count, StringFormat={}{0} messages, FallbackValue=0}" />
+            <TextBlock Text="," Margin="0,0,10,0" />
+            <TextBlock Classes="code_text"
+                       FontSize="10"
+                       TextTrimming="CharacterEllipsis"
+                       Text="{Binding Path=Item.CurrentPayloadLength, StringFormat={}{0} bytes (latest message), FallbackValue=0}" />
+            <TextBlock Text="," Margin="0,0,10,0" />
+            <TextBlock Classes="code_text"
+                       FontSize="10"
+                       TextTrimming="CharacterEllipsis"
+                       Text="{Binding Path=Item.TotalPayloadLength, StringFormat={}{0} bytes (all message), FallbackValue=0}" />
+        </StackPanel>
 
     </StackPanel>
 </UserControl>

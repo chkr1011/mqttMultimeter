@@ -20,12 +20,7 @@
     <controls:Overlay IsOverlayVisible="{Binding Path=OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
                       OverlayContent="{Binding OverlayContent}">
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="1" />
-                <ColumnDefinition Width="3*" />
-            </Grid.ColumnDefinitions>
+        <Grid ColumnDefinitions="*,Auto,3*">
 
             <!-- The list of publish items. -->
             <Grid Background="#262626" RowDefinitions="Auto,*">
@@ -56,7 +51,7 @@
 
             <!-- The splitter -->
             <GridSplitter Grid.Column="1"
-                          Width="1" />
+                          Width="2" />
 
             <!-- The selected item. -->
             <ContentPresenter Margin="10"

@@ -16,6 +16,7 @@ public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
 
         Timestamp = timestamp;
         Payload = payload ?? throw new ArgumentNullException(nameof(payload));
+        PayloadLength = applicationMessage.Payload?.Length ?? 0;
         Retain = applicationMessage.Retain;
 
         Delay = delay;
@@ -27,8 +28,10 @@ public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
     public InflightPageItemViewModel InflightItem { get; init; }
 
     public string Payload { get; init; }
+    
+    public int PayloadLength { get; }
 
-    public bool Retain { get; init; }
+    public bool Retain { get; }
 
     public DateTime Timestamp { get; init; }
 }

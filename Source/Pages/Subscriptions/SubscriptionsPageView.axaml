@@ -15,19 +15,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="1" />
-            <ColumnDefinition Width="3*" />
-        </Grid.ColumnDefinitions>
+    <Grid ColumnDefinitions="*,Auto,3*">
 
         <!-- The list of subscription items. -->
-        <Grid Background="#262626">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Grid Background="#262626"
+              RowDefinitions="Auto,*">
 
             <StackPanel Orientation="Horizontal"
                         Grid.Row="0"
@@ -55,7 +47,7 @@
 
         <!-- The splitter -->
         <GridSplitter Grid.Column="1"
-                      Width="1" />
+                      Width="2" />
 
         <!-- The selected item. -->
         <subscriptions:SubscriptionItemView Margin="10"

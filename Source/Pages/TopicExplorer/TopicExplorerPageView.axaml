@@ -14,20 +14,12 @@
     <controls:Overlay IsOverlayVisible="{Binding Path=OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
                       OverlayContent="{Binding OverlayContent}">
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="1" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <Grid ColumnDefinitions="*,Auto,*">
 
             <!-- The tree of topics. -->
             <Grid Grid.Column="0"
-                  Background="#262626">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+                  Background="#262626"
+                  RowDefinitions="Auto,*">
 
                 <!-- Tool Bar -->
                 <StackPanel Classes="tool_bar"
@@ -124,7 +116,7 @@
 
             <!-- The splitter -->
             <GridSplitter Grid.Column="1"
-                          Width="1" />
+                          Width="2" />
 
             <Grid Grid.Column="2">
 

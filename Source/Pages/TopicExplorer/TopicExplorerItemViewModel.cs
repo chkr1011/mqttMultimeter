@@ -14,7 +14,9 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
     readonly TopicExplorerPageViewModel _ownerPage;
 
     string? _currentPayload;
+    int _currentPayloadLength;
     TopicExplorerItemMessageViewModel? _selectedMessage;
+    int _totalPayloadLength;
     bool _trackLatestMessage;
 
     public TopicExplorerItemViewModel(TopicExplorerPageViewModel ownerPage)
@@ -34,6 +36,12 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
         }
     }
 
+    public int CurrentPayloadLength
+    {
+        get => _currentPayloadLength;
+        private set => this.RaiseAndSetIfChanged(ref _currentPayloadLength, value);
+    }
+
     public bool HasPayload => CurrentPayload != null;
 
     public CollectionViewModel<TopicExplorerItemMessageViewModel> Messages { get; } = new();
@@ -42,6 +50,12 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
     {
         get => _selectedMessage;
         set => this.RaiseAndSetIfChanged(ref _selectedMessage, value);
+    }
+
+    public int TotalPayloadLength
+    {
+        get => _totalPayloadLength;
+        private set => this.RaiseAndSetIfChanged(ref _totalPayloadLength, value);
     }
 
     public bool TrackLatestMessage
@@ -73,6 +87,8 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
             // Ignore error.
             payload = string.Empty;
         }
+
+        TotalPayloadLength += message.Payload?.Length ?? 0;
 
         var timestamp = DateTime.Now;
         var duration = TimeSpan.Zero;
@@ -106,5 +122,6 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
     void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         CurrentPayload = Messages.LastOrDefault()?.Payload ?? string.Empty;
+        CurrentPayloadLength = Messages.LastOrDefault()?.PayloadLength ?? 0;
     }
 }
