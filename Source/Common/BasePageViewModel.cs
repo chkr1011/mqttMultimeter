@@ -1,7 +1,7 @@
 ﻿using System;
 using ReactiveUI;
 
-namespace MQTTnetApp.Common;
+namespace mqttMultimeter.Common;
 
 public abstract class BasePageViewModel : BaseViewModel
 {

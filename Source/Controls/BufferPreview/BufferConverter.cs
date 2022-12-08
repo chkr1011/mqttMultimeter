@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public sealed class BufferConverter
 {

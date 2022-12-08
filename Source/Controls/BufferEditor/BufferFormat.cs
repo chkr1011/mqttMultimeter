@@ -1,4 +1,4 @@
-﻿namespace MQTTnetApp.Controls;
+﻿namespace mqttMultimeter.Controls;
 
 public enum BufferFormat
 {

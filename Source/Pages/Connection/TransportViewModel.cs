@@ -1,6 +1,6 @@
-﻿using MQTTnetApp.Common;
+﻿using mqttMultimeter.Common;
 
-namespace MQTTnetApp.Pages.Connection;
+namespace mqttMultimeter.Pages.Connection;
 
 public sealed class TransportViewModel : EnumViewModel<Transport>
 {

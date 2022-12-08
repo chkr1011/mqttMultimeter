@@ -2,7 +2,7 @@
 using System.Globalization;
 using Avalonia.Data.Converters;
 
-namespace MQTTnetApp.Converters;
+namespace mqttMultimeter.Converters;
 
 public sealed class TimeSpanToLongStringConverter : IValueConverter
 {

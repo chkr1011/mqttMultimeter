@@ -1,11 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Authentication;
+using mqttMultimeter.Common;
 using MQTTnet.Formatter;
-using MQTTnetApp.Common;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Connection;
+namespace mqttMultimeter.Pages.Connection;
 
 public sealed class ServerOptionsViewModel : BaseViewModel
 {
@@ -39,8 +39,10 @@ public sealed class ServerOptionsViewModel : BaseViewModel
         _selectedTransport = Transports.First();
 
         TlsVersions.Add(new EnumViewModel<SslProtocols>("no TLS", SslProtocols.None));
+#pragma warning disable SYSLIB0039
         TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.0", SslProtocols.Tls));
         TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.1", SslProtocols.Tls11));
+#pragma warning restore SYSLIB0039
         TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.2", SslProtocols.Tls12));
         TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.3", SslProtocols.Tls13));
         _selectedTlsVersion = TlsVersions.First();

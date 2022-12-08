@@ -2,12 +2,12 @@
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using mqttMultimeter.Common;
+using mqttMultimeter.Pages.Inflight;
 using MQTTnet;
-using MQTTnetApp.Common;
-using MQTTnetApp.Pages.Inflight;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.TopicExplorer;
+namespace mqttMultimeter.Pages.TopicExplorer;
 
 public sealed class TopicExplorerItemViewModel : BaseViewModel
 {

@@ -1,8 +1,8 @@
 using System;
+using mqttMultimeter.Common;
 using MQTTnet.Protocol;
-using MQTTnetApp.Common;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public sealed class RetainHandlingSelectorViewModel : BaseSingleSelectionViewModel
 {

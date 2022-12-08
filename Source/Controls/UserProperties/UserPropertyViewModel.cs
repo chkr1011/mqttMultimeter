@@ -1,7 +1,7 @@
 ﻿using System;
 using ReactiveUI;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public sealed class UserPropertyViewModel : ReactiveObject
 {

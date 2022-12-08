@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MQTTnetApp.Pages.Connection.State;
+namespace mqttMultimeter.Pages.Connection.State;
 
 public static class ConnectionPageStateFactory
 {

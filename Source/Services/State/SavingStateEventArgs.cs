@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MQTTnetApp.Services.State;
+namespace mqttMultimeter.Services.State;
 
 public sealed class SavingStateEventArgs : EventArgs
 {

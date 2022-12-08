@@ -2,13 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:inflight="clr-namespace:MQTTnetApp.Pages.Inflight"
-             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
+             xmlns:inflight="clr-namespace:mqttMultimeter.Pages.Inflight"
+             xmlns:controls="clr-namespace:mqttMultimeter.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance inflight:InflightPageViewModel}"
              d:DesignHeight="450"
-             x:Class="MQTTnetApp.Pages.Inflight.InflightPageView">
+             x:Class="mqttMultimeter.Pages.Inflight.InflightPageView">
 
     <controls:Overlay IsOverlayVisible="{Binding Path=OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
                       OverlayContent="{Binding OverlayContent}">

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace MQTTnetApp.Services.Updates.Model;
+namespace mqttMultimeter.Services.Updates.Model;
 
 public sealed class Release
 {

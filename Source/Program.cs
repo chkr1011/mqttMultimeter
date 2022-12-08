@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Avalonia;
 using Avalonia.ReactiveUI;
 
-namespace MQTTnetApp;
+namespace mqttMultimeter;
 
 static class Program
 {

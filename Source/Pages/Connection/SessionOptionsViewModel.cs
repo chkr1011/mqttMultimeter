@@ -1,9 +1,9 @@
 ﻿using System;
-using MQTTnetApp.Common;
-using MQTTnetApp.Controls;
+using mqttMultimeter.Common;
+using mqttMultimeter.Controls;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Connection;
+namespace mqttMultimeter.Pages.Connection;
 
 public sealed class SessionOptionsViewModel : BaseViewModel
 {
@@ -23,7 +23,7 @@ public sealed class SessionOptionsViewModel : BaseViewModel
 
     public SessionOptionsViewModel()
     {
-        ClientId = "MQTTnetApp-" + Guid.NewGuid();
+        ClientId = "mqttMultimeter-" + Guid.NewGuid();
     }
 
     public string AuthenticationData

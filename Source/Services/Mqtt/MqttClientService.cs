@@ -6,17 +6,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
+using mqttMultimeter.Controls;
+using mqttMultimeter.Pages.Connection;
+using mqttMultimeter.Pages.Publish;
+using mqttMultimeter.Pages.Subscriptions;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Diagnostics;
 using MQTTnet.Exceptions;
 using MQTTnet.Internal;
-using MQTTnetApp.Controls;
-using MQTTnetApp.Pages.Connection;
-using MQTTnetApp.Pages.Publish;
-using MQTTnetApp.Pages.Subscriptions;
 
-namespace MQTTnetApp.Services.Mqtt;
+namespace mqttMultimeter.Services.Mqtt;
 
 public sealed class MqttClientService
 {

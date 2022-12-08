@@ -1,7 +1,7 @@
 ﻿using System.Security.Authentication;
 using MQTTnet.Formatter;
 
-namespace MQTTnetApp.Pages.Connection.State;
+namespace mqttMultimeter.Pages.Connection.State;
 
 public sealed class ConnectionState
 {

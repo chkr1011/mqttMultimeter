@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using mqttMultimeter.Controls;
 using MQTTnet;
 using MQTTnet.Protocol;
-using MQTTnetApp.Controls;
 
-namespace MQTTnetApp.Pages.Inflight;
+namespace mqttMultimeter.Pages.Inflight;
 
 public sealed class InflightPageItemViewModel
 {

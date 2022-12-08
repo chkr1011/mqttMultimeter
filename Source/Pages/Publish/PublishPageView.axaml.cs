@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnetApp.Pages.Publish;
+namespace mqttMultimeter.Pages.Publish;
 
 public sealed class PublishPageView : UserControl
 {

@@ -2,14 +2,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:inflight="clr-namespace:MQTTnetApp.Pages.Inflight"
-             xmlns:topicExplorer="clr-namespace:MQTTnetApp.Pages.TopicExplorer"
-             xmlns:converters="clr-namespace:MQTTnetApp.Converters"
+             xmlns:topicExplorer="clr-namespace:mqttMultimeter.Pages.TopicExplorer"
+             xmlns:converters="clr-namespace:mqttMultimeter.Converters"
+             xmlns:inflight="clr-namespace:mqttMultimeter.Pages.Inflight"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemViewModel}"
              d:DesignHeight="450"
-             x:Class="MQTTnetApp.Pages.TopicExplorer.TopicExplorerItemView">
+             x:Class="mqttMultimeter.Pages.TopicExplorer.TopicExplorerItemView">
     <Grid RowDefinitions="Auto,*,1,3*">
 
         <!-- ToolBar -->

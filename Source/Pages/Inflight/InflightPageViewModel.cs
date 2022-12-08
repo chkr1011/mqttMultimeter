@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using DynamicData;
+using mqttMultimeter.Common;
+using mqttMultimeter.Controls;
+using mqttMultimeter.Main;
+using mqttMultimeter.Pages.Inflight.Export;
+using mqttMultimeter.Services.Mqtt;
 using MQTTnet;
 using MQTTnet.Client;
-using MQTTnetApp.Common;
-using MQTTnetApp.Controls;
-using MQTTnetApp.Main;
-using MQTTnetApp.Pages.Inflight.Export;
-using MQTTnetApp.Services.Mqtt;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Inflight;
+namespace mqttMultimeter.Pages.Inflight;
 
 public sealed class InflightPageViewModel : BasePageViewModel
 {

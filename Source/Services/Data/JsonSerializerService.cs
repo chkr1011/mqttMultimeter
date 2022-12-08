@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace MQTTnetApp.Services.Data;
+namespace mqttMultimeter.Services.Data;
 
 public sealed class JsonSerializerService
 {

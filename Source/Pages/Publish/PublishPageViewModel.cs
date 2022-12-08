@@ -2,13 +2,13 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MQTTnetApp.Common;
-using MQTTnetApp.Pages.Inflight;
-using MQTTnetApp.Pages.Publish.State;
-using MQTTnetApp.Services.Mqtt;
-using MQTTnetApp.Services.State;
+using mqttMultimeter.Common;
+using mqttMultimeter.Pages.Inflight;
+using mqttMultimeter.Pages.Publish.State;
+using mqttMultimeter.Services.Mqtt;
+using mqttMultimeter.Services.State;
 
-namespace MQTTnetApp.Pages.Publish;
+namespace mqttMultimeter.Pages.Publish;
 
 public sealed class PublishPageViewModel : BasePageViewModel
 {

@@ -4,11 +4,11 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using mqttMultimeter.Pages.Inflight.Export.Model;
 using MQTTnet;
-using MQTTnetApp.Pages.Inflight.Export.Model;
 using Newtonsoft.Json;
 
-namespace MQTTnetApp.Pages.Inflight.Export;
+namespace mqttMultimeter.Pages.Inflight.Export;
 
 public sealed class InflightPageItemExportService
 {
