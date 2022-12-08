@@ -12,7 +12,8 @@ env:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    # windows-latest is required due to some resource stuff.
+    runs-on: windows-latest
 
     steps:
       - name: Setup .NET SDK
@@ -34,13 +35,13 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source/bin/Release/win-x86/publish/
-          dest: mqttMultimeter-windows-X86.zip
+          dest: mqttMultimeter-windows-x86.zip
 
       - name: Collect win-x86 artifacts
         uses: actions/upload-artifact@v2
         with:
           name: mqttMultimeter-windows-x86
-          path: ${{ github.workspace }}/mqttMultimeter-windows-X86.zip
+          path: ${{ github.workspace }}/mqttMultimeter-windows-x86.zip
 
       - name: Build win-x64
         run: dotnet publish Source/mqttMultimeter.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
@@ -178,7 +179,7 @@ jobs:
           tag_name: v${{ env.VERSION }}
           generate_release_notes: true
           files: |
-            ${{ github.workspace }}/mqttMultimeter-windows-X86.zip
+            ${{ github.workspace }}/mqttMultimeter-windows-x86.zip
             ${{ github.workspace }}/mqttMultimeter-windows-x64.zip
             ${{ github.workspace }}/mqttMultimeter-windows-arm.zip
             ${{ github.workspace }}/mqttMultimeter-windows-arm64.zip
