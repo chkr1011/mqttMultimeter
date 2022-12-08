@@ -14,7 +14,7 @@
     <controls:Overlay IsOverlayVisible="{Binding Path=OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
                       OverlayContent="{Binding OverlayContent}">
 
-        <Grid ColumnDefinitions="*,Auto,*">
+        <Grid ColumnDefinitions="3*,Auto,2*">
 
             <!-- The tree of topics. -->
             <Grid Grid.Column="0"
@@ -65,6 +65,8 @@
 
                 <TreeView Background="Transparent"
                           Grid.Row="1"
+                          AutoScrollToSelectedItem="False"
+                          SelectionMode="Single"
                           x:Name="PART_Items"
                           SelectedItem="{Binding SelectedNode, Mode=TwoWay}"
                           Items="{Binding Nodes}"

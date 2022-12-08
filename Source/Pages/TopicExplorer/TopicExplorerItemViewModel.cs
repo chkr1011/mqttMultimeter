@@ -15,6 +15,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
 
     string? _currentPayload;
     int _currentPayloadLength;
+    DateTime? _lastUpdateTimestamp;
     TopicExplorerItemMessageViewModel? _selectedMessage;
     int _totalPayloadLength;
     bool _trackLatestMessage;
@@ -43,6 +44,12 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
     }
 
     public bool HasPayload => CurrentPayload != null;
+
+    public DateTime? LastUpdateTimestamp
+    {
+        get => _lastUpdateTimestamp;
+        private set => this.RaiseAndSetIfChanged(ref _lastUpdateTimestamp, value);
+    }
 
     public CollectionViewModel<TopicExplorerItemMessageViewModel> Messages { get; } = new();
 
@@ -88,9 +95,11 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
             payload = string.Empty;
         }
 
-        TotalPayloadLength += message.Payload?.Length ?? 0;
-
         var timestamp = DateTime.Now;
+
+        TotalPayloadLength += message.Payload?.Length ?? 0;
+        LastUpdateTimestamp = timestamp;
+
         var duration = TimeSpan.Zero;
         var lastMessage = Messages.LastOrDefault();
         if (lastMessage != null)

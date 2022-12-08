@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using MQTTnetApp.Common;
 using MQTTnetApp.Pages.Inflight;
@@ -68,7 +69,7 @@ public sealed class PublishPageViewModel : BasePageViewModel
             Name = $"Repeat '{inflightPageItem.Topic}'",
             ContentType = inflightPageItem.ContentType,
             Topic = inflightPageItem.Topic,
-            Payload = inflightPageItem.PayloadPreview
+            Payload = Encoding.UTF8.GetString(inflightPageItem.Payload)
         };
 
         Items.Collection.Add(publishItem);

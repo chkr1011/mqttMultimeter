@@ -36,9 +36,7 @@ public sealed class InflightPageItemViewModel
     public byte[] Payload => Message.Payload ?? Array.Empty<byte>();
 
     public MqttPayloadFormatIndicator PayloadFormatIndicator => Message.PayloadFormatIndicator;
-
-    public string PayloadPreview { get; set; } = string.Empty;
-
+    
     public MqttQualityOfServiceLevel QualityOfServiceLevel => Message.QualityOfServiceLevel;
 
     public string ResponseTopic => Message.ResponseTopic;

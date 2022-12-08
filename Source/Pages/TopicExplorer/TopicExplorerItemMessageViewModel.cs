@@ -28,7 +28,7 @@ public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
     public InflightPageItemViewModel InflightItem { get; init; }
 
     public string Payload { get; init; }
-    
+
     public int PayloadLength { get; }
 
     public bool Retain { get; }

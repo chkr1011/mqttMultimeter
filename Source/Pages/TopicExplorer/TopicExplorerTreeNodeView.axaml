@@ -9,46 +9,70 @@
              d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerTreeNodeViewModel}"
              x:Class="MQTTnetApp.Pages.TopicExplorer.TopicExplorerTreeNodeView">
 
-    <StackPanel Orientation="Vertical" Margin="0,3">
+    <Grid RowDefinitions="Auto,Auto"
+          ColumnDefinitions="Auto,Auto,Auto"
+          Margin="0,3">
 
-        <StackPanel Orientation="Horizontal">
+        <PathIcon Grid.Column="0"
+                  Grid.Row="0"
+                  Grid.RowSpan="2"
+                  Width="16"
+                  Height="16"
+                  IsVisible="{Binding !Item.HasPayload}"
+                  Data="{StaticResource folder_regular}" />
+        
+        <PathIcon Grid.Column="0"
+                  Grid.Row="0"
+                  Grid.RowSpan="2"
+                  Width="16"
+                  Height="16"
+                  IsVisible="{Binding Item.HasPayload, FallbackValue=False}"
+                  Data="{StaticResource attach_regular}" />
 
-            <!-- The topic name -->
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Classes="code_text"
-                           Text="{Binding Name}" />
+        <!-- The topic name -->
+        <StackPanel Grid.Column="1"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Margin="10,0,0,0"
+                    Orientation="Horizontal">
 
-                <TextBlock Text="="
-                           FontStyle="Italic"
-                           IsVisible="{Binding Item.HasPayload, FallbackValue=False}"
-                           Margin="10,0" />
-            </StackPanel>
-
-            <!-- The latest payload -->
             <TextBlock Classes="code_text"
-                       TextTrimming="CharacterEllipsis"
-                       TextWrapping="NoWrap"
-                       FontStyle="Italic"
-                       Text="{Binding Item.CurrentPayload, FallbackValue=''}" />
+                       Text="{Binding Name}" />
+
+            <TextBlock Text="="
+                       IsVisible="{Binding Item.HasPayload, FallbackValue=False}"
+                       Margin="10,0" />
         </StackPanel>
+
+        <!-- The latest payload -->
+        <TextBlock Grid.Column="2"
+                   Grid.Row="0"
+                   Classes="code_text"
+                   TextWrapping="NoWrap"
+                   Text="{Binding Item.CurrentPayload, FallbackValue=''}" />
 
         <!-- The statistics -->
-        <StackPanel TextBlock.Foreground="Gray" Orientation="Horizontal" Margin="0,3" IsVisible="{Binding !Item.Messages.IsEmpty, FallbackValue=False}">
-            <TextBlock Classes="code_text"
-                       FontSize="10"
-                       TextTrimming="CharacterEllipsis"
-                       Text="{Binding Path=Item.Messages.Count, StringFormat={}{0} messages, FallbackValue=0}" />
-            <TextBlock Text="," Margin="0,0,10,0" />
-            <TextBlock Classes="code_text"
-                       FontSize="10"
-                       TextTrimming="CharacterEllipsis"
-                       Text="{Binding Path=Item.CurrentPayloadLength, StringFormat={}{0} bytes (latest message), FallbackValue=0}" />
-            <TextBlock Text="," Margin="0,0,10,0" />
-            <TextBlock Classes="code_text"
-                       FontSize="10"
-                       TextTrimming="CharacterEllipsis"
-                       Text="{Binding Path=Item.TotalPayloadLength, StringFormat={}{0} bytes (all message), FallbackValue=0}" />
-        </StackPanel>
+        <StackPanel Grid.Column="2"
+                    Grid.Row="1"
+                    Orientation="Horizontal"
+                    Margin="0,3,0,0"
+                    IsVisible="{Binding !Item.Messages.IsEmpty, FallbackValue=False}">
 
-    </StackPanel>
+            <TextBlock Classes="code_text">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Messages: {0} | Last received: {1:O} | Last bytes: {2} | Total bytes: {3}">
+                        <Binding Path="Item.Messages.Count"
+                                 FallbackValue="0" />
+                        <Binding Path="Item.LastUpdateTimestamp"
+                                 FallbackValue='' />
+                        <Binding Path="Item.CurrentPayloadLength"
+                                 FallbackValue="0" />
+                        <Binding Path="Item.TotalPayloadLength"
+                                 FallbackValue="0" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+
+        </StackPanel>
+    </Grid>
 </UserControl>
