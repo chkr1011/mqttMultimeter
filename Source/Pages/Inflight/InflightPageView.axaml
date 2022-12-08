@@ -128,7 +128,7 @@
                 </DataGrid>
 
                 <!-- The splitter -->
-                <GridSplitter Grid.Column="1" />
+                <GridSplitter Grid.Column="1" Width="2" />
 
                 <!-- The details of the selected item -->
                 <Grid Grid.Column="2"

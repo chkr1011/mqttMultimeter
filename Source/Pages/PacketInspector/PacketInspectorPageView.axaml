@@ -109,7 +109,7 @@
             </DataGrid>
 
             <!-- The splitter -->
-            <GridSplitter Grid.Column="1" />
+            <GridSplitter Grid.Column="1" Width="2" />
 
             <!-- The details of the selected packet -->
             <Grid Grid.Column="2"
