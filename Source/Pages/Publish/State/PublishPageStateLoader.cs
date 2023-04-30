@@ -1,6 +1,6 @@
 using System;
 
-namespace MQTTnetApp.Pages.Publish.State;
+namespace mqttMultimeter.Pages.Publish.State;
 
 public static class PublishPageStateLoader
 {

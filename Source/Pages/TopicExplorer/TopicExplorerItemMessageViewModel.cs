@@ -1,9 +1,9 @@
 using System;
+using mqttMultimeter.Common;
+using mqttMultimeter.Pages.Inflight;
 using MQTTnet;
-using MQTTnetApp.Common;
-using MQTTnetApp.Pages.Inflight;
 
-namespace MQTTnetApp.Pages.TopicExplorer;
+namespace mqttMultimeter.Pages.TopicExplorer;
 
 public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
 {
@@ -16,7 +16,7 @@ public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
 
         Timestamp = timestamp;
         Payload = payload ?? throw new ArgumentNullException(nameof(payload));
-        PayloadLength = applicationMessage.Payload?.Length ?? 0;
+        PayloadLength = applicationMessage.PayloadSegment.Count;
         Retain = applicationMessage.Retain;
 
         Delay = delay;

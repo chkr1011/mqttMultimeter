@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:subscriptions="clr-namespace:MQTTnetApp.Pages.Subscriptions">
+                    xmlns:subscriptions="clr-namespace:mqttMultimeter.Pages.Subscriptions">
 
     <DataTemplate x:Key="SubscriptionItemViewModelListItem"
                   DataType="{x:Type subscriptions:SubscriptionItemViewModel}">

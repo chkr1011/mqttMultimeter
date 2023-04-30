@@ -2,12 +2,12 @@
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using mqttMultimeter.Common;
+using mqttMultimeter.Pages.Inflight;
 using MQTTnet;
-using MQTTnetApp.Common;
-using MQTTnetApp.Pages.Inflight;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.TopicExplorer;
+namespace mqttMultimeter.Pages.TopicExplorer;
 
 public sealed class TopicExplorerItemViewModel : BaseViewModel
 {
@@ -87,7 +87,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
         string payload;
         try
         {
-            payload = Encoding.UTF8.GetString(message.Payload ?? ReadOnlySpan<byte>.Empty);
+            payload = Encoding.UTF8.GetString(message.PayloadSegment);
         }
         catch
         {
@@ -97,7 +97,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
 
         var timestamp = DateTime.Now;
 
-        TotalPayloadLength += message.Payload?.Length ?? 0;
+        TotalPayloadLength += message.PayloadSegment.Count;
         LastUpdateTimestamp = timestamp;
 
         var duration = TimeSpan.Zero;

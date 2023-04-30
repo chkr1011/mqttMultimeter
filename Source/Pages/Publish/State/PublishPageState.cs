@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MQTTnetApp.Pages.Publish.State;
+namespace mqttMultimeter.Pages.Publish.State;
 
 public sealed class PublishPageState
 {

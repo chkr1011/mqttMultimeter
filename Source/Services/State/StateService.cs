@@ -5,9 +5,9 @@ using System.IO;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MQTTnetApp.Services.Data;
+using mqttMultimeter.Services.Data;
 
-namespace MQTTnetApp.Services.State;
+namespace mqttMultimeter.Services.State;
 
 public sealed class StateService
 {
@@ -78,7 +78,7 @@ public sealed class StateService
         foreach (var state in _state)
         {
             var path = Path.Combine(GeneratePath(), state.Key + ".json");
-            _logger.LogInformation($"Writing state to '{path}'");
+            _logger.LogInformation("Writing state to \'{Path}\'", path);
 
             var json = _jsonSerializerService.Serialize(state.Value);
             await File.WriteAllTextAsync(path, json).ConfigureAwait(false);
@@ -88,6 +88,9 @@ public sealed class StateService
     static string GeneratePath()
     {
         var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        
+        // We use ".MQTTnetApp" instead of ".mqttMultimeter" because the app name was changed
+        // and the state should be still working when starting the app with the new name!
         path = Path.Combine(path, ".MQTTnetApp", "State");
 
         Directory.CreateDirectory(path);

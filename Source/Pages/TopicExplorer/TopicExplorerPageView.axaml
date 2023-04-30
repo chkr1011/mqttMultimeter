@@ -2,14 +2,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:topicExplorer="clr-namespace:MQTTnetApp.Pages.TopicExplorer"
-             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
-             xmlns:converters="clr-namespace:MQTTnetApp.Converters"
+             xmlns:topicExplorer="clr-namespace:mqttMultimeter.Pages.TopicExplorer"
+             xmlns:controls="clr-namespace:mqttMultimeter.Controls"
+             xmlns:converters="clr-namespace:mqttMultimeter.Converters"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerPageViewModel}"
-             x:Class="MQTTnetApp.Pages.TopicExplorer.TopicExplorerPageView">
+             x:Class="mqttMultimeter.Pages.TopicExplorer.TopicExplorerPageView">
 
     <controls:Overlay IsOverlayVisible="{Binding Path=OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
                       OverlayContent="{Binding OverlayContent}">

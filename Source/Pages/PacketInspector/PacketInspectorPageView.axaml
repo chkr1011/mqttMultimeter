@@ -2,13 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:packetInspector="clr-namespace:MQTTnetApp.Pages.PacketInspector"
-             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
+             xmlns:packetInspector="clr-namespace:mqttMultimeter.Pages.PacketInspector"
+             xmlns:controls="clr-namespace:mqttMultimeter.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance packetInspector:PacketInspectorPageViewModel}"
-             x:Class="MQTTnetApp.Pages.PacketInspector.PacketInspectorPageView">
+             x:Class="mqttMultimeter.Pages.PacketInspector.PacketInspectorPageView">
     <Grid RowDefinitions="Auto,*">
 
         <!-- The Tool Bar -->

@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:connection="clr-namespace:MQTTnetApp.Pages.Connection">
+                    xmlns:connection="clr-namespace:mqttMultimeter.Pages.Connection">
 
     <DataTemplate x:Key="ConnectItemViewModelListItem"
                   DataType="{x:Type connection:ConnectionItemViewModel}">

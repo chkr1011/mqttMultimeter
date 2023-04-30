@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using mqttMultimeter.Common;
 using MQTTnet.Packets;
-using MQTTnetApp.Common;
 using ReactiveUI;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public sealed class UserPropertiesViewModel : BaseViewModel
 {

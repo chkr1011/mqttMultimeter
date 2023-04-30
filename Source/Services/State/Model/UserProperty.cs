@@ -1,4 +1,4 @@
-﻿namespace MQTTnetApp.Services.State.Model;
+﻿namespace mqttMultimeter.Services.State.Model;
 
 public sealed class UserProperty
 {

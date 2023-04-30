@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnetApp.Pages.Connection;
+namespace mqttMultimeter.Pages.Connection;
 
 public sealed class ConnectionPageView : UserControl
 {

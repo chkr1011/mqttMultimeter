@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public static class BufferPreviewTestData
 {

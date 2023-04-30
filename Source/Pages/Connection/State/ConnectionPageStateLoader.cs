@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace MQTTnetApp.Pages.Connection.State;
+namespace mqttMultimeter.Pages.Connection.State;
 
 public static class ConnectionPageStateLoader
 {

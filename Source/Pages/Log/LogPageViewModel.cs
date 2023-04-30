@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Avalonia.Threading;
+using mqttMultimeter.Common;
+using mqttMultimeter.Services.Mqtt;
 using MQTTnet.Diagnostics;
-using MQTTnetApp.Common;
-using MQTTnetApp.Services.Mqtt;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Log;
+namespace mqttMultimeter.Pages.Log;
 
 public sealed class LogPageViewModel : BasePageViewModel
 {

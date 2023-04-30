@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace MQTTnetApp.Common;
+namespace mqttMultimeter.Common;
 
 public sealed class CollectionViewModel<TItem> : ObservableCollection<TItem>
 {

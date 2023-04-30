@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 using Avalonia.Threading;
 using DynamicData;
 using DynamicData.Binding;
+using mqttMultimeter.Common;
+using mqttMultimeter.Controls;
+using mqttMultimeter.Pages.Inflight;
+using mqttMultimeter.Services.Mqtt;
 using MQTTnet;
 using MQTTnet.Client;
-using MQTTnetApp.Common;
-using MQTTnetApp.Controls;
-using MQTTnetApp.Pages.Inflight;
-using MQTTnetApp.Services.Mqtt;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.TopicExplorer;
+namespace mqttMultimeter.Pages.TopicExplorer;
 
 public sealed class TopicExplorerPageViewModel : BasePageViewModel
 {
