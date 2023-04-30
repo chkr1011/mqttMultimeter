@@ -2,8 +2,8 @@
 <img src="https://github.com/chkr1011/MQTTnet.App/blob/main/Images/Icons/icon_det_128.png?raw=true" width="128">
 </p>
 
-[![Downloads](https://img.shields.io/github/downloads/chkr1011/MQTTnetApp/total?color=green)](https://github.com/chkr1011/MQTTnetApp/releases)
-[![CI](https://img.shields.io/github/workflow/status/chkr1011/MQTTnetApp/CI/main)](https://github.com/chkr1011/MQTTnetApp/actions/workflows/ci.yml)
+[![Downloads](https://img.shields.io/github/downloads/chkr1011/mqttMultimeter/total?color=green)](https://github.com/chkr1011/mqttMultimeter/releases)
+[![CI](https://img.shields.io/github/workflow/status/chkr1011/mqttMultimeter/CI/main)](https://github.com/chkr1011/mqttMultimeter/actions/workflows/ci.yml)
 [![Join the chat at https://gitter.im/MQTTnet/community](https://badges.gitter.im/MQTTnet/community.svg)](https://gitter.im/MQTTnet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://raw.githubusercontent.com/chkr1011/MQTTnetApp/main/LICENSE)
   
