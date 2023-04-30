@@ -28,19 +28,19 @@
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.18" />
+        <PackageReference Include="Avalonia" Version="0.10.19" />
         <PackageReference Include="Avalonia.AvaloniaEdit" Version="0.10.12.2" />
-        <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.18" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.18" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.19" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.19" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.19" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.19" />
         <PackageReference Include="AvaloniaEdit.TextMate" Version="0.10.12.2" />
         <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
-        <PackageReference Include="MQTTnet" Version="4.1.4.563" />
-        <PackageReference Include="MessagePack" Version="2.4.59" />
-        <PackageReference Include="System.Text.Json" Version="7.0.0" />
+        <PackageReference Include="MQTTnet" Version="4.2.0.706" />
+        <PackageReference Include="MessagePack" Version="2.5.108" />
+        <PackageReference Include="System.Text.Json" Version="7.0.2" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Main\MainView.axaml.cs">

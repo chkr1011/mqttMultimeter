@@ -98,7 +98,7 @@ public sealed class MqttClientService
         }
 
         _mqttClient.ApplicationMessageReceivedAsync += OnApplicationMessageReceived;
-        _mqttClient.InspectPackage += OnInspectPackage;
+        _mqttClient.InspectPacketAsync += OnInspectPacket;
         _mqttClient.DisconnectedAsync += OnDisconnected;
 
         using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(item.ServerOptions.CommunicationTimeout));
@@ -261,7 +261,7 @@ public sealed class MqttClientService
         return Task.CompletedTask;
     }
 
-    Task OnInspectPackage(InspectMqttPacketEventArgs eventArgs)
+    Task OnInspectPacket(InspectMqttPacketEventArgs eventArgs)
     {
         foreach (var messageInspector in _messageInspectors)
         {

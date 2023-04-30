@@ -16,7 +16,7 @@ public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
 
         Timestamp = timestamp;
         Payload = payload ?? throw new ArgumentNullException(nameof(payload));
-        PayloadLength = applicationMessage.Payload?.Length ?? 0;
+        PayloadLength = applicationMessage.PayloadSegment.Count;
         Retain = applicationMessage.Retain;
 
         Delay = delay;

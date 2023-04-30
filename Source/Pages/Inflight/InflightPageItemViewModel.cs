@@ -12,6 +12,7 @@ public sealed class InflightPageItemViewModel
     {
         Message = message ?? throw new ArgumentNullException(nameof(message));
 
+        Payload = message.PayloadSegment.ToArray();
         UserProperties.IsReadOnly = true;
     }
 
@@ -33,7 +34,7 @@ public sealed class InflightPageItemViewModel
 
     public long Number { get; init; }
 
-    public byte[] Payload => Message.Payload ?? Array.Empty<byte>();
+    public byte[] Payload { get; }
 
     public MqttPayloadFormatIndicator PayloadFormatIndicator => Message.PayloadFormatIndicator;
     

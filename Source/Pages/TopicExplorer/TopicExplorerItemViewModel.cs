@@ -87,7 +87,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
         string payload;
         try
         {
-            payload = Encoding.UTF8.GetString(message.Payload ?? ReadOnlySpan<byte>.Empty);
+            payload = Encoding.UTF8.GetString(message.PayloadSegment);
         }
         catch
         {
@@ -97,7 +97,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
 
         var timestamp = DateTime.Now;
 
-        TotalPayloadLength += message.Payload?.Length ?? 0;
+        TotalPayloadLength += message.PayloadSegment.Count;
         LastUpdateTimestamp = timestamp;
 
         var duration = TimeSpan.Zero;
