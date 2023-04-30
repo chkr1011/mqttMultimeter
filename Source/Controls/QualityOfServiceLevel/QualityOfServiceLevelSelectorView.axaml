@@ -14,7 +14,7 @@
                   IsChecked="{Binding Path=IsLevel0, Mode=TwoWay}" />
 
         <CheckBox Margin="10,0"
-                  Content="At lease once - 1"
+                  Content="At least once - 1"
                   Classes="radio-button"
                   IsChecked="{Binding Path=IsLevel1, Mode=TwoWay}" />
 
