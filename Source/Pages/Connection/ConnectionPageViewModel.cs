@@ -2,14 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Threading;
-using MQTTnetApp.Common;
-using MQTTnetApp.Controls;
-using MQTTnetApp.Pages.Connection.State;
-using MQTTnetApp.Services.Mqtt;
-using MQTTnetApp.Services.State;
+using mqttMultimeter.Common;
+using mqttMultimeter.Controls;
+using mqttMultimeter.Pages.Connection.State;
+using mqttMultimeter.Services.Mqtt;
+using mqttMultimeter.Services.State;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Connection;
+namespace mqttMultimeter.Pages.Connection;
 
 public sealed class ConnectionPageViewModel : BasePageViewModel
 {
@@ -32,7 +32,15 @@ public sealed class ConnectionPageViewModel : BasePageViewModel
 
         stateService.Saving += SaveState;
         LoadState(stateService);
+
+        mqttClientService.Disconnected += (_, e) =>
+        {
+            DisconnectedReason.Reason = e.Reason.ToString();
+            DisconnectedReason.AdditionalInformation = e.ReasonString;
+        };
     }
+
+    public DisconnectedReasonViewModel DisconnectedReason { get; } = new();
 
     public bool IsConnected
     {
@@ -73,13 +81,14 @@ public sealed class ConnectionPageViewModel : BasePageViewModel
 
             var response = await _mqttClientService.Connect(item);
             item.Response.ApplyResponse(response);
+
+            DisconnectedReason.Clear();
         }
         catch (Exception exception)
         {
             // Ensure proper UI state before showing the exception.
             IsConnecting = false;
 
-            // TODO: In overlay.
             App.ShowException(exception);
         }
         finally

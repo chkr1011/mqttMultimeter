@@ -1,6 +1,6 @@
 using System;
 
-namespace MQTTnetApp.Pages.Publish.State;
+namespace mqttMultimeter.Pages.Publish.State;
 
 public static class PublishPageStateLoader
 {
@@ -29,14 +29,28 @@ public static class PublishPageStateLoader
         var item = new PublishItemViewModel(ownerPage)
         {
             Name = publishState.Name ?? string.Empty,
-            Topic = publishState.Topic,
+            Topic = publishState.Topic ?? string.Empty,
             Retain = publishState.Retain,
-            ContentType = publishState.ContentType,
+            ContentType = publishState.ContentType ?? string.Empty,
+            ResponseTopic = publishState.ResponseTopic ?? string.Empty,
+            SubscriptionIdentifier = publishState.SubscriptionIdentifier,
+            TopicAlias = publishState.TopicAlias,
+            MessageExpiryInterval = publishState.MessageExpiryInterval,
+            Payload = publishState.Payload ?? string.Empty,
+            PayloadFormatIndicator =
+            {
+                Value = publishState.PayloadFormatIndicator
+            },
             QualityOfServiceLevel =
             {
                 Value = publishState.QualityOfServiceLevel
             }
         };
+
+        foreach (var userProperty in publishState.UserProperties)
+        {
+            item.UserProperties.AddItem(userProperty.Name ?? string.Empty, userProperty.Value ?? string.Empty);
+        }
 
         return item;
     }

@@ -16,4 +16,10 @@
                 Value="26" />
     </Style>
 
+    <!-- This is a fake radio button because the radio button from avalonia has binding bugs! -->
+    <Style Selector="CheckBox.radio-button">
+        <Setter Property="CornerRadius"
+                Value="50" />
+    </Style>
+    
 </Styles>

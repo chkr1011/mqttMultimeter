@@ -1,31 +1,45 @@
 using System;
+using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 
-namespace MQTTnetApp.Common;
+namespace mqttMultimeter.Common;
 
 sealed class ViewLocator : IDataTemplate
 {
-    public IControl Build(object data)
+    readonly Dictionary<string, Type> _viewTypeCache = new();
+
+    public IControl Build(object viewModel)
     {
-        var viewFullName = data.GetType().FullName!.Replace("ViewModel", "View");
-        var viewType = Type.GetType(viewFullName);
+        var viewModelTypeName = viewModel.GetType().FullName!;
+
+        if (!_viewTypeCache.TryGetValue(viewModelTypeName, out var viewType))
+        {
+            // This project expects that a view is located in the same namespace with "ViewModel"
+            // replaced with "View"!
+            var viewName = viewModel.GetType().FullName!.Replace("ViewModel", "View");
+            viewType = Type.GetType(viewName);
+
+            if (viewType != null)
+            {
+                _viewTypeCache[viewModelTypeName] = viewType;
+            }
+        }
 
         if (viewType != null)
         {
-            var control = Activator.CreateInstance(viewType) as Control;
-            if (control == null)
+            if (Activator.CreateInstance(viewType) is not Control control)
             {
                 throw new InvalidOperationException($"Unable to create view of type '{viewType.FullName}'.");
             }
 
-            control.DataContext = data;
+            control.DataContext = viewModel;
             return control;
         }
 
         return new TextBlock
         {
-            Text = "Not Found: " + viewFullName
+            Text = $"View not found for view model {viewModelTypeName}."
         };
     }
 

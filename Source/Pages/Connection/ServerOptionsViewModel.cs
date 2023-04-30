@@ -1,22 +1,23 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Authentication;
+using mqttMultimeter.Common;
 using MQTTnet.Formatter;
-using MQTTnetApp.Common;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Connection;
+namespace mqttMultimeter.Pages.Connection;
 
 public sealed class ServerOptionsViewModel : BaseViewModel
 {
     int _communicationTimeout;
     string _host = string.Empty;
+    bool _ignoreCertificateErrors;
     int _port;
     int _receiveMaximum;
     EnumViewModel<MqttProtocolVersion> _selectedProtocolVersion;
 
     EnumViewModel<SslProtocols> _selectedTlsVersion;
-    EnumViewModel<Transport> _selectedTransport;
+    TransportViewModel _selectedTransport;
 
     public ServerOptionsViewModel()
     {
@@ -24,13 +25,24 @@ public sealed class ServerOptionsViewModel : BaseViewModel
         Port = 1883;
         CommunicationTimeout = 10;
 
-        Transports.Add(new EnumViewModel<Transport>("TCP", Transport.TCP));
-        Transports.Add(new EnumViewModel<Transport>("WebSocket", Transport.WebSocket));
+        Transports.Add(new TransportViewModel("TCP", Transport.TCP)
+        {
+            IsPortAvailable = true,
+            HostDisplayValue = "Host"
+        });
+
+        Transports.Add(new TransportViewModel("WebSocket", Transport.WebSocket)
+        {
+            HostDisplayValue = "URI"
+        });
+
         _selectedTransport = Transports.First();
 
         TlsVersions.Add(new EnumViewModel<SslProtocols>("no TLS", SslProtocols.None));
+#pragma warning disable SYSLIB0039
         TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.0", SslProtocols.Tls));
         TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.1", SslProtocols.Tls11));
+#pragma warning restore SYSLIB0039
         TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.2", SslProtocols.Tls12));
         TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.3", SslProtocols.Tls13));
         _selectedTlsVersion = TlsVersions.First();
@@ -53,6 +65,12 @@ public sealed class ServerOptionsViewModel : BaseViewModel
     {
         get => _host;
         set => this.RaiseAndSetIfChanged(ref _host, value);
+    }
+
+    public bool IgnoreCertificateErrors
+    {
+        get => _ignoreCertificateErrors;
+        set => this.RaiseAndSetIfChanged(ref _ignoreCertificateErrors, value);
     }
 
     public int Port
@@ -81,7 +99,7 @@ public sealed class ServerOptionsViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _selectedTlsVersion, value);
     }
 
-    public EnumViewModel<Transport> SelectedTransport
+    public TransportViewModel SelectedTransport
     {
         get => _selectedTransport;
         set => this.RaiseAndSetIfChanged(ref _selectedTransport, value);
@@ -89,5 +107,5 @@ public sealed class ServerOptionsViewModel : BaseViewModel
 
     public ObservableCollection<EnumViewModel<SslProtocols>> TlsVersions { get; } = new();
 
-    public ObservableCollection<EnumViewModel<Transport>> Transports { get; } = new();
+    public ObservableCollection<TransportViewModel> Transports { get; } = new();
 }

@@ -1,11 +1,20 @@
-<Application x:Class="MQTTnetApp.App"
+<Application x:Class="mqttMultimeter.App"
              xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="/Assets/VectorIcons.axaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="AppLightGreen">#2200EE00</SolidColorBrush>
+
+            <system:Double x:Key="ControlContentThemeFontSize">12</system:Double>
+
+            <!-- Patch some ugly parts of the default theme. -->
+            <Thickness x:Key="TextControlBorderThemeThickness">1</Thickness>
+            <Thickness x:Key="TextControlBorderThemeThicknessFocused">1</Thickness>
         </ResourceDictionary>
     </Application.Resources>
     <Application.Styles>
@@ -23,6 +32,7 @@
         <StyleInclude Source="/Styles/NumericUpDown.axaml" />
         <StyleInclude Source="/Styles/ComboBox.axaml" />
         <StyleInclude Source="/Styles/CheckBox.axaml" />
+        <StyleInclude Source="/Styles/RadioButton.axaml" />
 
         <StyleInclude Source="/Styles/Text.axaml" />
 
@@ -32,7 +42,19 @@
         <StyleInclude Source="/Controls/GroupBox.axaml" />
         <StyleInclude Source="/Controls/HexBox.axaml" />
         <StyleInclude Source="/Controls/BufferPreview/BufferPreviewView.axaml" />
+        <StyleInclude Source="/Controls/BufferEditor/BufferEditor.axaml" />
         <StyleInclude Source="/Controls/Overlay/Overlay.axaml" />
+        <StyleInclude Source="/Controls/CertificatePicker/CertificatePicker.axaml" />
+
+        <Style Selector="DataGridCell">
+            <Setter Property="FontSize"
+                    Value="{DynamicResource ControlContentThemeFontSize}" />
+        </Style>
+
+        <Style Selector="ToolTip">
+            <Setter Property="MaxWidth"
+                    Value="999999" />
+        </Style>
 
         <Style Selector="ItemsPresenter">
             <Setter Property="(KeyboardNavigation.TabNavigation)"

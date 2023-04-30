@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MQTTnetApp.Pages.Subscriptions.State;
+namespace mqttMultimeter.Pages.Subscriptions.State;
 
 public static class SubscriptionsPageStateFactory
 {

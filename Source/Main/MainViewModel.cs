@@ -1,15 +1,16 @@
-using MQTTnetApp.Common;
-using MQTTnetApp.Pages.Connection;
-using MQTTnetApp.Pages.Inflight;
-using MQTTnetApp.Pages.Info;
-using MQTTnetApp.Pages.Log;
-using MQTTnetApp.Pages.PacketInspector;
-using MQTTnetApp.Pages.Publish;
-using MQTTnetApp.Pages.Scripts;
-using MQTTnetApp.Pages.Subscriptions;
+using System;
+using mqttMultimeter.Common;
+using mqttMultimeter.Pages.Connection;
+using mqttMultimeter.Pages.Inflight;
+using mqttMultimeter.Pages.Info;
+using mqttMultimeter.Pages.Log;
+using mqttMultimeter.Pages.PacketInspector;
+using mqttMultimeter.Pages.Publish;
+using mqttMultimeter.Pages.Subscriptions;
+using mqttMultimeter.Pages.TopicExplorer;
 using ReactiveUI;
 
-namespace MQTTnetApp.Main;
+namespace mqttMultimeter.Main;
 
 public sealed class MainViewModel : BaseViewModel
 {
@@ -20,19 +21,26 @@ public sealed class MainViewModel : BaseViewModel
         SubscriptionsPageViewModel subscriptionsPage,
         InflightPageViewModel inflightPage,
         ScriptsPageViewModel scriptsPage,
+        TopicExplorerPageViewModel topicExplorerPage,
         PacketInspectorPageViewModel packetInspectorPage,
         InfoPageViewModel infoPage,
         LogPageViewModel logPage)
     {
-        ConnectionPage = connectionPage;
-        PublishPage = publishPage;
-        SubscriptionsPage = subscriptionsPage;
-        InflightPage = inflightPage;
-        ScriptsPage = scriptsPage;
-        PacketInspectorPage = packetInspectorPage;
-        InfoPage = infoPage;
-        LogPage = logPage;
+        ConnectionPage = AttachEvents(connectionPage);
+        PublishPage = AttachEvents(publishPage);
+        SubscriptionsPage = AttachEvents(subscriptionsPage);
+        InflightPage = AttachEvents(inflightPage);
+        TopicExplorerPage = AttachEvents(topicExplorerPage);
+        ScriptsPage = AttachEvents(scriptsPage);
+        PacketInspectorPage = AttachEvents(packetInspectorPage);
+        InfoPage = AttachEvents(infoPage);
+        LogPage = AttachEvents(logPage);
+
+        InflightPage.RepeatMessageRequested += item => PublishPage.RepeatMessage(item);
+        topicExplorerPage.RepeatMessageRequested += item => PublishPage.RepeatMessage(item);
     }
+
+    public event EventHandler? ActivatePageRequested;
 
     public ConnectionPageViewModel ConnectionPage { get; }
 
@@ -55,4 +63,12 @@ public sealed class MainViewModel : BaseViewModel
     public ScriptsPageViewModel ScriptsPage { get; }
 
     public SubscriptionsPageViewModel SubscriptionsPage { get; }
+
+    public TopicExplorerPageViewModel TopicExplorerPage { get; }
+
+    TPage AttachEvents<TPage>(TPage page) where TPage : BasePageViewModel
+    {
+        page.ActivationRequested += (_, __) => ActivatePageRequested?.Invoke(page, EventArgs.Empty);
+        return page;
+    }
 }

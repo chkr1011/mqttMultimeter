@@ -1,7 +1,7 @@
-﻿using MQTTnetApp.Common;
+﻿using mqttMultimeter.Common;
 using ReactiveUI;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public sealed class ProgressIndicatorViewModel : BaseViewModel
 {

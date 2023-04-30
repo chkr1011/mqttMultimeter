@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using MQTTnetApp.Common;
-using MQTTnetApp.Pages.Subscriptions.State;
-using MQTTnetApp.Services.Mqtt;
-using MQTTnetApp.Services.State;
+using mqttMultimeter.Common;
+using mqttMultimeter.Pages.Subscriptions.State;
+using mqttMultimeter.Services.Mqtt;
+using mqttMultimeter.Services.State;
 
-namespace MQTTnetApp.Pages.Subscriptions;
+namespace mqttMultimeter.Pages.Subscriptions;
 
-public sealed class SubscriptionsPageViewModel : BaseViewModel
+public sealed class SubscriptionsPageViewModel : BasePageViewModel
 {
     readonly MqttClientService _mqttClientService;
 
@@ -34,7 +34,7 @@ public sealed class SubscriptionsPageViewModel : BaseViewModel
             Name = "Untitled"
         };
 
-        newItem.UserProperties.AddItem();
+        newItem.UserProperties.AddEmptyItem();
 
         Items.Collection.Add(newItem);
     }

@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Authentication;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Threading;
+using mqttMultimeter.Controls;
+using mqttMultimeter.Pages.Connection;
+using mqttMultimeter.Pages.Publish;
+using mqttMultimeter.Pages.Subscriptions;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Diagnostics;
 using MQTTnet.Exceptions;
 using MQTTnet.Internal;
-using MQTTnetApp.Pages.Connection;
-using MQTTnetApp.Pages.Publish;
-using MQTTnetApp.Pages.Subscriptions;
 
-namespace MQTTnetApp.Services.Mqtt;
+namespace mqttMultimeter.Services.Mqtt;
 
 public sealed class MqttClientService
 {
@@ -20,7 +24,7 @@ public sealed class MqttClientService
     readonly List<Action<InspectMqttPacketEventArgs>> _messageInspectors = new();
     readonly MqttNetEventLogger _mqttNetEventLogger = new();
 
-    MqttClient? _mqttClient;
+    IMqttClient? _mqttClient;
 
     public MqttClientService()
     {
@@ -32,6 +36,8 @@ public sealed class MqttClientService
         add => _applicationMessageReceivedEvent.AddHandler(value);
         remove => _applicationMessageReceivedEvent.RemoveHandler(value);
     }
+
+    public event EventHandler<MqttClientDisconnectedEventArgs>? Disconnected;
 
     public event Action<MqttNetLogMessagePublishedEventArgs>? LogMessagePublished;
 
@@ -71,7 +77,7 @@ public sealed class MqttClientService
             clientOptionsBuilder.WithAuthentication(item.SessionOptions.AuthenticationMethod, Convert.FromBase64String(item.SessionOptions.AuthenticationData));
         }
 
-        if (item.ServerOptions.SelectedTransport?.Value == Transport.TCP)
+        if (item.ServerOptions.SelectedTransport.Value == Transport.TCP)
         {
             clientOptionsBuilder.WithTcpServer(item.ServerOptions.Host, item.ServerOptions.Port);
         }
@@ -80,16 +86,19 @@ public sealed class MqttClientService
             clientOptionsBuilder.WithWebSocketServer(item.ServerOptions.Host);
         }
 
-        if (item.ServerOptions.SelectedTlsVersion?.Value != SslProtocols.None)
+        if (item.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
         {
             clientOptionsBuilder.WithTls(o =>
             {
                 o.SslProtocol = item.ServerOptions.SelectedTlsVersion.Value;
+                o.IgnoreCertificateChainErrors = item.ServerOptions.IgnoreCertificateErrors;
+                o.IgnoreCertificateRevocationErrors = item.ServerOptions.IgnoreCertificateErrors;
+                o.CertificateValidationHandler = item.ServerOptions.IgnoreCertificateErrors ? _ => true : null;
             });
         }
 
         _mqttClient.ApplicationMessageReceivedAsync += OnApplicationMessageReceived;
-        _mqttClient.InspectPackage += OnInspectPackage;
+        _mqttClient.InspectPacketAsync += OnInspectPacket;
         _mqttClient.DisconnectedAsync += OnDisconnected;
 
         using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(item.ServerOptions.CommunicationTimeout));
@@ -115,6 +124,18 @@ public sealed class MqttClientService
         return _mqttClient.DisconnectAsync();
     }
 
+    public Task<MqttClientPublishResult> Publish(MqttApplicationMessage message, CancellationToken cancellationToken)
+    {
+        if (message == null)
+        {
+            throw new ArgumentNullException(nameof(message));
+        }
+
+        ThrowIfNotConnected();
+
+        return _mqttClient!.PublishAsync(message, cancellationToken);
+    }
+
     public Task<MqttClientPublishResult> Publish(PublishItemViewModel item)
     {
         if (item == null)
@@ -124,15 +145,37 @@ public sealed class MqttClientService
 
         ThrowIfNotConnected();
 
+        byte[] payload;
+        if (item.PayloadFormat == BufferFormat.Plain)
+        {
+            payload = Encoding.UTF8.GetBytes(item.Payload);
+        }
+        else if (item.PayloadFormat == BufferFormat.Base64)
+        {
+            payload = Convert.FromBase64String(item.Payload);
+        }
+        else if (item.PayloadFormat == BufferFormat.Path)
+        {
+            payload = File.ReadAllBytes(item.Payload);
+        }
+        else
+        {
+            throw new NotSupportedException();
+        }
+
         var applicationMessageBuilder = new MqttApplicationMessageBuilder().WithTopic(item.Topic)
             .WithQualityOfServiceLevel(item.QualityOfServiceLevel.Value)
             .WithRetainFlag(item.Retain)
             .WithMessageExpiryInterval(item.MessageExpiryInterval)
             .WithContentType(item.ContentType)
             .WithPayloadFormatIndicator(item.PayloadFormatIndicator.Value)
-            .WithPayload(item.PayloadInputFormat.ConvertPayloadInput(item.Payload))
-            .WithSubscriptionIdentifier(item.SubscriptionIdentifier)
+            .WithPayload(payload)
             .WithResponseTopic(item.ResponseTopic);
+
+        if (item.SubscriptionIdentifier > 0)
+        {
+            applicationMessageBuilder.WithSubscriptionIdentifier(item.SubscriptionIdentifier);
+        }
 
         if (item.TopicAlias > 0)
         {
@@ -188,9 +231,7 @@ public sealed class MqttClientService
 
         var subscribeOptions = subscribeOptionsBuilder.Build();
 
-        var subscribeResult = await _mqttClient.SubscribeAsync(subscribeOptions).ConfigureAwait(false);
-
-        return subscribeResult;
+        return await _mqttClient!.SubscribeAsync(subscribeOptions).ConfigureAwait(false);
     }
 
     public async Task<MqttClientUnsubscribeResult> Unsubscribe(SubscriptionItemViewModel subscriptionItem)
@@ -202,9 +243,7 @@ public sealed class MqttClientService
 
         ThrowIfNotConnected();
 
-        var unsubscribeResult = await _mqttClient.UnsubscribeAsync(subscriptionItem.Topic);
-
-        return unsubscribeResult;
+        return await _mqttClient.UnsubscribeAsync(subscriptionItem.Topic).ConfigureAwait(false);
     }
 
     Task OnApplicationMessageReceived(MqttApplicationMessageReceivedEventArgs eventArgs)
@@ -212,17 +251,17 @@ public sealed class MqttClientService
         return _applicationMessageReceivedEvent.InvokeAsync(eventArgs);
     }
 
-    Task OnDisconnected(MqttClientDisconnectedEventArgs arg)
+    Task OnDisconnected(MqttClientDisconnectedEventArgs eventArgs)
     {
-        if (arg.ClientWasConnected)
+        Dispatcher.UIThread.Post(() =>
         {
-            //arg.Reason
-        }
+            Disconnected?.Invoke(this, eventArgs);
+        });
 
         return Task.CompletedTask;
     }
 
-    Task OnInspectPackage(InspectMqttPacketEventArgs eventArgs)
+    Task OnInspectPacket(InspectMqttPacketEventArgs eventArgs)
     {
         foreach (var messageInspector in _messageInspectors)
         {

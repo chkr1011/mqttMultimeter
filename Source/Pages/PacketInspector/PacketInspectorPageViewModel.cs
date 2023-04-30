@@ -1,13 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using Avalonia.Threading;
+using mqttMultimeter.Common;
+using mqttMultimeter.Services.Mqtt;
 using MQTTnet.Diagnostics;
-using MQTTnetApp.Common;
-using MQTTnetApp.Services.Mqtt;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.PacketInspector;
+namespace mqttMultimeter.Pages.PacketInspector;
 
-public sealed class PacketInspectorPageViewModel : BaseViewModel
+public sealed class PacketInspectorPageViewModel : BasePageViewModel
 {
     bool _isRecordingEnabled;
     int _number;

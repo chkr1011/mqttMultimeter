@@ -2,30 +2,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
+             xmlns:controls="clr-namespace:mqttMultimeter.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance controls:RetainHandlingSelectorViewModel}"
-             x:Class="MQTTnetApp.Controls.RetainHandlingSelectorView">
+             x:Class="mqttMultimeter.Controls.RetainHandlingSelectorView">
     <StackPanel Orientation="Horizontal">
-        <StackPanel.Styles>
-            <Style Selector="RadioButton">
-                <Setter Property="Margin"
-                        Value="0,0,10,0" />
-            </Style>
-        </StackPanel.Styles>
+        <CheckBox IsChecked="{Binding IsSendAtSubscribe, Mode=TwoWay}"
+                  Classes="radio-button"
+                  Content="Send at subscribe (0)" />
 
-        <RadioButton IsChecked="{Binding IsSendAtSubscribe, Mode=TwoWay}"
-                     GroupName="RetainHandling"
-                     Content="Send at subscribe (0)" />
+        <CheckBox Margin="10,0"
+                  IsChecked="{Binding IsSendAtSubscribeIfNewSubscriptionOnly, Mode=TwoWay}"
+                  Classes="radio-button"
+                  Content="Send at subscribe if new subscription only (1)" />
 
-        <RadioButton IsChecked="{Binding IsSendAtSubscribeIfNewSubscriptionOnly, Mode=TwoWay}"
-                     GroupName="RetainHandling"
-                     Content="Send at subscribe if new subscription only (1)" />
-
-        <RadioButton GroupName="RetainHandling"
-                     IsChecked="{Binding IsDoNotSendOnSubscribe, Mode=TwoWay}"
-                     Content="Do not send on subscribe (2)" />
+        <CheckBox Classes="radio-button"
+                  IsChecked="{Binding IsDoNotSendOnSubscribe, Mode=TwoWay}"
+                  Content="Do not send on subscribe (2)" />
     </StackPanel>
 </UserControl>

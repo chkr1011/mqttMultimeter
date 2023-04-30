@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MQTTnetApp.Common;
-using MQTTnetApp.Controls;
+using mqttMultimeter.Common;
+using mqttMultimeter.Controls;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Publish;
+namespace mqttMultimeter.Pages.Publish;
 
 public sealed class PublishItemViewModel : BaseViewModel
 {
     string? _contentType;
     uint _messageExpiryInterval;
     string _name = string.Empty;
-    string? _payload;
+    string _payload = string.Empty;
     string? _responseTopic;
     bool _retain;
     uint _subscriptionIdentifier;
@@ -22,9 +22,7 @@ public sealed class PublishItemViewModel : BaseViewModel
     {
         OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
 
-        Payload = string.Empty;
         PayloadFormatIndicator.IsUnspecified = true;
-
         Response.UserProperties.IsReadOnly = true;
     }
 
@@ -48,15 +46,15 @@ public sealed class PublishItemViewModel : BaseViewModel
 
     public PublishPageViewModel OwnerPage { get; }
 
-    public string? Payload
+    public string Payload
     {
         get => _payload;
         set => this.RaiseAndSetIfChanged(ref _payload, value);
     }
 
-    public PayloadFormatIndicatorSelectorViewModel PayloadFormatIndicator { get; } = new();
+    public BufferFormat PayloadFormat { get; set; }
 
-    public PayloadInputFormatSelectorViewModel PayloadInputFormat { get; } = new();
+    public PayloadFormatIndicatorSelectorViewModel PayloadFormatIndicator { get; } = new();
 
     public QualityOfServiceLevelSelectorViewModel QualityOfServiceLevel { get; } = new();
 

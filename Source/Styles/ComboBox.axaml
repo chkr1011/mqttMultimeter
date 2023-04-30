@@ -1,13 +1,20 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Border Padding="20">
-            <!-- Add Controls for Previewer Here -->
+        <Border Padding="20"
+                Height="200">
+            <ComboBox>
+                <ComboBoxItem>A</ComboBoxItem>
+                <ComboBoxItem>B</ComboBoxItem>
+                <ComboBoxItem>C</ComboBoxItem>
+            </ComboBox>
         </Border>
     </Design.PreviewWith>
 
     <Styles.Resources>
+        <!-- These resources are used by the default theme! -->
         <x:Double x:Key="ComboBoxMinHeight">26</x:Double>
+        <CornerRadius x:Key="OverlayCornerRadius">0</CornerRadius>
     </Styles.Resources>
 
     <Style Selector="ComboBox">

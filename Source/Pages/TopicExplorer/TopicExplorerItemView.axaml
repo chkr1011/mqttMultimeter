@@ -1,0 +1,108 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:topicExplorer="clr-namespace:mqttMultimeter.Pages.TopicExplorer"
+             xmlns:converters="clr-namespace:mqttMultimeter.Converters"
+             xmlns:inflight="clr-namespace:mqttMultimeter.Pages.Inflight"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemViewModel}"
+             d:DesignHeight="450"
+             x:Class="mqttMultimeter.Pages.TopicExplorer.TopicExplorerItemView">
+    <Grid RowDefinitions="Auto,*,1,3*">
+
+        <!-- ToolBar -->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0"
+                    Margin="0">
+
+            <!-- The Enable/Disable button -->
+            <ToggleButton Classes="tool_bar_button"
+                          IsChecked="{Binding TrackLatestMessage}"
+                          ToolTip.Tip="Track latest message">
+                <PathIcon Data="{StaticResource arrow_next_regular}" />
+            </ToggleButton>
+
+            <Button ToolTip.Tip="Remove all messages"
+                    Classes="tool_bar_button"
+                    Command="{Binding Clear}">
+                <PathIcon Data="{StaticResource delete_regular}" />
+            </Button>
+        </StackPanel>
+
+        <!-- Messages -->
+        <DataGrid Grid.Row="1"
+                  Items="{Binding Messages}"
+                  SelectedItem="{Binding SelectedMessage, Mode=TwoWay}"
+                  Margin="0,0,0,10">
+            <DataGrid.Columns>
+
+                <!-- Timestamp -->
+                <DataGridTemplateColumn d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemMessageViewModel}"
+                                        Header="Timestamp">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
+                            <TextBlock Margin="10,0"
+                                       Text="{Binding Timestamp, StringFormat={}{0:yyyy-MM-ddTHH:mm:ss.ffff}}"
+                                       Classes="code_text" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Payload -->
+                <DataGridTemplateColumn Header="Payload"
+                                        CellStyleClasses="code_text"
+                                        d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemMessageViewModel}"
+                                        Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
+                            <TextBlock Margin="10,0"
+                                       Text="{Binding Payload}"
+                                       Classes="code_text" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Flags -->
+                <DataGridTemplateColumn d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemMessageViewModel}"
+                                        Header="Flags">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right"
+                                        Margin="5,0">
+                                <Border IsVisible="{Binding Retain}"
+                                        Classes="badge badge_retain">
+                                    <TextBlock />
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Delay -->
+                <DataGridTemplateColumn d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerItemMessageViewModel}"
+                                        Header="Delay">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
+                            <TextBlock Margin="10,0"
+                                       Text="{Binding Delay, Converter={x:Static converters:TimeSpanToLongStringConverter.Instance}}"
+                                       Classes="code_text" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <GridSplitter Grid.Row="2"
+                      HorizontalAlignment="Stretch"
+                      Classes="grid_splitter_vertical" />
+
+        <!-- Message details -->
+        <inflight:InflightPageItemView Grid.Row="3"
+                                       DataContext="{Binding SelectedMessage.InflightItem}" />
+    </Grid>
+
+
+</UserControl>

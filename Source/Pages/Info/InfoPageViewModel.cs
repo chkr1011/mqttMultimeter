@@ -1,14 +1,14 @@
 ﻿using System;
 using Avalonia.Controls;
 using Avalonia.Threading;
+using mqttMultimeter.Common;
+using mqttMultimeter.Services.Updates;
 using MQTTnet.Client;
-using MQTTnetApp.Common;
-using MQTTnetApp.Services.Updates;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Info;
+namespace mqttMultimeter.Pages.Info;
 
-public sealed class InfoPageViewModel : BaseViewModel
+public sealed class InfoPageViewModel : BasePageViewModel
 {
     readonly AppUpdateService _appUpdateService;
 

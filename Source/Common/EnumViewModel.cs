@@ -1,13 +1,13 @@
 ﻿using System;
 using ReactiveUI;
 
-namespace MQTTnetApp.Common;
+namespace mqttMultimeter.Common;
 
 public class EnumViewModel<TEnum> : BaseViewModel where TEnum : Enum
 {
     object? _displayValue;
 
-    public EnumViewModel(object displayValue, TEnum value)
+    public EnumViewModel(object? displayValue, TEnum value)
     {
         Value = value;
         DisplayValue = displayValue;

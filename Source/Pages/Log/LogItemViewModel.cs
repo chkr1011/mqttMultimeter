@@ -1,4 +1,4 @@
-﻿namespace MQTTnetApp.Pages.Log;
+﻿namespace mqttMultimeter.Pages.Log;
 
 public sealed class LogItemViewModel
 {

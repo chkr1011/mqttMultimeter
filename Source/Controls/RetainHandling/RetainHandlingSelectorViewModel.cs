@@ -1,54 +1,53 @@
 using System;
+using mqttMultimeter.Common;
 using MQTTnet.Protocol;
-using MQTTnetApp.Common;
-using ReactiveUI;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
-public sealed class RetainHandlingSelectorViewModel : BaseViewModel
+public sealed class RetainHandlingSelectorViewModel : BaseSingleSelectionViewModel
 {
-    bool _doNotSendOnSubscribe;
-    bool _isSendAtSubscribe;
-    bool _sendAtSubscribeIfNewSubscriptionOnly;
+    const int DoNotSendOnSubscribeIndex = 0;
+    const int SendAtSubscribeIndex = 1;
+    const int SendAtSubscribeIfNewSubscriptionOnly = 2;
 
-    public RetainHandlingSelectorViewModel()
+    public RetainHandlingSelectorViewModel() : base(3)
     {
         Value = MqttRetainHandling.SendAtSubscribe;
     }
 
     public bool IsDoNotSendOnSubscribe
     {
-        get => _doNotSendOnSubscribe;
-        set => this.RaiseAndSetIfChanged(ref _doNotSendOnSubscribe, value);
+        get => GetState(DoNotSendOnSubscribeIndex);
+        set => UpdateStates(DoNotSendOnSubscribeIndex, value);
     }
 
     public bool IsSendAtSubscribe
     {
-        get => _isSendAtSubscribe;
-        set => this.RaiseAndSetIfChanged(ref _isSendAtSubscribe, value);
+        get => GetState(SendAtSubscribeIndex);
+        set => UpdateStates(SendAtSubscribeIndex, value);
     }
 
     public bool IsSendAtSubscribeIfNewSubscriptionOnly
     {
-        get => _sendAtSubscribeIfNewSubscriptionOnly;
-        set => this.RaiseAndSetIfChanged(ref _sendAtSubscribeIfNewSubscriptionOnly, value);
+        get => GetState(SendAtSubscribeIfNewSubscriptionOnly);
+        set => UpdateStates(SendAtSubscribeIfNewSubscriptionOnly, value);
     }
 
     public MqttRetainHandling Value
     {
         get
         {
-            if (_isSendAtSubscribe)
+            if (IsSendAtSubscribe)
             {
                 return MqttRetainHandling.SendAtSubscribe;
             }
 
-            if (_sendAtSubscribeIfNewSubscriptionOnly)
+            if (IsSendAtSubscribeIfNewSubscriptionOnly)
             {
                 return MqttRetainHandling.SendAtSubscribeIfNewSubscriptionOnly;
             }
 
-            if (_doNotSendOnSubscribe)
+            if (IsDoNotSendOnSubscribe)
             {
                 return MqttRetainHandling.DoNotSendOnSubscribe;
             }
@@ -58,9 +57,9 @@ public sealed class RetainHandlingSelectorViewModel : BaseViewModel
 
         set
         {
-            _isSendAtSubscribe = value == MqttRetainHandling.SendAtSubscribe;
-            _doNotSendOnSubscribe = value == MqttRetainHandling.DoNotSendOnSubscribe;
-            _sendAtSubscribeIfNewSubscriptionOnly = value == MqttRetainHandling.SendAtSubscribeIfNewSubscriptionOnly;
+            IsSendAtSubscribe = value == MqttRetainHandling.SendAtSubscribe;
+            IsDoNotSendOnSubscribe = value == MqttRetainHandling.DoNotSendOnSubscribe;
+            IsSendAtSubscribeIfNewSubscriptionOnly = value == MqttRetainHandling.SendAtSubscribeIfNewSubscriptionOnly;
         }
     }
 }

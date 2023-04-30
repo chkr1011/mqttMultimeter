@@ -1,10 +1,10 @@
-<UserControl x:Class="MQTTnetApp.Main.MainView"
+<UserControl x:Class="mqttMultimeter.Main.MainView"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:main="clr-namespace:MQTTnetApp.Main"
-             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
+             xmlns:main="clr-namespace:mqttMultimeter.Main"
+             xmlns:controls="clr-namespace:mqttMultimeter.Controls"
              d:DataContext="{d:DesignInstance main:MainViewModel}"
              d:DesignHeight="450"
              d:DesignWidth="800"
@@ -12,7 +12,7 @@
     <UserControl.Styles>
         <Style Selector="Border.status_bar_connected">
             <Setter Property="Background"
-                    Value="DarkGreen" />
+                    Value="{StaticResource AppLightGreen}" />
         </Style>
 
         <Style Selector="Border.status_bar_not_connected">
@@ -60,7 +60,7 @@
                     <TabItem Content="{Binding SubscriptionsPage}"
                              ToolTip.Tip="Subscribe">
                         <TabItem.Header>
-                            <PathIcon Data="{StaticResource filter_regular}" />
+                            <PathIcon Data="{StaticResource add_square_regular}" />
                         </TabItem.Header>
                     </TabItem>
 
@@ -69,6 +69,14 @@
                              ToolTip.Tip="Inflight">
                         <TabItem.Header>
                             <PathIcon Data="{StaticResource apps_list_regular}" />
+                        </TabItem.Header>
+                    </TabItem>
+
+                    <!-- Topic Explorer -->
+                    <TabItem Content="{Binding TopicExplorerPage}"
+                             ToolTip.Tip="Topic Explorer">
+                        <TabItem.Header>
+                            <PathIcon Data="{StaticResource branch_regular}" />
                         </TabItem.Header>
                     </TabItem>
 
@@ -111,33 +119,34 @@
                     Classes.status_bar_connected="{Binding ConnectionPage.IsConnected}"
                     Classes.status_bar_not_connected="{Binding !ConnectionPage.IsConnected}"
                     Grid.Row="1">
-                <DockPanel LastChildFill="True">
 
-                    <StackPanel DockPanel.Dock="Left"
-                                Orientation="Horizontal">
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto">
+                    <!-- The connection status -->
+                    <Border Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Not connected"
+                                       IsVisible="{Binding !ConnectionPage.IsConnected}" />
+                            <TextBlock Text="Connected"
+                                       IsVisible="{Binding ConnectionPage.IsConnected}" />
 
-                        <!-- The connection status -->
-                        <Border Width="166">
-                            <Grid HorizontalAlignment="Center">
-                                <TextBlock Text="Not connected"
-                                           IsVisible="{Binding !ConnectionPage.IsConnected}" />
-                                <TextBlock Text="Connected"
-                                           IsVisible="{Binding ConnectionPage.IsConnected}" />
-                            </Grid>
-                        </Border>
+                            <TextBlock Margin="10,0,0,0"
+                                       Text="{Binding ConnectionPage.DisconnectedReason.Reason}" />
+                            <TextBlock Margin="10,0,0,0"
+                                       Text="{Binding ConnectionPage.DisconnectedReason.AdditionalInformation}" />
+                        </StackPanel>
+                    </Border>
 
-                        <Separator />
+                    <Separator Grid.Column="2" />
 
-                        <!-- The count of received application messages -->
-                        <Border>
-                            <TextBlock Text="{Binding InflightPage.Items.Count, StringFormat={}{0} application messages received}" />
-                        </Border>
-                    </StackPanel>
+                    <!-- The count of inflight items -->
+                    <Border Grid.Column="3">
+                        <TextBlock Text="{Binding InflightPage.Counter, StringFormat={}{0} messages received}" />
+                    </Border>
 
                     <!-- The version string -->
-                    <Border DockPanel.Dock="Right"
+                    <Border Grid.Column="4"
                             Classes.update_available="{Binding InfoPage.IsUpdateAvailable}"
-                            Margin="0,0,-10,0"
+                            Margin="10,0,-10,0"
                             Padding="10,0">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding InfoPage.CurrentAppVersion, StringFormat={}v{0}}" />
@@ -146,10 +155,7 @@
                                        Text="Update available" />
                         </StackPanel>
                     </Border>
-
-                    <!-- Filler -->
-                    <Border />
-                </DockPanel>
+                </Grid>
             </Border>
         </Grid>
     </controls:Overlay>

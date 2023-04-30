@@ -23,11 +23,7 @@
                 Value="False" />
     </Style>
 
-    <Style Selector="GridSplitter.horizontal_splitter">
-        <Setter Property="ResizeBehavior"
-                Value="PreviousAndNext" />
-        <Setter Property="ResizeDirection"
-                Value="Rows" />
+    <Style Selector="GridSplitter.grid_splitter_vertical">
         <Setter Property="Height"
                 Value="1" />
         <Setter Property="MinHeight"
@@ -38,6 +34,14 @@
                 Value="Black" />
         <Setter Property="IsTabStop"
                 Value="False" />
+        <Setter Property="ResizeBehavior"
+                Value="PreviousAndNext" />
+        <Setter Property="ResizeDirection"
+                Value="Rows" />
+        <Setter Property="Width"
+                Value="NaN" />
+        <Setter Property="MinWidth"
+                Value="0" />
     </Style>
 
 </Styles>

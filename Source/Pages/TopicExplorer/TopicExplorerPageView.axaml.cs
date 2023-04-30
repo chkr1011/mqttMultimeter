@@ -1,11 +1,11 @@
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnetApp.Pages.PacketInspector;
+namespace mqttMultimeter.Pages.TopicExplorer;
 
-public sealed class PacketView : UserControl
+public class TopicExplorerPageView : UserControl
 {
-    public PacketView()
+    public TopicExplorerPageView()
     {
         InitializeComponent();
     }

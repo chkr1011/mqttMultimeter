@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace MQTTnetApp.Pages.Connection.State;
+namespace mqttMultimeter.Pages.Connection.State;
 
 public static class ConnectionPageStateLoader
 {
@@ -54,28 +54,35 @@ public static class ConnectionPageStateLoader
         });
     }
 
-    static ConnectionItemViewModel CreateItem(ConnectionPageViewModel ownerPage, ConnectionState connectionState)
+    static ConnectionItemViewModel CreateItem(ConnectionPageViewModel ownerPage, ConnectionState state)
     {
         var item = new ConnectionItemViewModel(ownerPage)
         {
-            Name = connectionState.Name ?? string.Empty,
+            Name = state.Name ?? string.Empty,
             ServerOptions =
             {
-                Host = connectionState.Host ?? string.Empty,
-                Port = connectionState.Port
+                Host = state.Host ?? string.Empty,
+                Port = state.Port,
+                IgnoreCertificateErrors = state.IgnoreCertificateErrors
             },
             SessionOptions =
             {
-                UserName = connectionState.UserName ?? string.Empty,
-                KeepAliveInterval = connectionState.KeepAliveInterval,
-                AuthenticationMethod = connectionState.AuthenticationMethod ?? string.Empty
+                UserName = state.UserName ?? string.Empty,
+                KeepAliveInterval = state.KeepAliveInterval,
+                AuthenticationMethod = state.AuthenticationMethod ?? string.Empty,
+                CertificatePath = state.CertificatePath ?? string.Empty,
+                CertificatePassword = state.CertificatePassword ?? string.Empty,
+
+                // If there was a password saved in the state we assume that it should be saved (also in the future).
+                SaveCertificatePassword = !string.IsNullOrEmpty(state.CertificatePassword)
             }
         };
 
-        item.ServerOptions.SelectedTransport =
-            item.ServerOptions.Transports.FirstOrDefault(t => t.Value.Equals(connectionState.Transport)) ?? item.ServerOptions.Transports.First();
+        item.ServerOptions.SelectedTransport = item.ServerOptions.Transports.FirstOrDefault(t => t.Value.Equals(state.Transport)) ?? item.ServerOptions.Transports.First();
 
-        item.ServerOptions.SelectedProtocolVersion = item.ServerOptions.ProtocolVersions.FirstOrDefault(p => p.Value.Equals(connectionState.ProtocolVersion)) ??
+        item.ServerOptions.SelectedTlsVersion = item.ServerOptions.TlsVersions.FirstOrDefault(t => t.Value.Equals(state.TlsVersion)) ?? item.ServerOptions.TlsVersions.First();
+
+        item.ServerOptions.SelectedProtocolVersion = item.ServerOptions.ProtocolVersions.FirstOrDefault(p => p.Value.Equals(state.ProtocolVersion)) ??
                                                      item.ServerOptions.ProtocolVersions.First();
 
         return item;

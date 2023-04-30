@@ -2,12 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:subscriptions="clr-namespace:MQTTnetApp.Pages.Subscriptions"
+             xmlns:subscriptions="clr-namespace:mqttMultimeter.Pages.Subscriptions"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance subscriptions:SubscriptionsPageViewModel}"
-             x:Class="MQTTnetApp.Pages.Subscriptions.SubscriptionsPageView">
+             x:Class="mqttMultimeter.Pages.Subscriptions.SubscriptionsPageView">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,19 +15,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="3*" />
-        </Grid.ColumnDefinitions>
+    <Grid ColumnDefinitions="*,Auto,3*">
 
         <!-- The list of subscription items. -->
-        <Grid Background="#262626">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Grid Background="#262626"
+              RowDefinitions="Auto,*">
 
             <StackPanel Orientation="Horizontal"
                         Grid.Row="0"
@@ -54,12 +46,13 @@
         </Grid>
 
         <!-- The splitter -->
-        <GridSplitter Grid.Column="1" />
+        <GridSplitter Grid.Column="1"
+                      Width="2" />
 
         <!-- The selected item. -->
-        <ContentPresenter Margin="10"
+        <subscriptions:SubscriptionItemView Margin="10"
                           Grid.Column="2"
-                          Content="{Binding ElementName=PART_Items, Path=SelectedItem}" />
+                          DataContext="{Binding ElementName=PART_Items, Path=SelectedItem}" />
     </Grid>
 
 </UserControl>

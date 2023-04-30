@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using MQTTnetApp.Common;
-using MQTTnetApp.Controls;
+using mqttMultimeter.Common;
+using mqttMultimeter.Controls;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Subscriptions;
+namespace mqttMultimeter.Pages.Subscriptions;
 
 public sealed class SubscriptionItemViewModel : BaseViewModel
 {

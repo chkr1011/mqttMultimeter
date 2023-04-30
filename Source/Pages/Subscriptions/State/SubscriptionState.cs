@@ -1,6 +1,6 @@
 ﻿using MQTTnet.Protocol;
 
-namespace MQTTnetApp.Pages.Subscriptions.State;
+namespace mqttMultimeter.Pages.Subscriptions.State;
 
 public sealed class SubscriptionState
 {

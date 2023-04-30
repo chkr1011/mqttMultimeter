@@ -2,30 +2,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
+             xmlns:controls="clr-namespace:mqttMultimeter.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance controls:QualityOfServiceLevelSelectorViewModel}"
-             x:Class="MQTTnetApp.Controls.QualityOfServiceLevelSelectorView">
+             x:Class="mqttMultimeter.Controls.QualityOfServiceLevelSelectorView">
     <StackPanel Orientation="Horizontal">
-        <StackPanel.Styles>
-            <Style Selector="RadioButton">
-                <Setter Property="Margin"
-                        Value="0,0,10,0" />
-            </Style>
-        </StackPanel.Styles>
+        <CheckBox Content="At most once - 0"
+                  Classes="radio-button"
+                  IsChecked="{Binding Path=IsLevel0, Mode=TwoWay}" />
 
-        <RadioButton GroupName="QoS"
-                     Content="At most once (0)"
-                     IsChecked="{Binding Path=IsLevel0, Mode=TwoWay}" />
+        <CheckBox Margin="10,0"
+                  Content="At least once - 1"
+                  Classes="radio-button"
+                  IsChecked="{Binding Path=IsLevel1, Mode=TwoWay}" />
 
-        <RadioButton GroupName="QoS"
-                     Content="At lease once (1)"
-                     IsChecked="{Binding Path=IsLevel1, Mode=TwoWay}" />
-
-        <RadioButton GroupName="QoS"
-                     Content="Exactly once (2)"
-                     IsChecked="{Binding Path=IsLevel2, Mode=TwoWay}" />
+        <CheckBox Content="Exactly once - 2"
+                  Classes="radio-button"
+                  IsChecked="{Binding Path=IsLevel2, Mode=TwoWay}" />
     </StackPanel>
 </UserControl>

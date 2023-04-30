@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using ReactiveUI;
 
-namespace MQTTnetApp.Common;
+namespace mqttMultimeter.Common;
 
 public sealed class PageItemsViewModel<TItem> : BaseViewModel
 {

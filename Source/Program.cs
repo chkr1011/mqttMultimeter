@@ -1,12 +1,26 @@
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.ReactiveUI;
 
-namespace MQTTnetApp;
+namespace mqttMultimeter;
 
 static class Program
 {
     public static void Main(string[] args)
     {
-        AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect().LogToTrace().StartWithClassicDesktopLifetime(args);
+        BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+    }
+
+    // Do not remove this method! It is required for the Designer.
+    static AppBuilder BuildAvaloniaApp()
+    {
+        var appBuilder = AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect();
+        
+        if (Debugger.IsAttached)
+        {
+            appBuilder = appBuilder.LogToTrace();
+        }
+
+        return appBuilder;
     }
 }

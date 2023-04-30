@@ -1,25 +1,29 @@
 ﻿using System;
+using mqttMultimeter.Common;
 using MQTTnet.Protocol;
-using MQTTnetApp.Common;
-using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Publish;
+namespace mqttMultimeter.Pages.Publish;
 
-public sealed class PayloadFormatIndicatorSelectorViewModel : BaseViewModel
+public sealed class PayloadFormatIndicatorSelectorViewModel : BaseSingleSelectionViewModel
 {
-    bool _isCharacterData;
-    bool _isUnspecified = true;
+    const int CharacterDataIndex = 0;
+    const int UnspecifiedIndex = 1;
+
+    public PayloadFormatIndicatorSelectorViewModel() : base(2)
+    {
+        IsUnspecified = true;
+    }
 
     public bool IsCharacterData
     {
-        get => _isCharacterData;
-        set => this.RaiseAndSetIfChanged(ref _isCharacterData, value);
+        get => GetState(CharacterDataIndex);
+        set => UpdateStates(CharacterDataIndex, value);
     }
 
     public bool IsUnspecified
     {
-        get => _isUnspecified;
-        set => this.RaiseAndSetIfChanged(ref _isUnspecified, value);
+        get => GetState(UnspecifiedIndex);
+        set => UpdateStates(UnspecifiedIndex, value);
     }
 
     public MqttPayloadFormatIndicator Value

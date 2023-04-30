@@ -1,10 +1,10 @@
 ﻿using System.Linq;
+using mqttMultimeter.Common;
+using mqttMultimeter.Controls;
 using MQTTnet.Client;
-using MQTTnetApp.Common;
-using MQTTnetApp.Controls;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Subscriptions;
+namespace mqttMultimeter.Pages.Subscriptions;
 
 public sealed class SubscriptionResponseViewModel : BaseViewModel
 {
@@ -12,6 +12,11 @@ public sealed class SubscriptionResponseViewModel : BaseViewModel
     int? _reasonCode;
     string _reasonCodeText = string.Empty;
     string _reasonString = string.Empty;
+
+    public SubscriptionResponseViewModel()
+    {
+        UserProperties.IsReadOnly = true;
+    }
 
     public uint? PacketIdentifier
     {
@@ -44,8 +49,8 @@ public sealed class SubscriptionResponseViewModel : BaseViewModel
         ReasonCodeText = response.Items.First().ResultCode.ToString();
         ReasonCode = (int)response.Items.First().ResultCode;
         ReasonString = response.ReasonString;
+        PacketIdentifier = response.PacketIdentifier;
         UserProperties.Load(response.UserProperties);
-        // TODO: Import Packet Identifier
     }
 
     public void ApplyResponse(MqttClientUnsubscribeResult response)
@@ -53,7 +58,7 @@ public sealed class SubscriptionResponseViewModel : BaseViewModel
         ReasonCodeText = response.Items.First().ResultCode.ToString();
         ReasonCode = (int)response.Items.First().ResultCode;
         ReasonString = response.ReasonString;
+        PacketIdentifier = response.PacketIdentifier;
         UserProperties.Load(response.UserProperties);
-        // TODO: Import Packet Identifier
     }
 }

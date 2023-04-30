@@ -22,12 +22,16 @@
                 Value="Consolas" />
     </Style>
 
-    <Style Selector="Border.badge_retained">
+    <Style Selector="Border.badge_retain">
+        <Setter Property="ToolTip.Tip"
+                Value="Retain" />
         <Setter Property="Background"
                 Value="HotPink" />
     </Style>
 
-    <Style Selector="Border.badge_retained > TextBlock">
+    <Style Selector="Border.badge_retain > TextBlock">
+        <Setter Property="Text"
+                Value="R" />
         <Setter Property="Foreground"
                 Value="Black" />
     </Style>

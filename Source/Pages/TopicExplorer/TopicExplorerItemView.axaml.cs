@@ -1,11 +1,11 @@
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnetApp.Pages.Subscriptions;
+namespace mqttMultimeter.Pages.TopicExplorer;
 
-public sealed class SubscribeResultView : UserControl
+public class TopicExplorerItemView : UserControl
 {
-    public SubscribeResultView()
+    public TopicExplorerItemView()
     {
         InitializeComponent();
     }

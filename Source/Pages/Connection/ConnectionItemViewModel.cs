@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MQTTnetApp.Common;
+using mqttMultimeter.Common;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Connection;
+namespace mqttMultimeter.Pages.Connection;
 
 public sealed class ConnectionItemViewModel : BaseViewModel
 {
@@ -13,7 +13,7 @@ public sealed class ConnectionItemViewModel : BaseViewModel
     {
         OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
 
-        SessionOptions.UserProperties.AddItem();
+        SessionOptions.UserProperties.AddEmptyItem();
     }
 
     public string Name

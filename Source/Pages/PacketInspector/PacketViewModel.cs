@@ -1,4 +1,4 @@
-﻿namespace MQTTnetApp.Pages.PacketInspector;
+﻿namespace mqttMultimeter.Pages.PacketInspector;
 
 public sealed class PacketViewModel
 {
@@ -7,6 +7,7 @@ public sealed class PacketViewModel
     public bool IsInbound { get; init; }
 
     public long Length { get; init; }
+    
     public int Number { get; init; }
 
     public string? Type { get; init; }
