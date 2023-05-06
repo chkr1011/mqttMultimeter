@@ -81,7 +81,7 @@
                 </DataGridTemplateColumn>
 
                 <!-- Source column -->
-                <DataGridTemplateColumn Header="Timestamp"
+                <DataGridTemplateColumn Header="Source"
                                         Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type log:LogItemViewModel}">
