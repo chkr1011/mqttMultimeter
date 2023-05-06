@@ -155,7 +155,7 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source\bin\Release\linux-arm64\publish\
-          dest: ${{ github.workspace }}\mqttMultimeter-linux-arm64.zip
+          dest: mqttMultimeter-linux-arm64.zip
 
       - name: Collect linux-arm artifacts
         uses: actions/upload-artifact@v3
