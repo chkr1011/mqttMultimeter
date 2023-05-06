@@ -165,7 +165,7 @@ jobs:
 
       # Release Management
       - name: Delete release drafts
-        uses: hugo19941994/delete-draft-releases@v1
+        uses: hugo19941994/delete-draft-releases@v1.0.1
         with:
           threshold: 1s
         env:
