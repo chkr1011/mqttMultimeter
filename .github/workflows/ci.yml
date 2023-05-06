@@ -155,7 +155,7 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: Source\bin\Release\linux-arm64\publish\
-          dest: mqttMultimeter-linux-arm64.zip
+          dest: ${{ github.workspace }}\mqttMultimeter-linux-arm64.zip
 
       - name: Collect linux-arm artifacts
         uses: actions/upload-artifact@v3
@@ -179,12 +179,4 @@ jobs:
           tag_name: v${{ env.VERSION }}
           generate_release_notes: true
           files: |
-            ${{ github.workspace }}\mqttMultimeter-windows-x86.zip
-            ${{ github.workspace }}\mqttMultimeter-windows-x64.zip
-            ${{ github.workspace }}\mqttMultimeter-windows-arm.zip
-            ${{ github.workspace }}\mqttMultimeter-windows-arm64.zip
-            ${{ github.workspace }}\mqttMultimeter-macOS-x64.zip
-            ${{ github.workspace }}\mqttMultimeter-macOS-arm64.zip
-            ${{ github.workspace }}\mqttMultimeter-linux-x64.zip
-            ${{ github.workspace }}\mqttMultimeter-linux-arm.zip
-            ${{ github.workspace }}\mqttMultimeter-linux-arm64.zip
+            ${{ github.workspace }}\*.zip
