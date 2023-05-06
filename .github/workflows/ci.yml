@@ -29,7 +29,7 @@ jobs:
 
       # Build applications
       - name: Build win-x86
-        run: dotnet publish Source\mqttMultimeter.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source\mqttMultimeter.csproj -r win-x86 -p:Configuration=Release --no-restore -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-x86 build
         uses: vimtor/action-zip@v1
@@ -44,7 +44,7 @@ jobs:
           path: ${{ github.workspace }}\mqttMultimeter-windows-x86.zip
 
       - name: Build win-x64
-        run: dotnet publish Source\mqttMultimeter.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source\mqttMultimeter.csproj -r win-x64 -p:Configuration=Release --no-restore -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-x64 build
         uses: vimtor/action-zip@v1
@@ -59,7 +59,7 @@ jobs:
           path: ${{ github.workspace }}\mqttMultimeter-windows-x64.zip
 
       - name: Build win-arm
-        run: dotnet publish Source\mqttMultimeter.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source\mqttMultimeter.csproj -r win-arm -p:Configuration=Release --no-restore -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-arm build
         uses: vimtor/action-zip@v1
@@ -74,7 +74,7 @@ jobs:
           path: ${{ github.workspace }}\mqttMultimeter-windows-arm.zip
 
       - name: Build win-arm64
-        run: dotnet publish Source\mqttMultimeter.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source\mqttMultimeter.csproj -r win-arm64 -p:Configuration=Release --no-restore -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-arm64 build
         uses: vimtor/action-zip@v1
@@ -89,7 +89,7 @@ jobs:
           path: ${{ github.workspace }}\mqttMultimeter-windows-arm64.zip
 
       - name: Build osx-x64
-        run: dotnet publish Source\mqttMultimeter.csproj -r osx.12-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source\mqttMultimeter.csproj -r osx.12-x64 -p:Configuration=Release --no-restore -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip osx-x64 build
         uses: vimtor/action-zip@v1
@@ -104,7 +104,7 @@ jobs:
           path: ${{ github.workspace }}\mqttMultimeter-macOS-x64.zip
 
       - name: Build osx-arm64
-        run: dotnet publish Source\mqttMultimeter.csproj -r osx.12-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source\mqttMultimeter.csproj -r osx.12-arm64 -p:Configuration=Release --no-restore -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip osx-arm64 build
         uses: vimtor/action-zip@v1
@@ -119,7 +119,7 @@ jobs:
           path: ${{ github.workspace }}\mqttMultimeter-macOS-arm64.zip
 
       - name: Build linux-x64
-        run: dotnet publish Source\mqttMultimeter.csproj -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source\mqttMultimeter.csproj -r linux-x64 -p:Configuration=Release --no-restore -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-x64 build
         uses: vimtor/action-zip@v1
@@ -134,7 +134,7 @@ jobs:
           path: ${{ github.workspace }}\mqttMultimeter-linux-x64.zip
 
       - name: Build linux-arm
-        run: dotnet publish Source\mqttMultimeter.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source\mqttMultimeter.csproj -r linux-arm -p:Configuration=Release --no-restore -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-arm build
         uses: vimtor/action-zip@v1
@@ -149,7 +149,7 @@ jobs:
           path: ${{ github.workspace }}\mqttMultimeter-linux-arm.zip
 
       - name: Build linux-arm64
-        run: dotnet publish Source\mqttMultimeter.csproj -r linux-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source\mqttMultimeter.csproj -r linux-arm64 -p:Configuration=Release --no-restore -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-arm64 build
         uses: vimtor/action-zip@v1
