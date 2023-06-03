@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using DynamicData;
 using DynamicData.Binding;
+using mqttMultimeter.Common;
 using MQTTnet;
-using MQTTnetApp.Common;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.TopicExplorer;
+namespace mqttMultimeter.Pages.TopicExplorer;
 
 public sealed class TopicExplorerTreeNodeViewModel : BaseViewModel
 {

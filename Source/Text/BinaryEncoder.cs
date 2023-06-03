@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace MQTTnetApp.Text;
+namespace mqttMultimeter.Text;
 
 public static class BinaryEncoder
 {

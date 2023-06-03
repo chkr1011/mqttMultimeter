@@ -1,7 +1,7 @@
-﻿using MQTTnetApp.Common;
+﻿using mqttMultimeter.Common;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Connection;
+namespace mqttMultimeter.Pages.Connection;
 
 public sealed class DisconnectedReasonViewModel : BaseViewModel
 {

@@ -2,13 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:connection="clr-namespace:MQTTnetApp.Pages.Connection"
-             xmlns:controls="clr-namespace:MQTTnetApp.Controls"
+             xmlns:connection="clr-namespace:mqttMultimeter.Pages.Connection"
+             xmlns:controls="clr-namespace:mqttMultimeter.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance connection:ConnectionPageViewModel}"
-             x:Class="MQTTnetApp.Pages.Connection.ConnectionPageView">
+             x:Class="mqttMultimeter.Pages.Connection.ConnectionPageView">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,20 +20,10 @@
     <controls:Overlay IsOverlayVisible="{Binding Path=OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
                       OverlayContent="{Binding OverlayContent}">
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="1" />
-                <ColumnDefinition Width="3*" />
-            </Grid.ColumnDefinitions>
+        <Grid ColumnDefinitions="*,Auto,3*">
 
             <!-- The list of publish items. -->
-            <Grid Background="#262626">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
+            <Grid Background="#262626" RowDefinitions="Auto,*">
                 <StackPanel Orientation="Horizontal"
                             Grid.Row="0"
                             Classes="tool_bar"
@@ -61,7 +51,7 @@
 
             <!-- The splitter -->
             <GridSplitter Grid.Column="1"
-                          Width="1" />
+                          Width="2" />
 
             <!-- The selected item. -->
             <ContentPresenter Margin="10"

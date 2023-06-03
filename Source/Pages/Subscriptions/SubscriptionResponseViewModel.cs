@@ -1,10 +1,10 @@
 ﻿using System.Linq;
+using mqttMultimeter.Common;
+using mqttMultimeter.Controls;
 using MQTTnet.Client;
-using MQTTnetApp.Common;
-using MQTTnetApp.Controls;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.Subscriptions;
+namespace mqttMultimeter.Pages.Subscriptions;
 
 public sealed class SubscriptionResponseViewModel : BaseViewModel
 {

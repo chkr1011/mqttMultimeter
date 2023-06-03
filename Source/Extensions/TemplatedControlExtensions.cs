@@ -6,7 +6,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.VisualTree;
 
-namespace MQTTnetApp.Extensions;
+namespace mqttMultimeter.Extensions;
 
 public static class TemplatedControlExtensions
 {

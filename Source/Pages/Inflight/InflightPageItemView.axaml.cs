@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnetApp.Pages.Inflight;
+namespace mqttMultimeter.Pages.Inflight;
 
 public sealed class InflightPageItemView : UserControl
 {

@@ -2,12 +2,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:main="clr-namespace:MQTTnetApp.Main"
+        xmlns:main="clr-namespace:mqttMultimeter.Main"
         mc:Ignorable="d"
         d:DesignWidth="800"
         d:DesignHeight="600"
         Icon="/Assets/Icons/App.ico"
-        x:Class="MQTTnetApp.Main.MainWindow"
-        Title="MQTT Multimeter (MQTTnet App)">
+        x:Class="mqttMultimeter.Main.MainWindow"
+        Title="mqttMultimeter">
     <main:MainView />
 </Window>

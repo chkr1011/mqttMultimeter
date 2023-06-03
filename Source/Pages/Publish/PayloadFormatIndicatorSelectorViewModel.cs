@@ -1,8 +1,8 @@
 ﻿using System;
+using mqttMultimeter.Common;
 using MQTTnet.Protocol;
-using MQTTnetApp.Common;
 
-namespace MQTTnetApp.Pages.Publish;
+namespace mqttMultimeter.Pages.Publish;
 
 public sealed class PayloadFormatIndicatorSelectorViewModel : BaseSingleSelectionViewModel
 {

@@ -2,7 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnetApp.Main;
+namespace mqttMultimeter.Main;
 
 public sealed class MainView : UserControl
 {

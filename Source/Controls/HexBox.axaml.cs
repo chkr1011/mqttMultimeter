@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using MQTTnetApp.Extensions;
+using mqttMultimeter.Extensions;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public sealed class HexBox : TemplatedControl
 {

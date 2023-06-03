@@ -1,6 +1,6 @@
 using ReactiveUI;
 
-namespace MQTTnetApp.Common;
+namespace mqttMultimeter.Common;
 
 public abstract class BaseSingleSelectionViewModel : BaseViewModel
 {

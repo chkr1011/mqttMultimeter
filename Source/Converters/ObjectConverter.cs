@@ -1,6 +1,6 @@
 ﻿using Avalonia.Data.Converters;
 
-namespace MQTTnetApp.Converters;
+namespace mqttMultimeter.Converters;
 
 public static class ObjectConverter
 {

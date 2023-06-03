@@ -5,7 +5,7 @@ using Avalonia.Data;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public sealed class AutoGrid : Grid
 {

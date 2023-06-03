@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 
-namespace MQTTnetApp.Common;
+namespace mqttMultimeter.Common;
 
 sealed class ViewLocator : IDataTemplate
 {

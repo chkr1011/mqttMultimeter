@@ -2,19 +2,22 @@
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using mqttMultimeter.Common;
+using mqttMultimeter.Pages.Inflight;
 using MQTTnet;
-using MQTTnetApp.Common;
-using MQTTnetApp.Pages.Inflight;
 using ReactiveUI;
 
-namespace MQTTnetApp.Pages.TopicExplorer;
+namespace mqttMultimeter.Pages.TopicExplorer;
 
 public sealed class TopicExplorerItemViewModel : BaseViewModel
 {
     readonly TopicExplorerPageViewModel _ownerPage;
 
     string? _currentPayload;
+    int _currentPayloadLength;
+    DateTime? _lastUpdateTimestamp;
     TopicExplorerItemMessageViewModel? _selectedMessage;
+    int _totalPayloadLength;
     bool _trackLatestMessage;
 
     public TopicExplorerItemViewModel(TopicExplorerPageViewModel ownerPage)
@@ -34,7 +37,19 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
         }
     }
 
+    public int CurrentPayloadLength
+    {
+        get => _currentPayloadLength;
+        private set => this.RaiseAndSetIfChanged(ref _currentPayloadLength, value);
+    }
+
     public bool HasPayload => CurrentPayload != null;
+
+    public DateTime? LastUpdateTimestamp
+    {
+        get => _lastUpdateTimestamp;
+        private set => this.RaiseAndSetIfChanged(ref _lastUpdateTimestamp, value);
+    }
 
     public CollectionViewModel<TopicExplorerItemMessageViewModel> Messages { get; } = new();
 
@@ -42,6 +57,12 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
     {
         get => _selectedMessage;
         set => this.RaiseAndSetIfChanged(ref _selectedMessage, value);
+    }
+
+    public int TotalPayloadLength
+    {
+        get => _totalPayloadLength;
+        private set => this.RaiseAndSetIfChanged(ref _totalPayloadLength, value);
     }
 
     public bool TrackLatestMessage
@@ -66,7 +87,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
         string payload;
         try
         {
-            payload = Encoding.UTF8.GetString(message.Payload ?? ReadOnlySpan<byte>.Empty);
+            payload = Encoding.UTF8.GetString(message.PayloadSegment);
         }
         catch
         {
@@ -75,6 +96,10 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
         }
 
         var timestamp = DateTime.Now;
+
+        TotalPayloadLength += message.PayloadSegment.Count;
+        LastUpdateTimestamp = timestamp;
+
         var duration = TimeSpan.Zero;
         var lastMessage = Messages.LastOrDefault();
         if (lastMessage != null)
@@ -106,5 +131,6 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
     void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         CurrentPayload = Messages.LastOrDefault()?.Payload ?? string.Empty;
+        CurrentPayloadLength = Messages.LastOrDefault()?.PayloadLength ?? 0;
     }
 }

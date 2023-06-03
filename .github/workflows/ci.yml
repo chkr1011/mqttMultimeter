@@ -7,160 +7,161 @@ on:
   pull_request:
 
 env:
-  VERSION: "1.6.0.${{github.run_number}}"
+  VERSION: "1.8.0.${{github.run_number}}"
 
 jobs:
   build:
 
-    runs-on: windows-2022
+    # windows-latest is required due to some resource stuff.
+    runs-on: windows-latest
 
     steps:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v1.9.0
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '7.0.x'
 
       - name: Checkout Code
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: dotnet restore Source/MQTTnetApp.sln
+        run: dotnet restore Source/mqttMultimeter.sln
 
       # Build applications
       - name: Build win-x86
-        run: dotnet publish Source/MQTTnetApp.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/mqttMultimeter.csproj -r win-x86 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-x86 build
         uses: vimtor/action-zip@v1
         with:
-          files: Source/bin/Release/net6.0/win-x86/publish/
-          dest: MQTTnetApp-windows-X86.zip
+          files: Source/bin/Release/win-x86/publish/
+          dest: mqttMultimeter-windows-x86.zip
 
       - name: Collect win-x86 artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-windows-x86
-          path: ${{ github.workspace }}/MQTTnetApp-windows-X86.zip
+          name: mqttMultimeter-windows-x86
+          path: ${{ github.workspace }}/mqttMultimeter-windows-x86.zip
 
       - name: Build win-x64
-        run: dotnet publish Source/MQTTnetApp.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/mqttMultimeter.csproj -r win-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-x64 build
         uses: vimtor/action-zip@v1
         with:
-          files: Source/bin/Release/net6.0/win-x64/publish/
-          dest: MQTTnetApp-windows-X64.zip
+          files: Source/bin/Release/win-x64/publish/
+          dest: mqttMultimeter-windows-x64.zip
 
       - name: Collect win-x64 artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-windows-x64
-          path: ${{ github.workspace }}/MQTTnetApp-windows-X64.zip
+          name: mqttMultimeter-windows-x64
+          path: ${{ github.workspace }}/mqttMultimeter-windows-x64.zip
 
       - name: Build win-arm
-        run: dotnet publish Source/MQTTnetApp.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/mqttMultimeter.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-arm build
         uses: vimtor/action-zip@v1
         with:
-          files: Source/bin/Release/net6.0/win-arm/publish/
-          dest: MQTTnetApp-windows-ARM.zip
+          files: Source/bin/Release/win-arm/publish/
+          dest: mqttMultimeter-windows-arm.zip
 
       - name: Collect win-arm artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-windows-arm
-          path: ${{ github.workspace }}/MQTTnetApp-windows-ARM.zip
+          name: mqttMultimeter-windows-arm
+          path: ${{ github.workspace }}/mqttMultimeter-windows-arm.zip
 
       - name: Build win-arm64
-        run: dotnet publish Source/MQTTnetApp.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/mqttMultimeter.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip win-arm64 build
         uses: vimtor/action-zip@v1
         with:
-          files: Source/bin/Release/net6.0/win-arm64/publish/
-          dest: MQTTnetApp-windows-ARM64.zip
+          files: Source/bin/Release/win-arm64/publish/
+          dest: mqttMultimeter-windows-arm64.zip
 
       - name: Collect win-arm64 artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-windows-arm64
-          path: ${{ github.workspace }}/MQTTnetApp-windows-ARM64.zip
+          name: mqttMultimeter-windows-arm64
+          path: ${{ github.workspace }}/mqttMultimeter-windows-arm64.zip
 
       - name: Build osx-x64
-        run: dotnet publish Source/MQTTnetApp.csproj -r osx.12-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/mqttMultimeter.csproj -r osx.12-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip osx-x64 build
         uses: vimtor/action-zip@v1
         with:
-          files: Source/bin/Release/net6.0/osx.12-x64/publish/
-          dest: MQTTnetApp-macOS-X64.zip
+          files: Source/bin/Release/osx.12-x64/publish/
+          dest: mqttMultimeter-macOS-x64.zip
 
       - name: Collect osx-x64 artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-macOS-x64
-          path: ${{ github.workspace }}/MQTTnetApp-macOS-X64.zip
+          name: mqttMultimeter-macOS-x64
+          path: ${{ github.workspace }}/mqttMultimeter-macOS-x64.zip
 
       - name: Build osx-arm64
-        run: dotnet publish Source/MQTTnetApp.csproj -r osx.12-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/mqttMultimeter.csproj -r osx.12-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip osx-arm64 build
         uses: vimtor/action-zip@v1
         with:
-          files: Source/bin/Release/net6.0/osx.12-arm64/publish/
-          dest: MQTTnetApp-macOS-ARM64.zip
+          files: Source/bin/Release/osx.12-arm64/publish/
+          dest: mqttMultimeter-macOS-arm64.zip
 
       - name: Collect osx-arm64 artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-macOS-arm64
-          path: ${{ github.workspace }}/MQTTnetApp-macOS-ARM64.zip
+          name: mqttMultimeter-macOS-arm64
+          path: ${{ github.workspace }}/mqttMultimeter-macOS-arm64.zip
 
       - name: Build linux-x64
-        run: dotnet publish Source/MQTTnetApp.csproj -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/mqttMultimeter.csproj -r linux-x64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-x64 build
         uses: vimtor/action-zip@v1
         with:
-          files: Source/bin/Release/net6.0/linux-x64/publish/
-          dest: MQTTnetApp-linux-X64.zip
+          files: Source/bin/Release/linux-x64/publish/
+          dest: mqttMultimeter-linux-x64.zip
 
       - name: Collect linux-x64 artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-linux-x64
-          path: ${{ github.workspace }}/MQTTnetApp-linux-X64.zip
+          name: mqttMultimeter-linux-x64
+          path: ${{ github.workspace }}/mqttMultimeter-linux-x64.zip
 
       - name: Build linux-arm
-        run: dotnet publish Source/MQTTnetApp.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/mqttMultimeter.csproj -r linux-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-arm build
         uses: vimtor/action-zip@v1
         with:
-          files: Source/bin/Release/net6.0/linux-arm/publish/
-          dest: MQTTnetApp-linux-ARM.zip
+          files: Source/bin/Release/linux-arm/publish/
+          dest: mqttMultimeter-linux-arm.zip
 
       - name: Collect linux-arm artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-linux-arm
-          path: ${{ github.workspace }}/MQTTnetApp-linux-ARM.zip
+          name: mqttMultimeter-linux-arm
+          path: ${{ github.workspace }}/mqttMultimeter-linux-arm.zip
 
       - name: Build linux-arm64
-        run: dotnet publish Source/MQTTnetApp.csproj -r linux-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
+        run: dotnet publish Source/mqttMultimeter.csproj -r linux-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
       - name: Zip linux-arm64 build
         uses: vimtor/action-zip@v1
         with:
-          files: Source/bin/Release/net6.0/linux-arm64/publish/
-          dest: MQTTnetApp-linux-ARM64.zip
+          files: Source/bin/Release/linux-arm64/publish/
+          dest: mqttMultimeter-linux-arm64.zip
 
       - name: Collect linux-arm artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: MQTTnetApp-linux-arm64
-          path: ${{ github.workspace }}/MQTTnetApp-linux-ARM64.zip
+          name: mqttMultimeter-linux-arm64
+          path: ${{ github.workspace }}/mqttMultimeter-linux-arm64.zip
 
       # Release Management
       - name: Delete release drafts
@@ -178,12 +179,12 @@ jobs:
           tag_name: v${{ env.VERSION }}
           generate_release_notes: true
           files: |
-            ${{ github.workspace }}/MQTTnetApp-windows-X86.zip
-            ${{ github.workspace }}/MQTTnetApp-windows-X64.zip
-            ${{ github.workspace }}/MQTTnetApp-windows-ARM.zip
-            ${{ github.workspace }}/MQTTnetApp-windows-ARM64.zip
-            ${{ github.workspace }}/MQTTnetApp-macOS-X64.zip
-            ${{ github.workspace }}/MQTTnetApp-macOS-ARM64.zip
-            ${{ github.workspace }}/MQTTnetApp-linux-X64.zip
-            ${{ github.workspace }}/MQTTnetApp-linux-ARM.zip
-            ${{ github.workspace }}/MQTTnetApp-linux-ARM64.zip
+            ${{ github.workspace }}/mqttMultimeter-windows-x86.zip
+            ${{ github.workspace }}/mqttMultimeter-windows-x64.zip
+            ${{ github.workspace }}/mqttMultimeter-windows-arm.zip
+            ${{ github.workspace }}/mqttMultimeter-windows-arm64.zip
+            ${{ github.workspace }}/mqttMultimeter-macOS-x64.zip
+            ${{ github.workspace }}/mqttMultimeter-macOS-arm64.zip
+            ${{ github.workspace }}/mqttMultimeter-linux-x64.zip
+            ${{ github.workspace }}/mqttMultimeter-linux-arm.zip
+            ${{ github.workspace }}/mqttMultimeter-linux-arm64.zip

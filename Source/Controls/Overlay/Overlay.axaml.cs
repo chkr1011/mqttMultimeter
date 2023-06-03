@@ -2,7 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public sealed class Overlay : ContentControl
 {

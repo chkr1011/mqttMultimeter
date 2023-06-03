@@ -1,4 +1,4 @@
-﻿namespace MQTTnetApp.Pages.Connection;
+﻿namespace mqttMultimeter.Pages.Connection;
 
 public enum Transport
 {

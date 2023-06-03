@@ -1,7 +1,7 @@
 ﻿using System;
 using MQTTnet;
 
-namespace MQTTnetApp.Pages.Inflight;
+namespace mqttMultimeter.Pages.Inflight;
 
 public static class InflightPageItemViewModelFactory
 {

@@ -3,10 +3,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
-using MQTTnetApp.Services.Data;
-using MQTTnetApp.Services.Updates.Model;
+using mqttMultimeter.Services.Data;
+using mqttMultimeter.Services.Updates.Model;
 
-namespace MQTTnetApp.Services.Updates;
+namespace mqttMultimeter.Services.Updates;
 
 public sealed class AppUpdateService
 {
@@ -44,10 +44,10 @@ public sealed class AppUpdateService
                 {
                     var request = new HttpRequestMessage
                     {
-                        RequestUri = new Uri("https://api.github.com/repos/chkr1011/MQTTnetApp/releases")
+                        RequestUri = new Uri("https://api.github.com/repos/chkr1011/mqttMultimeter/releases")
                     };
 
-                    request.Headers.UserAgent.ParseAdd("MQTTnetApp");
+                    request.Headers.UserAgent.ParseAdd("mqttMultimeter");
 
                     var response = await httpClient.SendAsync(request).ConfigureAwait(false);
                     var releasesJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

@@ -4,7 +4,7 @@ using Avalonia.Data.Converters;
 using Avalonia.Media;
 using MQTTnet.Protocol;
 
-namespace MQTTnetApp.Converters;
+namespace mqttMultimeter.Converters;
 
 public static class EnumConverters
 {

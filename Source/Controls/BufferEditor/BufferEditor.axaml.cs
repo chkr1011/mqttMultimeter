@@ -12,12 +12,12 @@ using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
 using AvaloniaEdit.TextMate.Grammars;
-using MQTTnetApp.Extensions;
-using MQTTnetApp.Main;
+using mqttMultimeter.Extensions;
+using mqttMultimeter.Main;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public sealed class BufferEditor : TemplatedControl
 {

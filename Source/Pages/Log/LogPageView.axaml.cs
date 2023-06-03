@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace MQTTnetApp.Pages.Log;
+namespace mqttMultimeter.Pages.Log;
 
 public class LogPageView : UserControl
 {

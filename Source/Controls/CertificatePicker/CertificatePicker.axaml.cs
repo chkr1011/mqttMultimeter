@@ -6,10 +6,10 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
-using MQTTnetApp.Extensions;
-using MQTTnetApp.Main;
+using mqttMultimeter.Extensions;
+using mqttMultimeter.Main;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public sealed class CertificatePicker : TemplatedControl
 {

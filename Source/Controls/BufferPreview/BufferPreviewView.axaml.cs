@@ -17,12 +17,12 @@ using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
 using AvaloniaEdit.TextMate.Grammars;
 using MessagePack;
-using MQTTnetApp.Extensions;
-using MQTTnetApp.Main;
-using MQTTnetApp.Services.Data;
-using MQTTnetApp.Text;
+using mqttMultimeter.Extensions;
+using mqttMultimeter.Main;
+using mqttMultimeter.Services.Data;
+using mqttMultimeter.Text;
 
-namespace MQTTnetApp.Controls;
+namespace mqttMultimeter.Controls;
 
 public sealed class BufferInspectorView : TemplatedControl
 {

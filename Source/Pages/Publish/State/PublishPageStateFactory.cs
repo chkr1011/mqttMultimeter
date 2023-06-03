@@ -1,7 +1,7 @@
 ﻿using System;
-using MQTTnetApp.Services.State.Model;
+using mqttMultimeter.Services.State.Model;
 
-namespace MQTTnetApp.Pages.Publish.State;
+namespace mqttMultimeter.Pages.Publish.State;
 
 public static class PublishPageStateFactory
 {
