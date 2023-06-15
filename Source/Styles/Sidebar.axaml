@@ -16,10 +16,7 @@
                           RowDefinitions="*">
 
                         <!-- The container for the tab items -->
-                        <ItemsPresenter Name="PART_ItemsPresenter"
-                                        ItemTemplate="{TemplateBinding ItemTemplate}"
-                                        Items="{TemplateBinding Items}"
-                                        ItemsPanel="{TemplateBinding ItemsPanel}" />
+                        <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
 
                         <!-- The divider -->
                         <Rectangle Grid.Column="1"

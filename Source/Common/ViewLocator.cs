@@ -9,7 +9,7 @@ sealed class ViewLocator : IDataTemplate
 {
     readonly Dictionary<string, Type> _viewTypeCache = new();
 
-    public IControl Build(object? viewModel)
+    public Control Build(object? viewModel)
     {
         if (viewModel == null)
         {

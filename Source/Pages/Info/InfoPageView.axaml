@@ -1,16 +1,15 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:info="clr-namespace:mqttMultimeter.Pages.Info"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
+             Design.Width="800"
+             Design.Height="450"
              Margin="10"
-             d:DataContext="{d:DesignInstance info:InfoPageViewModel}"
              x:Class="mqttMultimeter.Pages.Info.InfoPageView">
+    <Design.DataContext>
+        <info:InfoPageViewModel />
+    </Design.DataContext>
+
     <UserControl.Styles>
-        <StyleInclude Source="avares://AvaloniaEdit/AvaloniaEdit.xaml" />
 
         <Style Selector="TextBlock.version_text">
             <Setter Property="Margin"

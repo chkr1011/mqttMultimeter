@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Controls;
 
-public sealed class QualityOfServiceLevelSelectorView : UserControl
+public sealed partial class QualityOfServiceLevelSelectorView : UserControl
 {
     public QualityOfServiceLevelSelectorView()
     {

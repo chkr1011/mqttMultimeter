@@ -23,20 +23,12 @@
             <ControlTemplate TargetType="{x:Type controls:BufferEditor}">
                 <Border BorderThickness="{DynamicResource TextControlBorderThemeThickness}"
                         Background="{DynamicResource TextControlBackground}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                    <Grid RowDefinitions="Auto,*">
 
                         <!-- The tool bar. -->
                         <Grid Grid.Row="0"
-                              Classes="tool_bar">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                              Classes="tool_bar"
+                              ColumnDefinitions="Auto,*,Auto">
 
                             <!-- The buttons -->
                             <StackPanel Orientation="Horizontal">

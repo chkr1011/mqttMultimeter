@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Pages.Connection;
 
-public sealed class ConnectionItemView : UserControl
+public sealed partial class ConnectionItemView : UserControl
 {
     public ConnectionItemView()
     {

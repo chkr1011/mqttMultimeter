@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Main;
 
-public sealed class MainView : UserControl
+public sealed partial class MainView : UserControl
 {
     public MainView()
     {

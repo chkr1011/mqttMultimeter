@@ -99,7 +99,7 @@ public sealed class InflightPageViewModel : BasePageViewModel
             {
                 _itemsSource.RemoveAt(0);
             }
-        });
+        }).GetTask();
     }
 
     public void ClearItems()

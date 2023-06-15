@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Pages.Inflight;
 
-public sealed class InflightPageView : UserControl
+public sealed partial class InflightPageView : UserControl
 {
     public InflightPageView()
     {

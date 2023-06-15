@@ -11,11 +11,11 @@ using Avalonia.Interactivity;
 using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
-using AvaloniaEdit.TextMate.Grammars;
 using mqttMultimeter.Extensions;
 using mqttMultimeter.Main;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TextMateSharp.Grammars;
 
 namespace mqttMultimeter.Controls;
 
@@ -172,7 +172,7 @@ public sealed class BufferEditor : TemplatedControl
     {
         if (!string.IsNullOrEmpty(Buffer))
         {
-            Application.Current?.Clipboard?.SetTextAsync(Buffer);
+            //Application.Current?.Clipboard?.SetTextAsync(Buffer);
         }
     }
 

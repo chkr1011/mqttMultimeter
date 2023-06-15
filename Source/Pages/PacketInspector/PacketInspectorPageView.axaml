@@ -1,14 +1,14 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:packetInspector="clr-namespace:mqttMultimeter.Pages.PacketInspector"
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-             d:DataContext="{d:DesignInstance packetInspector:PacketInspectorPageViewModel}"
+             Design.Width="800"
+             Design.Height="450"
              x:Class="mqttMultimeter.Pages.PacketInspector.PacketInspectorPageView">
+    <Design.DataContext>
+        <packetInspector:PacketInspectorPageViewModel />
+    </Design.DataContext>
+    
     <Grid RowDefinitions="Auto,*">
 
         <!-- The Tool Bar -->
@@ -37,11 +37,10 @@
             <DataGrid Grid.Column="0"
                       Background="#262626"
                       SelectedItem="{Binding SelectedPacket}"
-                      Items="{Binding Packets}">
+                      ItemsSource="{Binding Packets}">
                 <DataGrid.Columns>
                     <!-- The number column -->
                     <DataGridTemplateColumn Header="#"
-                                            d:DataContext="{d:DesignInstance packetInspector:PacketViewModel}"
                                             Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -55,7 +54,6 @@
 
                     <!-- The direction column -->
                     <DataGridTemplateColumn Header="Direction"
-                                            d:DataContext="{d:DesignInstance packetInspector:PacketViewModel}"
                                             Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -81,7 +79,6 @@
 
                     <!-- The type column -->
                     <DataGridTemplateColumn Header="Type"
-                                            d:DataContext="{d:DesignInstance packetInspector:PacketViewModel}"
                                             Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -94,7 +91,6 @@
 
                     <!-- The size column -->
                     <DataGridTemplateColumn Header="Size"
-                                            d:DataContext="{d:DesignInstance packetInspector:PacketViewModel}"
                                             Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

@@ -60,7 +60,7 @@
                                 <ComboBox Classes="tool_bar_combo_box"
                                           MinWidth="100"
                                           VerticalAlignment="Stretch"
-                                          Items="{Binding Path=Formats, RelativeSource={RelativeSource TemplatedParent}}"
+                                          ItemsSource="{Binding Path=Formats, RelativeSource={RelativeSource TemplatedParent}}"
                                           SelectedItem="{Binding Path=SelectedFormat, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>

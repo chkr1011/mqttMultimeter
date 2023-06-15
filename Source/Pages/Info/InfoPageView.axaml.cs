@@ -8,7 +8,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Pages.Info;
 
-public sealed class InfoPageView : UserControl
+public sealed partial class InfoPageView : UserControl
 {
     public InfoPageView()
     {

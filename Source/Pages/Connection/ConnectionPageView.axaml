@@ -1,14 +1,13 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:connection="clr-namespace:mqttMultimeter.Pages.Connection"
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-             d:DataContext="{d:DesignInstance connection:ConnectionPageViewModel}"
+             Design.Width="800"
+             Design.Height="450"
              x:Class="mqttMultimeter.Pages.Connection.ConnectionPageView">
+    <Design.DataContext>
+        <connection:ConnectionPageViewModel />
+    </Design.DataContext>
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,7 +22,8 @@
         <Grid ColumnDefinitions="*,Auto,3*">
 
             <!-- The list of publish items. -->
-            <Grid Background="#262626" RowDefinitions="Auto,*">
+            <Grid Background="#262626"
+                  RowDefinitions="Auto,*">
                 <StackPanel Orientation="Horizontal"
                             Grid.Row="0"
                             Classes="tool_bar"
@@ -44,7 +44,7 @@
                          ItemTemplate="{StaticResource ConnectItemViewModelListItem}"
                          Grid.Row="1"
                          SelectedItem="{Binding Items.SelectedItem}"
-                         Items="{Binding Items.Collection}"
+                         ItemsSource="{Binding Items.Collection}"
                          x:Name="PART_Items"
                          Grid.Column="0" />
             </Grid>

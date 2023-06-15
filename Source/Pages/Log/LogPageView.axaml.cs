@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Pages.Log;
 
-public class LogPageView : UserControl
+public sealed partial class LogPageView : UserControl
 {
     public LogPageView()
     {

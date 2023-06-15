@@ -18,9 +18,9 @@
         </ResourceDictionary>
     </Application.Resources>
     <Application.Styles>
-        <FluentTheme Mode="Dark" />
-        <StyleInclude Source="avares://AvaloniaEdit/AvaloniaEdit.xaml" />
-
+        <FluentTheme />
+        <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
+        
         <StyleInclude Source="/Styles/GridSplitter.axaml" />
         <StyleInclude Source="/Styles/Badges.axaml" />
         <StyleInclude Source="/Styles/Button.axaml" />

@@ -7,7 +7,7 @@ using Avalonia.VisualTree;
 
 namespace mqttMultimeter.Pages.TopicExplorer;
 
-public sealed class TopicExplorerTreeNodeView : UserControl
+public sealed partial class TopicExplorerTreeNodeView : UserControl
 {
     public TopicExplorerTreeNodeView()
     {
@@ -30,7 +30,7 @@ public sealed class TopicExplorerTreeNodeView : UserControl
     void OnMessagesChanged(object? sender, EventArgs eventArgs)
     {
         Control control = this;
-        while (!(control is TreeViewItem))
+        while (control is not TreeViewItem)
         {
             control = control.GetVisualParent<Control>();
 

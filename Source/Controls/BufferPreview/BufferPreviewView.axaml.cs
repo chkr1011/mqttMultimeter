@@ -15,12 +15,12 @@ using Avalonia.Interactivity;
 using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
-using AvaloniaEdit.TextMate.Grammars;
 using MessagePack;
 using mqttMultimeter.Extensions;
 using mqttMultimeter.Main;
 using mqttMultimeter.Services.Data;
 using mqttMultimeter.Text;
+using TextMateSharp.Grammars;
 
 namespace mqttMultimeter.Controls;
 
@@ -162,7 +162,7 @@ public sealed class BufferInspectorView : TemplatedControl
     {
         if (!string.IsNullOrEmpty(_content))
         {
-            Application.Current?.Clipboard?.SetTextAsync(_content);
+            //Application.Current?.Clipboard?.SetTextAsync(_content);
         }
     }
 

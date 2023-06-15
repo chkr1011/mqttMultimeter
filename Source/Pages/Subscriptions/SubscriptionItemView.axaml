@@ -1,14 +1,14 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:subscriptions="clr-namespace:mqttMultimeter.Pages.Subscriptions"
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-             d:DataContext="{d:DesignInstance subscriptions:SubscriptionItemViewModel}"
+             Design.Width="800"
+             Design.Height="450"
              x:Class="mqttMultimeter.Pages.Subscriptions.SubscriptionItemView">
+    <Design.DataContext>
+        <subscriptions:SubscriptionItemViewModel />
+    </Design.DataContext>
+
     <Grid RowDefinitions="Auto,2*,Auto">
         <Grid Grid.Row="0"
               ColumnDefinitions="*,Auto">
@@ -68,8 +68,8 @@
                        Grid.Row="0"
                        Content="Quality of Service level (QoS)" />
                 <controls:QualityOfServiceLevelSelectorView DataContext="{Binding QualityOfServiceLevel}"
-                                  Grid.Column="1"
-                                  Grid.Row="0" />
+                                                            Grid.Column="1"
+                                                            Grid.Row="0" />
 
                 <!-- No local -->
                 <Label Grid.Row="1"
@@ -92,17 +92,17 @@
                        Grid.Column="0"
                        Classes="caption">Retain handling</Label>
                 <controls:RetainHandlingSelectorView Grid.Row="3"
-                                  Grid.Column="1"
-                                  DataContext="{Binding RetainHandling}" />
+                                                     Grid.Column="1"
+                                                     DataContext="{Binding RetainHandling}" />
 
                 <!-- User properties -->
                 <Label Grid.Row="4"
                        Grid.Column="0"
                        Classes="caption">User Properties</Label>
                 <controls:UserPropertiesView Grid.Row="5"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="2"
-                                  DataContext="{Binding UserProperties}" />
+                                             Grid.Column="0"
+                                             Grid.ColumnSpan="2"
+                                             DataContext="{Binding UserProperties}" />
             </Grid>
         </Grid>
 

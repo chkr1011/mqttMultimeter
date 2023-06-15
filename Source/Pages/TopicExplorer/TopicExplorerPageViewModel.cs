@@ -181,7 +181,7 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
         var topic = arguments.ApplicationMessage.Topic;
         var path = topic.Split("/");
 
-        return Dispatcher.UIThread.InvokeAsync(() => InsertNode(path, arguments.ApplicationMessage));
+        return Dispatcher.UIThread.InvokeAsync(() => InsertNode(path, arguments.ApplicationMessage)).GetTask();
     }
 
     static void SetExpandedState(TopicExplorerTreeNodeViewModel node, bool value)

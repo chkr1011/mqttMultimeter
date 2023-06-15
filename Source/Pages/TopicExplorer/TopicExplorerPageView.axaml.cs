@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Pages.TopicExplorer;
 
-public class TopicExplorerPageView : UserControl
+public sealed partial class TopicExplorerPageView : UserControl
 {
     public TopicExplorerPageView()
     {

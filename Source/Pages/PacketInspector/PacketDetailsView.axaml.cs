@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Pages.PacketInspector;
 
-public sealed class PacketDetailsView : UserControl
+public sealed partial class PacketDetailsView : UserControl
 {
     public PacketDetailsView()
     {
