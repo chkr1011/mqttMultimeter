@@ -19,7 +19,7 @@ public sealed partial class InfoPageView : UserControl
     {
         AvaloniaXamlLoader.Load(this);
 
-        var licenses = this.FindControl<TextBlock>("Licenses");
+        var licenses = this.FindControl<TextBlock>("Licenses")!;
         licenses.Text = ReadEmbeddedMarkdown();
     }
 

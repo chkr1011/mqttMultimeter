@@ -37,7 +37,6 @@
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-rc1.1" />
         <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.0-rc1.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
         <PackageReference Include="MQTTnet" Version="4.2.1.781" />
         <PackageReference Include="MessagePack" Version="2.5.108" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

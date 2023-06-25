@@ -65,7 +65,8 @@ public sealed class MqttClientService
             .WithCredentials(item.SessionOptions.UserName, item.SessionOptions.Password)
             .WithRequestProblemInformation(item.SessionOptions.RequestProblemInformation)
             .WithRequestResponseInformation(item.SessionOptions.RequestResponseInformation)
-            .WithKeepAlivePeriod(TimeSpan.FromSeconds(item.SessionOptions.KeepAliveInterval));
+            .WithKeepAlivePeriod(TimeSpan.FromSeconds(item.SessionOptions.KeepAliveInterval))
+            .WithoutPacketFragmentation(); // We do not need this optimization is this type of client. It will also increase compatibility.
 
         if (item.SessionOptions.SessionExpiryInterval > 0)
         {
