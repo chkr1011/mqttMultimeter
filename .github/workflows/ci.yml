@@ -208,4 +208,4 @@ jobs:
           tag_name: v${{ env.VERSION }}
           generate_release_notes: true
           files: |
-            ${{ github.workspace }}/*.zip
+            ./mqttMultimeter-windows-x86.zip
