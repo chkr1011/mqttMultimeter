@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using mqttMultimeter.Services.Data;
 
 namespace mqttMultimeter.Services.State;
@@ -12,16 +11,13 @@ namespace mqttMultimeter.Services.State;
 public sealed class StateService
 {
     readonly JsonSerializerService _jsonSerializerService;
-    readonly ILogger<StateService> _logger;
-
     readonly Dictionary<string, JsonNode?> _state = new();
 
     bool _isLoaded;
 
-    public StateService(JsonSerializerService jsonSerializerService, ILogger<StateService> logger)
+    public StateService(JsonSerializerService jsonSerializerService)
     {
         _jsonSerializerService = jsonSerializerService ?? throw new ArgumentNullException(nameof(jsonSerializerService));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     public event EventHandler<SavingStateEventArgs>? Saving;
@@ -78,7 +74,7 @@ public sealed class StateService
         foreach (var state in _state)
         {
             var path = Path.Combine(GeneratePath(), state.Key + ".json");
-            _logger.LogInformation("Writing state to \'{Path}\'", path);
+            Debug.WriteLine("Writing state to \'{Path}\'", path);
 
             var json = _jsonSerializerService.Serialize(state.Value);
             await File.WriteAllTextAsync(path, json).ConfigureAwait(false);
