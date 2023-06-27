@@ -65,7 +65,8 @@ public sealed class MqttClientService
             .WithCredentials(item.SessionOptions.UserName, item.SessionOptions.Password)
             .WithRequestProblemInformation(item.SessionOptions.RequestProblemInformation)
             .WithRequestResponseInformation(item.SessionOptions.RequestResponseInformation)
-            .WithKeepAlivePeriod(TimeSpan.FromSeconds(item.SessionOptions.KeepAliveInterval));
+            .WithKeepAlivePeriod(TimeSpan.FromSeconds(item.SessionOptions.KeepAliveInterval))
+            .WithoutPacketFragmentation(); // There is no need for performance optimization in this MQTT debugging app.
 
         if (item.SessionOptions.SessionExpiryInterval > 0)
         {
