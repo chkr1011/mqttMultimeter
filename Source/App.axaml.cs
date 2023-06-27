@@ -30,7 +30,7 @@ public sealed class App : Application
 
     public App()
     {
-        var serviceProvider = new ServiceCollection().AddLogging()
+        var serviceProvider = new ServiceCollection()
             // Services
             .AddSingleton<MqttClientService>()
             .AddSingleton<AppUpdateService>()
