@@ -26,12 +26,12 @@ public sealed class InflightPageItemExportService
 
         var export = new InflightPageExport
         {
-            Messages = new List<MqttApplicationMessage>(inflightPage.Items.Count)
+            Messages = new List<InflightPageExportMessage>(inflightPage.Items.Count)
         };
 
         foreach (var item in inflightPage.Items)
         {
-            export.Messages.Add(item.Message);
+            export.Messages.Add(CreateMessageModel(item.Message));
         }
 
         var json = JsonConvert.SerializeObject(export, Formatting.Indented);
@@ -66,7 +66,60 @@ public sealed class InflightPageItemExportService
 
         foreach (var message in export.Messages)
         {
-            await inflightPage.AppendMessage(message);
+            await inflightPage.AppendMessage(CreateMessage(message));
         }
+    }
+
+    static MqttApplicationMessage CreateMessage(InflightPageExportMessage model)
+    {
+        var message = new MqttApplicationMessage
+        {
+            Topic = model.Topic,
+            ResponseTopic = model.ResponseTopic,
+            QualityOfServiceLevel = model.QualityOfServiceLevel,
+            Retain = model.Retain,
+            Dup = model.Dup,
+            ContentType = model.ContentType,
+            CorrelationData = model.CorrelationData,
+            SubscriptionIdentifiers = model.SubscriptionIdentifiers,
+            TopicAlias = model.TopicAlias,
+            MessageExpiryInterval = model.MessageExpiryInterval,
+            PayloadFormatIndicator = model.PayloadFormatIndicator,
+            UserProperties = model.UserProperties,
+            PayloadSegment = new ArraySegment<byte>(model.Payload ?? Array.Empty<byte>())
+        };
+
+        return message;
+    }
+
+    static InflightPageExportMessage CreateMessageModel(MqttApplicationMessage message)
+    {
+        var exportMessage = new InflightPageExportMessage
+        {
+            Topic = message.Topic,
+            ResponseTopic = message.ResponseTopic,
+            QualityOfServiceLevel = message.QualityOfServiceLevel,
+            Retain = message.Retain,
+            Dup = message.Dup,
+            ContentType = message.ContentType,
+            CorrelationData = message.CorrelationData,
+            SubscriptionIdentifiers = message.SubscriptionIdentifiers,
+            TopicAlias = message.TopicAlias,
+            MessageExpiryInterval = message.MessageExpiryInterval,
+            PayloadFormatIndicator = message.PayloadFormatIndicator,
+            UserProperties = message.UserProperties,
+            Payload = null // Will be set later!
+        };
+
+        if (message.PayloadSegment.Count > 0)
+        {
+            exportMessage.Payload = message.PayloadSegment.ToArray();
+        }
+        else
+        {
+            exportMessage.Payload = Array.Empty<byte>();
+        }
+
+        return exportMessage;
     }
 }

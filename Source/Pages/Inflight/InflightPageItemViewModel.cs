@@ -12,7 +12,15 @@ public sealed class InflightPageItemViewModel
     {
         Message = message ?? throw new ArgumentNullException(nameof(message));
 
-        Payload = message.PayloadSegment.ToArray();
+        if (message.PayloadSegment.Count > 0)
+        {
+            Payload = message.PayloadSegment.ToArray();
+        }
+        else
+        {
+            Payload = Array.Empty<byte>();
+        }
+        
         UserProperties.IsReadOnly = true;
     }
 
