@@ -35,6 +35,11 @@
         <Setter Property="FontFamily"
                 Value="Inconsolata,Consolas,Monospace,Courier" />
     </Style>
+    
+    <Style Selector="NumericUpDown.code_text">
+        <Setter Property="FontFamily"
+                Value="Inconsolata,Consolas,Monospace,Courier" />
+    </Style>
 
     <Style Selector="TextBlock.code_text">
         <Setter Property="FontFamily"

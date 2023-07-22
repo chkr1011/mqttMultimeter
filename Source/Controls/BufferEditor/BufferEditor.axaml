@@ -39,14 +39,28 @@
                                     <PathIcon Data="{StaticResource text_wrap_regular}"
                                               ToolTip.Tip="Toggle word wrap" />
                                 </ToggleButton>
-
-                                <Separator Classes="tool_bar_separator" />
-
+                                
+                                <!-- The Reformat button -->
+                                <Button Classes="tool_bar_button"
+                                        x:Name="ReformatButton">
+                                    <PathIcon Data="{StaticResource code_regular}"
+                                              ToolTip.Tip="Reformat" />
+                                </Button>
+                                
                                 <!-- The Copy button -->
                                 <Button Classes="tool_bar_button"
                                         x:Name="CopyToClipboardButton">
                                     <PathIcon Data="{StaticResource copy_regular}"
                                               ToolTip.Tip="Copy to clipboard" />
+                                </Button>
+
+                                <Separator Classes="tool_bar_separator" />
+                                
+                                <!-- The open button -->
+                                <Button Classes="tool_bar_button"
+                                        x:Name="LoadFromFileButton"
+                                        ToolTip.Tip="Load from file">
+                                    <PathIcon Data="{StaticResource folder_open_regular}" />
                                 </Button>
 
                                 <!-- The Save button -->
@@ -56,21 +70,22 @@
                                               ToolTip.Tip="Save to file" />
                                 </Button>
 
-                                <!-- The open button -->
-                                <Button Classes="tool_bar_button"
-                                        x:Name="LoadFromFileButton"
-                                        ToolTip.Tip="Load from file">
-                                    <PathIcon Data="{StaticResource folder_open_regular}" />
-                                </Button>
-
                                 <Separator Classes="tool_bar_separator" />
 
-                                <!-- The Reformat button -->
+                                <!-- The zoom in button -->
                                 <Button Classes="tool_bar_button"
-                                        x:Name="ReformatButton">
-                                    <PathIcon Data="{StaticResource code_regular}"
-                                              ToolTip.Tip="Reformat" />
+                                        x:Name="IncreaseFontSizeButton">
+                                    <PathIcon Data="{StaticResource zoom_in_regular}"
+                                              ToolTip.Tip="Increase font size" />
                                 </Button>
+                                
+                                <!-- The zoom out button -->
+                                <Button Classes="tool_bar_button"
+                                        x:Name="DecreaseFontSizeButton">
+                                    <PathIcon Data="{StaticResource zoom_out_regular}"
+                                              ToolTip.Tip="Decrease font size" />
+                                </Button>
+                                
                             </StackPanel>
 
                             <!-- The format -->

@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using mqttMultimeter.Extensions;
-using mqttMultimeter.Main;
 
 namespace mqttMultimeter.Controls;
 
@@ -51,31 +49,30 @@ public sealed class CertificatePicker : TemplatedControl
     {
         Dispatcher.UIThread.InvokeAsync(async () =>
         {
-            var openFileDialog = new OpenFileDialog
+            var filePickerOptions = new FilePickerOpenOptions
             {
-                Title = "Choose certificate",
-                Filters = new List<FileDialogFilter>
+                AllowMultiple = false,
+                FileTypeFilter = new[]
                 {
-                    new()
+                    new FilePickerFileType("Certificates")
                     {
-                        Extensions =
+                        Patterns = new[]
                         {
-                            "pem",
-                            "crt",
-                            "pfx"
-                        },
-                        Name = "Certificates"
+                            "*.pem",
+                            "*.crt",
+                            "*.pfx"
+                        }
                     }
                 }
             };
-
-            var filenames = await openFileDialog.ShowAsync(MainWindow.Instance);
-            if (filenames?.Length == 0)
+            
+            var files = await TopLevel.GetTopLevel(this)!.StorageProvider.OpenFilePickerAsync(filePickerOptions);
+            if (files.Count == 0)
             {
                 return;
             }
 
-            Path = filenames?.FirstOrDefault() ?? string.Empty;
+            Path = files[0].Path.LocalPath;
         });
     }
 }

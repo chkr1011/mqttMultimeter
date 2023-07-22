@@ -29,17 +29,15 @@ public sealed partial class TopicExplorerTreeNodeView : UserControl
 
     void OnMessagesChanged(object? sender, EventArgs eventArgs)
     {
-        Control control = this;
+        Control? control = this;
         while (control is not TreeViewItem)
         {
             control = control.GetVisualParent<Control>();
-
             if (control == null)
             {
                 break;
             }
         }
-
 
         if (control != null)
         {

@@ -27,8 +27,13 @@ public sealed partial class MainView : UserControl
             return;
         }
         
-        foreach (TabItem tabItem in sidebar.Items)
+        foreach (TabItem? tabItem in sidebar.Items)
         {
+            if (tabItem == null)
+            {
+                continue;
+            }
+            
             if (ReferenceEquals(sender, tabItem.Content))
             {
                 sidebar.SelectedItem = tabItem;

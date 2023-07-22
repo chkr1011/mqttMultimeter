@@ -37,13 +37,13 @@
                 <!-- The export/import buttons. -->
                 <Button Classes="tool_bar_button"
                         ToolTip.Tip="Export all items to a file."
-                        Command="{Binding ExportItems}">
-                    <PathIcon Data="{StaticResource save_regular}" />
+                        Click="OnExportItems">
+                <PathIcon Data="{StaticResource save_regular}" />
                 </Button>
 
                 <Button Classes="tool_bar_button"
                         ToolTip.Tip="Import all items from a file."
-                        Command="{Binding ImportItems}">
+                        Click="OnImportItems">
                     <PathIcon Data="{StaticResource folder_open_regular}" />
                 </Button>
 

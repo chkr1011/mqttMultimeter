@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using Avalonia.Threading;
 using DynamicData;
 using mqttMultimeter.Common;
 using mqttMultimeter.Controls;
-using mqttMultimeter.Main;
 using mqttMultimeter.Pages.Inflight.Export;
 using mqttMultimeter.Services.Mqtt;
 using MQTTnet;
@@ -22,17 +18,6 @@ namespace mqttMultimeter.Pages.Inflight;
 
 public sealed class InflightPageViewModel : BasePageViewModel
 {
-    const string ExportDialogTitle = "Export Inflight items";
-
-    static readonly FileDialogFilter ExportDialogFilter = new()
-    {
-        Name = "MQTT Inflight item exports",
-        Extensions = new List<string>
-        {
-            "mqtt_inflight"
-        }
-    };
-
     readonly InflightPageItemExportService _exportService;
     readonly ReadOnlyObservableCollection<InflightPageItemViewModel> _items;
     readonly SourceList<InflightPageItemViewModel> _itemsSource = new();
@@ -91,15 +76,16 @@ public sealed class InflightPageViewModel : BasePageViewModel
         var newItem = CreateItemViewModel(message);
 
         return Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            _itemsSource.Add(newItem);
-
-            // TODO: Move to configuration.
-            if (_itemsSource.Count > 1000)
             {
-                _itemsSource.RemoveAt(0);
-            }
-        }).GetTask();
+                _itemsSource.Add(newItem);
+
+                // TODO: Move to configuration.
+                if (_itemsSource.Count > 1000)
+                {
+                    _itemsSource.RemoveAt(0);
+                }
+            })
+            .GetTask();
     }
 
     public void ClearItems()
@@ -107,45 +93,19 @@ public sealed class InflightPageViewModel : BasePageViewModel
         _itemsSource.Clear();
     }
 
-    public async Task ExportItems()
+    public Task ExportItems(string path)
     {
-        var saveFileDialog = new SaveFileDialog
-        {
-            Title = ExportDialogTitle
-        };
-
-        saveFileDialog.Filters?.Add(ExportDialogFilter);
-
-        var fileName = await saveFileDialog.ShowAsync(MainWindow.Instance);
-        if (string.IsNullOrEmpty(fileName))
-        {
-            return;
-        }
-
-        await _exportService.Export(this, fileName);
+        return _exportService.Export(this, path);
     }
 
-    public async Task ImportItems()
+    public Task ImportItems(string path)
     {
-        var openFileDialog = new OpenFileDialog
+        if (!File.Exists(path))
         {
-            Title = ExportDialogTitle
-        };
-
-        openFileDialog.Filters?.Add(ExportDialogFilter);
-
-        var fileName = (await openFileDialog.ShowAsync(MainWindow.Instance))?.FirstOrDefault();
-        if (string.IsNullOrEmpty(fileName))
-        {
-            return;
+            return Task.CompletedTask;
         }
 
-        if (!File.Exists(fileName))
-        {
-            return;
-        }
-
-        await _exportService.Import(this, fileName);
+        return _exportService.Import(this, path);
     }
 
     Func<InflightPageItemViewModel, bool> BuildFilter(string? searchText)
