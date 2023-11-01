@@ -122,7 +122,7 @@
 
                 <!-- No data overlay -->
                 <Grid VerticalAlignment="Stretch"
-                      IsVisible="{Binding ElementName=PART_Items, Path=SelectedItem.Item, Converter={x:Static converters:ObjectConverter.IsNull}, FallbackValue=null}"
+                      IsVisible="{Binding ElementName=PART_Items, Path=SelectedItem.Item, Converter={x:Static converters:ObjectConverter.IsNull}, FallbackValue={x:Null}}"
                       HorizontalAlignment="Stretch">
                     <StackPanel HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
@@ -134,7 +134,7 @@
                     </StackPanel>
                 </Grid>
 
-                <ContentPresenter Content="{Binding ElementName=PART_Items, Path=SelectedItem.Item, FallbackValue=null}" />
+                <ContentPresenter Content="{Binding ElementName=PART_Items, Path=SelectedItem.Item, FallbackValue={x:Null}}" />
             </Grid>
         </Grid>
 

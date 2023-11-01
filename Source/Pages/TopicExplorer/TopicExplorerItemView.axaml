@@ -97,7 +97,7 @@
 
         <!-- Message details -->
         <inflight:InflightPageItemView Grid.Row="3"
-                                       DataContext="{Binding SelectedMessage.InflightItem, FallbackValue=null}" />
+                                       DataContext="{Binding SelectedMessage.InflightItem, FallbackValue={x:Null}}" />
     </Grid>
 
 
