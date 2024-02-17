@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Security;
 using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Threading;
 using mqttMultimeter.Controls;
 using mqttMultimeter.Pages.Connection;
@@ -95,6 +98,27 @@ public sealed class MqttClientService
                 o.IgnoreCertificateChainErrors = item.ServerOptions.IgnoreCertificateErrors;
                 o.IgnoreCertificateRevocationErrors = item.ServerOptions.IgnoreCertificateErrors;
                 o.CertificateValidationHandler = item.ServerOptions.IgnoreCertificateErrors ? _ => true : null;
+
+                if (!string.IsNullOrEmpty(item.SessionOptions.CertificatePath))
+                {
+                    X509Certificate2Collection certificates = new();
+
+                    if (string.IsNullOrEmpty(item.SessionOptions.CertificatePassword))
+                    {
+                        certificates.Add(new X509Certificate2(item.SessionOptions.CertificatePath));
+                    }
+                    else
+                    {
+                        certificates.Add(new X509Certificate2(item.SessionOptions.CertificatePath, item.SessionOptions.CertificatePassword));
+                    }
+
+                    o.Certificates = certificates;
+                    o.ApplicationProtocols = new List<SslApplicationProtocol>
+                    {
+                        // TODO: Consider exposing this in the UI.
+                        new("mqtt")
+                    };
+                }
             });
         }
 
