@@ -7,7 +7,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using Avalonia.Threading;
 using mqttMultimeter.Controls;
 using mqttMultimeter.Pages.Connection;
@@ -113,12 +112,7 @@ public sealed class MqttClientService
                     }
 
                     o.WithClientCertificates(certificates);
-                    o.WithApplicationProtocols(new List<SslApplicationProtocol>
-                    {
-                        // TODO: Consider exposing this in the UI.
-                        // TODO: Add proper overload in MQTTnet library.
-                        new("mqtt")
-                    });
+                    o.WithApplicationProtocols([new SslApplicationProtocol("mqtt")]);
                 }
             });
         }
