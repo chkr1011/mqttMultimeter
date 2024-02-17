@@ -58,21 +58,6 @@ jobs:
           name: mqttMultimeter-windows-x64
           path: ${{ github.workspace }}\mqttMultimeter-windows-x64.zip
 
-      - name: Build win-arm
-        run: dotnet publish Source\mqttMultimeter.csproj -r win-arm -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
-
-      - name: Zip win-arm build
-        uses: vimtor/action-zip@v1
-        with:
-          files: Source\bin\Release\win-arm\publish\
-          dest: mqttMultimeter-windows-arm.zip
-
-      - name: Collect win-arm artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: mqttMultimeter-windows-arm
-          path: ${{ github.workspace }}\mqttMultimeter-windows-arm.zip
-
       - name: Build win-arm64
         run: dotnet publish Source\mqttMultimeter.csproj -r win-arm64 -p:Configuration=Release -p:PublishSingleFile=true -p:PublishReadyToRun=false -p:IncludeNativeLibrariesForSelfExtract=true --self-contained true -property:Version=${{ env.VERSION }}
 
