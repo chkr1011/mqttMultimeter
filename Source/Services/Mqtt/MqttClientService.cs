@@ -92,12 +92,12 @@ public sealed class MqttClientService
 
         if (item.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
         {
-            clientOptionsBuilder.WithTls(o =>
+            clientOptionsBuilder.WithTlsOptions(o =>
             {
-                o.SslProtocol = item.ServerOptions.SelectedTlsVersion.Value;
-                o.IgnoreCertificateChainErrors = item.ServerOptions.IgnoreCertificateErrors;
-                o.IgnoreCertificateRevocationErrors = item.ServerOptions.IgnoreCertificateErrors;
-                o.CertificateValidationHandler = item.ServerOptions.IgnoreCertificateErrors ? _ => true : null;
+                o.WithSslProtocols(item.ServerOptions.SelectedTlsVersion.Value);
+                o.WithIgnoreCertificateChainErrors(item.ServerOptions.IgnoreCertificateErrors);
+                o.WithIgnoreCertificateRevocationErrors(item.ServerOptions.IgnoreCertificateErrors);
+                o.WithCertificateValidationHandler(item.ServerOptions.IgnoreCertificateErrors ? _ => true : null);
 
                 if (!string.IsNullOrEmpty(item.SessionOptions.CertificatePath))
                 {
@@ -112,12 +112,13 @@ public sealed class MqttClientService
                         certificates.Add(new X509Certificate2(item.SessionOptions.CertificatePath, item.SessionOptions.CertificatePassword));
                     }
 
-                    o.Certificates = certificates;
-                    o.ApplicationProtocols = new List<SslApplicationProtocol>
+                    o.WithClientCertificates(certificates);
+                    o.WithApplicationProtocols(new List<SslApplicationProtocol>
                     {
                         // TODO: Consider exposing this in the UI.
+                        // TODO: Add proper overload in MQTTnet library.
                         new("mqtt")
-                    };
+                    });
                 }
             });
         }
