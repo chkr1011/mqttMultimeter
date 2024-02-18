@@ -11,15 +11,16 @@
         <PackageVersion />
         <Authors />
         <Company>Christian Kratky</Company>
-        <Copyright>Copyright (c) Christian Kratky 2017 - 2023</Copyright>
+        <Copyright>Copyright (c) Christian Kratky 2017 - 2024</Copyright>
         <ApplicationIcon>Assets\Icons\App.ico</ApplicationIcon>
         <FileVersion>0.0.0</FileVersion>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+        <Prefer32Bit>false</Prefer32Bit>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>embedded</DebugType>
         <DebugSymbols>true</DebugSymbols>
-        <Prefer32Bit>false</Prefer32Bit>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <DebugType>none</DebugType>
@@ -81,11 +82,5 @@
     <ItemGroup>
         <None Remove="Pages\Info\Readme.md" />
         <EmbeddedResource Include="Pages\Info\Readme.md" />
-        <UpToDateCheckInput Remove="Common\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml" />
-        <UpToDateCheckInput Remove="Configuration\QualityOfServiceLevel\QualityOfServiceLevelSelectorView.axaml" />
-        <UpToDateCheckInput Remove="Common\BufferInspector\BufferInspectorView.axaml" />
-        <UpToDateCheckInput Remove="Common\BufferInspector\BufferValueView.axaml" />
-        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpPropertyView.axaml" />
-        <UpToDateCheckInput Remove="Common\ObjectDump\ObjectDumpView.axaml" />
     </ItemGroup>
 </Project>
