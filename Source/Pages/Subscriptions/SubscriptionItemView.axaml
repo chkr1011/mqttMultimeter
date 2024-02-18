@@ -145,7 +145,7 @@
                     </Grid>
                 </TabItem>
                 <!-- The user properties -->
-                <TabItem Header="User properties">
+                <TabItem Header="User Properties">
                     <controls:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
                 </TabItem>
             </TabControl>

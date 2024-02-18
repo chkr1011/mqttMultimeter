@@ -221,7 +221,7 @@
                                    Text="{Binding Response.PacketIdentifier}" />
                     </Grid>
                 </TabItem>
-                <TabItem Header="User properties">
+                <TabItem Header="User Properties">
                     <controls:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
                 </TabItem>
             </TabControl>
