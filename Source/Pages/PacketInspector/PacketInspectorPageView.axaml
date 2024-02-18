@@ -60,14 +60,14 @@
                                 <Grid Margin="10,0,0,0">
                                     <StackPanel Orientation="Horizontal"
                                                 IsVisible="{Binding IsInbound}">
-                                        <PathIcon Data="{StaticResource arrow_download_regular}" />
+                                        <PathIcon Width="16" Height="16" Data="{StaticResource arrow_download_regular}" />
                                         <TextBlock Margin="10,0"
                                                    Classes="code_text"
                                                    Text="Inbound" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal"
                                                 IsVisible="{Binding !IsInbound}">
-                                        <PathIcon Data="{StaticResource arrow_upload_regular}" />
+                                        <PathIcon Width="16" Height="16" Data="{StaticResource arrow_upload_regular}" />
                                         <TextBlock Margin="10,0"
                                                    Classes="code_text"
                                                    Text="Outbound" />
