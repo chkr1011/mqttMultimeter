@@ -12,24 +12,30 @@
     <Border Background="#262626"
             BorderThickness="1"
             BorderBrush="Black">
-        <Grid RowDefinitions="*,Auto,Auto">
-            <TextBlock FontSize="18"
-                       FontWeight="Light"
-                       TextWrapping="Wrap"
-                       HorizontalAlignment="Center"
-                       Grid.Row="0"
-                       Text="{Binding Message}" />
 
-            <Expander Header="Stack Trace"
-                      Grid.Row="1">
-                <TextBox IsReadOnly="True"
-                         BorderThickness="0"
-                         Classes="code_text"
-                         Text="{Binding Exception}"
-                         TextWrapping="NoWrap" />
-            </Expander>
+        <Grid RowDefinitions="*,Auto">
 
-            <Border Grid.Row="2">
+            <TabControl Grid.Row="0"
+                        Margin="10,10,10,0">
+                <TabItem Header="Message">
+                    <TextBlock FontSize="18"
+                               FontWeight="Light"
+                               TextWrapping="Wrap"
+                               HorizontalAlignment="Center"
+                               Text="{Binding Message}" />
+                </TabItem>
+                <TabItem Header="Stack Trace">
+                    <TextBox IsReadOnly="True"
+                             BorderThickness="0"
+                             ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                             ScrollViewer.VerticalScrollBarVisibility="Visible"
+                             Classes="code_text"
+                             Text="{Binding Exception, Mode=OneWay}"
+                             TextWrapping="NoWrap" />
+                </TabItem>
+            </TabControl>
+
+            <Border Grid.Row="1">
                 <StackPanel Margin="10"
                             HorizontalAlignment="Right"
                             Orientation="Horizontal">
