@@ -27,6 +27,8 @@
                 <TabItem Header="Stack Trace">
                     <TextBox IsReadOnly="True"
                              BorderThickness="0"
+                             VerticalAlignment="Stretch"
+                             VerticalContentAlignment="Top"
                              ScrollViewer.HorizontalScrollBarVisibility="Visible"
                              ScrollViewer.VerticalScrollBarVisibility="Visible"
                              Classes="code_text"
