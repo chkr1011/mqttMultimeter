@@ -31,7 +31,7 @@
 
             <!-- The rows -->
             <ScrollViewer Grid.Row="2">
-                <ItemsControl ItemsSource="{Binding Items}">
+                <ItemsControl ItemsSource="{Binding Items}" Margin="5">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type controls:UserPropertyViewModel}">
                             <Grid Margin="0,5"
@@ -40,9 +40,11 @@
                                 <!-- The name. -->
                                 <TextBox Grid.Column="0"
                                          Watermark="Name"
+                                         Classes="code_text"
                                          IsReadOnly="{Binding Owner.IsReadOnly}"
                                          Text="{Binding Name, Mode=TwoWay}" />
 
+                                <!-- The divider -->
                                 <TextBlock Grid.Column="1"
                                            Margin="10,0"
                                            FontWeight="Bold"
@@ -51,6 +53,7 @@
                                 <!-- The value. -->
                                 <TextBox Grid.Column="2"
                                          Watermark="Value"
+                                         Classes="code_text"
                                          IsReadOnly="{Binding Owner.IsReadOnly}"
                                          Text="{Binding Value, Mode=TwoWay}" />
 
