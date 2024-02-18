@@ -196,9 +196,12 @@ public sealed class InflightPageViewModel : BasePageViewModel
         {
             try
             {
+                // To delete a retained message it is important to set the body to an empty
+                // one and setting the retain flag to _true_ as well!
                 var message = new MqttApplicationMessageBuilder().WithTopic(item.Topic)
                     .WithQualityOfServiceLevel(item.QualityOfServiceLevel)
                     .WithPayload(ArraySegment<byte>.Empty)
+                    .WithRetainFlag()
                     .Build();
 
                 await _mqttClientService.Publish(message, CancellationToken.None);
