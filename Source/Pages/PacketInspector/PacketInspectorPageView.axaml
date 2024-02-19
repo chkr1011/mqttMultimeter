@@ -115,7 +115,7 @@
                         Background="Black">
                     <Label Margin="5,0"
                            Classes="tool_bar_label"
-                           Content="Selected MQTT packet" />
+                           Content="Selected packet" />
                 </Border>
 
                 <controls:BufferInspectorView Grid.Row="1"

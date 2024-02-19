@@ -19,7 +19,7 @@
         <Setter Property="Foreground"
                 Value="White" />
         <Setter Property="FontFamily"
-                Value="Consolas" />
+                Value="{StaticResource MonospaceFontFamily}" />
     </Style>
 
     <Style Selector="Border.badge_retain">

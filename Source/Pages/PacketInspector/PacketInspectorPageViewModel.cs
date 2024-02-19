@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using Avalonia.Threading;
 using mqttMultimeter.Common;
 using mqttMultimeter.Services.Mqtt;
@@ -15,6 +16,11 @@ public sealed class PacketInspectorPageViewModel : BasePageViewModel
 
     public PacketInspectorPageViewModel(MqttClientService mqttClientService)
     {
+        if (mqttClientService == null)
+        {
+            throw new ArgumentNullException(nameof(mqttClientService));
+        }
+
         mqttClientService.RegisterMessageInspectorHandler(ProcessPacket);
     }
 
@@ -96,7 +102,7 @@ public sealed class PacketInspectorPageViewModel : BasePageViewModel
             IsInbound = eventArgs.Direction == MqttPacketFlowDirection.Inbound
         };
 
-        Dispatcher.UIThread.InvokeAsync(() =>
+        Dispatcher.UIThread.Invoke(() =>
         {
             Packets.Add(viewModel);
 

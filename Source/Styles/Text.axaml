@@ -7,15 +7,6 @@
 
     <Styles.Resources>
         <x:Double x:Key="TextControlThemeMinHeight">26</x:Double>
-        
-    <!-- 
-    Monospace fonts per OS:
-    - Linux    = Ubuntu Mono
-    - Windows  = Lucida Console
-    - macOS    = SF Mono  
-    - Fallback = Courier New
-    -->
-        <FontFamily x:Key="MonospaceFontFamily">Ubuntu Mono,Lucida Console,SF Mono,Courier New</FontFamily>
     </Styles.Resources>
 
     <Style Selector="TextBlock">
@@ -51,6 +42,11 @@
     </Style>
 
     <Style Selector="TextBlock.code_text">
+        <Setter Property="FontFamily"
+                Value="{StaticResource MonospaceFontFamily}" />
+    </Style>
+    
+    <Style Selector="Label.code_text">
         <Setter Property="FontFamily"
                 Value="{StaticResource MonospaceFontFamily}" />
     </Style>

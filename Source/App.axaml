@@ -8,6 +8,15 @@
                 <ResourceInclude Source="/Assets/VectorIcons.axaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <!-- 
+            Monospace fonts per OS:
+            - Linux    = Ubuntu Mono
+            - Windows  = Lucida Console
+            - macOS    = SF Mono  
+            - Fallback = Courier New
+            -->
+            <FontFamily x:Key="MonospaceFontFamily">Ubuntu Mono,Lucida Console,SF Mono,Courier New</FontFamily>
+            
             <SolidColorBrush x:Key="AppLightGreen">#2200EE00</SolidColorBrush>
 
             <system:Double x:Key="ControlContentThemeFontSize">12</system:Double>
