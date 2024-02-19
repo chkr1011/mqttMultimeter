@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Main;
 
-public sealed class MainView : UserControl
+public sealed partial class MainView : UserControl
 {
     public MainView()
     {
@@ -21,8 +21,19 @@ public sealed class MainView : UserControl
     void OnActivatePageRequested(object? sender, EventArgs e)
     {
         var sidebar = this.FindControl<TabControl>("Sidebar");
-        foreach (TabItem tabItem in sidebar.Items)
+
+        if (sidebar == null)
         {
+            return;
+        }
+        
+        foreach (TabItem? tabItem in sidebar.Items)
+        {
+            if (tabItem == null)
+            {
+                continue;
+            }
+            
             if (ReferenceEquals(sender, tabItem.Content))
             {
                 sidebar.SelectedItem = tabItem;

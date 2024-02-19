@@ -33,16 +33,26 @@
 
     <Style Selector="TextBox.code_text">
         <Setter Property="FontFamily"
-                Value="Inconsolata,Consolas,Monospace,Courier" />
+                Value="{StaticResource MonospaceFontFamily}" />
+    </Style>
+    
+    <Style Selector="NumericUpDown.code_text">
+        <Setter Property="FontFamily"
+                Value="{StaticResource MonospaceFontFamily}" />
     </Style>
 
     <Style Selector="TextBlock.code_text">
         <Setter Property="FontFamily"
-                Value="Inconsolata,Consolas,Monospace,Courier" />
+                Value="{StaticResource MonospaceFontFamily}" />
+    </Style>
+    
+    <Style Selector="Label.code_text">
+        <Setter Property="FontFamily"
+                Value="{StaticResource MonospaceFontFamily}" />
     </Style>
 
     <Style Selector="avaloniaEdit|TextEditor.code_text">
         <Setter Property="FontFamily"
-                Value="Inconsolata,Consolas,Monospace,Courier" />
+                Value="{StaticResource MonospaceFontFamily}" />
     </Style>
 </Styles>

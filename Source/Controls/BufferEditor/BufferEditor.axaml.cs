@@ -1,50 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
-using AvaloniaEdit.TextMate.Grammars;
 using mqttMultimeter.Extensions;
-using mqttMultimeter.Main;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TextMateSharp.Grammars;
 
 namespace mqttMultimeter.Controls;
 
 public sealed class BufferEditor : TemplatedControl
 {
-    static readonly List<FileDialogFilter> FileDialogFilters = new()
+    static readonly List<FilePickerFileType> FileDialogFilters = new()
     {
-        new FileDialogFilter
+        new FilePickerFileType("JSON files")
         {
-            Name = "Text files",
-            Extensions = new List<string>
+            Patterns = new List<string>
             {
-                "txt"
+                "*.json"
             }
         },
-        new FileDialogFilter
+        new FilePickerFileType("Text files")
         {
-            Name = "JSON files",
-            Extensions = new List<string>
+            Patterns = new List<string>
             {
-                "json"
+                "*.txt"
             }
         },
-        new FileDialogFilter
+        new FilePickerFileType("XML files")
         {
-            Name = "XML files",
-            Extensions = new List<string>
+            Patterns = new List<string>
             {
-                "xml"
+                "*.xml"
+            }
+        },
+        new FilePickerFileType("All files")
+        {
+            Patterns = new List<string>
+            {
+                "*"
             }
         }
     };
@@ -141,12 +143,24 @@ public sealed class BufferEditor : TemplatedControl
         _reformatButton = (Button)this.GetTemplateChild("ReformatButton");
         _reformatButton.Click += OnReformat;
 
+        var increaseFontSizeButton = (Button)this.GetTemplateChild("IncreaseFontSizeButton");
+        increaseFontSizeButton.Click += (_, __) =>
+        {
+            _textEditor.FontSize += 0.5;
+        };
+
+        var decreaseFontSizeButton = (Button)this.GetTemplateChild("DecreaseFontSizeButton");
+        decreaseFontSizeButton.Click += (_, __) =>
+        {
+            _textEditor.FontSize -= 0.5;
+        };
+
         SyncText();
         SyncGrammar();
         SyncBufferFormat();
     }
 
-    protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
 
@@ -172,7 +186,8 @@ public sealed class BufferEditor : TemplatedControl
     {
         if (!string.IsNullOrEmpty(Buffer))
         {
-            Application.Current?.Clipboard?.SetTextAsync(Buffer);
+            var clipboard = TopLevel.GetTopLevel(this)?.Clipboard;
+            _ = clipboard?.SetTextAsync(Buffer);
         }
     }
 
@@ -180,24 +195,31 @@ public sealed class BufferEditor : TemplatedControl
     {
         Dispatcher.UIThread.InvokeAsync(async () =>
         {
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filters!.AddRange(FileDialogFilters);
-
-            var fileName = (await openFileDialog.ShowAsync(MainWindow.Instance))?.FirstOrDefault();
-            if (!string.IsNullOrEmpty(fileName))
+            var filePickerOptions = new FilePickerOpenOptions
             {
-                try
+                FileTypeFilter = FileDialogFilters
+            };
+
+            var files = await TopLevel.GetTopLevel(this)!.StorageProvider.OpenFilePickerAsync(filePickerOptions);
+            if (files.Count == 0)
+            {
+                return;
+            }
+
+            try
+            {
+                using (var stream = new StreamReader(await files[0].OpenReadAsync()))
                 {
-                    Buffer = await File.ReadAllTextAsync(fileName, CancellationToken.None);
+                    Buffer = await stream.ReadToEndAsync();
                 }
-                catch (FileNotFoundException)
-                {
-                    // Ignore this case!
-                }
-                catch (Exception exception)
-                {
-                    App.ShowException(exception);
-                }
+            }
+            catch (FileNotFoundException)
+            {
+                // Ignore this case!
+            }
+            catch (Exception exception)
+            {
+                App.ShowException(exception);
             }
         });
     }
@@ -230,29 +252,47 @@ public sealed class BufferEditor : TemplatedControl
 
     void OnSaveToFile(object? sender, RoutedEventArgs e)
     {
-        var saveFileDialog = new SaveFileDialog();
-        saveFileDialog.Filters!.AddRange(FileDialogFilters);
-
-        // TODO: Not working!
-        if (IsJson)
-        {
-            saveFileDialog.DefaultExtension = ".json";
-        }
-        else if (IsXml)
-        {
-            saveFileDialog.DefaultExtension = ".xml";
-        }
-        else
-        {
-            saveFileDialog.DefaultExtension = ".txt";
-        }
-
         Dispatcher.UIThread.InvokeAsync(async () =>
         {
-            var fileName = await saveFileDialog.ShowAsync(MainWindow.Instance);
-            if (!string.IsNullOrEmpty(fileName))
+            try
             {
-                await File.WriteAllTextAsync(fileName, Buffer ?? string.Empty, CancellationToken.None);
+                var filePickerOptions = new FilePickerSaveOptions
+                {
+                    FileTypeChoices = FileDialogFilters
+                };
+
+                // TODO: Not working!
+                if (IsJson)
+                {
+                    filePickerOptions.DefaultExtension = ".json";
+                }
+                else if (IsXml)
+                {
+                    filePickerOptions.DefaultExtension = ".xml";
+                }
+                else
+                {
+                    filePickerOptions.DefaultExtension = ".txt";
+                }
+
+                var file = await TopLevel.GetTopLevel(this)!.StorageProvider.SaveFilePickerAsync(filePickerOptions);
+                if (file == null)
+                {
+                    return;
+                }
+
+                await using (var stream = new StreamWriter(await file.OpenWriteAsync()))
+                {
+                    await stream.WriteAsync(Buffer ?? string.Empty);
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                // Ignore this case!
+            }
+            catch (Exception exception)
+            {
+                App.ShowException(exception);
             }
         });
     }

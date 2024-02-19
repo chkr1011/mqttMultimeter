@@ -1,15 +1,14 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:topicExplorer="clr-namespace:mqttMultimeter.Pages.TopicExplorer"
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
              xmlns:converters="clr-namespace:mqttMultimeter.Converters"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-             d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerPageViewModel}"
+             Design.Width="800"
+             Design.Height="450"
              x:Class="mqttMultimeter.Pages.TopicExplorer.TopicExplorerPageView">
+    <Design.DataContext>
+        <topicExplorer:TopicExplorerPageViewModel />
+    </Design.DataContext>
 
     <controls:Overlay IsOverlayVisible="{Binding Path=OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
                       OverlayContent="{Binding OverlayContent}">
@@ -69,7 +68,7 @@
                           SelectionMode="Single"
                           x:Name="PART_Items"
                           SelectedItem="{Binding SelectedNode, Mode=TwoWay}"
-                          Items="{Binding Nodes}"
+                          ItemsSource="{Binding Nodes}"
                           Grid.Column="0">
                     <TreeView.ItemTemplate>
                         <TreeDataTemplate ItemsSource="{Binding Nodes}">
@@ -77,8 +76,7 @@
                         </TreeDataTemplate>
                     </TreeView.ItemTemplate>
                     <TreeView.Styles>
-                        <Style d:DataContext="{d:DesignInstance topicExplorer:TopicExplorerTreeNodeViewModel}"
-                               Selector="TreeViewItem">
+                        <Style Selector="TreeViewItem">
                             <Setter Property="IsExpanded"
                                     Value="{Binding Path=IsExpanded, Mode=TwoWay}" />
                         </Style>
@@ -124,7 +122,7 @@
 
                 <!-- No data overlay -->
                 <Grid VerticalAlignment="Stretch"
-                      IsVisible="{Binding ElementName=PART_Items, Path=SelectedItem.Item, Converter={x:Static converters:ObjectConverter.IsNull}}"
+                      IsVisible="{Binding ElementName=PART_Items, Path=SelectedItem.Item, Converter={x:Static converters:ObjectConverter.IsNull}, FallbackValue={x:Null}}"
                       HorizontalAlignment="Stretch">
                     <StackPanel HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
@@ -136,7 +134,7 @@
                     </StackPanel>
                 </Grid>
 
-                <ContentPresenter Content="{Binding ElementName=PART_Items, Path=SelectedItem.Item}" />
+                <ContentPresenter Content="{Binding ElementName=PART_Items, Path=SelectedItem.Item, FallbackValue={x:Null}}" />
             </Grid>
         </Grid>
 

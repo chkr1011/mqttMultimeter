@@ -58,7 +58,6 @@ public sealed class StateService
         }
         catch (Exception exception)
         {
-            // TODO: Use proper logging framework.
             Debug.WriteLine(exception);
         }
 
@@ -84,7 +83,7 @@ public sealed class StateService
     static string GeneratePath()
     {
         var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        
+
         // We use ".MQTTnetApp" instead of ".mqttMultimeter" because the app name was changed
         // and the state should be still working when starting the app with the new name!
         path = Path.Combine(path, ".MQTTnetApp", "State");

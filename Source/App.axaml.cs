@@ -2,6 +2,7 @@ using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
 using Microsoft.Extensions.DependencyInjection;
 using mqttMultimeter.Common;
 using mqttMultimeter.Controls;
@@ -64,6 +65,8 @@ public sealed class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        Current!.RequestedThemeVariant = ThemeVariant.Dark;
+        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var mainWindow = new MainWindow

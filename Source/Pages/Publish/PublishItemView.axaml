@@ -1,14 +1,14 @@
 <UserControl x:Class="mqttMultimeter.Pages.Publish.PublishItemView"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:publish="clr-namespace:mqttMultimeter.Pages.Publish"
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
-             d:DesignHeight="450"
-             d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance publish:PublishItemViewModel}"
-             mc:Ignorable="d">
+             Design.Height="450"
+             Design.Width="800">
+    <Design.DataContext>
+        <publish:PublishItemViewModel />
+    </Design.DataContext>
+
     <Grid RowDefinitions="Auto,2*,Auto">
 
         <Grid Grid.Row="0"
@@ -57,10 +57,11 @@
                         <!-- The content type -->
                         <Label Grid.Column="0"
                                Grid.Row="0"
-                               Classes="caption">Content type</Label>
+                               Content="Content type"
+                               Classes="caption" />
                         <TextBox Grid.Column="1"
                                  Grid.Row="0"
-                                 Classes="value"
+                                 Classes="value code_text"
                                  Text="{Binding ContentType, Mode=TwoWay}" />
 
                         <!-- The payload format indicator -->
@@ -125,7 +126,7 @@
                                    Content="Message expiry interval" />
                             <NumericUpDown Value="{Binding MessageExpiryInterval}"
                                            Minimum="0"
-                                           Classes="value"
+                                           Classes="code_text value"
                                            Grid.Row="2"
                                            Grid.Column="1"
                                            Maximum="4294967295" />
@@ -142,7 +143,7 @@
                                            Grid.Row="3"
                                            Value="{Binding TopicAlias}"
                                            Minimum="0"
-                                           Classes="value"
+                                           Classes="code_text value"
                                            Maximum="65535" />
                             <TextBlock Grid.Column="2"
                                        Grid.Row="3"
@@ -157,7 +158,7 @@
                                            Grid.Row="4"
                                            Value="{Binding SubscriptionIdentifier}"
                                            Minimum="0"
-                                           Classes="value"
+                                           Classes="code_text value"
                                            Maximum="4294967295" />
                             <TextBlock Grid.Column="2"
                                        Grid.Row="4"
@@ -169,7 +170,7 @@
                                    Grid.Row="5"
                                    Content="Response topic" />
                             <TextBox Grid.Column="1"
-                                     Classes="value"
+                                     Classes="code_text value"
                                      Grid.Row="5"
                                      Text="{Binding ResponseTopic}" />
                         </Grid>
@@ -220,7 +221,7 @@
                                    Text="{Binding Response.PacketIdentifier}" />
                     </Grid>
                 </TabItem>
-                <TabItem Header="User properties">
+                <TabItem Header="User Properties">
                     <controls:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
                 </TabItem>
             </TabControl>

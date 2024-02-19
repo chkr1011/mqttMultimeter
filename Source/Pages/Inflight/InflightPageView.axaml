@@ -1,14 +1,13 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:inflight="clr-namespace:mqttMultimeter.Pages.Inflight"
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance inflight:InflightPageViewModel}"
-             d:DesignHeight="450"
+             Design.Width="800"
+             Design.Height="450"
              x:Class="mqttMultimeter.Pages.Inflight.InflightPageView">
+    <Design.DataContext>
+        <inflight:InflightPageViewModel />
+    </Design.DataContext>
 
     <controls:Overlay IsOverlayVisible="{Binding Path=OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
                       OverlayContent="{Binding OverlayContent}">
@@ -38,13 +37,13 @@
                 <!-- The export/import buttons. -->
                 <Button Classes="tool_bar_button"
                         ToolTip.Tip="Export all items to a file."
-                        Command="{Binding ExportItems}">
-                    <PathIcon Data="{StaticResource save_regular}" />
+                        Click="OnExportItems">
+                <PathIcon Data="{StaticResource save_regular}" />
                 </Button>
 
                 <Button Classes="tool_bar_button"
                         ToolTip.Tip="Import all items from a file."
-                        Command="{Binding ImportItems}">
+                        Click="OnImportItems">
                     <PathIcon Data="{StaticResource folder_open_regular}" />
                 </Button>
 
@@ -64,11 +63,10 @@
                 <DataGrid Grid.Column="0"
                           Background="#262626"
                           SelectedItem="{Binding SelectedItem}"
-                          Items="{Binding Items}">
+                          ItemsSource="{Binding Items}">
                     <DataGrid.Columns>
                         <!-- The number column -->
                         <DataGridTemplateColumn Header="#"
-                                                d:DataContext="{d:DesignInstance inflight:InflightPageItemViewModel}"
                                                 Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -82,7 +80,6 @@
 
                         <!-- The topic column -->
                         <DataGridTemplateColumn Header="Topic"
-                                                d:DataContext="{d:DesignInstance inflight:InflightPageItemViewModel}"
                                                 Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -95,7 +92,6 @@
 
                         <!-- The flags column -->
                         <DataGridTemplateColumn Header="Flags"
-                                                d:DataContext="{d:DesignInstance inflight:InflightPageItemViewModel}"
                                                 Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -113,7 +109,6 @@
 
                         <!-- The size column -->
                         <DataGridTemplateColumn Header="Size"
-                                                d:DataContext="{d:DesignInstance inflight:InflightPageItemViewModel}"
                                                 Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -128,7 +123,8 @@
                 </DataGrid>
 
                 <!-- The splitter -->
-                <GridSplitter Grid.Column="1" Width="2" />
+                <GridSplitter Grid.Column="1"
+                              Width="2" />
 
                 <!-- The details of the selected item -->
                 <Grid Grid.Column="2"

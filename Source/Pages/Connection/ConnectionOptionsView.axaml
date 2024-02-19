@@ -1,20 +1,25 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:connection="clr-namespace:mqttMultimeter.Pages.Connection"
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-             d:DataContext="{d:DesignInstance connection:ConnectionItemViewModel}"
+             Design.Width="800"
+             Design.Height="450"
              x:Class="mqttMultimeter.Pages.Connection.ConnectionOptionsView">
+    <Design.DataContext>
+        <connection:ConnectionItemViewModel />
+    </Design.DataContext>
     <ScrollViewer>
         <StackPanel>
+            <StackPanel.Styles>
+                <Style Selector="Expander">
+                    <Setter Property="HorizontalAlignment"
+                            Value="Stretch" />
+                </Style>
+            </StackPanel.Styles>
+
             <Expander Header="Server"
                       IsExpanded="True">
-                <controls:AutoGrid Margin="-6"
-                                   ColumnDefinitions="Auto,*,10,Auto,*"
+                <controls:AutoGrid ColumnDefinitions="Auto,*,10,Auto,*"
                                    HorizontalAlignment="Stretch">
 
                     <!-- The transport -->
@@ -25,7 +30,7 @@
                                 Orientation="Horizontal">
                         <ComboBox Classes="value"
                                   Width="125"
-                                  Items="{Binding  ServerOptions.Transports}"
+                                  ItemsSource="{Binding  ServerOptions.Transports}"
                                   SelectedItem="{Binding  ServerOptions.SelectedTransport}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -35,7 +40,7 @@
                         </ComboBox>
                         <ComboBox Margin="10,5,0,5"
                                   Classes="value"
-                                  Items="{Binding ServerOptions.TlsVersions}"
+                                  ItemsSource="{Binding ServerOptions.TlsVersions}"
                                   SelectedItem="{Binding ServerOptions.SelectedTlsVersion}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -54,7 +59,7 @@
                            Content="MQTT protocol version" />
                     <ComboBox Grid.Column="4"
                               Classes="value"
-                              Items="{Binding  ServerOptions.ProtocolVersions}"
+                              ItemsSource="{Binding  ServerOptions.ProtocolVersions}"
                               SelectedItem="{Binding ServerOptions.SelectedProtocolVersion}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -70,7 +75,7 @@
                            Content="{Binding ServerOptions.SelectedTransport.HostDisplayValue}" />
                     <TextBox Grid.Column="1"
                              Text="{Binding ServerOptions.Host}"
-                             Classes="value" />
+                             Classes="value code_text" />
 
                     <Label Grid.Column="3"
                            Classes="caption"
@@ -122,7 +127,7 @@
                     <Label controls:AutoGrid.IsNextRow="True"
                            Grid.Column="0"
                            Content="Client ID" />
-                    <TextBox Classes="value"
+                    <TextBox Classes="value code_text"
                              Grid.Column="1"
                              Text="{Binding SessionOptions.ClientId}" />
 
@@ -152,8 +157,7 @@
 
             <Expander Header="Authentication"
                       Margin="0,10,0,0">
-                <controls:AutoGrid Margin="-6"
-                                   ColumnDefinitions="Auto,*,10,Auto,*">
+                <controls:AutoGrid ColumnDefinitions="Auto,*,10,Auto,*">
 
                     <!-- Credentials -->
                     <Label Grid.Column="0"
@@ -214,9 +218,9 @@
             </Expander>
 
             <Expander Header="User Properties"
-                      Margin="0,10,0,0">
-                <controls:UserPropertiesView Margin="-6"
-                                  DataContext="{Binding SessionOptions.UserProperties}" />
+                      Margin="0,10,0,0"
+                      Padding="0">
+                <controls:UserPropertiesView DataContext="{Binding SessionOptions.UserProperties}" />
             </Expander>
         </StackPanel>
     </ScrollViewer>

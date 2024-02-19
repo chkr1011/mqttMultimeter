@@ -12,12 +12,13 @@
         <Setter Property="Template">
             <ControlTemplate TargetType="{x:Type controls:HexBox}">
                 <Border CornerRadius="{TemplateBinding CornerRadius}"
+                        TextElement.FontFamily="{StaticResource MonospaceFontFamily}"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                    <Grid RowDefinitions="*,Auto,Auto">
+                    <Grid RowDefinitions="*,Auto">
 
-                        <!-- The HEX content -->
+                        <!-- The hex content -->
                         <TextBox IsReadOnly="True"
                                  Name="PART_ContentTextBox"
                                  CaretIndex="{Binding CaretIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -32,28 +33,25 @@
                                             <!-- Horizontal ruler -->
                                             <TextBlock Grid.Row="0"
                                                        Grid.Column="1"
-                                                       FontFamily="Consolas"
-                                                       FontSize="12"
+                                                       FontSize="{StaticResource ControlContentThemeFontSize}"
                                                        VerticalAlignment="Top"
                                                        Margin="0,0,10,10"
                                                        Text="00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F"
-                                                       Foreground="Gray" />
+                                                       Foreground="{StaticResource SystemAccentColor}" />
 
                                             <TextBlock Grid.Row="0"
                                                        Grid.Column="2"
                                                        Margin="0,0,0,10"
-                                                       FontFamily="Consolas"
                                                        VerticalAlignment="Top"
-                                                       FontSize="12"
+                                                       FontSize="{StaticResource ControlContentThemeFontSize}"
                                                        Text="Decoded Text"
-                                                       Foreground="Gray" />
+                                                       Foreground="{StaticResource SystemAccentColor}" />
 
                                             <!-- The hex content -->
                                             <TextPresenter x:Name="PART_TextPresenter"
                                                            Grid.Row="1"
                                                            Grid.Column="1"
-                                                           Margin="0,0,0,0"
-                                                           FontFamily="Consolas"
+                                                           Margin="0"
                                                            FontSize="12"
                                                            HorizontalAlignment="Stretch"
                                                            SelectionStart="{TemplateBinding SelectionStart}"
@@ -71,8 +69,6 @@
                                             <!-- Decoded text -->
                                             <TextBlock Grid.Row="1"
                                                        Grid.Column="2"
-                                                       FontFamily="Consolas"
-                                                       FontSize="12"
                                                        VerticalAlignment="Top"
                                                        Text="{Binding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:HexBox}}}"
                                                        x:Name="PART_PreviewTextBlock"
@@ -84,157 +80,138 @@
                             </TextBox.Template>
                         </TextBox>
 
-                        <!-- The separator line -->
-                        <Rectangle Grid.Row="1"
-                                   HorizontalAlignment="Stretch"
-                                   Height="1"
-                                   Fill="Black" />
-
                         <!-- The parsed values -->
-                        <Grid Margin="10,10,0,10"
-                              ColumnDefinitions="Auto,*,Auto,*"
-                              RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
-                              Grid.Row="2">
-                            <Grid.Styles>
-                                <Style Selector="Label">
-                                    <Setter Property="Margin"
-                                            Value="0,0,10,0" />
-                                </Style>
-                                <Style Selector="TextBox">
-                                    <Setter Property="Margin"
-                                            Value="0,0,10,0" />
-                                    <Setter Property="IsReadOnly"
-                                            Value="True" />
-                                    <Setter Property="BorderThickness"
-                                            Value="0" />
-                                    <Setter Property="FontFamily"
-                                            Value="Consolas" />
-                                    <Setter Property="CornerRadius"
-                                            Value="0" />
-                                    <Setter Property="Background"
-                                            Value="Transparent" />
-                                </Style>
-                            </Grid.Styles>
+                        <Border Background="#FF262626"
+                                Grid.Row="1">
+                            <controls:AutoGrid Margin="10,10,0,10"
+                                               ColumnDefinitions="Auto,*,Auto,*"
+                                               RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                                <Grid.Styles>
+                                    <Style Selector="Label">
+                                        <Setter Property="Margin"
+                                                Value="0,0,10,0" />
+                                    </Style>
+                                    <Style Selector="TextBox">
+                                        <Setter Property="Margin"
+                                                Value="0,0,10,0" />
+                                        <Setter Property="IsReadOnly"
+                                                Value="True" />
+                                        <Setter Property="BorderThickness"
+                                                Value="0" />
+                                        <Setter Property="CornerRadius"
+                                                Value="0" />
+                                        <Setter Property="Background"
+                                                Value="Transparent" />
+                                    </Style>
+                                </Grid.Styles>
 
-                            <Label Grid.Column="0"
-                                   Grid.Row="0"
-                                   Content="Offset" />
-                            <TextBox Grid.Column="1"
-                                     Grid.Row="0"
-                                     x:Name="ValueOffset" />
+                                <!-- Meta information -->
+                                <Label Grid.Column="0"
+                                       Classes="label"
+                                       Content="Length:" />
+                                <TextBox Grid.Column="1"
+                                         x:Name="Length" />
+                                
+                                <!-- Position information -->
+                                <Label Grid.Column="0"
+                                       Classes="label"
+                                       controls:AutoGrid.IsNextRow="True"
+                                       Content="Offset:" />
+                                <TextBox Grid.Column="1"
+                                         x:Name="ValueOffset" />
 
-                            <Label Grid.Column="2"
-                                   Grid.Row="0"
-                                   Content="Remaining" />
-                            <TextBox Grid.Column="3"
-                                     Grid.Row="0"
-                                     x:Name="ValueRemaining" />
+                                <Label Grid.Column="2"
+                                       Classes="label"
+                                       Content="Remaining:" />
+                                <TextBox Grid.Column="3"
+                                         x:Name="ValueRemaining" />
 
-                            <Label Grid.Column="0"
-                                   Grid.Row="1"
-                                   controls:AutoGrid.IsNextRow="True"
-                                   Content="8 bit Binary" />
-                            <TextBox Grid.Column="1"
-                                     Grid.Row="1"
-                                     x:Name="Value8Bit" />
+                                <!-- Converted values -->
+                                <Label controls:AutoGrid.IsNextRow="True"
+                                       Classes="label"
+                                       Grid.Column="0"
+                                       Content="Hexadecimal:" />
+                                <TextBox Grid.Column="1"
+                                         x:Name="ValueHex" />
 
-                            <Label Grid.Column="2"
-                                   Grid.Row="1"
-                                   Content="Boolean" />
-                            <TextBox Grid.Column="3"
-                                     Grid.Row="1"
-                                     x:Name="ValueBoolean" />
+                                <Label Grid.Column="0"
+                                       controls:AutoGrid.IsNextRow="True"
+                                       Content="Binary:" />
+                                <TextBox Grid.Column="1"
+                                         x:Name="Value8Bit" />
 
-                            <Label Grid.Column="0"
-                                   Grid.Row="2"
-                                   controls:AutoGrid.IsNextRow="True"
-                                   Content="Int8" />
-                            <TextBox Grid.Column="1"
-                                     Grid.Row="2"
-                                     x:Name="ValueInt8" />
+                                <Label Grid.Column="2"
+                                       Content="Boolean:" />
+                                <TextBox Grid.Column="3"
+                                         x:Name="ValueBoolean" />
 
-                            <Label Grid.Column="2"
-                                   Grid.Row="2"
-                                   Content="Int16" />
-                            <TextBox Grid.Column="3"
-                                     Grid.Row="2"
-                                     x:Name="ValueInt16" />
+                                <Label Grid.Column="0"
+                                       controls:AutoGrid.IsNextRow="True"
+                                       Content="Int8:" />
+                                <TextBox Grid.Column="1"
+                                         x:Name="ValueInt8" />
 
-                            <Label Grid.Column="0"
-                                   Grid.Row="3"
-                                   controls:AutoGrid.IsNextRow="True"
-                                   Content="UInt16" />
-                            <TextBox Grid.Column="1"
-                                     Grid.Row="3"
-                                     x:Name="ValueUInt16" />
+                                <Label Grid.Column="2"
+                                       Content="Int16:" />
+                                <TextBox Grid.Column="3"
+                                         x:Name="ValueInt16" />
 
-                            <Label Grid.Column="2"
-                                   Grid.Row="3"
-                                   Content="Int32" />
-                            <TextBox Grid.Column="3"
-                                     Grid.Row="3"
-                                     x:Name="ValueInt32" />
+                                <Label Grid.Column="0"
+                                       controls:AutoGrid.IsNextRow="True"
+                                       Content="UInt16:" />
+                                <TextBox Grid.Column="1"
+                                         x:Name="ValueUInt16" />
 
-                            <Label Grid.Column="0"
-                                   Grid.Row="4"
-                                   controls:AutoGrid.IsNextRow="True"
-                                   Content="UInt32" />
-                            <TextBox Grid.Column="1"
-                                     Grid.Row="4"
-                                     x:Name="ValueUInt32" />
+                                <Label Grid.Column="2"
+                                       Content="Int32:" />
+                                <TextBox Grid.Column="3"
+                                         x:Name="ValueInt32" />
 
-                            <Label Grid.Column="2"
-                                   Grid.Row="4"
-                                   Content="Int64" />
-                            <TextBox Grid.Column="3"
-                                     Grid.Row="4"
-                                     x:Name="ValueInt64" />
+                                <Label Grid.Column="0"
+                                       controls:AutoGrid.IsNextRow="True"
+                                       Content="UInt32:" />
+                                <TextBox Grid.Column="1"
+                                         x:Name="ValueUInt32" />
 
-                            <Label Grid.Column="0"
-                                   Grid.Row="5"
-                                   controls:AutoGrid.IsNextRow="True"
-                                   Content="UInt64" />
-                            <TextBox Grid.Column="1"
-                                     Grid.Row="5"
-                                     x:Name="ValueUInt64" />
+                                <Label Grid.Column="2"
+                                       Content="Int64:" />
+                                <TextBox Grid.Column="3"
+                                         x:Name="ValueInt64" />
 
-                            <Label Grid.Column="2"
-                                   Grid.Row="5"
-                                   Content="ASCII" />
-                            <TextBox Grid.Column="3"
-                                     Grid.Row="5"
-                                     x:Name="ValueAscii" />
+                                <Label Grid.Column="0"
+                                       controls:AutoGrid.IsNextRow="True"
+                                       Content="UInt64:" />
+                                <TextBox Grid.Column="1"
+                                         x:Name="ValueUInt64" />
 
-                            <Label Grid.Column="0"
-                                   Grid.Row="6"
-                                   controls:AutoGrid.IsNextRow="True"
-                                   Content="UTF-8" />
-                            <TextBox Grid.Column="1"
-                                     Grid.Row="6"
-                                     x:Name="ValueUTF8" />
+                                <Label Grid.Column="2"
+                                       Content="ASCII:" />
+                                <TextBox Grid.Column="3"
+                                         x:Name="ValueAscii" />
 
-                            <Label Grid.Column="2"
-                                   Grid.Row="6"
-                                   Content="UTF-32" />
-                            <TextBox Grid.Column="3"
-                                     Grid.Row="6"
-                                     x:Name="ValueUTF32" />
+                                <Label Grid.Column="0"
+                                       controls:AutoGrid.IsNextRow="True"
+                                       Content="UTF-8:" />
+                                <TextBox Grid.Column="1"
+                                         x:Name="ValueUTF8" />
 
-                            <Label Grid.Column="0"
-                                   Grid.Row="7"
-                                   controls:AutoGrid.IsNextRow="True"
-                                   Content="Float" />
-                            <TextBox Grid.Column="1"
-                                     Grid.Row="7"
-                                     x:Name="ValueFloat" />
+                                <Label Grid.Column="2"
+                                       Content="UTF-32:" />
+                                <TextBox Grid.Column="3"
+                                         x:Name="ValueUTF32" />
 
-                            <Label Grid.Column="2"
-                                   Grid.Row="7"
-                                   Content="Double" />
-                            <TextBox Grid.Column="3"
-                                     Grid.Row="7"
-                                     x:Name="ValueDouble" />
-                        </Grid>
+                                <Label Grid.Column="0"
+                                       controls:AutoGrid.IsNextRow="True"
+                                       Content="Float:" />
+                                <TextBox Grid.Column="1"
+                                         x:Name="ValueFloat" />
+
+                                <Label Grid.Column="2"
+                                       Content="Double:" />
+                                <TextBox Grid.Column="3"
+                                         x:Name="ValueDouble" />
+                            </controls:AutoGrid>
+                        </Border>
 
                     </Grid>
                 </Border>

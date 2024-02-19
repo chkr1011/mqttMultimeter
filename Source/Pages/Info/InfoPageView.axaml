@@ -1,20 +1,24 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:info="clr-namespace:mqttMultimeter.Pages.Info"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
+             Design.Width="800"
+             Design.Height="450"
              Margin="10"
-             d:DataContext="{d:DesignInstance info:InfoPageViewModel}"
              x:Class="mqttMultimeter.Pages.Info.InfoPageView">
+    <Design.DataContext>
+        <info:InfoPageViewModel />
+    </Design.DataContext>
+
     <UserControl.Styles>
-        <StyleInclude Source="avares://AvaloniaEdit/AvaloniaEdit.xaml" />
 
         <Style Selector="TextBlock.version_text">
             <Setter Property="Margin"
-                    Value="0,0,10,0" />
+                    Value="10,0,10,0" />
+        </Style>
+        
+        <Style Selector="Label.version_text">
+            <Setter Property="Margin"
+                    Value="10,0,10,0" />
         </Style>
 
         <Style Selector="Label.h1 AccessText">
@@ -24,12 +28,12 @@
                     Value="Bold" />
         </Style>
 
-        <Style Selector="TextBlock.no_update_available">
+        <Style Selector="Label.no_update_available">
             <Setter Property="Foreground"
                     Value="Green" />
         </Style>
 
-        <Style Selector="TextBlock.update_available">
+        <Style Selector="Label.update_available">
             <Setter Property="Foreground"
                     Value="Orange" />
         </Style>
@@ -100,51 +104,51 @@
                       ColumnDefinitions="Auto,Auto,Auto"
                       RowDefinitions="Auto,Auto,Auto,Auto">
 
-                    <Label Classes="caption"
+                    <Label Classes="value caption"
                            Grid.Column="0"
                            Grid.Row="0"
                            Content="App version" />
-                    <TextBlock Text="{Binding CurrentAppVersion}"
-                               Classes="value version_text code_text"
-                               Grid.Column="1"
-                               Grid.Row="0" />
+                    <Label Content="{Binding CurrentAppVersion}"
+                           Classes="value version_text code_text"
+                           Grid.Column="1"
+                           Grid.Row="0" />
 
                     <StackPanel Orientation="Horizontal"
                                 Grid.Column="2"
                                 Grid.Row="0">
-                        <TextBlock Text="Latest version:" />
-                        <TextBlock Classes.no_update_available="{Binding !IsUpdateAvailable}"
+                        <Label Content="Latest version:" />
+                        <Label Classes.no_update_available="{Binding !IsUpdateAvailable}"
                                    Classes.update_available="{Binding IsUpdateAvailable}"
                                    Margin="10,0,0,0"
                                    Cursor="Hand"
                                    PointerPressed="OnLatestVersionClicked"
-                                   Text="{Binding LatestAppVersion}"
+                                   Content="{Binding LatestAppVersion}"
                                    Classes="value version_text code_text" />
                     </StackPanel>
 
-                    <Label Classes="caption"
+                    <Label Classes="caption value"
                            Grid.Column="0"
                            Grid.Row="1"
                            Content="MQTTnet version" />
-                    <TextBlock Text="{Binding MqttNetVersion}"
-                               Classes="value version_text code_text"
-                               Grid.Row="1"
-                               Grid.Column="1" />
+                    <Label Content="{Binding MqttNetVersion}"
+                           Classes="value version_text code_text"
+                           Grid.Row="1"
+                           Grid.Column="1" />
 
-                    <Label Classes="caption"
+                    <Label Classes="caption value"
                            Grid.Column="0"
                            Grid.Row="2"
                            Content="Avalonia version" />
-                    <TextBlock Text="{Binding AvaloniaVersion}"
-                               Classes="value version_text code_text"
-                               Grid.Row="2"
-                               Grid.Column="1" />
+                    <Label Content="{Binding AvaloniaVersion}"
+                           Classes="value version_text code_text"
+                           Grid.Row="2"
+                           Grid.Column="1" />
 
-                    <Label Classes="caption"
+                    <Label Classes="caption value"
                            Grid.Column="0"
                            Grid.Row="3"
                            Content=".NET Framework version" />
-                    <TextBlock Text="{Binding DotNetVersion}"
+                    <Label Content="{Binding DotNetVersion}"
                                Classes="value version_text code_text"
                                Grid.Column="1"
                                Grid.Row="3" />
@@ -153,7 +157,7 @@
                 <!-- The used libraries -->
                 <Label Classes="h1"
                        Margin="0,20,0,0"
-                       Content="Uses libraries" />
+                       Content="Used libraries" />
 
                 <StackPanel Orientation="Vertical"
                             Margin="10,0,0,0">

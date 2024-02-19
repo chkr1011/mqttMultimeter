@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Controls;
 
-public sealed class RetainHandlingSelectorView : UserControl
+public sealed partial class RetainHandlingSelectorView : UserControl
 {
     public RetainHandlingSelectorView()
     {

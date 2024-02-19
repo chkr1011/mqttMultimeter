@@ -1,26 +1,13 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-             d:DataContext="{d:DesignInstance controls:UserPropertiesViewModel}"
+             Design.Width="800"
+             Design.Height="450"
              x:Class="mqttMultimeter.Controls.UserPropertiesView">
-    
-    <UserControl.Styles>
-        <!-- <Style Selector="controls|UserPropertiesView > Border"> -->
-        <!--     <Setter Property="BorderBrush" -->
-        <!--             Value="{DynamicResource TextControlBorderBrush}" /> -->
-        <!-- </Style> -->
-        <!-- -->
-        <!-- <Style Selector="controls|UserPropertiesView:focus-within > Border"> -->
-        <!--     <Setter Property="BorderBrush" -->
-        <!--             Value="{DynamicResource TextControlBorderBrushFocused}" /> -->
-        <!-- </Style> -->
-    </UserControl.Styles>
-    
+    <Design.DataContext>
+        <controls:UserPropertiesViewModel />
+    </Design.DataContext>
+
     <Border>
         <Grid RowDefinitions="Auto,Auto,*"
               Grid.IsSharedSizeScope="True">
@@ -44,7 +31,7 @@
 
             <!-- The rows -->
             <ScrollViewer Grid.Row="2">
-                <ItemsControl Items="{Binding Items}">
+                <ItemsControl ItemsSource="{Binding Items}" Margin="5">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type controls:UserPropertyViewModel}">
                             <Grid Margin="0,5"
@@ -53,9 +40,11 @@
                                 <!-- The name. -->
                                 <TextBox Grid.Column="0"
                                          Watermark="Name"
+                                         Classes="code_text"
                                          IsReadOnly="{Binding Owner.IsReadOnly}"
                                          Text="{Binding Name, Mode=TwoWay}" />
 
+                                <!-- The divider -->
                                 <TextBlock Grid.Column="1"
                                            Margin="10,0"
                                            FontWeight="Bold"
@@ -64,6 +53,7 @@
                                 <!-- The value. -->
                                 <TextBox Grid.Column="2"
                                          Watermark="Value"
+                                         Classes="code_text"
                                          IsReadOnly="{Binding Owner.IsReadOnly}"
                                          Text="{Binding Value, Mode=TwoWay}" />
 

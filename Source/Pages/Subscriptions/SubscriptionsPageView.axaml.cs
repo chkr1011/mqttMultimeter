@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Pages.Subscriptions;
 
-public sealed class SubscriptionsPageView : UserControl
+public sealed partial class SubscriptionsPageView : UserControl
 {
     public SubscriptionsPageView()
     {

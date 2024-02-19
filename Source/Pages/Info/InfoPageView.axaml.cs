@@ -8,7 +8,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Pages.Info;
 
-public sealed class InfoPageView : UserControl
+public sealed partial class InfoPageView : UserControl
 {
     public InfoPageView()
     {
@@ -19,7 +19,7 @@ public sealed class InfoPageView : UserControl
     {
         AvaloniaXamlLoader.Load(this);
 
-        var licenses = this.FindControl<TextBlock>("Licenses");
+        var licenses = this.FindControl<TextBlock>("Licenses")!;
         licenses.Text = ReadEmbeddedMarkdown();
     }
 

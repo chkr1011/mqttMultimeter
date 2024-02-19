@@ -6,21 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading;
 using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
-using AvaloniaEdit.TextMate.Grammars;
 using MessagePack;
 using mqttMultimeter.Extensions;
-using mqttMultimeter.Main;
 using mqttMultimeter.Services.Data;
 using mqttMultimeter.Text;
+using TextMateSharp.Grammars;
 
 namespace mqttMultimeter.Controls;
 
@@ -138,7 +137,7 @@ public sealed class BufferInspectorView : TemplatedControl
         ReadBuffer();
     }
 
-    protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
 
@@ -162,28 +161,49 @@ public sealed class BufferInspectorView : TemplatedControl
     {
         if (!string.IsNullOrEmpty(_content))
         {
-            Application.Current?.Clipboard?.SetTextAsync(_content);
+            var clipboard = TopLevel.GetTopLevel(this)?.Clipboard;
+            _ = clipboard?.SetTextAsync(_content);
         }
     }
 
     void OnSaveToFile(object? sender, RoutedEventArgs e)
     {
-        var saveFileDialog = new SaveFileDialog();
-        saveFileDialog.Filters!.Add(new FileDialogFilter
-        {
-            Name = "Binary files",
-            Extensions = new List<string>
-            {
-                "bin"
-            }
-        });
-
         Dispatcher.UIThread.InvokeAsync(async () =>
         {
-            var fileName = await saveFileDialog.ShowAsync(MainWindow.Instance);
-            if (!string.IsNullOrEmpty(fileName))
+            try
             {
-                await File.WriteAllBytesAsync(fileName, Buffer ?? Array.Empty<byte>(), CancellationToken.None);
+                var filePickerOptions = new FilePickerSaveOptions
+                {
+                    FileTypeChoices = new List<FilePickerFileType>
+                    {
+                        new("Binary files")
+                        {
+                            Patterns = new[]
+                            {
+                                "*.bin"
+                            }
+                        }
+                    }
+                };
+                
+                var file = await TopLevel.GetTopLevel(this)!.StorageProvider.SaveFilePickerAsync(filePickerOptions);
+                if (file == null)
+                {
+                    return;
+                }
+
+                await using (var stream = await file.OpenWriteAsync())
+                {
+                    await stream.WriteAsync(Buffer ?? Array.Empty<byte>());
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                // Ignore this case!
+            }
+            catch (Exception exception)
+            {
+                App.ShowException(exception);
             }
         });
     }

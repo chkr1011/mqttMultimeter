@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Pages.Publish;
 
-public sealed class PublishItemView : UserControl
+public sealed partial class PublishItemView : UserControl
 {
     public PublishItemView()
     {

@@ -49,7 +49,7 @@ public sealed class HexBox : TemplatedControl
         UpdateValues();
     }
 
-    protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> change)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
 
@@ -90,7 +90,7 @@ public sealed class HexBox : TemplatedControl
 
             contentBuilder.Append(byteHex);
 
-            if (@byte > 0x0020 && @byte < 0x007F)
+            if (@byte is > 0x0020 and < 0x007F)
             {
                 previewBuilder.Append((char)@byte);
             }
@@ -144,13 +144,15 @@ public sealed class HexBox : TemplatedControl
     void SetValue(string textBoxName, byte[] buffer, int bufferMinLength, Func<byte[], string> valueProvider)
     {
         var textBox = (TextBox)this.GetTemplateChild(textBoxName);
+
         if (buffer.Length < bufferMinLength)
         {
             textBox.Text = string.Empty;
-            return;
         }
-
-        textBox.Text = valueProvider(buffer);
+        else
+        {
+            textBox.Text = valueProvider(buffer);
+        }
     }
 
     void SetValue(string textBoxName, object value)
@@ -161,7 +163,7 @@ public sealed class HexBox : TemplatedControl
 
     void UpdateValues()
     {
-        var lineBreaks = Regex.Matches(_contentTextBox?.Text?.Substring(0, CaretIndex) ?? "", Environment.NewLine).Count;
+        var lineBreaks = Regex.Matches(_contentTextBox?.Text?[..CaretIndex] ?? string.Empty, Environment.NewLine).Count;
 
         var offset = (CaretIndex - lineBreaks) / 3;
         var length = Value?.Length ?? 0;
@@ -173,8 +175,10 @@ public sealed class HexBox : TemplatedControl
 
         var buffer = Value?.Skip(offset).ToArray() ?? Array.Empty<byte>();
 
+        SetValue("Length", length.ToString(CultureInfo.InvariantCulture));
         SetValue("ValueOffset", offset.ToString(CultureInfo.InvariantCulture));
         SetValue("ValueRemaining", remaining.ToString(CultureInfo.InvariantCulture));
+        SetValue("ValueHex", buffer, 1, b => BitConverter.ToString(b, 0, 1));
         SetValue("Value8Bit", buffer, 1, b => GetBits(b[0]));
         SetValue("ValueBoolean", buffer, 1, b => (b[0] > 0).ToString(CultureInfo.InvariantCulture));
         SetValue("ValueInt8", buffer, 1, b => b[0].ToString(CultureInfo.InvariantCulture));
