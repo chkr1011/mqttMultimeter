@@ -44,8 +44,6 @@ public sealed class InflightPageViewModel : BasePageViewModel
 
     public event Action<InflightPageItemViewModel>? RepeatMessageRequested;
 
-    public long Counter => _counter;
-
     public string? FilterText
     {
         get => _filterText;
@@ -73,10 +71,10 @@ public sealed class InflightPageViewModel : BasePageViewModel
             throw new ArgumentNullException(nameof(message));
         }
 
-        var newItem = CreateItemViewModel(message);
-
         return Dispatcher.UIThread.InvokeAsync(() =>
             {
+                var newItem = CreateItemViewModel(message);
+
                 _itemsSource.Add(newItem);
 
                 // TODO: Move to configuration.
@@ -121,7 +119,6 @@ public sealed class InflightPageViewModel : BasePageViewModel
     InflightPageItemViewModel CreateItemViewModel(MqttApplicationMessage applicationMessage)
     {
         var counter = Interlocked.Increment(ref _counter);
-        this.RaisePropertyChanged(nameof(Counter));
 
         var itemViewModel = InflightPageItemViewModelFactory.Create(applicationMessage, counter);
 

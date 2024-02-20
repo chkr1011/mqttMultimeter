@@ -85,14 +85,25 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
         }
 
         string payload;
-        try
+        if (message.PayloadSegment.Count == 0)
         {
-            payload = Encoding.UTF8.GetString(message.PayloadSegment);
+            payload = "[mqttMultimeter:EMPTY]";
         }
-        catch
+        else
         {
-            // Ignore error.
-            payload = string.Empty;
+            try
+            {
+                var payloadBuilder = new StringBuilder();
+                payloadBuilder.Append(Encoding.UTF8.GetString(message.PayloadSegment));
+                payloadBuilder.Replace("\r\n", " ");
+                payloadBuilder.Replace("\n", " ");
+
+                payload = payloadBuilder.ToString();
+            }
+            catch
+            {
+                payload = "[mqttMultimeter:INVALID_UTF8]";
+            }
         }
 
         var timestamp = DateTime.Now;
@@ -108,8 +119,8 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
         }
 
         var viewModel = new TopicExplorerItemMessageViewModel(timestamp, message, payload, duration);
-        viewModel.InflightItem.RepeatMessageRequested += (s, _) => _ownerPage.RepeatMessage((InflightPageItemViewModel)s!);
-        viewModel.InflightItem.DeleteRetainedMessageRequested += (s, _) => _ownerPage.DeleteRetainedMessage((InflightPageItemViewModel)s!);
+        viewModel.InflightItem.RepeatMessageRequested += OnInflightItemOnRepeatMessageRequested;
+        viewModel.InflightItem.DeleteRetainedMessageRequested += OnInflightItemOnDeleteRetainedMessageRequested;
 
         Messages.Add(viewModel);
 
@@ -126,6 +137,16 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
     {
         Messages.Clear();
         SelectedMessage = null;
+    }
+
+    void OnInflightItemOnDeleteRetainedMessageRequested(object? s, EventArgs _)
+    {
+        _ownerPage.DeleteRetainedMessage((InflightPageItemViewModel)s!);
+    }
+
+    void OnInflightItemOnRepeatMessageRequested(object? s, EventArgs _)
+    {
+        _ownerPage.RepeatMessage((InflightPageItemViewModel)s!);
     }
 
     void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)

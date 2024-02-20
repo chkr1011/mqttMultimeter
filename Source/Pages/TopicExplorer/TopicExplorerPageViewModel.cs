@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
@@ -20,12 +20,14 @@ namespace mqttMultimeter.Pages.TopicExplorer;
 public sealed class TopicExplorerPageViewModel : BasePageViewModel
 {
     readonly MqttClientService _mqttClientService;
+    readonly Dictionary<string, TopicExplorerTreeNodeViewModel> _nodeLookup = new();
     readonly SourceList<TopicExplorerTreeNodeViewModel> _rootNodes = new();
 
     bool _highlightChanges = true;
     bool _isRecordingEnabled;
 
     TopicExplorerTreeNodeViewModel? _selectedNode;
+    bool _trackLatestMessageOnly;
 
     public TopicExplorerPageViewModel(MqttClientService mqttClientService)
     {
@@ -75,9 +77,17 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
         set => this.RaiseAndSetIfChanged(ref _selectedNode, value);
     }
 
+    public bool TrackLatestMessageOnly
+    {
+        get => _trackLatestMessageOnly;
+        set => this.RaiseAndSetIfChanged(ref _trackLatestMessageOnly, value);
+    }
+
     public void Clear()
     {
         _rootNodes.Clear();
+        _nodeLookup.Clear();
+
         SelectedNode = null;
     }
 
@@ -140,35 +150,48 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
         RepeatMessageRequested?.Invoke(item);
     }
 
-    void InsertNode(string[] path, MqttApplicationMessage message)
+    void InsertNode(MqttApplicationMessage message)
     {
-        var target = _rootNodes;
-        TopicExplorerTreeNodeViewModel? parentNode = null;
-
-        var fullTopic = new StringBuilder();
-        for (var index = 0; index < path.Length; index++)
+        if (!_nodeLookup.TryGetValue(message.Topic, out var node))
         {
-            var currentPath = path[index];
-            fullTopic.Append(currentPath);
+            var path = message.Topic.Split('/');
+            var target = _rootNodes;
+            TopicExplorerTreeNodeViewModel? parentNode = null;
 
-            var targetNode = target.Items.FirstOrDefault(i => i.Name.Equals(currentPath));
-            if (targetNode == null)
+            for (var index = 0; index < path.Length; index++)
             {
-                targetNode = new TopicExplorerTreeNodeViewModel(currentPath, parentNode, this);
-                target.Add(targetNode);
+                var currentPath = path[index];
+                node = target.Items.FirstOrDefault(i => i.Name.Equals(currentPath));
+                if (node == null)
+                {
+                    node = new TopicExplorerTreeNodeViewModel(currentPath, parentNode, this);
+                    target.Add(node);
+
+                    _nodeLookup[message.Topic] = node;
+                }
+
+                target = node.NodesSource;
+
+                if (index == path.Length - 1)
+                {
+                    break;
+                }
+
+                parentNode = node;
             }
-
-            target = targetNode.NodesSource;
-
-            if (index == path.Length - 1)
-            {
-                targetNode.AddMessage(message);
-            }
-
-            fullTopic.Append('/');
-
-            parentNode = targetNode;
         }
+
+        if (node == null)
+        {
+            throw new InvalidOperationException("Node not found in tree.");
+        }
+
+        if (_trackLatestMessageOnly)
+        {
+            node.Clear();
+        }
+
+        node.AddMessage(message);
     }
 
     Task OnMqttMessageReceived(MqttApplicationMessageReceivedEventArgs arguments)
@@ -178,10 +201,7 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
             return Task.CompletedTask;
         }
 
-        var topic = arguments.ApplicationMessage.Topic;
-        var path = topic.Split("/");
-
-        return Dispatcher.UIThread.InvokeAsync(() => InsertNode(path, arguments.ApplicationMessage)).GetTask();
+        return Dispatcher.UIThread.InvokeAsync(() => InsertNode(arguments.ApplicationMessage)).GetTask();
     }
 
     static void SetExpandedState(TopicExplorerTreeNodeViewModel node, bool value)

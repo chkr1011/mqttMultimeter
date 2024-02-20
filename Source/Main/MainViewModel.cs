@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using mqttMultimeter.Common;
 using mqttMultimeter.Pages.Connection;
 using mqttMultimeter.Pages.Inflight;
@@ -8,12 +9,17 @@ using mqttMultimeter.Pages.PacketInspector;
 using mqttMultimeter.Pages.Publish;
 using mqttMultimeter.Pages.Subscriptions;
 using mqttMultimeter.Pages.TopicExplorer;
+using mqttMultimeter.Services.Mqtt;
+using MQTTnet.Client;
 using ReactiveUI;
 
 namespace mqttMultimeter.Main;
 
 public sealed class MainViewModel : BaseViewModel
 {
+    readonly MqttClientService _mqttClientService;
+
+    int _counter;
     object? _overlayContent;
 
     public MainViewModel(ConnectionPageViewModel connectionPage,
@@ -23,8 +29,12 @@ public sealed class MainViewModel : BaseViewModel
         TopicExplorerPageViewModel topicExplorerPage,
         PacketInspectorPageViewModel packetInspectorPage,
         InfoPageViewModel infoPage,
-        LogPageViewModel logPage)
+        LogPageViewModel logPage,
+        MqttClientService mqttClientService)
     {
+        _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
+        _mqttClientService.ApplicationMessageReceived += IncreaseCounter;
+
         ConnectionPage = AttachEvents(connectionPage);
         PublishPage = AttachEvents(publishPage);
         SubscriptionsPage = AttachEvents(subscriptionsPage);
@@ -41,6 +51,12 @@ public sealed class MainViewModel : BaseViewModel
     public event EventHandler? ActivatePageRequested;
 
     public ConnectionPageViewModel ConnectionPage { get; }
+
+    public int Counter
+    {
+        get => _counter;
+        set => this.RaiseAndSetIfChanged(ref _counter, value);
+    }
 
     public InflightPageViewModel InflightPage { get; }
 
@@ -66,5 +82,12 @@ public sealed class MainViewModel : BaseViewModel
     {
         page.ActivationRequested += (_, __) => ActivatePageRequested?.Invoke(page, EventArgs.Empty);
         return page;
+    }
+
+    Task IncreaseCounter(MqttApplicationMessageReceivedEventArgs _)
+    {
+        Counter++;
+
+        return Task.CompletedTask;
     }
 }

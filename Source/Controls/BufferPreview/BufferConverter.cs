@@ -2,20 +2,13 @@
 
 namespace mqttMultimeter.Controls;
 
-public sealed class BufferConverter
+public sealed class BufferConverter(string name, string? grammar, Func<byte[], string> convert)
 {
-    readonly Func<byte[], string> _convertCallback;
+    readonly Func<byte[], string> _convertCallback = convert ?? throw new ArgumentNullException(nameof(convert));
 
-    public BufferConverter(string name, string? grammar, Func<byte[], string> convert)
-    {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
-        Grammar = grammar;
-        _convertCallback = convert ?? throw new ArgumentNullException(nameof(convert));
-    }
+    public string? Grammar { get; } = grammar;
 
-    public string? Grammar { get; }
-
-    public string Name { get; }
+    public string Name { get; } = name ?? throw new ArgumentNullException(nameof(name));
 
     public string Convert(byte[]? buffer)
     {

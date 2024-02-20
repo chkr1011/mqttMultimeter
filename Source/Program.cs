@@ -14,7 +14,7 @@ static class Program
     // Do not remove this method! It is required for the Designer.
     static AppBuilder BuildAvaloniaApp()
     {
-        var appBuilder = AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect();
+        var appBuilder = AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect().WithInterFont();
         
         if (Debugger.IsAttached)
         {

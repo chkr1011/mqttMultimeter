@@ -22,6 +22,9 @@ public sealed class TopicExplorerTreeNodeViewModel : BaseViewModel
         NodesSource.Connect().Sort(SortExpressionComparer<TopicExplorerTreeNodeViewModel>.Ascending(t => t.Name)).Bind(out var nodes).Subscribe();
 
         Nodes = nodes;
+
+        Item = new TopicExplorerItemViewModel(OwnerPage);
+        Item.Messages.CollectionChanged += OnMessagesChanged;
     }
 
     public event EventHandler? MessagesChanged;
@@ -32,7 +35,7 @@ public sealed class TopicExplorerTreeNodeViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _isExpanded, value);
     }
 
-    public TopicExplorerItemViewModel? Item { get; private set; }
+    public TopicExplorerItemViewModel Item { get; }
 
     public string Name { get; }
 
@@ -46,13 +49,12 @@ public sealed class TopicExplorerTreeNodeViewModel : BaseViewModel
 
     public void AddMessage(MqttApplicationMessage message)
     {
-        if (Item == null)
-        {
-            Item = new TopicExplorerItemViewModel(OwnerPage);
-            Item.Messages.CollectionChanged += OnMessagesChanged;
-        }
-
         Item.AddMessage(message);
+    }
+
+    public void Clear()
+    {
+        Item.Clear();
     }
 
     void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)

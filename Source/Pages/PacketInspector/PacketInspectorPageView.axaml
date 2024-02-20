@@ -4,11 +4,12 @@
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
              Design.Width="800"
              Design.Height="450"
-             x:Class="mqttMultimeter.Pages.PacketInspector.PacketInspectorPageView">
+             x:Class="mqttMultimeter.Pages.PacketInspector.PacketInspectorPageView"
+             x:DataType="packetInspector:PacketInspectorPageViewModel">
     <Design.DataContext>
         <packetInspector:PacketInspectorPageViewModel />
     </Design.DataContext>
-    
+
     <Grid RowDefinitions="Auto,*">
 
         <!-- The Tool Bar -->
@@ -17,15 +18,15 @@
 
             <!-- The Enable/Disable button -->
             <ToggleButton Classes="tool_bar_button"
-                          IsChecked="{Binding IsRecordingEnabled}"
+                          IsChecked="{CompiledBinding IsRecordingEnabled}"
                           ToolTip.Tip="Enable/Disable recording">
                 <PathIcon Data="{StaticResource record_regular}" />
             </ToggleButton>
 
             <!-- The clear items button. -->
             <Button Classes="tool_bar_button"
-                    ToolTip.Tip="Remove all packet items."
-                    Command="{Binding ClearItems}">
+                    ToolTip.Tip="Remove all packet items"
+                    Command="{CompiledBinding ClearItems, Mode=OneTime}">
                 <PathIcon Data="{StaticResource delete_regular}" />
             </Button>
         </StackPanel>
@@ -47,7 +48,8 @@
                                 <TextBlock Margin="5,0"
                                            HorizontalAlignment="Right"
                                            Classes="code_text"
-                                           Text="{Binding Number}" />
+                                           x:DataType="packetInspector:PacketViewModel"
+                                           Text="{CompiledBinding Number, Mode=OneTime}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -57,17 +59,22 @@
                                             Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid Margin="10,0,0,0">
+                                <Grid Margin="10,0,0,0"
+                                      x:DataType="packetInspector:PacketViewModel">
                                     <StackPanel Orientation="Horizontal"
-                                                IsVisible="{Binding IsInbound}">
-                                        <PathIcon Width="16" Height="16" Data="{StaticResource arrow_download_regular}" />
+                                                IsVisible="{CompiledBinding IsInbound, Mode=OneTime}">
+                                        <PathIcon Width="16"
+                                                  Height="16"
+                                                  Data="{StaticResource arrow_download_regular}" />
                                         <TextBlock Margin="10,0"
                                                    Classes="code_text"
                                                    Text="Inbound" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal"
-                                                IsVisible="{Binding !IsInbound}">
-                                        <PathIcon Width="16" Height="16" Data="{StaticResource arrow_upload_regular}" />
+                                                IsVisible="{CompiledBinding !IsInbound, Mode=OneTime}">
+                                        <PathIcon Width="16"
+                                                  Height="16"
+                                                  Data="{StaticResource arrow_upload_regular}" />
                                         <TextBlock Margin="10,0"
                                                    Classes="code_text"
                                                    Text="Outbound" />
@@ -84,7 +91,8 @@
                             <DataTemplate>
                                 <TextBlock Margin="5,0"
                                            Classes="code_text"
-                                           Text="{Binding Type}" />
+                                           x:DataType="packetInspector:PacketViewModel"
+                                           Text="{CompiledBinding Type, Mode=OneTime}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -97,7 +105,8 @@
                                 <TextBlock Margin="5,0,10,0"
                                            HorizontalAlignment="Right"
                                            Classes="code_text"
-                                           Text="{Binding Length, StringFormat={}{0} bytes}" />
+                                           x:DataType="packetInspector:PacketViewModel"
+                                           Text="{CompiledBinding Length, StringFormat={}{0} bytes, Mode=OneTime}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -105,7 +114,8 @@
             </DataGrid>
 
             <!-- The splitter -->
-            <GridSplitter Grid.Column="1" Width="2" />
+            <GridSplitter Grid.Column="1"
+                          Width="2" />
 
             <!-- The details of the selected packet -->
             <Grid Grid.Column="2"
@@ -121,7 +131,7 @@
                 <controls:BufferInspectorView Grid.Row="1"
                                               Margin="10"
                                               SelectedFormatName="RAW"
-                                              Buffer="{Binding SelectedPacket.Data, FallbackValue={x:Null}}" />
+                                              Buffer="{CompiledBinding SelectedPacket.Data, FallbackValue={x:Null}}" />
 
             </Grid>
 
