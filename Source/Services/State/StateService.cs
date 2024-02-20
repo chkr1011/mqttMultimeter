@@ -82,15 +82,56 @@ public sealed class StateService
 
     static string GeneratePath()
     {
-        var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        string path;
 
-        // We use ".MQTTnetApp" instead of ".mqttMultimeter" because the app name was changed
-        // and the state should be still working when starting the app with the new name!
-        path = Path.Combine(path, ".MQTTnetApp", "State");
+        // This will work for Linux and macOS.
+        if (Environment.OSVersion.Platform == PlatformID.Unix)
+        {
+            path = GeneratePathForLinux();
+        }
+        else
+        {
+            path = GeneratePathForWindows();
+        }
+
+        path = Path.Combine(path, "State");
 
         Directory.CreateDirectory(path);
 
         return path;
+    }
+
+    static string GeneratePathForLinux()
+    {
+        // We follow the XDG Base Directory Specification https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+        var path = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME");
+        if (string.IsNullOrEmpty(path))
+        {
+            // From spec: If $XDG_CONFIG_HOME is either not set or empty, a default equal to $HOME/.config should be used.
+            path = Environment.GetEnvironmentVariable("HOME");
+            if (string.IsNullOrEmpty(path))
+            {
+                path = "~";
+            }
+
+            path = Path.Combine(path, ".config");
+        }
+
+        if (string.IsNullOrEmpty(path))
+        {
+            path = "~";
+        }
+
+        path = Path.Combine(path, "mqtt-multimeter");
+
+        Migrate(path);
+
+        return path;
+    }
+
+    static string GeneratePathForWindows()
+    {
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "mqtt-multimeter");
     }
 
     void Load()
@@ -114,5 +155,31 @@ public sealed class StateService
         }
 
         _isLoaded = true;
+    }
+
+    static void Migrate(string destinationPath)
+    {
+        try
+        {
+            if (Directory.Exists(destinationPath))
+            {
+                // If the new directory exist we stop the migration to prevent data loss.
+                // This requires that the user will delete/move the old variant of the directory
+                // on it's own.
+                return;
+            }
+
+            // The first version of the app was named "MQTTnetApp". That is the reason for the different name.
+            var legacyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".MQTTnetApp");
+
+            if (Directory.Exists(legacyPath))
+            {
+                Directory.Move(legacyPath, destinationPath);
+            }
+        }
+        catch (Exception exception)
+        {
+            Debug.WriteLine(exception);
+        }
     }
 }
