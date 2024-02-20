@@ -1,5 +1,6 @@
 using System;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 
 namespace mqttMultimeter.Main;
@@ -26,14 +27,14 @@ public sealed partial class MainView : UserControl
         {
             return;
         }
-        
+
         foreach (TabItem? tabItem in sidebar.Items)
         {
             if (tabItem == null)
             {
                 continue;
             }
-            
+
             if (ReferenceEquals(sender, tabItem.Content))
             {
                 sidebar.SelectedItem = tabItem;
@@ -51,5 +52,10 @@ public sealed partial class MainView : UserControl
         }
 
         viewModel.ActivatePageRequested += OnActivatePageRequested;
+    }
+
+    void OnUpdateAvailableNotificationPressed(object? _, PointerPressedEventArgs __)
+    {
+        ((MainViewModel)DataContext!).InfoPage.OpenReleasesUrl();
     }
 }

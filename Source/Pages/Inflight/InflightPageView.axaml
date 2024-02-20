@@ -74,7 +74,7 @@
                                     <TextBlock Margin="5,0"
                                                HorizontalAlignment="Right"
                                                Classes="code_text"
-                                               Text="{CompiledBinding Number, Mode=OneTime}" />
+                                               Text="{CompiledBinding Number}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -86,7 +86,7 @@
                                 <DataTemplate>
                                     <TextBlock Margin="5,0"
                                                Classes="code_text"
-                                               Text="{CompiledBinding Topic, Mode=OneTime}" />
+                                               Text="{CompiledBinding Topic}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -99,7 +99,7 @@
                                     <StackPanel Orientation="Horizontal"
                                                 HorizontalAlignment="Right"
                                                 Margin="5,0">
-                                        <Border IsVisible="{CompiledBinding Retain, Mode=OneTime}"
+                                        <Border IsVisible="{CompiledBinding Retain}"
                                                 Classes="badge badge_retain"
                                                 Margin="0,3">
                                             <TextBlock />
@@ -117,7 +117,7 @@
                                     <TextBlock Margin="5,0,10,0"
                                                HorizontalAlignment="Right"
                                                Classes="code_text"
-                                               Text="{CompiledBinding Length, StringFormat={}{0} bytes, Mode=OneTime}" />
+                                               Text="{CompiledBinding Length, StringFormat={}{0} bytes}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

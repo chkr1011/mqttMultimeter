@@ -23,10 +23,11 @@ namespace mqttMultimeter.Services.Mqtt;
 public sealed class MqttClientService
 {
     readonly AsyncEvent<MqttApplicationMessageReceivedEventArgs> _applicationMessageReceivedEvent = new();
-    readonly List<Action<InspectMqttPacketEventArgs>> _messageInspectors = new();
+    readonly List<Func<InspectMqttPacketEventArgs, Task>> _messageInspectors = new();
     readonly MqttNetEventLogger _mqttNetEventLogger = new();
 
     IMqttClient? _mqttClient;
+    int _receivedMessagesCount;
 
     public MqttClientService()
     {
@@ -45,6 +46,8 @@ public sealed class MqttClientService
 
     public bool IsConnected => _mqttClient?.IsConnected == true;
 
+    public int ReceivedMessagesCount => _receivedMessagesCount;
+
     public async Task<MqttClientConnectResult> Connect(ConnectionItemViewModel item)
     {
         if (item == null)
@@ -54,6 +57,10 @@ public sealed class MqttClientService
 
         if (_mqttClient != null)
         {
+            _mqttClient.ApplicationMessageReceivedAsync -= OnApplicationMessageReceived;
+            _mqttClient.DisconnectedAsync -= OnDisconnected;
+            _mqttClient.InspectPacketAsync -= OnInspectPacket;
+            
             await _mqttClient.DisconnectAsync();
             _mqttClient.Dispose();
         }
@@ -121,6 +128,8 @@ public sealed class MqttClientService
         }
 
         _mqttClient.ApplicationMessageReceivedAsync += OnApplicationMessageReceived;
+
+        // TODO: Attach and detach packet inspection on demand (internal overhead in MQTTnet library)!
         _mqttClient.InspectPacketAsync += OnInspectPacket;
         _mqttClient.DisconnectedAsync += OnDisconnected;
 
@@ -216,7 +225,7 @@ public sealed class MqttClientService
         return _mqttClient!.PublishAsync(applicationMessageBuilder.Build());
     }
 
-    public void RegisterMessageInspectorHandler(Action<InspectMqttPacketEventArgs> handler)
+    public void RegisterMessageInspectorHandler(Func<InspectMqttPacketEventArgs, Task> handler)
     {
         if (handler == null)
         {
@@ -271,6 +280,8 @@ public sealed class MqttClientService
 
     async Task OnApplicationMessageReceived(MqttApplicationMessageReceivedEventArgs eventArgs)
     {
+        Interlocked.Increment(ref _receivedMessagesCount);
+
         // We have to insert a small delay here because this is an UI application. If we
         // have no delay the application will freeze as soon as there is much traffic.
         await Task.Delay(50);
@@ -296,7 +307,10 @@ public sealed class MqttClientService
     {
         foreach (var messageInspector in _messageInspectors)
         {
-            messageInspector.Invoke(eventArgs);
+            messageInspector.Invoke(eventArgs).GetAwaiter().GetResult();
+
+            // We have to insert a sleep here to make sure that the UI remains responsive.
+            Thread.Sleep(25);
         }
 
         return Task.CompletedTask;

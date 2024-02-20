@@ -1,5 +1,5 @@
 using System;
-using System.Threading.Tasks;
+using Avalonia.Threading;
 using mqttMultimeter.Common;
 using mqttMultimeter.Pages.Connection;
 using mqttMultimeter.Pages.Inflight;
@@ -10,7 +10,6 @@ using mqttMultimeter.Pages.Publish;
 using mqttMultimeter.Pages.Subscriptions;
 using mqttMultimeter.Pages.TopicExplorer;
 using mqttMultimeter.Services.Mqtt;
-using MQTTnet.Client;
 using ReactiveUI;
 
 namespace mqttMultimeter.Main;
@@ -33,7 +32,6 @@ public sealed class MainViewModel : BaseViewModel
         MqttClientService mqttClientService)
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
-        _mqttClientService.ApplicationMessageReceived += IncreaseCounter;
 
         ConnectionPage = AttachEvents(connectionPage);
         PublishPage = AttachEvents(publishPage);
@@ -46,6 +44,10 @@ public sealed class MainViewModel : BaseViewModel
 
         InflightPage.RepeatMessageRequested += item => PublishPage.RepeatMessage(item);
         topicExplorerPage.RepeatMessageRequested += item => PublishPage.RepeatMessage(item);
+
+        // Update the counter with a timer. There is no need to trigger a binding
+        // for each counter increment.
+        DispatcherTimer.Run(UpdateCounter, TimeSpan.FromSeconds(1));
     }
 
     public event EventHandler? ActivatePageRequested;
@@ -84,10 +86,9 @@ public sealed class MainViewModel : BaseViewModel
         return page;
     }
 
-    Task IncreaseCounter(MqttApplicationMessageReceivedEventArgs _)
+    bool UpdateCounter()
     {
-        Counter++;
-
-        return Task.CompletedTask;
+        Counter = _mqttClientService.ReceivedMessagesCount;
+        return true;
     }
 }
