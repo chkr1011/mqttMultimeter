@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading.Tasks;
 using mqttMultimeter.Services.Data;
 using mqttMultimeter.Services.Updates.Model;
@@ -16,11 +15,7 @@ public sealed class AppUpdateService
     {
         _jsonSerializerService = jsonSerializerService ?? throw new ArgumentNullException(nameof(jsonSerializerService));
 
-        var attribute = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false).FirstOrDefault();
-        var productVersion = ((AssemblyInformationalVersionAttribute?)attribute)?.InformationalVersion;
-        Version.TryParse(productVersion, out var assemblyProductVersion);
-
-        CurrentVersion = assemblyProductVersion ?? new Version(0, 0, 0, 0);
+        CurrentVersion = typeof(Program).Assembly.GetName().Version!;
     }
 
     public Version CurrentVersion { get; }

@@ -38,7 +38,7 @@
                     Orientation="Horizontal">
 
             <TextBlock Classes="code_text"
-                       Text="{CompiledBinding Name, Mode=OneTime}" />
+                       Text="{CompiledBinding Name}" />
 
             <TextBlock Text="="
                        IsVisible="{CompiledBinding Item.HasPayload, FallbackValue=False}"

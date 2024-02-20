@@ -34,7 +34,7 @@ public sealed partial class InfoPageView : UserControl
 
     void OnLatestVersionClicked(object? sender, PointerPressedEventArgs e)
     {
-        Launch("https://github.com/chkr1011/mqttMultimeter/releases");
+        ((InfoPageViewModel)DataContext!).OpenReleasesUrl();
     }
 
     void OnOpenHomepage(object? sender, RoutedEventArgs e)

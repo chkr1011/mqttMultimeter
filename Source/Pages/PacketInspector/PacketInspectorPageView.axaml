@@ -49,7 +49,7 @@
                                            HorizontalAlignment="Right"
                                            Classes="code_text"
                                            x:DataType="packetInspector:PacketViewModel"
-                                           Text="{CompiledBinding Number, Mode=OneTime}" />
+                                           Text="{CompiledBinding Number}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -62,7 +62,7 @@
                                 <Grid Margin="10,0,0,0"
                                       x:DataType="packetInspector:PacketViewModel">
                                     <StackPanel Orientation="Horizontal"
-                                                IsVisible="{CompiledBinding IsInbound, Mode=OneTime}">
+                                                IsVisible="{CompiledBinding IsInbound}">
                                         <PathIcon Width="16"
                                                   Height="16"
                                                   Data="{StaticResource arrow_download_regular}" />
@@ -71,7 +71,7 @@
                                                    Text="Inbound" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal"
-                                                IsVisible="{CompiledBinding !IsInbound, Mode=OneTime}">
+                                                IsVisible="{CompiledBinding !IsInbound}">
                                         <PathIcon Width="16"
                                                   Height="16"
                                                   Data="{StaticResource arrow_upload_regular}" />
@@ -92,7 +92,7 @@
                                 <TextBlock Margin="5,0"
                                            Classes="code_text"
                                            x:DataType="packetInspector:PacketViewModel"
-                                           Text="{CompiledBinding Type, Mode=OneTime}" />
+                                           Text="{CompiledBinding Type}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -106,7 +106,7 @@
                                            HorizontalAlignment="Right"
                                            Classes="code_text"
                                            x:DataType="packetInspector:PacketViewModel"
-                                           Text="{CompiledBinding Length, StringFormat={}{0} bytes, Mode=OneTime}" />
+                                           Text="{CompiledBinding Length, StringFormat={}{0} bytes}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

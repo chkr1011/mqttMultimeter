@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using mqttMultimeter.Common;
@@ -47,6 +48,11 @@ public sealed class InfoPageViewModel : BasePageViewModel
 
     public string MqttNetVersion { get; }
 
+    public void OpenReleasesUrl()
+    {
+        Launch("https://github.com/chkr1011/mqttMultimeter/releases");
+    }
+
     bool CheckForUpdates()
     {
         LatestAppVersion = _appUpdateService.LatestVersion?.ToString() ?? string.Empty;
@@ -54,5 +60,14 @@ public sealed class InfoPageViewModel : BasePageViewModel
 
         // Keep timer running.
         return true;
+    }
+
+    static void Launch(string fileName)
+    {
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = fileName,
+            UseShellExecute = true
+        });
     }
 }

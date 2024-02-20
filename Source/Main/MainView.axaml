@@ -142,8 +142,10 @@
                             Margin="10,0,-10,0"
                             Padding="10,0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{CompiledBinding InfoPage.CurrentAppVersion, StringFormat={}v{0}}" />
+                            <TextBlock Text="{CompiledBinding InfoPage.CurrentAppVersion, StringFormat={}v{0}, Mode=OneTime}" />
                             <TextBlock Margin="10,0,0,0"
+                                       Cursor="Hand"
+                                       PointerPressed="OnUpdateAvailableNotificationPressed"
                                        IsVisible="{CompiledBinding InfoPage.IsUpdateAvailable}"
                                        Text="Update available" />
                         </StackPanel>

@@ -44,7 +44,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
                             <TextBlock Margin="10,0"
-                                       Text="{CompiledBinding Timestamp, StringFormat={}{0:yyyy-MM-ddTHH:mm:ss.ffff}, Mode=OneTime}"
+                                       Text="{CompiledBinding Timestamp, StringFormat={}{0:yyyy-MM-ddTHH:mm:ss.ffff}}"
                                        Classes="code_text" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -57,7 +57,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
                             <TextBlock Margin="10,0"
-                                       Text="{CompiledBinding Payload, Mode=OneTime}"
+                                       Text="{CompiledBinding Payload}"
                                        Classes="code_text" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -70,7 +70,7 @@
                             <StackPanel Orientation="Horizontal"
                                         HorizontalAlignment="Right"
                                         Margin="5,0">
-                                <Border IsVisible="{CompiledBinding Retain, Mode=OneTime}"
+                                <Border IsVisible="{CompiledBinding Retain}"
                                         Classes="badge badge_retain"
                                         Margin="0,3">
                                     <TextBlock />
@@ -85,7 +85,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
                             <TextBlock Margin="10,0"
-                                       Text="{CompiledBinding Delay, Converter={x:Static converters:TimeSpanToLongStringConverter.Instance}, Mode=OneTime}"
+                                       Text="{CompiledBinding Delay, Converter={x:Static converters:TimeSpanToLongStringConverter.Instance}}"
                                        Classes="code_text" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
