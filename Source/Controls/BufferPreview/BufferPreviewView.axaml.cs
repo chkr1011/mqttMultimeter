@@ -44,7 +44,7 @@ public sealed class BufferInspectorView : TemplatedControl
 
     string _content = string.Empty;
     Button? _copyToClipboardButton;
-    string? _currentTextEditorLanguage;
+    HexBox? _hexBox;
     Button? _saveToFileButton;
     TextEditor? _textEditor;
     TextMate.Installation? _textMateInstallation;
@@ -80,8 +80,8 @@ public sealed class BufferInspectorView : TemplatedControl
         set => SetValue(SelectedFormatNameProperty, value);
     }
 
-    static ObservableCollection<BufferConverter> SharedConverters { get; } = new()
-    {
+    static ObservableCollection<BufferConverter> SharedConverters { get; } =
+    [
         new BufferConverter("ASCII", null, b => Encoding.ASCII.GetString(b)),
         new BufferConverter("Base64", null, Convert.ToBase64String),
         new BufferConverter("Binary", null, BinaryEncoder.GetString),
@@ -94,6 +94,7 @@ public sealed class BufferInspectorView : TemplatedControl
                 return JsonSerializer.Serialize(JsonNode.Parse(json), JsonSerializerOptions);
             }),
 
+
         new BufferConverter("MessagePack as JSON",
             "source.json.comments",
             b =>
@@ -101,6 +102,7 @@ public sealed class BufferInspectorView : TemplatedControl
                 var json = MessagePackSerializer.ConvertToJson(b);
                 return JsonSerializerService.Instance?.Format(json) ?? string.Empty;
             }),
+
 
         new BufferConverter("RAW", null, _ => "RAW"), // Special case!
         new BufferConverter("Unicode", null, b => Encoding.Unicode.GetString(b)),
@@ -113,7 +115,7 @@ public sealed class BufferInspectorView : TemplatedControl
                 var xml = Encoding.UTF8.GetString(b);
                 return XDocument.Parse(xml).ToString(SaveOptions.None);
             })
-    };
+    ];
 
     public bool ShowRaw
     {
@@ -124,6 +126,8 @@ public sealed class BufferInspectorView : TemplatedControl
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
+
+        _hexBox = (HexBox)this.GetTemplateChild("HexBox");
 
         _textEditor = (TextEditor)this.GetTemplateChild("TextEditor");
         _textMateInstallation = _textEditor.InstallTextMate(_textEditorRegistryOptions);
@@ -148,7 +152,7 @@ public sealed class BufferInspectorView : TemplatedControl
 
         if (change.Property == SelectedFormatProperty)
         {
-            ShowRaw = SelectedFormat?.Name == "RAW";
+            ShowRaw = ReferenceEquals(SelectedFormat?.Name, "RAW");
         }
 
         if (change.Property == SelectedFormatNameProperty)
@@ -185,17 +189,15 @@ public sealed class BufferInspectorView : TemplatedControl
                         }
                     }
                 };
-                
+
                 var file = await TopLevel.GetTopLevel(this)!.StorageProvider.SaveFilePickerAsync(filePickerOptions);
                 if (file == null)
                 {
                     return;
                 }
 
-                await using (var stream = await file.OpenWriteAsync())
-                {
-                    await stream.WriteAsync(Buffer ?? Array.Empty<byte>());
-                }
+                await using var stream = await file.OpenWriteAsync();
+                await stream.WriteAsync(Buffer ?? Array.Empty<byte>());
             }
             catch (FileNotFoundException)
             {
@@ -239,10 +241,12 @@ public sealed class BufferInspectorView : TemplatedControl
     {
         if (string.IsNullOrEmpty(SelectedFormatName))
         {
-            SelectedFormat = Formats.FirstOrDefault();
+            SelectedFormat = Formats.FirstOrDefault(i => i.Name.Equals("UTF-8"));
         }
-
-        SelectedFormat = Formats.FirstOrDefault(f => string.Equals(f.Name, SelectedFormatName));
+        else
+        {
+            SelectedFormat = Formats.FirstOrDefault(f => string.Equals(f.Name, SelectedFormatName));
+        }
 
         if (SelectedFormat == null)
         {
@@ -252,38 +256,26 @@ public sealed class BufferInspectorView : TemplatedControl
 
     void SyncTextEditor()
     {
-        if (_textEditor == null)
+        if (_textEditor == null || _hexBox == null)
         {
             return;
         }
-
-        _textEditor.Text = _content;
 
         if (SelectedFormat == null)
         {
             return;
         }
 
-        if (_textMateInstallation == null)
-        {
-            return;
-        }
+        _textMateInstallation?.SetGrammar(SelectedFormat.Grammar);
 
-        // Avoid updating the language all the time even without a change!
-        if (string.Equals(_currentTextEditorLanguage, SelectedFormat.Grammar))
-        {
-            return;
-        }
+        // It is important to set the content after the grammar so that
+        // the highlighting gets applied properly!
+        _textEditor.Text = _content;
 
-        _currentTextEditorLanguage = SelectedFormat.Grammar;
-
-        if (SelectedFormat.Grammar == null)
+        if (SelectedFormat.Name == "RAW")
         {
-            _textMateInstallation.SetGrammar(_currentTextEditorLanguage);
-        }
-        else
-        {
-            _textMateInstallation.SetGrammar(_textEditorRegistryOptions.GetScopeByLanguageId(_currentTextEditorLanguage));
+            // Only fill the data of the hex box when it is actually used!
+            _hexBox.Value = Buffer;
         }
     }
 }

@@ -28,21 +28,21 @@
 
                 <Button Classes="tool_bar_button"
                         ToolTip.Tip="Move item up"
-                        Command="{Binding OwnerPage.Items.MoveItemUp}"
+                        Command="{Binding OwnerPage.Items.MoveItemUp, Mode=OneTime}"
                         CommandParameter="{Binding .}">
                     <PathIcon Data="{StaticResource arrow_up_regular}" />
                 </Button>
 
                 <Button Classes="tool_bar_button"
                         ToolTip.Tip="Move item down"
-                        Command="{Binding OwnerPage.Items.MoveItemDown}"
+                        Command="{Binding OwnerPage.Items.MoveItemDown, Mode=OneTime}"
                         CommandParameter="{Binding .}">
                     <PathIcon Data="{StaticResource arrow_down_regular}" />
                 </Button>
 
                 <Button Classes="tool_bar_button"
                         ToolTip.Tip="Delete item"
-                        Command="{Binding OwnerPage.Items.RemoveItem}"
+                        Command="{Binding OwnerPage.Items.RemoveItem, Mode=OneTime}"
                         CommandParameter="{Binding .}">
                     <PathIcon Data="{StaticResource delete_regular}" />
                 </Button>

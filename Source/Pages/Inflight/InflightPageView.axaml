@@ -4,13 +4,14 @@
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
              Design.Width="800"
              Design.Height="450"
-             x:Class="mqttMultimeter.Pages.Inflight.InflightPageView">
+             x:Class="mqttMultimeter.Pages.Inflight.InflightPageView"
+             x:DataType="inflight:InflightPageViewModel">
     <Design.DataContext>
         <inflight:InflightPageViewModel />
     </Design.DataContext>
 
-    <controls:Overlay IsOverlayVisible="{Binding Path=OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
-                      OverlayContent="{Binding OverlayContent}">
+    <controls:Overlay IsOverlayVisible="{CompiledBinding Path=OverlayContent, Converter={x:Static ObjectConverters.IsNotNull}}"
+                      OverlayContent="{CompiledBinding OverlayContent}">
 
         <Grid RowDefinitions="Auto,*">
 
@@ -20,15 +21,15 @@
 
                 <!-- The Enable/Disable button. -->
                 <ToggleButton Classes="tool_bar_button"
-                              IsChecked="{Binding IsRecordingEnabled}"
-                              ToolTip.Tip="Enable/Disable recording">
+                              IsChecked="{CompiledBinding IsRecordingEnabled}"
+                              ToolTip.Tip="Enable or disable recording">
                     <PathIcon Data="{StaticResource record_regular}" />
                 </ToggleButton>
 
                 <!-- The clear items button. -->
                 <Button Classes="tool_bar_button"
                         ToolTip.Tip="Remove all items"
-                        Command="{Binding ClearItems}">
+                        Command="{CompiledBinding ClearItems, Mode=OneTime}">
                     <PathIcon Data="{StaticResource delete_regular}" />
                 </Button>
 
@@ -36,13 +37,13 @@
 
                 <!-- The export/import buttons. -->
                 <Button Classes="tool_bar_button"
-                        ToolTip.Tip="Export all items to a file."
+                        ToolTip.Tip="Export all items to a file"
                         Click="OnExportItems">
-                <PathIcon Data="{StaticResource save_regular}" />
+                    <PathIcon Data="{StaticResource save_regular}" />
                 </Button>
 
                 <Button Classes="tool_bar_button"
-                        ToolTip.Tip="Import all items from a file."
+                        ToolTip.Tip="Import all items from a file"
                         Click="OnImportItems">
                     <PathIcon Data="{StaticResource folder_open_regular}" />
                 </Button>
@@ -53,7 +54,7 @@
                 <TextBox Width="200"
                          Classes="tool_bar_text_box"
                          Watermark="Topic filter"
-                         Text="{Binding Path=FilterText, Mode=TwoWay}" />
+                         Text="{CompiledBinding Path=FilterText}" />
             </StackPanel>
 
             <Grid Grid.Row="1"
@@ -62,8 +63,8 @@
                 <!-- The data grid with items -->
                 <DataGrid Grid.Column="0"
                           Background="#262626"
-                          SelectedItem="{Binding SelectedItem}"
-                          ItemsSource="{Binding Items}">
+                          SelectedItem="{CompiledBinding SelectedItem}"
+                          ItemsSource="{CompiledBinding Items, Mode=OneTime}">
                     <DataGrid.Columns>
                         <!-- The number column -->
                         <DataGridTemplateColumn Header="#"
@@ -73,7 +74,7 @@
                                     <TextBlock Margin="5,0"
                                                HorizontalAlignment="Right"
                                                Classes="code_text"
-                                               Text="{Binding Number}" />
+                                               Text="{CompiledBinding Number, Mode=OneTime}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -85,7 +86,7 @@
                                 <DataTemplate>
                                     <TextBlock Margin="5,0"
                                                Classes="code_text"
-                                               Text="{Binding Topic}" />
+                                               Text="{CompiledBinding Topic, Mode=OneTime}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -98,8 +99,9 @@
                                     <StackPanel Orientation="Horizontal"
                                                 HorizontalAlignment="Right"
                                                 Margin="5,0">
-                                        <Border IsVisible="{Binding Retain}"
-                                                Classes="badge badge_retain">
+                                        <Border IsVisible="{CompiledBinding Retain, Mode=OneTime}"
+                                                Classes="badge badge_retain"
+                                                Margin="0,3">
                                             <TextBlock />
                                         </Border>
                                     </StackPanel>
@@ -115,7 +117,7 @@
                                     <TextBlock Margin="5,0,10,0"
                                                HorizontalAlignment="Right"
                                                Classes="code_text"
-                                               Text="{Binding Length, StringFormat={}{0} bytes}" />
+                                               Text="{CompiledBinding Length, StringFormat={}{0} bytes, Mode=OneTime}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -138,7 +140,7 @@
                     </Border>
 
                     <inflight:InflightPageItemView Grid.Row="1"
-                                                   DataContext="{Binding SelectedItem}" />
+                                                   DataContext="{CompiledBinding SelectedItem}" />
 
                 </Grid>
             </Grid>

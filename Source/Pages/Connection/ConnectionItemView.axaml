@@ -8,6 +8,7 @@
     <Design.DataContext>
         <connection:ConnectionItemViewModel />
     </Design.DataContext>
+
     <Grid ColumnDefinitions="*, Auto"
           RowDefinitions="Auto,*,Auto,Auto">
 
@@ -32,7 +33,7 @@
                         Classes="image_button"
                         MinWidth="100"
                         Margin="0,0,10,0"
-                        Command="{Binding Connect}">
+                        Command="{Binding Connect, Mode=OneTime}">
                     <StackPanel>
                         <PathIcon Data="{StaticResource checkmark_circle_regular}" />
                         <TextBlock Text="Connect" />
@@ -40,7 +41,7 @@
                 </Button>
                 <Button Classes="image_button"
                         MinWidth="100"
-                        Command="{Binding Disconnect}">
+                        Command="{Binding Disconnect, Mode=OneTime}">
                     <StackPanel>
                         <PathIcon Data="{StaticResource plug_disconnected_regular}" />
                         <TextBlock Text="Disconnect" />

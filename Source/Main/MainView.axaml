@@ -4,7 +4,8 @@
              xmlns:main="clr-namespace:mqttMultimeter.Main"
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
              Design.Height="450"
-             Design.Width="800">
+             Design.Width="800"
+             x:DataType="main:MainViewModel">
     <Design.DataContext>
         <main:MainViewModel />
     </Design.DataContext>
@@ -41,7 +42,7 @@
 
                 <!-- Connect -->
                 <TabControl.Items>
-                    <TabItem Content="{Binding ConnectionPage}"
+                    <TabItem Content="{CompiledBinding ConnectionPage, Mode=OneTime}"
                              ToolTip.Tip="Connect">
                         <TabItem.Header>
                             <PathIcon Data="{StaticResource globe_regular}" />
@@ -49,7 +50,7 @@
                     </TabItem>
 
                     <!-- Publish -->
-                    <TabItem Content="{Binding PublishPage}"
+                    <TabItem Content="{CompiledBinding PublishPage, Mode=OneTime}"
                              ToolTip.Tip="Publish">
                         <TabItem.Header>
                             <PathIcon Data="{StaticResource send_regular}" />
@@ -57,7 +58,7 @@
                     </TabItem>
 
                     <!-- Subscribe -->
-                    <TabItem Content="{Binding SubscriptionsPage}"
+                    <TabItem Content="{CompiledBinding SubscriptionsPage, Mode=OneTime}"
                              ToolTip.Tip="Subscribe">
                         <TabItem.Header>
                             <PathIcon Data="{StaticResource add_square_regular}" />
@@ -65,7 +66,7 @@
                     </TabItem>
 
                     <!-- Inflight -->
-                    <TabItem Content="{Binding InflightPage}"
+                    <TabItem Content="{CompiledBinding InflightPage, Mode=OneTime}"
                              ToolTip.Tip="Inflight">
                         <TabItem.Header>
                             <PathIcon Data="{StaticResource apps_list_regular}" />
@@ -73,7 +74,7 @@
                     </TabItem>
 
                     <!-- Topic Explorer -->
-                    <TabItem Content="{Binding TopicExplorerPage}"
+                    <TabItem Content="{CompiledBinding TopicExplorerPage, Mode=OneTime}"
                              ToolTip.Tip="Topic Explorer">
                         <TabItem.Header>
                             <PathIcon Data="{StaticResource branch_regular}" />
@@ -81,7 +82,7 @@
                     </TabItem>
 
                     <!-- Packet Inspection -->
-                    <TabItem Content="{Binding PacketInspectorPage}"
+                    <TabItem Content="{CompiledBinding PacketInspectorPage, Mode=OneTime}"
                              ToolTip.Tip="Packet Inspection">
                         <TabItem.Header>
                             <PathIcon Data="{StaticResource arrow_swap_regular}" />
@@ -89,7 +90,7 @@
                     </TabItem>
 
                     <!-- Log -->
-                    <TabItem Content="{Binding LogPage}"
+                    <TabItem Content="{CompiledBinding LogPage, Mode=OneTime}"
                              ToolTip.Tip="Log">
                         <TabItem.Header>
                             <PathIcon Data="{StaticResource stethoscope_regular}" />
@@ -97,7 +98,7 @@
                     </TabItem>
 
                     <!-- Info -->
-                    <TabItem Content="{Binding InfoPage}"
+                    <TabItem Content="{CompiledBinding InfoPage, Mode=OneTime}"
                              ToolTip.Tip="Info">
                         <TabItem.Header>
                             <PathIcon Data="{StaticResource info_regular}" />
@@ -117,14 +118,14 @@
                     <Border Grid.Column="0">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Not connected"
-                                       IsVisible="{Binding !ConnectionPage.IsConnected}" />
+                                       IsVisible="{CompiledBinding !ConnectionPage.IsConnected}" />
                             <TextBlock Text="Connected"
-                                       IsVisible="{Binding ConnectionPage.IsConnected}" />
+                                       IsVisible="{CompiledBinding ConnectionPage.IsConnected}" />
 
                             <TextBlock Margin="10,0,0,0"
-                                       Text="{Binding ConnectionPage.DisconnectedReason.Reason}" />
+                                       Text="{CompiledBinding ConnectionPage.DisconnectedReason.Reason}" />
                             <TextBlock Margin="10,0,0,0"
-                                       Text="{Binding ConnectionPage.DisconnectedReason.AdditionalInformation}" />
+                                       Text="{CompiledBinding ConnectionPage.DisconnectedReason.AdditionalInformation}" />
                         </StackPanel>
                     </Border>
 
@@ -132,18 +133,18 @@
 
                     <!-- The count of inflight items -->
                     <Border Grid.Column="3">
-                        <TextBlock Text="{Binding InflightPage.Counter, StringFormat={}{0} messages received}" />
+                        <TextBlock Text="{CompiledBinding Counter, StringFormat={}{0} messages received}" />
                     </Border>
 
                     <!-- The version string -->
                     <Border Grid.Column="4"
-                            Classes.update_available="{Binding InfoPage.IsUpdateAvailable}"
+                            Classes.update_available="{CompiledBinding InfoPage.IsUpdateAvailable}"
                             Margin="10,0,-10,0"
                             Padding="10,0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding InfoPage.CurrentAppVersion, StringFormat={}v{0}}" />
+                            <TextBlock Text="{CompiledBinding InfoPage.CurrentAppVersion, StringFormat={}v{0}}" />
                             <TextBlock Margin="10,0,0,0"
-                                       IsVisible="{Binding InfoPage.IsUpdateAvailable}"
+                                       IsVisible="{CompiledBinding InfoPage.IsUpdateAvailable}"
                                        Text="Update available" />
                         </StackPanel>
                     </Border>

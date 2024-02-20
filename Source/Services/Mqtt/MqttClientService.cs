@@ -86,7 +86,10 @@ public sealed class MqttClientService
         }
         else
         {
-            clientOptionsBuilder.WithWebSocketServer(item.ServerOptions.Host);
+            clientOptionsBuilder.WithWebSocketServer(o =>
+            {
+                o.WithUri(item.ServerOptions.Host);
+            });
         }
 
         if (item.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
@@ -266,9 +269,17 @@ public sealed class MqttClientService
         return await _mqttClient.UnsubscribeAsync(subscriptionItem.Topic).ConfigureAwait(false);
     }
 
-    Task OnApplicationMessageReceived(MqttApplicationMessageReceivedEventArgs eventArgs)
+    async Task OnApplicationMessageReceived(MqttApplicationMessageReceivedEventArgs eventArgs)
     {
-        return _applicationMessageReceivedEvent.InvokeAsync(eventArgs);
+        // We have to insert a small delay here because this is an UI application. If we
+        // have no delay the application will freeze as soon as there is much traffic.
+        await Task.Delay(50);
+        await Dispatcher.UIThread.InvokeAsync(() =>
+            {
+            },
+            DispatcherPriority.Render);
+
+        await _applicationMessageReceivedEvent.InvokeAsync(eventArgs);
     }
 
     Task OnDisconnected(MqttClientDisconnectedEventArgs eventArgs)

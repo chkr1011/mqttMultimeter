@@ -21,47 +21,62 @@ public sealed class PageItemsViewModel<TItem> : BaseViewModel
         SelectedItem = default;
     }
 
-    public void MoveItemDown(TItem? item)
+    public void MoveItemDown(object? item)
     {
         if (item == null)
         {
             return;
         }
 
-        var index = Collection.IndexOf(item);
-
-        if (index >= Collection.Count - 1)
-        {
-            return;
-        }
-
-        Collection.Move(index, ++index);
+        var index = Collection.IndexOf((TItem)item);
+        Move(index, ++index);
     }
 
-    public void MoveItemUp(TItem? item)
+    public void MoveItemUp(object? item)
     {
         if (item == null)
         {
             return;
         }
 
-        var index = Collection.IndexOf(item);
-
-        if (index <= 0)
-        {
-            return;
-        }
-
-        Collection.Move(index, --index);
+        var index = Collection.IndexOf((TItem)item);
+        Move(index, --index);
     }
 
-    public void RemoveItem(TItem? item)
+    public void RemoveItem(object? item)
     {
         if (item == null)
         {
             return;
         }
 
-        Collection.Remove(item);
+        var index = Collection.IndexOf((TItem)item);
+        Collection.Remove((TItem)item);
+
+        if (index > 0)
+        {
+            SelectedItem = Collection[--index];
+        }
+    }
+
+    void Move(int from, int to)
+    {
+        if (from == -1)
+        {
+            return;
+        }
+
+        if (to == Collection.Count)
+        {
+            return;
+        }
+        
+        var restoreSelection = ReferenceEquals(Collection[from], SelectedItem);
+        Collection.Move(from, to);
+
+        if (restoreSelection)
+        {
+            SelectedItem = Collection[to];
+        }
     }
 }

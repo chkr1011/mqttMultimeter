@@ -23,15 +23,15 @@ public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
         InflightItem = InflightPageItemViewModelFactory.Create(applicationMessage, 0);
     }
 
-    public TimeSpan Delay { get; init; }
+    public TimeSpan Delay { get; }
 
     public InflightPageItemViewModel InflightItem { get; init; }
 
-    public string Payload { get; init; }
+    public string Payload { get; }
 
     public int PayloadLength { get; }
 
     public bool Retain { get; }
 
-    public DateTime Timestamp { get; init; }
+    public DateTime Timestamp { get; }
 }

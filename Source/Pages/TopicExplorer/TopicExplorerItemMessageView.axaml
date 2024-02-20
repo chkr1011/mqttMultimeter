@@ -3,7 +3,8 @@
              xmlns:topicExplorer="clr-namespace:mqttMultimeter.Pages.TopicExplorer"
              Design.Width="800"
              Design.Height="450"
-             x:Class="mqttMultimeter.Pages.TopicExplorer.TopicExplorerItemMessageView">
+             x:Class="mqttMultimeter.Pages.TopicExplorer.TopicExplorerItemMessageView"
+             x:DataType="topicExplorer:TopicExplorerItemMessageViewModel">
     <Design.DataContext>
         <topicExplorer:TopicExplorerItemMessageViewModel />
     </Design.DataContext>
@@ -11,7 +12,7 @@
     <StackPanel Orientation="Horizontal"
                 Margin="10">
         <TextBlock Classes="code_text"
-                   Text="{Binding Timestamp, StringFormat={}{0:HH:mm:ss.fff}}" />
+                   Text="{CompiledBinding Timestamp, StringFormat={}{0:HH:mm:ss.fff}, Mode=OneTime}" />
         <TextBlock Classes="code_text"
                    Margin="10,0"
                    Text="="
@@ -19,7 +20,7 @@
         <TextBlock Classes="code_text"
                    Margin="0,0,10,0"
                    FontStyle="Italic"
-                   Text="{Binding Payload}" />
+                   Text="{CompiledBinding Payload, Mode=OneTime}" />
     </StackPanel>
 
 </UserControl>

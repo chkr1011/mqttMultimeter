@@ -3,7 +3,8 @@
              xmlns:topicExplorer="clr-namespace:mqttMultimeter.Pages.TopicExplorer"
              Design.Width="800"
              Design.Height="450"
-             x:Class="mqttMultimeter.Pages.TopicExplorer.TopicExplorerTreeNodeView">
+             x:Class="mqttMultimeter.Pages.TopicExplorer.TopicExplorerTreeNodeView"
+             x:DataType="topicExplorer:TopicExplorerTreeNodeViewModel">
     <Design.DataContext>
         <topicExplorer:TopicExplorerTreeNodeViewModel />
     </Design.DataContext>
@@ -15,18 +16,19 @@
         <PathIcon Grid.Column="0"
                   Grid.Row="0"
                   Grid.RowSpan="2"
+                  Classes.IsFolder="{CompiledBinding !Item.HasPayload}"
+                  Classes.IsMessage="{CompiledBinding Item.HasPayload}"
                   Width="16"
-                  Height="16"
-                  IsVisible="{Binding !Item.HasPayload}"
-                  Data="{StaticResource folder_regular}" />
-
-        <PathIcon Grid.Column="0"
-                  Grid.Row="0"
-                  Grid.RowSpan="2"
-                  Width="16"
-                  Height="16"
-                  IsVisible="{Binding Item.HasPayload, FallbackValue=False}"
-                  Data="{StaticResource attach_regular}" />
+                  Height="16">
+            <PathIcon.Styles>
+                <Style Selector="PathIcon.IsFolder">
+                    <Setter Property="Data" Value="{StaticResource folder_regular}" />
+                </Style>
+                <Style Selector="PathIcon.IsMessage">
+                    <Setter Property="Data" Value="{StaticResource mail_regular}" />
+                </Style>
+            </PathIcon.Styles>
+        </PathIcon>
 
         <!-- The topic name -->
         <StackPanel Grid.Column="1"
@@ -36,10 +38,10 @@
                     Orientation="Horizontal">
 
             <TextBlock Classes="code_text"
-                       Text="{Binding Name}" />
+                       Text="{CompiledBinding Name, Mode=OneTime}" />
 
             <TextBlock Text="="
-                       IsVisible="{Binding Item.HasPayload, FallbackValue=False}"
+                       IsVisible="{CompiledBinding Item.HasPayload, FallbackValue=False}"
                        Margin="10,0" />
         </StackPanel>
 
@@ -48,26 +50,26 @@
                    Grid.Row="0"
                    Classes="code_text"
                    TextWrapping="NoWrap"
-                   Text="{Binding Item.CurrentPayload, FallbackValue=''}" />
+                   Text="{CompiledBinding Item.CurrentPayload, FallbackValue=''}" />
 
         <!-- The statistics -->
         <StackPanel Grid.Column="2"
                     Grid.Row="1"
                     Orientation="Horizontal"
                     Margin="0,3,0,0"
-                    IsVisible="{Binding !Item.Messages.IsEmpty, FallbackValue=False}">
+                    IsVisible="{CompiledBinding !Item.Messages.IsEmpty, FallbackValue=False}">
 
             <TextBlock Classes="code_text">
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{}Messages: {0} | Last received: {1:O} | Last bytes: {2} | Total bytes: {3}">
-                        <Binding Path="Item.Messages.Count"
-                                 FallbackValue="0" />
-                        <Binding Path="Item.LastUpdateTimestamp"
-                                 FallbackValue='' />
-                        <Binding Path="Item.CurrentPayloadLength"
-                                 FallbackValue="0" />
-                        <Binding Path="Item.TotalPayloadLength"
-                                 FallbackValue="0" />
+                        <CompiledBinding Path="Item.Messages.Count"
+                                         FallbackValue="0" />
+                        <CompiledBinding Path="Item.LastUpdateTimestamp"
+                                         FallbackValue='' />
+                        <CompiledBinding Path="Item.CurrentPayloadLength"
+                                         FallbackValue="0" />
+                        <CompiledBinding Path="Item.TotalPayloadLength"
+                                         FallbackValue="0" />
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>

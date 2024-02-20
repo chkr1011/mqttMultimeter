@@ -20,7 +20,8 @@ public sealed class InflightPageItemViewModel
         {
             Payload = Array.Empty<byte>();
         }
-        
+
+        Length = Payload.Length;
         UserProperties.IsReadOnly = true;
     }
 
@@ -34,7 +35,7 @@ public sealed class InflightPageItemViewModel
 
     public bool Dup => Message.Dup;
 
-    public long Length => Payload.Length;
+    public long Length { get; }
 
     public MqttApplicationMessage Message { get; }
 
@@ -45,7 +46,7 @@ public sealed class InflightPageItemViewModel
     public byte[] Payload { get; }
 
     public MqttPayloadFormatIndicator PayloadFormatIndicator => Message.PayloadFormatIndicator;
-    
+
     public MqttQualityOfServiceLevel QualityOfServiceLevel => Message.QualityOfServiceLevel;
 
     public string ResponseTopic => Message.ResponseTopic;

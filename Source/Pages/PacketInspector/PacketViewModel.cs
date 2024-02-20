@@ -1,6 +1,8 @@
-﻿namespace mqttMultimeter.Pages.PacketInspector;
+﻿using mqttMultimeter.Common;
 
-public sealed class PacketViewModel
+namespace mqttMultimeter.Pages.PacketInspector;
+
+public sealed class PacketViewModel : BaseViewModel
 {
     public byte[]? Data { get; init; }
 

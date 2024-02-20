@@ -80,12 +80,13 @@
                                                  BorderThickness="0"
                                                  Grid.Row="1"
                                                  ShowLineNumbers="True"
+                                                 FontFamily="{StaticResource MonospaceFontFamily}"
                                                  IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}" />
 
                         <controls:HexBox Grid.Row="1"
+                                         x:Name="HexBox"
                                          BorderThickness="0"
-                                         IsVisible="{Binding ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
-                                         Value="{Binding Buffer, RelativeSource={RelativeSource TemplatedParent}}" />
+                                         IsVisible="{Binding ShowRaw, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Grid>
                 </Border>
             </ControlTemplate>
