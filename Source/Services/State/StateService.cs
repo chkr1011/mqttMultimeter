@@ -172,7 +172,7 @@ public sealed class StateService
             if (Directory.Exists(destinationPath))
             {
                 // If the new directory exist we create a backup of the data so that the user can manually restore the data.
-                Directory.Move(destinationPath, destinationPath + "-backup-" + Guid.NewGuid());
+                Directory.Move(destinationPath, destinationPath + "-" + Guid.NewGuid());
             }
 
             Directory.Move(legacyPath, destinationPath);
