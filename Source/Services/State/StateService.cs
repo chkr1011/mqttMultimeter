@@ -94,8 +94,9 @@ public sealed class StateService
             path = GeneratePathForWindows();
         }
 
-        path = Path.Combine(path, "State");
+        Migrate(path);
 
+        path = Path.Combine(path, "State");
         Directory.CreateDirectory(path);
 
         return path;
@@ -123,8 +124,6 @@ public sealed class StateService
         }
 
         path = Path.Combine(path, "mqtt-multimeter");
-
-        Migrate(path);
 
         return path;
     }
@@ -161,21 +160,22 @@ public sealed class StateService
     {
         try
         {
-            if (Directory.Exists(destinationPath))
-            {
-                // If the new directory exist we stop the migration to prevent data loss.
-                // This requires that the user will delete/move the old variant of the directory
-                // on it's own.
-                return;
-            }
-
             // The first version of the app was named "MQTTnetApp". That is the reason for the different name.
             var legacyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".MQTTnetApp");
 
-            if (Directory.Exists(legacyPath))
+            if (!Directory.Exists(legacyPath))
             {
-                Directory.Move(legacyPath, destinationPath);
+                // There is nothing to migrate...
+                return;
             }
+
+            if (Directory.Exists(destinationPath))
+            {
+                // If the new directory exist we create a backup of the data so that the user can manually restore the data.
+                Directory.Move(destinationPath, destinationPath + "-backup-" + Guid.NewGuid());
+            }
+
+            Directory.Move(legacyPath, destinationPath);
         }
         catch (Exception exception)
         {
