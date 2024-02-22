@@ -4,7 +4,8 @@
              xmlns:publish="clr-namespace:mqttMultimeter.Pages.Publish"
              xmlns:controls="clr-namespace:mqttMultimeter.Controls"
              Design.Height="450"
-             Design.Width="800">
+             Design.Width="800"
+             x:DataType="publish:PublishItemViewModel">
     <Design.DataContext>
         <publish:PublishItemViewModel />
     </Design.DataContext>
@@ -13,7 +14,7 @@
 
         <Grid Grid.Row="0"
               ColumnDefinitions="*,Auto">
-            <TextBox Text="{Binding Name}"
+            <TextBox Text="{CompiledBinding Name}"
                      Classes="page_item_name" />
 
             <!-- The send button -->
@@ -22,7 +23,7 @@
                     Width="100"
                     Margin="10,0,0,0"
                     Classes="image_button"
-                    Command="{Binding Publish}"
+                    Command="{CompiledBinding Publish, Mode=OneTime}"
                     IsDefault="True">
                 <StackPanel>
                     <PathIcon Data="{StaticResource send_regular}" />
@@ -43,7 +44,7 @@
                          Watermark="Topic"
                          VerticalAlignment="Center"
                          Classes="code_text"
-                         Text="{Binding Topic}" />
+                         Text="{CompiledBinding Topic}" />
             </Grid>
 
             <TabControl Grid.Row="1"
@@ -62,7 +63,7 @@
                         <TextBox Grid.Column="1"
                                  Grid.Row="0"
                                  Classes="value code_text"
-                                 Text="{Binding ContentType, Mode=TwoWay}" />
+                                 Text="{CompiledBinding ContentType, Mode=TwoWay}" />
 
                         <!-- The payload format indicator -->
                         <Label Grid.Column="0"
@@ -75,11 +76,11 @@
 
                             <CheckBox Classes="radio-button"
                                       Content="Unspecified"
-                                      IsChecked="{Binding PayloadFormatIndicator.IsUnspecified}" />
+                                      IsChecked="{CompiledBinding PayloadFormatIndicator.IsUnspecified}" />
                             <CheckBox Classes="radio-button"
                                       Margin="10,0,0,0"
                                       Content="Character data"
-                                      IsChecked="{Binding PayloadFormatIndicator.IsCharacterData}" />
+                                      IsChecked="{CompiledBinding PayloadFormatIndicator.IsCharacterData}" />
                         </StackPanel>
 
                         <!-- The payload -->
@@ -89,8 +90,8 @@
                                Classes="caption">Payload</Label>
 
                         <controls:BufferEditor Grid.Row="2"
-                                               Buffer="{Binding Payload, Mode=TwoWay}"
-                                               BufferFormat="{Binding PayloadFormat}"
+                                               Buffer="{CompiledBinding Payload, Mode=TwoWay}"
+                                               BufferFormat="{CompiledBinding PayloadFormat, Mode=TwoWay}"
                                                Grid.Column="1" />
                     </Grid>
                 </TabItem>
@@ -108,7 +109,7 @@
                                    Content="Quality of service (QoS) level" />
                             <controls:QualityOfServiceLevelSelectorView Grid.Column="1"
                                                                         Grid.Row="0"
-                                                                        DataContext="{Binding QualityOfServiceLevel}" />
+                                                                        DataContext="{CompiledBinding QualityOfServiceLevel}" />
                             <!-- Retain -->
                             <Label Classes="caption"
                                    Grid.Column="0"
@@ -117,14 +118,14 @@
                             <CheckBox Grid.Column="1"
                                       Grid.Row="1"
                                       Classes="value"
-                                      IsChecked="{Binding Retain}" />
+                                      IsChecked="{CompiledBinding Retain}" />
 
                             <!-- Message Expiry Interval -->
                             <Label Grid.Row="2"
                                    Grid.Column="0"
                                    Classes="caption"
                                    Content="Message expiry interval" />
-                            <NumericUpDown Value="{Binding MessageExpiryInterval}"
+                            <NumericUpDown Value="{CompiledBinding MessageExpiryInterval}"
                                            Minimum="0"
                                            Classes="code_text value"
                                            Grid.Row="2"
@@ -141,7 +142,7 @@
                                    Content="Topic alias" />
                             <NumericUpDown Grid.Column="1"
                                            Grid.Row="3"
-                                           Value="{Binding TopicAlias}"
+                                           Value="{CompiledBinding TopicAlias}"
                                            Minimum="0"
                                            Classes="code_text value"
                                            Maximum="65535" />
@@ -156,7 +157,7 @@
                                    Content="Subscription identifier" />
                             <NumericUpDown Grid.Column="1"
                                            Grid.Row="4"
-                                           Value="{Binding SubscriptionIdentifier}"
+                                           Value="{CompiledBinding SubscriptionIdentifier}"
                                            Minimum="0"
                                            Classes="code_text value"
                                            Maximum="4294967295" />
@@ -172,13 +173,13 @@
                             <TextBox Grid.Column="1"
                                      Classes="code_text value"
                                      Grid.Row="5"
-                                     Text="{Binding ResponseTopic}" />
+                                     Text="{CompiledBinding ResponseTopic}" />
                         </Grid>
                     </StackPanel>
                 </TabItem>
 
                 <TabItem Header="User Properties">
-                    <controls:UserPropertiesView DataContext="{Binding UserProperties}" />
+                    <controls:UserPropertiesView DataContext="{CompiledBinding UserProperties}" />
                 </TabItem>
 
             </TabControl>
@@ -197,32 +198,32 @@
                         <TextBlock Grid.Row="0"
                                    Grid.Column="1"
                                    Classes="value code_text"
-                                   Text="{Binding Response.ReasonCode}" />
+                                   Text="{CompiledBinding Response.ReasonCode}" />
                         <Label Grid.Row="1"
                                Grid.Column="0"
                                Classes="caption">Reason code text</Label>
                         <TextBlock Grid.Row="1"
                                    Grid.Column="1"
                                    Classes="value code_text"
-                                   Text="{Binding Response.ReasonCodeText}" />
+                                   Text="{CompiledBinding Response.ReasonCodeText}" />
                         <Label Grid.Row="2"
                                Grid.Column="0"
                                Classes="caption">Reason string</Label>
                         <TextBlock Grid.Row="2"
                                    Grid.Column="1"
                                    Classes="value code_text"
-                                   Text="{Binding Response.ReasonString}" />
+                                   Text="{CompiledBinding Response.ReasonString}" />
                         <Label Grid.Row="3"
                                Grid.Column="0"
                                Classes="caption">Packet identifier</Label>
                         <TextBlock Grid.Row="3"
                                    Grid.Column="1"
                                    Classes="value code_text"
-                                   Text="{Binding Response.PacketIdentifier}" />
+                                   Text="{CompiledBinding Response.PacketIdentifier}" />
                     </Grid>
                 </TabItem>
                 <TabItem Header="User Properties">
-                    <controls:UserPropertiesView DataContext="{Binding Response.UserProperties}" />
+                    <controls:UserPropertiesView DataContext="{CompiledBinding Response.UserProperties}" />
                 </TabItem>
             </TabControl>
         </controls:GroupBox>

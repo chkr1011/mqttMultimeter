@@ -15,7 +15,8 @@
                         Background="{DynamicResource TextControlBackground}">
 
                     <!-- The text base previews. -->
-                    <Grid RowDefinitions="Auto,*">
+                    <Grid RowDefinitions="Auto,*"
+                          x:Name="Container">
 
                         <!-- Options -->
                         <Grid Classes="tool_bar"
@@ -27,7 +28,7 @@
                                 <!-- The Text Wrapping button -->
                                 <ToggleButton Classes="tool_bar_button"
                                               IsChecked="True"
-                                              IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
+                                              IsVisible="{CompiledBinding ShowText, RelativeSource={RelativeSource TemplatedParent}}"
                                               x:Name="TextWrappingCheckBox">
                                     <PathIcon Data="{StaticResource text_wrap_regular}"
                                               ToolTip.Tip="Toggle word wrap" />
@@ -37,7 +38,7 @@
 
                                 <!-- The Copy button -->
                                 <Button Classes="tool_bar_button"
-                                        IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}"
+                                        IsVisible="{CompiledBinding ShowText, RelativeSource={RelativeSource TemplatedParent}}"
                                         x:Name="CopyToClipboardButton">
                                     <PathIcon Data="{StaticResource copy_regular}"
                                               ToolTip.Tip="Copy to clipboard" />
@@ -54,24 +55,34 @@
                             <!-- The Format selector -->
                             <StackPanel Grid.Column="2"
                                         Orientation="Horizontal">
+
+                                <CheckBox IsChecked="{CompiledBinding UseBase64PreDecoding, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Content="Unwrap Base64"
+                                          Margin="0,0,5,0"
+                                          ToolTip.Tip="When active the payload will be unwrapped from a Base64 compatible string" />
+
+                                <Separator Classes="tool_bar_separator" />
+
                                 <Label Classes="tool_bar_label"
                                        Content="Format"
-                                       Margin="0,0,10,0" />
+                                       Margin="5,0,10,0" />
                                 <ComboBox Classes="tool_bar_combo_box"
                                           MinWidth="100"
                                           VerticalAlignment="Stretch"
-                                          ItemsSource="{Binding Path=Formats, RelativeSource={RelativeSource TemplatedParent}}"
-                                          SelectedItem="{Binding Path=SelectedFormat, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                          ItemsSource="{CompiledBinding Path=Formats, RelativeSource={RelativeSource TemplatedParent}, Mode=OneTime}"
+                                          SelectedItem="{CompiledBinding Path=SelectedFormat, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Name}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
+
+
                             </StackPanel>
                         </Grid>
 
-                        <avaloniaEdit:TextEditor WordWrap="{Binding ElementName=TextWrappingCheckBox, Path=IsChecked}"
+                        <avaloniaEdit:TextEditor WordWrap="{CompiledBinding ElementName=TextWrappingCheckBox, Path=IsChecked}"
                                                  IsReadOnly="True"
                                                  x:Name="TextEditor"
                                                  Margin="5"
@@ -81,12 +92,17 @@
                                                  Grid.Row="1"
                                                  ShowLineNumbers="True"
                                                  FontFamily="{StaticResource MonospaceFontFamily}"
-                                                 IsVisible="{Binding !ShowRaw, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                 IsVisible="{CompiledBinding ShowText, RelativeSource={RelativeSource TemplatedParent}}" />
 
                         <controls:HexBox Grid.Row="1"
                                          x:Name="HexBox"
                                          BorderThickness="0"
-                                         IsVisible="{Binding ShowRaw, RelativeSource={RelativeSource TemplatedParent}}" />
+                                         IsVisible="{CompiledBinding ShowRaw, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                        <Viewbox Grid.Row="1"
+                                 Stretch="Uniform"
+                                 x:Name="PictureBox"
+                                 IsVisible="{CompiledBinding ShowPicture, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Grid>
                 </Border>
             </ControlTemplate>

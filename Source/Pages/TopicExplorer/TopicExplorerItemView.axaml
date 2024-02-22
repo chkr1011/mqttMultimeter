@@ -57,7 +57,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type topicExplorer:TopicExplorerItemMessageViewModel}">
                             <TextBlock Margin="10,0"
-                                       Text="{CompiledBinding Payload}"
+                                       Text="{CompiledBinding PayloadPreview}"
                                        Classes="code_text" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

@@ -12,9 +12,10 @@ namespace mqttMultimeter.Pages.TopicExplorer;
 public sealed class TopicExplorerItemViewModel : BaseViewModel
 {
     readonly TopicExplorerPageViewModel _ownerPage;
-
-    string? _currentPayload;
     int _currentPayloadLength;
+
+    string? _currentPayloadPreview;
+    bool _hasPayload;
     DateTime? _lastUpdateTimestamp;
     TopicExplorerItemMessageViewModel? _selectedMessage;
     int _totalPayloadLength;
@@ -27,23 +28,27 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
         Messages.CollectionChanged += OnMessagesChanged;
     }
 
-    public string? CurrentPayload
-    {
-        get => _currentPayload;
-        private set
-        {
-            this.RaiseAndSetIfChanged(ref _currentPayload, value);
-            this.RaisePropertyChanged(nameof(HasPayload));
-        }
-    }
-
     public int CurrentPayloadLength
     {
         get => _currentPayloadLength;
         private set => this.RaiseAndSetIfChanged(ref _currentPayloadLength, value);
     }
 
-    public bool HasPayload => CurrentPayload != null;
+    public string? CurrentPayloadPreview
+    {
+        get => _currentPayloadPreview;
+        private set
+        {
+            this.RaiseAndSetIfChanged(ref _currentPayloadPreview, value);
+            this.RaisePropertyChanged(nameof(HasPayload));
+        }
+    }
+
+    public bool HasPayload
+    {
+        get => _hasPayload;
+        private set => this.RaiseAndSetIfChanged(ref _hasPayload, value);
+    }
 
     public DateTime? LastUpdateTimestamp
     {
@@ -84,27 +89,6 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
             throw new ArgumentNullException(nameof(message));
         }
 
-        string payload;
-        if (message.PayloadSegment.Count == 0)
-        {
-            payload = "[mqttMultimeter:EMPTY]";
-        }
-        else
-        {
-            try
-            {
-                var payloadBuilder = new StringBuilder();
-                payloadBuilder.Append(Encoding.UTF8.GetString(message.PayloadSegment));
-                payloadBuilder.Replace("\r\n", " ");
-                payloadBuilder.Replace("\n", " ");
-
-                payload = payloadBuilder.ToString();
-            }
-            catch
-            {
-                payload = "[mqttMultimeter:INVALID_UTF8]";
-            }
-        }
 
         var timestamp = DateTime.Now;
 
@@ -118,7 +102,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
             duration = timestamp - lastMessage.Timestamp;
         }
 
-        var viewModel = new TopicExplorerItemMessageViewModel(timestamp, message, payload, duration);
+        var viewModel = new TopicExplorerItemMessageViewModel(timestamp, message, duration);
         viewModel.InflightItem.RepeatMessageRequested += OnInflightItemOnRepeatMessageRequested;
         viewModel.InflightItem.DeleteRetainedMessageRequested += OnInflightItemOnDeleteRetainedMessageRequested;
 
@@ -151,7 +135,8 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
 
     void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        CurrentPayload = Messages.LastOrDefault()?.Payload ?? string.Empty;
+        CurrentPayloadPreview = Messages.LastOrDefault()?.PayloadPreview ?? string.Empty;
         CurrentPayloadLength = Messages.LastOrDefault()?.PayloadLength ?? 0;
+        HasPayload = CurrentPayloadLength > 0;
     }
 }
