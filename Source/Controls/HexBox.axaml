@@ -21,7 +21,7 @@
                         <!-- The hex content -->
                         <TextBox IsReadOnly="True"
                                  Name="PART_ContentTextBox"
-                                 CaretIndex="{Binding CaretIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                 CaretIndex="{CompiledBinding CaretIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                  AcceptsReturn="True">
                             <TextBox.Template>
                                 <ControlTemplate>
@@ -71,7 +71,7 @@
                                                        Grid.Column="2"
                                                        Margin="10,0,0,0"
                                                        VerticalAlignment="Top"
-                                                       Text="{Binding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:HexBox}}}"
+                                                       Text="{CompiledBinding Preview, RelativeSource={RelativeSource AncestorType={x:Type controls:HexBox}}}"
                                                        x:Name="PART_PreviewTextBlock"
                                                        Foreground="Gray" />
                                         </Grid>

@@ -50,7 +50,7 @@
                    Grid.Row="0"
                    Classes="code_text"
                    TextWrapping="NoWrap"
-                   Text="{CompiledBinding Item.CurrentPayload, FallbackValue=''}" />
+                   Text="{CompiledBinding Item.CurrentPayloadPreview, FallbackValue=''}" />
 
         <!-- The statistics -->
         <StackPanel Grid.Column="2"

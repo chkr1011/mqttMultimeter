@@ -177,8 +177,11 @@ public sealed class BufferEditor : TemplatedControl
                  change.Property == IsXmlProperty ||
                  change.Property == IsPathProperty)
         {
-            SyncGrammar();
-            SyncBufferFormat();
+            if (change.NewValue is true)
+            {
+                SyncGrammar();
+                SyncBufferFormat();
+            }
         }
     }
 
