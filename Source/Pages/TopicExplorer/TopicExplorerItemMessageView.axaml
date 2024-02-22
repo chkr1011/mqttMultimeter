@@ -20,7 +20,7 @@
         <TextBlock Classes="code_text"
                    Margin="0,0,10,0"
                    FontStyle="Italic"
-                   Text="{CompiledBinding Payload}" />
+                   Text="{CompiledBinding PayloadPreview}" />
     </StackPanel>
 
 </UserControl>

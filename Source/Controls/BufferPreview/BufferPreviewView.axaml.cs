@@ -11,6 +11,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using AvaloniaEdit;
@@ -38,13 +39,18 @@ public sealed class BufferInspectorView : TemplatedControl
 
     public static readonly StyledProperty<bool> ShowRawProperty = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(ShowRaw));
 
+    public static readonly StyledProperty<bool> ShowTextProperty = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(ShowText));
+
+    public static readonly StyledProperty<bool> ShowPictureProperty = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(ShowPicture));
+
+    public static readonly StyledProperty<bool> UseBase64PreDecodingProperty = AvaloniaProperty.Register<BufferInspectorView, bool>(nameof(UseBase64PreDecoding));
+
     public static readonly StyledProperty<string?> SelectedFormatNameProperty = AvaloniaProperty.Register<BufferInspectorView, string?>(nameof(SelectedFormatName), "UTF-8");
 
     readonly RegistryOptions _textEditorRegistryOptions = new(ThemeName.Dark);
-
-    string _content = string.Empty;
     Button? _copyToClipboardButton;
     HexBox? _hexBox;
+    Viewbox? _pictureBox;
     Button? _saveToFileButton;
     TextEditor? _textEditor;
     TextMate.Installation? _textMateInstallation;
@@ -103,7 +109,7 @@ public sealed class BufferInspectorView : TemplatedControl
                 return JsonSerializerService.Instance?.Format(json) ?? string.Empty;
             }),
 
-
+        new BufferConverter("Picture", null, _ => "PICTURE"), // Special case!
         new BufferConverter("RAW", null, _ => "RAW"), // Special case!
         new BufferConverter("Unicode", null, b => Encoding.Unicode.GetString(b)),
         new BufferConverter("UTF-8", null, b => Encoding.UTF8.GetString(b)),
@@ -117,10 +123,28 @@ public sealed class BufferInspectorView : TemplatedControl
             })
     ];
 
+    public bool ShowPicture
+    {
+        get => GetValue(ShowPictureProperty);
+        set => SetValue(ShowPictureProperty, value);
+    }
+
     public bool ShowRaw
     {
         get => GetValue(ShowRawProperty);
         set => SetValue(ShowRawProperty, value);
+    }
+
+    public bool ShowText
+    {
+        get => GetValue(ShowTextProperty);
+        set => SetValue(ShowTextProperty, value);
+    }
+
+    public bool UseBase64PreDecoding
+    {
+        get => GetValue(UseBase64PreDecodingProperty);
+        set => SetValue(UseBase64PreDecodingProperty, value);
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -128,31 +152,49 @@ public sealed class BufferInspectorView : TemplatedControl
         base.OnApplyTemplate(e);
 
         _hexBox = (HexBox)this.GetTemplateChild("HexBox");
+        _pictureBox = (Viewbox)this.GetTemplateChild("PictureBox");
 
         _textEditor = (TextEditor)this.GetTemplateChild("TextEditor");
         _textMateInstallation = _textEditor.InstallTextMate(_textEditorRegistryOptions);
-        SyncTextEditor();
 
         _copyToClipboardButton = (Button)this.GetTemplateChild("CopyToClipboardButton");
         _copyToClipboardButton.Click += OnCopyToClipboard;
 
         _saveToFileButton = (Button)this.GetTemplateChild("SaveToFileButton");
         _saveToFileButton.Click += OnSaveToFile;
-        ReadBuffer();
+
+        Sync();
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == BufferProperty || change.Property == SelectedFormatProperty)
-        {
-            ReadBuffer();
-        }
-
         if (change.Property == SelectedFormatProperty)
         {
-            ShowRaw = ReferenceEquals(SelectedFormat?.Name, "RAW");
+            if (string.Equals(SelectedFormat?.Name, "RAW"))
+            {
+                ShowRaw = true;
+                ShowText = false;
+                ShowPicture = false;
+            }
+            else if (string.Equals(SelectedFormat?.Name, "Picture"))
+            {
+                ShowPicture = true;
+                ShowText = false;
+                ShowRaw = false;
+            }
+            else
+            {
+                ShowText = true;
+                ShowPicture = false;
+                ShowRaw = false;
+            }
+        }
+
+        if (change.Property == UseBase64PreDecodingProperty || change.Property == SelectedFormatProperty || change.Property == BufferProperty)
+        {
+            Sync();
         }
 
         if (change.Property == SelectedFormatNameProperty)
@@ -163,10 +205,10 @@ public sealed class BufferInspectorView : TemplatedControl
 
     void OnCopyToClipboard(object? sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(_content))
+        if (!string.IsNullOrEmpty(_textEditor!.Text))
         {
             var clipboard = TopLevel.GetTopLevel(this)?.Clipboard;
-            _ = clipboard?.SetTextAsync(_content);
+            _ = clipboard?.SetTextAsync(_textEditor.Text);
         }
     }
 
@@ -210,33 +252,6 @@ public sealed class BufferInspectorView : TemplatedControl
         });
     }
 
-    void ReadBuffer()
-    {
-        var format = SelectedFormat;
-        if (format == null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        if ((Buffer?.Length ?? 0) == 0)
-        {
-            _content = string.Empty;
-        }
-        else
-        {
-            try
-            {
-                _content = format.Convert(Buffer!);
-            }
-            catch (Exception exception)
-            {
-                _content = $"<{exception.Message}>";
-            }
-        }
-
-        SyncTextEditor();
-    }
-
     void SelectFormat()
     {
         if (string.IsNullOrEmpty(SelectedFormatName))
@@ -254,9 +269,9 @@ public sealed class BufferInspectorView : TemplatedControl
         }
     }
 
-    void SyncTextEditor()
+    void Sync()
     {
-        if (_textEditor == null || _hexBox == null)
+        if (_textEditor == null || _hexBox == null || _pictureBox == null)
         {
             return;
         }
@@ -266,16 +281,61 @@ public sealed class BufferInspectorView : TemplatedControl
             return;
         }
 
-        _textMateInstallation?.SetGrammar(SelectedFormat.Grammar);
-
-        // It is important to set the content after the grammar so that
-        // the highlighting gets applied properly!
-        _textEditor.Text = _content;
+        var buffer = Buffer ?? Array.Empty<byte>();
+        if (UseBase64PreDecoding)
+        {
+            try
+            {
+                buffer = Convert.FromBase64String(Encoding.ASCII.GetString(buffer));
+            }
+            catch
+            {
+                // Go ahead if decoding did not work. It is probably not required.
+            }
+        }
 
         if (SelectedFormat.Name == "RAW")
         {
             // Only fill the data of the hex box when it is actually used!
-            _hexBox.Value = Buffer;
+            _hexBox.Value = buffer;
+        }
+        else if (SelectedFormat.Name == "Picture")
+        {
+            try
+            {
+                if (_pictureBox.Child is Image existingImage)
+                {
+                    ((Bitmap)existingImage.Source!).Dispose();
+                }
+
+                _pictureBox.Child = new Image
+                {
+                    Source = new Bitmap(new MemoryStream(buffer))
+                };
+            }
+            catch
+            {
+                // Ignore. We may can set a picture here indicating that the format is not supported.
+                _pictureBox.Child = null;
+            }
+        }
+        else
+        {
+            string text;
+            try
+            {
+                text = SelectedFormat.Convert(buffer);
+            }
+            catch (Exception exception)
+            {
+                text = exception.ToString();
+            }
+
+            _textMateInstallation?.SetGrammar(SelectedFormat.Grammar);
+
+            // It is important to set the content after the grammar so that
+            // the highlighting gets applied properly!
+            _textEditor.Text = text;
         }
     }
 }

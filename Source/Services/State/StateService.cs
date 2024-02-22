@@ -8,17 +8,12 @@ using mqttMultimeter.Services.Data;
 
 namespace mqttMultimeter.Services.State;
 
-public sealed class StateService
+public sealed class StateService(JsonSerializerService jsonSerializerService)
 {
-    readonly JsonSerializerService _jsonSerializerService;
+    readonly JsonSerializerService _jsonSerializerService = jsonSerializerService ?? throw new ArgumentNullException(nameof(jsonSerializerService));
     readonly Dictionary<string, JsonNode?> _state = new();
 
     bool _isLoaded;
-
-    public StateService(JsonSerializerService jsonSerializerService)
-    {
-        _jsonSerializerService = jsonSerializerService ?? throw new ArgumentNullException(nameof(jsonSerializerService));
-    }
 
     public event EventHandler<SavingStateEventArgs>? Saving;
 
@@ -118,14 +113,7 @@ public sealed class StateService
             path = Path.Combine(path, ".config");
         }
 
-        if (string.IsNullOrEmpty(path))
-        {
-            path = "~";
-        }
-
-        path = Path.Combine(path, "mqtt-multimeter");
-
-        return path;
+        return Path.Combine(path, "mqtt-multimeter");
     }
 
     static string GeneratePathForWindows()
