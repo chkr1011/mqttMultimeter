@@ -103,23 +103,23 @@
                                        Margin="0,0,10,0" />
 
                                 <RadioButton GroupName="PayloadType"
-                                             IsChecked="{CompiledBinding Path=IsText, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
+                                             IsChecked="{CompiledBinding Path=IsText, RelativeSource={RelativeSource TemplatedParent}}"
                                              Content="Text" />
 
                                 <RadioButton GroupName="PayloadType"
-                                             IsChecked="{CompiledBinding Path=IsJson, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
+                                             IsChecked="{CompiledBinding Path=IsJson, RelativeSource={RelativeSource TemplatedParent}}"
                                              Content="JSON" />
 
                                 <RadioButton GroupName="PayloadType"
-                                             IsChecked="{CompiledBinding Path=IsXml, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
+                                             IsChecked="{CompiledBinding Path=IsXml, RelativeSource={RelativeSource TemplatedParent}}"
                                              Content="XML" />
 
                                 <RadioButton GroupName="PayloadType"
-                                             IsChecked="{CompiledBinding Path=IsBase64, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
+                                             IsChecked="{CompiledBinding Path=IsBase64, RelativeSource={RelativeSource TemplatedParent}}"
                                              Content="Base64" />
 
                                 <RadioButton GroupName="PayloadType"
-                                             IsChecked="{CompiledBinding Path=IsPath, RelativeSource={RelativeSource AncestorType={x:Type controls:BufferEditor}}}"
+                                             IsChecked="{CompiledBinding Path=IsPath, RelativeSource={RelativeSource TemplatedParent}}"
                                              Content="Path" />
                             </StackPanel>
                         </Grid>
