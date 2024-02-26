@@ -120,7 +120,15 @@ public sealed class BufferInspectorView : TemplatedControl
             {
                 var xml = Encoding.UTF8.GetString(b);
                 return XDocument.Parse(xml).ToString(SaveOptions.None);
-            })
+            }),
+
+        new BufferConverter("Sparkplug B",
+            "source.json.comments",
+            b =>
+            {
+                var payload = Org.Eclipse.Tahu.Protobuf.Payload.Parser.ParseFrom(b);
+                return JsonSerializer.Serialize(payload, JsonSerializerOptions);
+            }),
     ];
 
     public bool ShowPicture

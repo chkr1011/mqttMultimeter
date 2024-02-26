@@ -40,6 +40,7 @@
         <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.9" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.9" />
         <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.6" />
+        <PackageReference Include="Google.Protobuf" Version="3.25.3" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
         <PackageReference Include="MQTTnet" Version="4.3.3.952" />
         <PackageReference Include="MessagePack" Version="2.5.129" />
