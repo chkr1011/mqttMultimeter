@@ -129,7 +129,7 @@ public sealed class BufferInspectorView : TemplatedControl
             {
                 var xml = Encoding.UTF8.GetString(b);
                 return XDocument.Parse(xml).ToString(SaveOptions.None);
-            }),
+            })
     ];
 
     public bool ShowPicture
