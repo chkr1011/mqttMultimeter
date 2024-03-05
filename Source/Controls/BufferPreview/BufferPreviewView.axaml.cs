@@ -111,6 +111,15 @@ public sealed class BufferInspectorView : TemplatedControl
 
         new BufferConverter("Picture", null, _ => "PICTURE"), // Special case!
         new BufferConverter("RAW", null, _ => "RAW"), // Special case!
+
+        new BufferConverter("Sparkplug B",
+            "source.json.comments",
+            b =>
+            {
+                var payload = Org.Eclipse.Tahu.Protobuf.Payload.Parser.ParseFrom(b);
+                return JsonSerializer.Serialize(payload, JsonSerializerOptions);
+            }),
+
         new BufferConverter("Unicode", null, b => Encoding.Unicode.GetString(b)),
         new BufferConverter("UTF-8", null, b => Encoding.UTF8.GetString(b)),
         new BufferConverter("UTF-32", null, b => Encoding.UTF32.GetString(b)),
@@ -120,14 +129,6 @@ public sealed class BufferInspectorView : TemplatedControl
             {
                 var xml = Encoding.UTF8.GetString(b);
                 return XDocument.Parse(xml).ToString(SaveOptions.None);
-            }),
-
-        new BufferConverter("Sparkplug B",
-            "source.json.comments",
-            b =>
-            {
-                var payload = Org.Eclipse.Tahu.Protobuf.Payload.Parser.ParseFrom(b);
-                return JsonSerializer.Serialize(payload, JsonSerializerOptions);
             }),
     ];
 
