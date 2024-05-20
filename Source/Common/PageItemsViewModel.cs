@@ -61,6 +61,11 @@ public sealed class PageItemsViewModel<TItem> : BaseViewModel
 
     void Move(int from, int to)
     {
+        if (to == -1)
+        {
+            return;
+        }
+
         if (from == -1)
         {
             return;
@@ -70,7 +75,7 @@ public sealed class PageItemsViewModel<TItem> : BaseViewModel
         {
             return;
         }
-        
+
         var restoreSelection = ReferenceEquals(Collection[from], SelectedItem);
         Collection.Move(from, to);
 
