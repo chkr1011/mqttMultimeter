@@ -29,16 +29,16 @@
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <PackageReference Include="Avalonia.Diagnostics" Version="11.0.10" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="11.1.0-beta2" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.0.10" />
+        <PackageReference Include="Avalonia" Version="11.1.0-beta2" />
         <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.6" />
-        <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.10" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.10" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.1.0-beta2" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.1.0-beta2" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.1.0-beta2" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="11.1.0-beta2" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.0-beta2" />
         <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.6" />
         <PackageReference Include="Google.Protobuf" Version="3.26.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
