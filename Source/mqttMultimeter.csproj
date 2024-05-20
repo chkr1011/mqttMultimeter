@@ -42,7 +42,7 @@
         <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.6" />
         <PackageReference Include="Google.Protobuf" Version="3.26.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-        <PackageReference Include="MQTTnet" Version="5.0.0.1101" />
+        <PackageReference Include="MQTTnet" Version="5.0.0.1145" />
         <PackageReference Include="MessagePack" Version="2.5.140" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
