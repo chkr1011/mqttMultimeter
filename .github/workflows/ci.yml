@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  VERSION: "1.8.2.${{github.run_number}}"
+  VERSION: "1.9.0.${{github.run_number}}"
 
 jobs:
   build:
