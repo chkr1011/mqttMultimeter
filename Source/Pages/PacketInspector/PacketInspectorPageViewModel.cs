@@ -92,7 +92,7 @@ public sealed class PacketInspectorPageViewModel : BasePageViewModel
         {
             return Task.CompletedTask;
         }
-        
+
         Dispatcher.UIThread.Invoke(() =>
         {
             var number = _number++;

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using DynamicData;
+using DynamicData.Binding;
 using mqttMultimeter.Common;
 using mqttMultimeter.Controls;
 using mqttMultimeter.Pages.Inflight.Export;
@@ -39,7 +40,12 @@ public sealed class InflightPageViewModel : BasePageViewModel
 
         var filter = this.WhenAnyValue(x => x.FilterText).Throttle(TimeSpan.FromMilliseconds(800)).Select(BuildFilter);
 
-        _itemsSource.Connect().Filter(filter).ObserveOn(RxApp.MainThreadScheduler).Bind(out _items).Subscribe();
+        _itemsSource.Connect()
+            .Filter(filter)
+            .Sort(SortExpressionComparer<InflightPageItemViewModel>.Ascending(t => t.Number))
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Bind(out _items)
+            .Subscribe();
     }
 
     public event Action<InflightPageItemViewModel>? RepeatMessageRequested;
