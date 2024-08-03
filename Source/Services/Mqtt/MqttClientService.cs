@@ -60,12 +60,12 @@ public sealed class MqttClientService
             _mqttClient.ApplicationMessageReceivedAsync -= OnApplicationMessageReceived;
             _mqttClient.DisconnectedAsync -= OnDisconnected;
             _mqttClient.InspectPacketAsync -= OnInspectPacket;
-            
+
             await _mqttClient.DisconnectAsync();
             _mqttClient.Dispose();
         }
 
-        _mqttClient = new MqttFactory(_mqttNetEventLogger).CreateMqttClient();
+        _mqttClient = new MqttClientFactory(_mqttNetEventLogger).CreateMqttClient();
 
         var clientOptionsBuilder = new MqttClientOptionsBuilder().WithTimeout(TimeSpan.FromSeconds(item.ServerOptions.CommunicationTimeout))
             .WithProtocolVersion(item.ServerOptions.SelectedProtocolVersion.Value)

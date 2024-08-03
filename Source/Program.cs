@@ -15,7 +15,7 @@ static class Program
     static AppBuilder BuildAvaloniaApp()
     {
         var appBuilder = AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect().WithInterFont();
-        
+
         if (Debugger.IsAttached)
         {
             appBuilder = appBuilder.LogToTrace();
