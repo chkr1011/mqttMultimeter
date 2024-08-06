@@ -15,7 +15,7 @@ sealed class ViewLocator : IDataTemplate
         {
             return new TextBlock();
         }
-        
+
         var viewModelTypeName = viewModel.GetType().FullName!;
 
         if (!_viewTypeCache.TryGetValue(viewModelTypeName, out var viewType))

@@ -29,8 +29,6 @@ public sealed class InflightPageViewModel : BasePageViewModel
     string? _filterText;
     bool _isRecordingEnabled = true;
 
-    InflightPageItemViewModel? _selectedItem;
-
     public InflightPageViewModel(MqttClientService mqttClientService, InflightPageItemExportService exportService)
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
@@ -63,12 +61,6 @@ public sealed class InflightPageViewModel : BasePageViewModel
     }
 
     public ReadOnlyObservableCollection<InflightPageItemViewModel> Items => _items;
-
-    public InflightPageItemViewModel? SelectedItem
-    {
-        get => _selectedItem;
-        set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
-    }
 
     public Task AppendMessage(MqttApplicationMessage message)
     {

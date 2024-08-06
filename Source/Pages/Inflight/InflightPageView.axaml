@@ -63,7 +63,7 @@
                 <!-- The data grid with items -->
                 <DataGrid Grid.Column="0"
                           Background="#262626"
-                          SelectedItem="{CompiledBinding SelectedItem}"
+                          x:Name="PART_Items"
                           ItemsSource="{CompiledBinding Items, Mode=OneTime}">
                     <DataGrid.Columns>
                         <!-- The number column -->
@@ -139,8 +139,15 @@
                                Content="Selected message" />
                     </Border>
 
-                    <inflight:InflightPageItemView Grid.Row="1"
-                                                   DataContext="{CompiledBinding SelectedItem}" />
+                    <ContentPresenter Grid.Row="1"
+                                      Content="{Binding ElementName=PART_Items, Path=SelectedItem}">
+                        <!-- It seems we need the data template here even if it works without such a template in other areas!? -->
+                        <ContentPresenter.ContentTemplate>
+                            <DataTemplate DataType="{x:Type inflight:InflightPageItemViewModel}">
+                                <inflight:InflightPageItemView />
+                            </DataTemplate>
+                        </ContentPresenter.ContentTemplate>
+                    </ContentPresenter>
 
                 </Grid>
             </Grid>
