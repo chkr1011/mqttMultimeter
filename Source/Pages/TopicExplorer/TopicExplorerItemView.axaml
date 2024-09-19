@@ -34,6 +34,7 @@
 
         <!-- Messages -->
         <DataGrid Grid.Row="1"
+                  x:Name="PART_Items"
                   ItemsSource="{CompiledBinding Messages, Mode=OneTime}"
                   SelectedItem="{CompiledBinding SelectedMessage, Mode=TwoWay}"
                   Margin="0,0,0,10">
@@ -98,9 +99,14 @@
                       Classes="grid_splitter_vertical" />
 
         <!-- Message details -->
-        <inflight:InflightPageItemView Grid.Row="3"
-                                       DataContext="{CompiledBinding SelectedMessage.InflightItem, FallbackValue={x:Null}}" />
+        <ContentPresenter Content="{Binding ElementName=PART_Items, Path=SelectedItem.InflightItem}"
+                          Grid.Row="3">
+            <ContentPresenter.ContentTemplate>
+                <DataTemplate DataType="{x:Type inflight:InflightPageItemViewModel}">
+                    <inflight:InflightPageItemView />
+                </DataTemplate>
+            </ContentPresenter.ContentTemplate>
+        </ContentPresenter>
     </Grid>
-
 
 </UserControl>

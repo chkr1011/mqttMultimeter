@@ -18,7 +18,7 @@ public sealed class InflightPageItemViewModel
         }
         else
         {
-            Payload = Array.Empty<byte>();
+            Payload = [];
         }
 
         Length = Payload.Length;
