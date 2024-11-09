@@ -13,8 +13,8 @@ using mqttMultimeter.Pages.Connection;
 using mqttMultimeter.Pages.Publish;
 using mqttMultimeter.Pages.Subscriptions;
 using MQTTnet;
-using MQTTnet.Client;
-using MQTTnet.Diagnostics;
+using MQTTnet.Diagnostics.Logger;
+using MQTTnet.Diagnostics.PacketInspection;
 using MQTTnet.Exceptions;
 using MQTTnet.Internal;
 

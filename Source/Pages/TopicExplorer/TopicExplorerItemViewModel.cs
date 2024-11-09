@@ -12,13 +12,13 @@ namespace mqttMultimeter.Pages.TopicExplorer;
 public sealed class TopicExplorerItemViewModel : BaseViewModel
 {
     readonly TopicExplorerPageViewModel _ownerPage;
-    int _currentPayloadLength;
 
+    long _currentPayloadLength;
     string? _currentPayloadPreview;
     bool _hasPayload;
     DateTime? _lastUpdateTimestamp;
     TopicExplorerItemMessageViewModel? _selectedMessage;
-    int _totalPayloadLength;
+    long _totalPayloadLength;
     bool _trackLatestMessage;
 
     public TopicExplorerItemViewModel(TopicExplorerPageViewModel ownerPage)
@@ -28,7 +28,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
         Messages.CollectionChanged += OnMessagesChanged;
     }
 
-    public int CurrentPayloadLength
+    public long CurrentPayloadLength
     {
         get => _currentPayloadLength;
         private set => this.RaiseAndSetIfChanged(ref _currentPayloadLength, value);
@@ -64,7 +64,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _selectedMessage, value);
     }
 
-    public int TotalPayloadLength
+    public long TotalPayloadLength
     {
         get => _totalPayloadLength;
         private set => this.RaiseAndSetIfChanged(ref _totalPayloadLength, value);
@@ -92,7 +92,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
 
         var timestamp = DateTime.Now;
 
-        TotalPayloadLength += message.PayloadSegment.Count;
+        TotalPayloadLength += message.Payload.Length;
         LastUpdateTimestamp = timestamp;
 
         var duration = TimeSpan.Zero;

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using Avalonia.Threading;
 using mqttMultimeter.Common;
 using mqttMultimeter.Services.Mqtt;
-using MQTTnet.Diagnostics;
+using MQTTnet.Diagnostics.Logger;
 using ReactiveUI;
 
 namespace mqttMultimeter.Pages.Log;

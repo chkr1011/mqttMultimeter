@@ -4,7 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Threading;
 using mqttMultimeter.Common;
 using mqttMultimeter.Services.Updates;
-using MQTTnet.Client;
+using MQTTnet;
 using ReactiveUI;
 
 namespace mqttMultimeter.Pages.Info;
