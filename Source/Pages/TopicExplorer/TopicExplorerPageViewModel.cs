@@ -12,7 +12,6 @@ using mqttMultimeter.Controls;
 using mqttMultimeter.Pages.Inflight;
 using mqttMultimeter.Services.Mqtt;
 using MQTTnet;
-using MQTTnet.Client;
 using ReactiveUI;
 
 namespace mqttMultimeter.Pages.TopicExplorer;

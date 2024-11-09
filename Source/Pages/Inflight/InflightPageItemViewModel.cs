@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using mqttMultimeter.Controls;
 using MQTTnet;
@@ -12,9 +13,9 @@ public sealed class InflightPageItemViewModel
     {
         Message = message ?? throw new ArgumentNullException(nameof(message));
 
-        if (message.PayloadSegment.Count > 0)
+        if (message.Payload.Length > 0)
         {
-            Payload = message.PayloadSegment.ToArray();
+            Payload = message.Payload.ToArray();
         }
         else
         {

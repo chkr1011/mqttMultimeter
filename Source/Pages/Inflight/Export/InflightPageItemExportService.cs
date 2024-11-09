@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -111,13 +112,13 @@ public sealed class InflightPageItemExportService
             Payload = null // Will be set later!
         };
 
-        if (message.PayloadSegment.Count > 0)
+        if (message.Payload.Length > 0)
         {
-            exportMessage.Payload = message.PayloadSegment.ToArray();
+            exportMessage.Payload = message.Payload.ToArray();
         }
         else
         {
-            exportMessage.Payload = Array.Empty<byte>();
+            exportMessage.Payload = [];
         }
 
         return exportMessage;

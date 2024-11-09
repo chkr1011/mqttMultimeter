@@ -1,6 +1,6 @@
 ﻿using mqttMultimeter.Common;
 using mqttMultimeter.Controls;
-using MQTTnet.Client;
+using MQTTnet;
 using ReactiveUI;
 
 namespace mqttMultimeter.Pages.Publish;

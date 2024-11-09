@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using System.Text;
 using mqttMultimeter.Common;
 using mqttMultimeter.Pages.Inflight;
@@ -16,8 +17,8 @@ public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
         }
 
         Timestamp = timestamp;
-        PayloadPreview = GeneratePayloadPreview(applicationMessage.PayloadSegment);
-        PayloadLength = applicationMessage.PayloadSegment.Count;
+        PayloadPreview = GeneratePayloadPreview(applicationMessage.Payload);
+        PayloadLength = applicationMessage.Payload.Length;
         Retain = applicationMessage.Retain;
 
         Delay = delay;
@@ -28,7 +29,7 @@ public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
 
     public InflightPageItemViewModel InflightItem { get; init; }
 
-    public int PayloadLength { get; }
+    public long PayloadLength { get; }
 
     public string PayloadPreview { get; }
 
@@ -36,9 +37,9 @@ public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
 
     public DateTime Timestamp { get; }
 
-    static string GeneratePayloadPreview(ArraySegment<byte> payload)
+    static string GeneratePayloadPreview(ReadOnlySequence<byte> payload)
     {
-        if (payload.Count == 0)
+        if (payload.Length == 0)
         {
             return string.Empty;
         }
