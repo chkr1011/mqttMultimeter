@@ -38,7 +38,7 @@ jobs:
           dest: mqttMultimeter-windows-x86.zip
 
       - name: Collect win-x86 artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mqttMultimeter-windows-x86
           path: ${{ github.workspace }}\mqttMultimeter-windows-x86.zip
@@ -53,7 +53,7 @@ jobs:
           dest: mqttMultimeter-windows-x64.zip
 
       - name: Collect win-x64 artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mqttMultimeter-windows-x64
           path: ${{ github.workspace }}\mqttMultimeter-windows-x64.zip
@@ -68,7 +68,7 @@ jobs:
           dest: mqttMultimeter-windows-arm64.zip
 
       - name: Collect win-arm64 artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mqttMultimeter-windows-arm64
           path: ${{ github.workspace }}\mqttMultimeter-windows-arm64.zip
@@ -83,7 +83,7 @@ jobs:
           dest: mqttMultimeter-macOS-x64.zip
 
       - name: Collect osx-x64 artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mqttMultimeter-macOS-x64
           path: ${{ github.workspace }}\mqttMultimeter-macOS-x64.zip
@@ -98,7 +98,7 @@ jobs:
           dest: mqttMultimeter-macOS-arm64.zip
 
       - name: Collect osx-arm64 artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mqttMultimeter-macOS-arm64
           path: ${{ github.workspace }}\mqttMultimeter-macOS-arm64.zip
@@ -113,7 +113,7 @@ jobs:
           dest: mqttMultimeter-linux-x64.zip
 
       - name: Collect linux-x64 artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mqttMultimeter-linux-x64
           path: ${{ github.workspace }}\mqttMultimeter-linux-x64.zip
@@ -128,7 +128,7 @@ jobs:
           dest: mqttMultimeter-linux-arm.zip
 
       - name: Collect linux-arm artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mqttMultimeter-linux-arm
           path: ${{ github.workspace }}\mqttMultimeter-linux-arm.zip
@@ -143,7 +143,7 @@ jobs:
           dest: mqttMultimeter-linux-arm64.zip
 
       - name: Collect linux-arm artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mqttMultimeter-linux-arm64
           path: ${{ github.workspace }}\mqttMultimeter-linux-arm64.zip
