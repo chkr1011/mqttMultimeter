@@ -18,7 +18,7 @@
         <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
         <Prefer32Bit>false</Prefer32Bit>
         <!-- "UseAppHost=false" requires so that the app will start in Rider (fix pending) -->
-        <UseAppHost>false</UseAppHost>
+<!--        <UseAppHost>false</UseAppHost>-->
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>embedded</DebugType>
