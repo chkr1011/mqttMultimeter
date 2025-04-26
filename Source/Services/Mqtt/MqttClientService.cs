@@ -84,7 +84,7 @@ public sealed class MqttClientService
 
         if (!string.IsNullOrEmpty(item.SessionOptions.AuthenticationMethod))
         {
-            clientOptionsBuilder.WithAuthentication(item.SessionOptions.AuthenticationMethod, Convert.FromBase64String(item.SessionOptions.AuthenticationData));
+            clientOptionsBuilder.WithEnhancedAuthentication(item.SessionOptions.AuthenticationMethod, Convert.FromBase64String(item.SessionOptions.AuthenticationData));
         }
 
         if (item.ServerOptions.SelectedTransport.Value == Transport.TCP)
@@ -114,11 +114,11 @@ public sealed class MqttClientService
 
                     if (string.IsNullOrEmpty(item.SessionOptions.CertificatePassword))
                     {
-                        certificates.Add(new X509Certificate2(item.SessionOptions.CertificatePath));
+                        certificates.Add(X509CertificateLoader.LoadCertificateFromFile(item.SessionOptions.CertificatePath));
                     }
                     else
                     {
-                        certificates.Add(new X509Certificate2(item.SessionOptions.CertificatePath, item.SessionOptions.CertificatePassword));
+                        certificates.Add(X509CertificateLoader.LoadPkcs12FromFile(item.SessionOptions.CertificatePath, item.SessionOptions.CertificatePassword));
                     }
 
                     o.WithClientCertificates(certificates);

@@ -24,7 +24,7 @@ public sealed class StateService(JsonSerializerService jsonSerializerService)
             throw new InvalidOperationException("The storage is not loaded.");
         }
 
-        _state[key] = JsonNode.Parse(_jsonSerializerService.Serialize(data));
+        _state[key] = _jsonSerializerService.SerializeToNode(data);
     }
 
     public bool TryGet<TData>(string key, out TData? data)
@@ -70,7 +70,7 @@ public sealed class StateService(JsonSerializerService jsonSerializerService)
             var path = Path.Combine(GeneratePath(), state.Key + ".json");
             Debug.WriteLine("Writing state to \'{Path}\'", path);
 
-            var json = _jsonSerializerService.Serialize(state.Value);
+            var json = _jsonSerializerService.SerializeToString(state.Value);
             await File.WriteAllTextAsync(path, json).ConfigureAwait(false);
         }
     }
@@ -133,7 +133,7 @@ public sealed class StateService(JsonSerializerService jsonSerializerService)
                 var json = File.ReadAllText(stateFile);
                 var key = Path.GetFileNameWithoutExtension(stateFile);
 
-                _state[key] = _jsonSerializerService.Deserialize<JsonValue>(json);
+                _state[key] = _jsonSerializerService.Deserialize<JsonNode>(json);
             }
         }
         catch (FileNotFoundException)
