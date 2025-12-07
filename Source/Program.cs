@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Avalonia;
-using Avalonia.ReactiveUI;
+using ReactiveUI.Avalonia;
 
 namespace mqttMultimeter;
 
