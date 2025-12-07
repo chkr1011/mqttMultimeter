@@ -11,10 +11,7 @@ public sealed class TopicExplorerItemMessageViewModel : BaseViewModel
 {
     public TopicExplorerItemMessageViewModel(DateTime timestamp, MqttApplicationMessage applicationMessage, TimeSpan delay)
     {
-        if (applicationMessage == null)
-        {
-            throw new ArgumentNullException(nameof(applicationMessage));
-        }
+        ArgumentNullException.ThrowIfNull(applicationMessage);
 
         Timestamp = timestamp;
         PayloadPreview = GeneratePayloadPreview(applicationMessage.Payload);

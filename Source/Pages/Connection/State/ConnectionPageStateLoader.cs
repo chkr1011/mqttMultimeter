@@ -7,10 +7,7 @@ public static class ConnectionPageStateLoader
 {
     public static void Apply(ConnectionPageViewModel target, ConnectionPageState? state)
     {
-        if (target == null)
-        {
-            throw new ArgumentNullException(nameof(target));
-        }
+        ArgumentNullException.ThrowIfNull(target);
 
         if (state == null)
         {

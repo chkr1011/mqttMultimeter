@@ -16,10 +16,7 @@ public sealed class SubscriptionsPageViewModel : BasePageViewModel
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
-        if (stateService == null)
-        {
-            throw new ArgumentNullException(nameof(stateService));
-        }
+        ArgumentNullException.ThrowIfNull(stateService);
 
         stateService.Saving += SaveState;
         LoadState(stateService);

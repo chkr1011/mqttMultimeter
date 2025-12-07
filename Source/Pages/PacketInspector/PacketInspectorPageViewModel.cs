@@ -17,10 +17,7 @@ public sealed class PacketInspectorPageViewModel : BasePageViewModel
 
     public PacketInspectorPageViewModel(MqttClientService mqttClientService)
     {
-        if (mqttClientService == null)
-        {
-            throw new ArgumentNullException(nameof(mqttClientService));
-        }
+        ArgumentNullException.ThrowIfNull(mqttClientService);
 
         mqttClientService.RegisterMessageInspectorHandler(ProcessPacket);
     }

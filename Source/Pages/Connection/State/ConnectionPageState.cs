@@ -6,5 +6,5 @@ public sealed class ConnectionPageState
 {
     public const string Key = "Connections";
 
-    public List<ConnectionState> Connections { get; set; } = new();
+    public List<ConnectionState> Connections { get; set; } = [];
 }

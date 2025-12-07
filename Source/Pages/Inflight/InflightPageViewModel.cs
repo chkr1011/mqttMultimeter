@@ -63,10 +63,7 @@ public sealed class InflightPageViewModel : BasePageViewModel
 
     public Task AppendMessage(MqttApplicationMessage message)
     {
-        if (message == null)
-        {
-            throw new ArgumentNullException(nameof(message));
-        }
+        ArgumentNullException.ThrowIfNull(message);
 
         return Dispatcher.UIThread.InvokeAsync(() =>
             {

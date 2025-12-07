@@ -7,10 +7,7 @@ public static class PublishPageStateFactory
 {
     public static PublishPageState Create(PublishPageViewModel viewModel)
     {
-        if (viewModel == null)
-        {
-            throw new ArgumentNullException(nameof(viewModel));
-        }
+        ArgumentNullException.ThrowIfNull(viewModel);
 
         var state = new PublishPageState();
 

@@ -17,6 +17,7 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
         <Prefer32Bit>false</Prefer32Bit>
+        <LangVersion>default</LangVersion>
         <!-- "UseAppHost=false" requires so that the app will start in Rider (fix pending) -->
 <!--        <UseAppHost>false</UseAppHost>-->
     </PropertyGroup>

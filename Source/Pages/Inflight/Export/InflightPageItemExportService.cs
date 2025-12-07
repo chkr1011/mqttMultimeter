@@ -15,15 +15,9 @@ public sealed class InflightPageItemExportService
 {
     public async Task Export(InflightPageViewModel inflightPage, string fileName)
     {
-        if (inflightPage == null)
-        {
-            throw new ArgumentNullException(nameof(inflightPage));
-        }
+        ArgumentNullException.ThrowIfNull(inflightPage);
 
-        if (fileName == null)
-        {
-            throw new ArgumentNullException(nameof(fileName));
-        }
+        ArgumentNullException.ThrowIfNull(fileName);
 
         var export = new InflightPageExport
         {
@@ -42,15 +36,9 @@ public sealed class InflightPageItemExportService
 
     public async Task Import(InflightPageViewModel inflightPage, string fileName)
     {
-        if (inflightPage == null)
-        {
-            throw new ArgumentNullException(nameof(inflightPage));
-        }
+        ArgumentNullException.ThrowIfNull(inflightPage);
 
-        if (fileName == null)
-        {
-            throw new ArgumentNullException(nameof(fileName));
-        }
+        ArgumentNullException.ThrowIfNull(fileName);
 
         var json = await File.ReadAllTextAsync(fileName, Encoding.UTF8, CancellationToken.None);
         var export = JsonConvert.DeserializeObject<InflightPageExport>(json);

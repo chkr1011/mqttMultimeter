@@ -61,10 +61,7 @@ public sealed class UserPropertiesViewModel : BaseViewModel
 
     public void RemoveItem(UserPropertyViewModel item)
     {
-        if (item == null)
-        {
-            throw new ArgumentNullException(nameof(item));
-        }
+        ArgumentNullException.ThrowIfNull(item);
 
         Items.Remove(item);
     }
