@@ -84,10 +84,7 @@ public sealed class TopicExplorerItemViewModel : BaseViewModel
 
     public void AddMessage(MqttApplicationMessage message)
     {
-        if (message == null)
-        {
-            throw new ArgumentNullException(nameof(message));
-        }
+        ArgumentNullException.ThrowIfNull(message);
 
 
         var timestamp = DateTime.Now;

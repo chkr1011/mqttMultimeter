@@ -18,10 +18,7 @@ public sealed class PublishPageViewModel : BasePageViewModel
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
-        if (stateService == null)
-        {
-            throw new ArgumentNullException(nameof(stateService));
-        }
+        ArgumentNullException.ThrowIfNull(stateService);
 
         stateService.Saving += SaveState;
         LoadState(stateService);
@@ -59,10 +56,7 @@ public sealed class PublishPageViewModel : BasePageViewModel
 
     public void RepeatMessage(InflightPageItemViewModel inflightPageItem)
     {
-        if (inflightPageItem == null)
-        {
-            throw new ArgumentNullException(nameof(inflightPageItem));
-        }
+        ArgumentNullException.ThrowIfNull(inflightPageItem);
 
         var publishItem = new PublishItemViewModel(this)
         {

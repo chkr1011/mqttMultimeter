@@ -22,10 +22,7 @@ public sealed class ConnectionPageViewModel : BasePageViewModel
     {
         _mqttClientService = mqttClientService ?? throw new ArgumentNullException(nameof(mqttClientService));
 
-        if (stateService == null)
-        {
-            throw new ArgumentNullException(nameof(stateService));
-        }
+        ArgumentNullException.ThrowIfNull(stateService);
 
         var timer = new DispatcherTimer(TimeSpan.FromSeconds(0.1), DispatcherPriority.Normal, CheckConnection);
         timer.Start();

@@ -6,10 +6,7 @@ public static class ConnectionPageStateFactory
 {
     public static ConnectionPageState Create(ConnectionPageViewModel viewModel)
     {
-        if (viewModel == null)
-        {
-            throw new ArgumentNullException(nameof(viewModel));
-        }
+        ArgumentNullException.ThrowIfNull(viewModel);
 
         var state = new ConnectionPageState();
 

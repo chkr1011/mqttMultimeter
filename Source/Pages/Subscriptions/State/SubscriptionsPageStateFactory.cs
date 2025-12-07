@@ -6,10 +6,7 @@ public static class SubscriptionsPageStateFactory
 {
     public static SubscriptionsPageState Create(SubscriptionsPageViewModel viewModel)
     {
-        if (viewModel == null)
-        {
-            throw new ArgumentNullException(nameof(viewModel));
-        }
+        ArgumentNullException.ThrowIfNull(viewModel);
 
         var state = new SubscriptionsPageState();
 

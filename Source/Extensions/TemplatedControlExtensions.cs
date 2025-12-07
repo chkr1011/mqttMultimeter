@@ -12,10 +12,7 @@ public static class TemplatedControlExtensions
 {
     public static StyledElement? FindVisualChild(this Visual visual, string name)
     {
-        if (visual == null)
-        {
-            throw new ArgumentNullException(nameof(visual));
-        }
+        ArgumentNullException.ThrowIfNull(visual);
 
         var children = visual.GetVisualChildren();
 
@@ -41,15 +38,9 @@ public static class TemplatedControlExtensions
 
     public static Control GetTemplateChild(this TemplatedControl templatedControl, string name)
     {
-        if (templatedControl == null)
-        {
-            throw new ArgumentNullException(nameof(templatedControl));
-        }
+        ArgumentNullException.ThrowIfNull(templatedControl);
 
-        if (name == null)
-        {
-            throw new ArgumentNullException(nameof(name));
-        }
+        ArgumentNullException.ThrowIfNull(name);
 
         return templatedControl.GetTemplateChildren().First(c => string.Equals(c.Name, name, StringComparison.Ordinal));
     }

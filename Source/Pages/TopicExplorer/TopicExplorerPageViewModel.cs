@@ -30,15 +30,9 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
 
     public TopicExplorerPageViewModel(MqttClientService mqttClientService)
     {
-        if (mqttClientService == null)
-        {
-            throw new ArgumentNullException(nameof(mqttClientService));
-        }
+        ArgumentNullException.ThrowIfNull(mqttClientService);
 
-        if (mqttClientService == null)
-        {
-            throw new ArgumentNullException(nameof(mqttClientService));
-        }
+        ArgumentNullException.ThrowIfNull(mqttClientService);
 
         mqttClientService.ApplicationMessageReceived += OnMqttMessageReceived;
 
@@ -100,10 +94,7 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
 
     public void DeleteRetainedMessage(InflightPageItemViewModel item)
     {
-        if (item == null)
-        {
-            throw new ArgumentNullException(nameof(item));
-        }
+        ArgumentNullException.ThrowIfNull(item);
 
         OverlayContent = ProgressIndicatorViewModel.Create($"Deleting retained message...\r\n\r\n{item.Topic}");
 
@@ -141,10 +132,7 @@ public sealed class TopicExplorerPageViewModel : BasePageViewModel
 
     public void RepeatMessage(InflightPageItemViewModel item)
     {
-        if (item == null)
-        {
-            throw new ArgumentNullException(nameof(item));
-        }
+        ArgumentNullException.ThrowIfNull(item);
 
         RepeatMessageRequested?.Invoke(item);
     }

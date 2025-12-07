@@ -7,19 +7,19 @@ namespace mqttMultimeter.Pages.Connection;
 
 public sealed class ConnectionItemViewModel : BaseViewModel
 {
-    string _name = string.Empty;
-
     public ConnectionItemViewModel(ConnectionPageViewModel ownerPage)
     {
         OwnerPage = ownerPage ?? throw new ArgumentNullException(nameof(ownerPage));
 
         SessionOptions.UserProperties.AddEmptyItem();
+
+        Name = string.Empty;
     }
 
     public string Name
     {
-        get => _name;
-        set => this.RaiseAndSetIfChanged(ref _name, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public ConnectionPageViewModel OwnerPage { get; }

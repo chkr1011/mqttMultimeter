@@ -6,10 +6,7 @@ public sealed class SubscriptionsPageStateLoader
 {
     public static void Apply(SubscriptionsPageViewModel target, SubscriptionsPageState? state)
     {
-        if (target == null)
-        {
-            throw new ArgumentNullException(nameof(target));
-        }
+        ArgumentNullException.ThrowIfNull(target);
 
         if (state == null)
         {

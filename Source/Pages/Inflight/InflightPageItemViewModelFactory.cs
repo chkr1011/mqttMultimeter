@@ -7,10 +7,7 @@ public static class InflightPageItemViewModelFactory
 {
     public static InflightPageItemViewModel Create(MqttApplicationMessage message, long number)
     {
-        if (message == null)
-        {
-            throw new ArgumentNullException(nameof(message));
-        }
+        ArgumentNullException.ThrowIfNull(message);
 
         var itemViewModel = new InflightPageItemViewModel(message)
         {

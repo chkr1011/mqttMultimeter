@@ -7,33 +7,34 @@ namespace mqttMultimeter.Pages.Connection;
 
 public sealed class ConnectResponseViewModel : BaseViewModel
 {
-    bool? _isSessionPresent;
-    int? _reasonCode;
-    string _reasonCodeText = string.Empty;
-    string _reasonString = string.Empty;
+    public ConnectResponseViewModel()
+    {
+        ReasonCodeText = string.Empty;
+        ReasonString = string.Empty;
+    }
 
     public bool? IsSessionPresent
     {
-        get => _isSessionPresent;
-        set => this.RaiseAndSetIfChanged(ref _isSessionPresent, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public int? ReasonCode
     {
-        get => _reasonCode;
-        set => this.RaiseAndSetIfChanged(ref _reasonCode, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public string ReasonCodeText
     {
-        get => _reasonCodeText;
-        set => this.RaiseAndSetIfChanged(ref _reasonCodeText, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public string ReasonString
     {
-        get => _reasonString;
-        set => this.RaiseAndSetIfChanged(ref _reasonString, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public UserPropertiesViewModel UserProperties { get; } = new();

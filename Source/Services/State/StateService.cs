@@ -29,10 +29,7 @@ public sealed class StateService(JsonSerializerService jsonSerializerService)
 
     public bool TryGet<TData>(string key, out TData? data)
     {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
+        ArgumentNullException.ThrowIfNull(key);
 
         if (!_isLoaded)
         {

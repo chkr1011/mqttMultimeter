@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
 using System.Security.Authentication;
 using mqttMultimeter.Common;
 using MQTTnet.Formatter;
@@ -9,13 +8,7 @@ namespace mqttMultimeter.Pages.Connection;
 
 public sealed class ServerOptionsViewModel : BaseViewModel
 {
-    int _communicationTimeout;
-    string _host = string.Empty;
-    bool _ignoreCertificateErrors;
-    int _port;
-    int _receiveMaximum;
     EnumViewModel<MqttProtocolVersion> _selectedProtocolVersion;
-
     EnumViewModel<SslProtocols> _selectedTlsVersion;
     TransportViewModel _selectedTransport;
 
@@ -25,7 +18,7 @@ public sealed class ServerOptionsViewModel : BaseViewModel
         Port = 1883;
         CommunicationTimeout = 10;
 
-        Transports.Add(new TransportViewModel("TCP", Transport.TCP)
+        Transports.Add(new TransportViewModel("TCP", Transport.Tcp)
         {
             IsPortAvailable = true,
             HostDisplayValue = "Host"
@@ -36,7 +29,7 @@ public sealed class ServerOptionsViewModel : BaseViewModel
             HostDisplayValue = "URI"
         });
 
-        _selectedTransport = Transports.First();
+        _selectedTransport = Transports[0];
 
         TlsVersions.Add(new EnumViewModel<SslProtocols>("no TLS", SslProtocols.None));
 #pragma warning disable SYSLIB0039
@@ -45,7 +38,7 @@ public sealed class ServerOptionsViewModel : BaseViewModel
 #pragma warning restore SYSLIB0039
         TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.2", SslProtocols.Tls12));
         TlsVersions.Add(new EnumViewModel<SslProtocols>("TLS 1.3", SslProtocols.Tls13));
-        _selectedTlsVersion = TlsVersions.First();
+        _selectedTlsVersion = TlsVersions[0];
 
         ProtocolVersions.Add(new EnumViewModel<MqttProtocolVersion>("3.1.0", MqttProtocolVersion.V310));
         ProtocolVersions.Add(new EnumViewModel<MqttProtocolVersion>("3.1.1", MqttProtocolVersion.V311));
@@ -57,34 +50,34 @@ public sealed class ServerOptionsViewModel : BaseViewModel
 
     public int CommunicationTimeout
     {
-        get => _communicationTimeout;
-        set => this.RaiseAndSetIfChanged(ref _communicationTimeout, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public string Host
     {
-        get => _host;
-        set => this.RaiseAndSetIfChanged(ref _host, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public bool IgnoreCertificateErrors
     {
-        get => _ignoreCertificateErrors;
-        set => this.RaiseAndSetIfChanged(ref _ignoreCertificateErrors, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public int Port
     {
-        get => _port;
-        set => this.RaiseAndSetIfChanged(ref _port, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
-    public ObservableCollection<EnumViewModel<MqttProtocolVersion>> ProtocolVersions { get; } = new();
+    public ObservableCollection<EnumViewModel<MqttProtocolVersion>> ProtocolVersions { get; } = [];
 
-    public int ReceiveMaximum
+    public ushort ReceiveMaximum
     {
-        get => _receiveMaximum;
-        set => this.RaiseAndSetIfChanged(ref _receiveMaximum, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public EnumViewModel<MqttProtocolVersion> SelectedProtocolVersion
@@ -105,7 +98,7 @@ public sealed class ServerOptionsViewModel : BaseViewModel
         set => this.RaiseAndSetIfChanged(ref _selectedTransport, value);
     }
 
-    public ObservableCollection<EnumViewModel<SslProtocols>> TlsVersions { get; } = new();
+    public ObservableCollection<EnumViewModel<SslProtocols>> TlsVersions { get; } = [];
 
-    public ObservableCollection<TransportViewModel> Transports { get; } = new();
+    public ObservableCollection<TransportViewModel> Transports { get; } = [];
 }

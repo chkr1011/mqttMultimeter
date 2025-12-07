@@ -6,10 +6,7 @@ public static class PublishPageStateLoader
 {
     public static void Apply(PublishPageViewModel target, PublishPageState? state)
     {
-        if (target == null)
-        {
-            throw new ArgumentNullException(nameof(target));
-        }
+        ArgumentNullException.ThrowIfNull(target);
 
         if (state == null)
         {
