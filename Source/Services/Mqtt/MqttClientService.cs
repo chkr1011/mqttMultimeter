@@ -50,10 +50,7 @@ public sealed class MqttClientService
 
     public async Task<MqttClientConnectResult> Connect(ConnectionItemViewModel item)
     {
-        if (item == null)
-        {
-            throw new ArgumentNullException(nameof(item));
-        }
+        ArgumentNullException.ThrowIfNull(item);
 
         if (_mqttClient != null)
         {
@@ -75,6 +72,7 @@ public sealed class MqttClientService
             .WithRequestProblemInformation(item.SessionOptions.RequestProblemInformation)
             .WithRequestResponseInformation(item.SessionOptions.RequestResponseInformation)
             .WithKeepAlivePeriod(TimeSpan.FromSeconds(item.SessionOptions.KeepAliveInterval))
+            .WithReceiveMaximum(item.ServerOptions.ReceiveMaximum)
             .WithoutPacketFragmentation(); // We do not need this optimization is this type of client. It will also increase compatibility.
 
         if (item.SessionOptions.SessionExpiryInterval > 0)
@@ -87,7 +85,7 @@ public sealed class MqttClientService
             clientOptionsBuilder.WithEnhancedAuthentication(item.SessionOptions.AuthenticationMethod, Convert.FromBase64String(item.SessionOptions.AuthenticationData));
         }
 
-        if (item.ServerOptions.SelectedTransport.Value == Transport.TCP)
+        if (item.ServerOptions.SelectedTransport.Value == Transport.Tcp)
         {
             clientOptionsBuilder.WithTcpServer(item.ServerOptions.Host, item.ServerOptions.Port);
         }
@@ -158,10 +156,7 @@ public sealed class MqttClientService
 
     public Task<MqttClientPublishResult> Publish(MqttApplicationMessage message, CancellationToken cancellationToken)
     {
-        if (message == null)
-        {
-            throw new ArgumentNullException(nameof(message));
-        }
+        ArgumentNullException.ThrowIfNull(message);
 
         ThrowIfNotConnected();
 
@@ -170,10 +165,7 @@ public sealed class MqttClientService
 
     public Task<MqttClientPublishResult> Publish(PublishItemViewModel item)
     {
-        if (item == null)
-        {
-            throw new ArgumentNullException(nameof(item));
-        }
+        ArgumentNullException.ThrowIfNull(item);
 
         ThrowIfNotConnected();
 
@@ -227,20 +219,14 @@ public sealed class MqttClientService
 
     public void RegisterMessageInspectorHandler(Func<InspectMqttPacketEventArgs, Task> handler)
     {
-        if (handler == null)
-        {
-            throw new ArgumentNullException(nameof(handler));
-        }
+        ArgumentNullException.ThrowIfNull(handler);
 
         _messageInspectors.Add(handler);
     }
 
     public async Task<MqttClientSubscribeResult> Subscribe(SubscriptionItemViewModel subscriptionItem)
     {
-        if (subscriptionItem == null)
-        {
-            throw new ArgumentNullException(nameof(subscriptionItem));
-        }
+        ArgumentNullException.ThrowIfNull(subscriptionItem);
 
         ThrowIfNotConnected();
 
@@ -268,10 +254,7 @@ public sealed class MqttClientService
 
     public async Task<MqttClientUnsubscribeResult> Unsubscribe(SubscriptionItemViewModel subscriptionItem)
     {
-        if (subscriptionItem == null)
-        {
-            throw new ArgumentNullException(nameof(subscriptionItem));
-        }
+        ArgumentNullException.ThrowIfNull(subscriptionItem);
 
         ThrowIfNotConnected();
 
