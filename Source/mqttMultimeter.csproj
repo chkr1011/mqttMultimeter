@@ -7,9 +7,7 @@
         <AssemblyVersion>0.0.0</AssemblyVersion>
         <NeutralLanguage>en-US</NeutralLanguage>
         <IsPackable>false</IsPackable>
-        <PackageId />
-        <PackageVersion />
-        <Authors />
+        <Authors>Christian Kratky</Authors>
         <Company>Christian Kratky</Company>
         <Copyright>Copyright (c) Christian Kratky 2017 - 2024</Copyright>
         <ApplicationIcon>Assets\Icons\App.ico</ApplicationIcon>
@@ -18,7 +16,7 @@
         <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
         <Prefer32Bit>false</Prefer32Bit>
         <!-- "UseAppHost=false" requires so that the app will start in Rider (fix pending) -->
-<!--        <UseAppHost>false</UseAppHost>-->
+        <UseAppHost>false</UseAppHost>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>embedded</DebugType>
