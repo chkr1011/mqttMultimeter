@@ -101,6 +101,7 @@ public sealed class MqttClientService
         {
             clientOptionsBuilder.WithTlsOptions(o =>
             {
+                o.UseTls();
                 o.WithSslProtocols(item.ServerOptions.SelectedTlsVersion.Value);
                 o.WithIgnoreCertificateChainErrors(item.ServerOptions.IgnoreCertificateErrors);
                 o.WithIgnoreCertificateRevocationErrors(item.ServerOptions.IgnoreCertificateErrors);
@@ -108,7 +109,9 @@ public sealed class MqttClientService
                 if (item.ServerOptions.IgnoreCertificateErrors)
                 {
                     o.WithCertificateValidationHandler(context => true);
-                    o.WithAllowUntrustedCertificates();
+                    o.WithAllowUntrustedCertificates(true); 
+                    o.WithIgnoreCertificateChainErrors(true);
+                    o.WithIgnoreCertificateRevocationErrors(true); 
                 }
 
                 if (!string.IsNullOrEmpty(item.SessionOptions.CertificatePath))
