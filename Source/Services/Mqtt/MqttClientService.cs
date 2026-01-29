@@ -20,10 +20,10 @@ using MQTTnet.Internal;
 
 namespace mqttMultimeter.Services.Mqtt;
 
-public sealed class MqttClientService
+public class MqttClientService
 {
     readonly AsyncEvent<MqttApplicationMessageReceivedEventArgs> _applicationMessageReceivedEvent = new();
-    readonly List<Func<InspectMqttPacketEventArgs, Task>> _messageInspectors = new();
+    readonly List<Func<InspectMqttPacketEventArgs, Task>> _messageInspectors = [];
     readonly MqttNetEventLogger _mqttNetEventLogger = new();
 
     IMqttClient? _mqttClient;
@@ -96,42 +96,9 @@ public sealed class MqttClientService
                 o.WithUri(item.ServerOptions.Host);
             });
         }
-    
-        if (item.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
-        {
-            clientOptionsBuilder.WithTlsOptions(o =>
-            {
-                o.UseTls();
-                o.WithSslProtocols(item.ServerOptions.SelectedTlsVersion.Value);
-                o.WithIgnoreCertificateChainErrors(item.ServerOptions.IgnoreCertificateErrors);
-                o.WithIgnoreCertificateRevocationErrors(item.ServerOptions.IgnoreCertificateErrors);
 
-                if (item.ServerOptions.IgnoreCertificateErrors)
-                {
-                    o.WithCertificateValidationHandler(context => true);
-                    o.WithAllowUntrustedCertificates(true); 
-                    o.WithIgnoreCertificateChainErrors(true);
-                    o.WithIgnoreCertificateRevocationErrors(true); 
-                }
-
-                if (!string.IsNullOrEmpty(item.SessionOptions.CertificatePath))
-                {
-                    X509Certificate2Collection certificates = new();
-
-                    if (string.IsNullOrEmpty(item.SessionOptions.CertificatePassword))
-                    {
-                        certificates.Add(X509CertificateLoader.LoadCertificateFromFile(item.SessionOptions.CertificatePath));
-                    }
-                    else
-                    {
-                        certificates.Add(X509CertificateLoader.LoadPkcs12FromFile(item.SessionOptions.CertificatePath, item.SessionOptions.CertificatePassword));
-                    }
-
-                    o.WithClientCertificates(certificates);
-                    o.WithApplicationProtocols([new SslApplicationProtocol("mqtt")]);
-                }
-            });
-        }
+        SetupTls(item, clientOptionsBuilder);
+        SetupUserProperties(item, clientOptionsBuilder);
 
         _mqttClient.ApplicationMessageReceivedAsync += OnApplicationMessageReceived;
 
@@ -273,24 +240,20 @@ public sealed class MqttClientService
     {
         Interlocked.Increment(ref _receivedMessagesCount);
 
-        // We have to insert a small delay here because this is an UI application. If we
+        // We have to insert a small delay here because this is a UI application. If we
         // have no delay the application will freeze as soon as there is much traffic.
-        await Task.Delay(50);
+        await Task.Delay(10);
         await Dispatcher.UIThread.InvokeAsync(() =>
             {
             },
             DispatcherPriority.Render);
 
-        await _applicationMessageReceivedEvent.InvokeAsync(eventArgs);
+        await _applicationMessageReceivedEvent.InvokeAsync(eventArgs).ConfigureAwait(false);
     }
 
     Task OnDisconnected(MqttClientDisconnectedEventArgs eventArgs)
     {
-        Dispatcher.UIThread.Post(() =>
-        {
-            Disconnected?.Invoke(this, eventArgs);
-        });
-
+        Disconnected?.Invoke(this, eventArgs);
         return Task.CompletedTask;
     }
 
@@ -298,7 +261,7 @@ public sealed class MqttClientService
     {
         foreach (var messageInspector in _messageInspectors)
         {
-            messageInspector.Invoke(eventArgs).GetAwaiter().GetResult();
+            messageInspector(eventArgs).GetAwaiter().GetResult();
 
             // We have to insert a sleep here to make sure that the UI remains responsive.
             Thread.Sleep(25);
@@ -310,6 +273,53 @@ public sealed class MqttClientService
     void OnLogMessagePublished(object? sender, MqttNetLogMessagePublishedEventArgs e)
     {
         LogMessagePublished?.Invoke(e);
+    }
+
+    static void SetupTls(ConnectionItemViewModel source, MqttClientOptionsBuilder target)
+    {
+        if (source.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
+        {
+            target.WithTlsOptions(o =>
+            {
+                o.UseTls();
+                o.WithSslProtocols(source.ServerOptions.SelectedTlsVersion.Value);
+                o.WithIgnoreCertificateChainErrors(source.ServerOptions.IgnoreCertificateErrors);
+                o.WithIgnoreCertificateRevocationErrors(source.ServerOptions.IgnoreCertificateErrors);
+
+                if (source.ServerOptions.IgnoreCertificateErrors)
+                {
+                    o.WithCertificateValidationHandler(_ => true);
+                    o.WithAllowUntrustedCertificates();
+                    o.WithIgnoreCertificateChainErrors();
+                    o.WithIgnoreCertificateRevocationErrors();
+                }
+
+                if (!string.IsNullOrEmpty(source.SessionOptions.CertificatePath))
+                {
+                    X509Certificate2Collection certificates = new();
+
+                    if (string.IsNullOrEmpty(source.SessionOptions.CertificatePassword))
+                    {
+                        certificates.Add(X509CertificateLoader.LoadCertificateFromFile(source.SessionOptions.CertificatePath));
+                    }
+                    else
+                    {
+                        certificates.Add(X509CertificateLoader.LoadPkcs12FromFile(source.SessionOptions.CertificatePath, source.SessionOptions.CertificatePassword));
+                    }
+
+                    o.WithClientCertificates(certificates);
+                    o.WithApplicationProtocols([new SslApplicationProtocol("mqtt")]);
+                }
+            });
+        }
+    }
+
+    static void SetupUserProperties(ConnectionItemViewModel source, MqttClientOptionsBuilder target)
+    {
+        foreach (var userProperty in source.SessionOptions.UserProperties.Items)
+        {
+            target.WithUserProperty(userProperty.Name, userProperty.Value);
+        }
     }
 
     void ThrowIfNotConnected()
