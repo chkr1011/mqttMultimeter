@@ -96,15 +96,23 @@ public sealed class MqttClientService
                 o.WithUri(item.ServerOptions.Host);
             });
         }
-
+    
         if (item.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
         {
             clientOptionsBuilder.WithTlsOptions(o =>
             {
+                o.UseTls();
                 o.WithSslProtocols(item.ServerOptions.SelectedTlsVersion.Value);
                 o.WithIgnoreCertificateChainErrors(item.ServerOptions.IgnoreCertificateErrors);
                 o.WithIgnoreCertificateRevocationErrors(item.ServerOptions.IgnoreCertificateErrors);
-                o.WithCertificateValidationHandler(item.ServerOptions.IgnoreCertificateErrors ? _ => true : null);
+
+                if (item.ServerOptions.IgnoreCertificateErrors)
+                {
+                    o.WithCertificateValidationHandler(context => true);
+                    o.WithAllowUntrustedCertificates(true); 
+                    o.WithIgnoreCertificateChainErrors(true);
+                    o.WithIgnoreCertificateRevocationErrors(true); 
+                }
 
                 if (!string.IsNullOrEmpty(item.SessionOptions.CertificatePath))
                 {
@@ -136,11 +144,11 @@ public sealed class MqttClientService
         {
             return await _mqttClient.ConnectAsync(clientOptionsBuilder.Build(), timeout.Token);
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException ex)
         {
             if (timeout.IsCancellationRequested)
             {
-                throw new MqttCommunicationTimedOutException();
+                throw new MqttCommunicationTimedOutException(ex);
             }
 
             throw;
