@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Security;
 using System.Security.Authentication;
@@ -20,12 +19,12 @@ using MQTTnet.Internal;
 
 namespace mqttMultimeter.Services.Mqtt;
 
-public sealed class MqttClientService
+public class MqttClientService
 {
     readonly AsyncEvent<MqttApplicationMessageReceivedEventArgs> _applicationMessageReceivedEvent = new();
-    readonly List<Func<InspectMqttPacketEventArgs, Task>> _messageInspectors = new();
     readonly MqttNetEventLogger _mqttNetEventLogger = new();
 
+    Func<InspectMqttPacketEventArgs, Task>? _messageInspector;
     IMqttClient? _mqttClient;
     int _receivedMessagesCount;
 
@@ -96,42 +95,9 @@ public sealed class MqttClientService
                 o.WithUri(item.ServerOptions.Host);
             });
         }
-    
-        if (item.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
-        {
-            clientOptionsBuilder.WithTlsOptions(o =>
-            {
-                o.UseTls();
-                o.WithSslProtocols(item.ServerOptions.SelectedTlsVersion.Value);
-                o.WithIgnoreCertificateChainErrors(item.ServerOptions.IgnoreCertificateErrors);
-                o.WithIgnoreCertificateRevocationErrors(item.ServerOptions.IgnoreCertificateErrors);
 
-                if (item.ServerOptions.IgnoreCertificateErrors)
-                {
-                    o.WithCertificateValidationHandler(context => true);
-                    o.WithAllowUntrustedCertificates(true); 
-                    o.WithIgnoreCertificateChainErrors(true);
-                    o.WithIgnoreCertificateRevocationErrors(true); 
-                }
-
-                if (!string.IsNullOrEmpty(item.SessionOptions.CertificatePath))
-                {
-                    X509Certificate2Collection certificates = new();
-
-                    if (string.IsNullOrEmpty(item.SessionOptions.CertificatePassword))
-                    {
-                        certificates.Add(X509CertificateLoader.LoadCertificateFromFile(item.SessionOptions.CertificatePath));
-                    }
-                    else
-                    {
-                        certificates.Add(X509CertificateLoader.LoadPkcs12FromFile(item.SessionOptions.CertificatePath, item.SessionOptions.CertificatePassword));
-                    }
-
-                    o.WithClientCertificates(certificates);
-                    o.WithApplicationProtocols([new SslApplicationProtocol("mqtt")]);
-                }
-            });
-        }
+        SetupTls(item, clientOptionsBuilder);
+        SetupUserProperties(item, clientOptionsBuilder);
 
         _mqttClient.ApplicationMessageReceivedAsync += OnApplicationMessageReceived;
 
@@ -229,7 +195,12 @@ public sealed class MqttClientService
     {
         ArgumentNullException.ThrowIfNull(handler);
 
-        _messageInspectors.Add(handler);
+        if (_messageInspector != null)
+        {
+            throw new InvalidOperationException();
+        }
+
+        _messageInspector = handler;
     }
 
     public async Task<MqttClientSubscribeResult> Subscribe(SubscriptionItemViewModel subscriptionItem)
@@ -272,44 +243,96 @@ public sealed class MqttClientService
     async Task OnApplicationMessageReceived(MqttApplicationMessageReceivedEventArgs eventArgs)
     {
         Interlocked.Increment(ref _receivedMessagesCount);
+        await _applicationMessageReceivedEvent.InvokeAsync(eventArgs).ConfigureAwait(false);
 
-        // We have to insert a small delay here because this is an UI application. If we
+        await RenderUi().ConfigureAwait(false);
+    }
+
+    Task OnDisconnected(MqttClientDisconnectedEventArgs eventArgs)
+    {
+        Disconnected?.Invoke(this, eventArgs);
+        return Task.CompletedTask;
+    }
+
+    async Task OnInspectPacket(InspectMqttPacketEventArgs eventArgs)
+    {
+        if (_messageInspector == null)
+        {
+            return;
+        }
+
+        await _messageInspector(eventArgs);
+
+        await RenderUi().ConfigureAwait(false);
+    }
+
+    void OnLogMessagePublished(object? sender, MqttNetLogMessagePublishedEventArgs e)
+    {
+        LogMessagePublished?.Invoke(e);
+    }
+
+    async Task RenderUi()
+    {
+        // We have to insert a small delay here because this is a UI application. If we
         // have no delay the application will freeze as soon as there is much traffic.
         await Task.Delay(50);
         await Dispatcher.UIThread.InvokeAsync(() =>
             {
             },
             DispatcherPriority.Render);
-
-        await _applicationMessageReceivedEvent.InvokeAsync(eventArgs);
     }
 
-    Task OnDisconnected(MqttClientDisconnectedEventArgs eventArgs)
+    static void SetupTls(ConnectionItemViewModel source, MqttClientOptionsBuilder target)
     {
-        Dispatcher.UIThread.Post(() =>
+        if (source.ServerOptions.SelectedTlsVersion.Value != SslProtocols.None)
         {
-            Disconnected?.Invoke(this, eventArgs);
-        });
+            target.WithTlsOptions(o =>
+            {
+                o.UseTls();
+                o.WithSslProtocols(source.ServerOptions.SelectedTlsVersion.Value);
+                o.WithIgnoreCertificateChainErrors(source.ServerOptions.IgnoreCertificateErrors);
+                o.WithIgnoreCertificateRevocationErrors(source.ServerOptions.IgnoreCertificateErrors);
 
-        return Task.CompletedTask;
-    }
+                if (source.ServerOptions.IgnoreCertificateErrors)
+                {
+                    o.WithCertificateValidationHandler(_ => true);
+                    o.WithAllowUntrustedCertificates();
+                    o.WithIgnoreCertificateChainErrors();
+                    o.WithIgnoreCertificateRevocationErrors();
+                }
 
-    Task OnInspectPacket(InspectMqttPacketEventArgs eventArgs)
-    {
-        foreach (var messageInspector in _messageInspectors)
-        {
-            messageInspector.Invoke(eventArgs).GetAwaiter().GetResult();
+                if (!string.IsNullOrEmpty(source.SessionOptions.CertificatePath))
+                {
+                    X509Certificate2Collection certificates = new();
 
-            // We have to insert a sleep here to make sure that the UI remains responsive.
-            Thread.Sleep(25);
+                    if (string.IsNullOrEmpty(source.SessionOptions.CertificatePassword))
+                    {
+                        certificates.Add(X509CertificateLoader.LoadCertificateFromFile(source.SessionOptions.CertificatePath));
+                    }
+                    else
+                    {
+                        certificates.Add(X509CertificateLoader.LoadPkcs12FromFile(source.SessionOptions.CertificatePath, source.SessionOptions.CertificatePassword));
+                    }
+
+                    o.WithClientCertificates(certificates);
+                    o.WithApplicationProtocols([new SslApplicationProtocol("mqtt")]);
+                }
+            });
         }
-
-        return Task.CompletedTask;
     }
 
-    void OnLogMessagePublished(object? sender, MqttNetLogMessagePublishedEventArgs e)
+    static void SetupUserProperties(ConnectionItemViewModel source, MqttClientOptionsBuilder target)
     {
-        LogMessagePublished?.Invoke(e);
+        foreach (var userProperty in source.SessionOptions.UserProperties.Items)
+        {
+            if (string.IsNullOrEmpty(userProperty.Name))
+            {
+                // This is an empty entry from the UI.
+                continue;
+            }
+
+            target.WithUserProperty(userProperty.Name, userProperty.Value);
+        }
     }
 
     void ThrowIfNotConnected()

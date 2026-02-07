@@ -11,12 +11,9 @@ using ReactiveUI;
 
 namespace mqttMultimeter.Pages.Connection;
 
-public sealed class ConnectionPageViewModel : BasePageViewModel
+public class ConnectionPageViewModel : BasePageViewModel
 {
     readonly MqttClientService _mqttClientService;
-
-    bool _isConnected;
-    bool _isConnecting;
 
     public ConnectionPageViewModel(MqttClientService mqttClientService, StateService stateService)
     {
@@ -24,7 +21,7 @@ public sealed class ConnectionPageViewModel : BasePageViewModel
 
         ArgumentNullException.ThrowIfNull(stateService);
 
-        var timer = new DispatcherTimer(TimeSpan.FromSeconds(0.1), DispatcherPriority.Normal, CheckConnection);
+        var timer = new DispatcherTimer(TimeSpan.FromSeconds(0.5), DispatcherPriority.Normal, CheckConnection);
         timer.Start();
 
         stateService.Saving += SaveState;
@@ -32,8 +29,11 @@ public sealed class ConnectionPageViewModel : BasePageViewModel
 
         mqttClientService.Disconnected += (_, e) =>
         {
-            DisconnectedReason.Reason = e.Reason.ToString();
-            DisconnectedReason.AdditionalInformation = e.ReasonString;
+            Dispatcher.UIThread.Post(() =>
+            {
+                DisconnectedReason.Reason = e.Reason.ToString();
+                DisconnectedReason.AdditionalInformation = e.ReasonString;
+            });
         };
     }
 
@@ -41,14 +41,14 @@ public sealed class ConnectionPageViewModel : BasePageViewModel
 
     public bool IsConnected
     {
-        get => _isConnected;
-        set => this.RaiseAndSetIfChanged(ref _isConnected, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public bool IsConnecting
     {
-        get => _isConnecting;
-        private set => this.RaiseAndSetIfChanged(ref _isConnecting, value);
+        get;
+        private set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public PageItemsViewModel<ConnectionItemViewModel> Items { get; } = new();
