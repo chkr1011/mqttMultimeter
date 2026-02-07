@@ -23,9 +23,9 @@ namespace mqttMultimeter.Services.Mqtt;
 public class MqttClientService
 {
     readonly AsyncEvent<MqttApplicationMessageReceivedEventArgs> _applicationMessageReceivedEvent = new();
-    readonly List<Func<InspectMqttPacketEventArgs, Task>> _messageInspectors = [];
     readonly MqttNetEventLogger _mqttNetEventLogger = new();
 
+    Func<InspectMqttPacketEventArgs, Task>? _messageInspector;
     IMqttClient? _mqttClient;
     int _receivedMessagesCount;
 
@@ -196,7 +196,12 @@ public class MqttClientService
     {
         ArgumentNullException.ThrowIfNull(handler);
 
-        _messageInspectors.Add(handler);
+        if (_messageInspector != null)
+        {
+            throw new InvalidOperationException();
+        }
+
+        _messageInspector = handler;
     }
 
     public async Task<MqttClientSubscribeResult> Subscribe(SubscriptionItemViewModel subscriptionItem)
@@ -239,16 +244,9 @@ public class MqttClientService
     async Task OnApplicationMessageReceived(MqttApplicationMessageReceivedEventArgs eventArgs)
     {
         Interlocked.Increment(ref _receivedMessagesCount);
-
-        // We have to insert a small delay here because this is a UI application. If we
-        // have no delay the application will freeze as soon as there is much traffic.
-        await Task.Delay(10);
-        await Dispatcher.UIThread.InvokeAsync(() =>
-            {
-            },
-            DispatcherPriority.Render);
-
         await _applicationMessageReceivedEvent.InvokeAsync(eventArgs).ConfigureAwait(false);
+
+        await RenderUi().ConfigureAwait(false);
     }
 
     Task OnDisconnected(MqttClientDisconnectedEventArgs eventArgs)
@@ -257,22 +255,32 @@ public class MqttClientService
         return Task.CompletedTask;
     }
 
-    Task OnInspectPacket(InspectMqttPacketEventArgs eventArgs)
+    async Task OnInspectPacket(InspectMqttPacketEventArgs eventArgs)
     {
-        foreach (var messageInspector in _messageInspectors)
+        if (_messageInspector == null)
         {
-            messageInspector(eventArgs).GetAwaiter().GetResult();
-
-            // We have to insert a sleep here to make sure that the UI remains responsive.
-            Thread.Sleep(25);
+            return;
         }
 
-        return Task.CompletedTask;
+        await _messageInspector(eventArgs);
+
+        await RenderUi().ConfigureAwait(false);
     }
 
     void OnLogMessagePublished(object? sender, MqttNetLogMessagePublishedEventArgs e)
     {
         LogMessagePublished?.Invoke(e);
+    }
+
+    async Task RenderUi()
+    {
+        // We have to insert a small delay here because this is a UI application. If we
+        // have no delay the application will freeze as soon as there is much traffic.
+        await Task.Delay(50);
+        await Dispatcher.UIThread.InvokeAsync(() =>
+            {
+            },
+            DispatcherPriority.Render);
     }
 
     static void SetupTls(ConnectionItemViewModel source, MqttClientOptionsBuilder target)
