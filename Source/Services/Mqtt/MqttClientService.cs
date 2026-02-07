@@ -318,6 +318,12 @@ public class MqttClientService
     {
         foreach (var userProperty in source.SessionOptions.UserProperties.Items)
         {
+            if (string.IsNullOrEmpty(userProperty.Name))
+            {
+                // This is an empty entry from the UI.
+                continue;
+            }
+
             target.WithUserProperty(userProperty.Name, userProperty.Value);
         }
     }
