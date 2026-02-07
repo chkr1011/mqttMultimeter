@@ -3,27 +3,19 @@ using ReactiveUI;
 
 namespace mqttMultimeter.Controls;
 
-public sealed class UserPropertyViewModel : ReactiveObject
+public class UserPropertyViewModel(UserPropertiesViewModel owner) : ReactiveObject
 {
-    string _name = string.Empty;
-    string _value = string.Empty;
-
-    public UserPropertyViewModel(UserPropertiesViewModel owner)
-    {
-        Owner = owner ?? throw new ArgumentNullException(nameof(owner));
-    }
-
     public string Name
     {
-        get => _name;
-        set => this.RaiseAndSetIfChanged(ref _name, value);
-    }
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = string.Empty;
 
-    public UserPropertiesViewModel Owner { get; }
+    public UserPropertiesViewModel Owner { get; } = owner ?? throw new ArgumentNullException(nameof(owner));
 
     public string Value
     {
-        get => _value;
-        set => this.RaiseAndSetIfChanged(ref _value, value);
-    }
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = string.Empty;
 }

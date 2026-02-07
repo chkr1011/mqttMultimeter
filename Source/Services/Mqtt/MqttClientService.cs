@@ -20,10 +20,10 @@ using MQTTnet.Internal;
 
 namespace mqttMultimeter.Services.Mqtt;
 
-public sealed class MqttClientService
+public class MqttClientService
 {
     readonly AsyncEvent<MqttApplicationMessageReceivedEventArgs> _applicationMessageReceivedEvent = new();
-    readonly List<Func<InspectMqttPacketEventArgs, Task>> _messageInspectors = new();
+    readonly List<Func<InspectMqttPacketEventArgs, Task>> _messageInspectors = [];
     readonly MqttNetEventLogger _mqttNetEventLogger = new();
 
     IMqttClient? _mqttClient;
@@ -281,7 +281,7 @@ public sealed class MqttClientService
             },
             DispatcherPriority.Render);
 
-        await _applicationMessageReceivedEvent.InvokeAsync(eventArgs);
+        await _applicationMessageReceivedEvent.InvokeAsync(eventArgs).ConfigureAwait(false);
     }
 
     Task OnDisconnected(MqttClientDisconnectedEventArgs eventArgs)
