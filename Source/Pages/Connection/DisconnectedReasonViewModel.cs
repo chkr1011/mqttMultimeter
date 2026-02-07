@@ -3,7 +3,7 @@ using ReactiveUI;
 
 namespace mqttMultimeter.Pages.Connection;
 
-public sealed class DisconnectedReasonViewModel : BaseViewModel
+public class DisconnectedReasonViewModel : BaseViewModel
 {
     public string AdditionalInformation
     {
