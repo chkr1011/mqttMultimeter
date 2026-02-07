@@ -7,17 +7,15 @@ using ReactiveUI;
 
 namespace mqttMultimeter.Controls;
 
-public sealed class UserPropertiesViewModel : BaseViewModel
+public class UserPropertiesViewModel : BaseViewModel
 {
-    bool _isReadOnly;
-
     public bool IsReadOnly
     {
-        get => _isReadOnly;
-        set => this.RaiseAndSetIfChanged(ref _isReadOnly, value);
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
-    public ObservableCollection<UserPropertyViewModel> Items { get; } = new();
+    public ObservableCollection<UserPropertyViewModel> Items { get; } = [];
 
     public void AddEmptyItem()
     {
@@ -54,7 +52,7 @@ public sealed class UserPropertiesViewModel : BaseViewModel
             Items.Add(new UserPropertyViewModel(this)
             {
                 Name = userProperty.Name,
-                Value = userProperty.Value
+                Value = userProperty.ReadValueAsString()
             });
         }
     }
